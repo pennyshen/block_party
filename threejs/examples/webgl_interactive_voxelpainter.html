@@ -201,9 +201,16 @@
 				controls = new THREE.PointerLockControls( camera );
 				scene.add( controls.getObject() );
 
+				//cross blocks
+				var geometry = new THREE.CubeGeometry(150,50,50);
+      			var geometry2 = new THREE.CubeGeometry(50,50,150);
+      			THREE.GeometryUtils.merge(geometry, geometry2);
+
 				// roll-over helpers
 
-				rollOverGeo = new THREE.CubeGeometry( 50, 50, 50 );
+				//rollOverGeo = new THREE.CubeGeometry( 50, 50, 50 );
+				//uses the new cross block
+				rollOverGeo = geometry;
 				rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
 				rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
 				scene.add( rollOverMesh );
@@ -358,8 +365,11 @@
 
 						intersector = getRealIntersector( intersects );
 						setVoxelPosition( intersector );
-
-						var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
+						//places cross block
+						var geometry = new THREE.CubeGeometry(150,50,50);
+      					var geometry2 = new THREE.CubeGeometry(50,50,150);
+      					THREE.GeometryUtils.merge(geometry, geometry2);
+						var voxel = new THREE.Mesh( geometry, cubeMaterial );
 						voxel.position.copy( voxelPosition );
 						voxel.matrixAutoUpdate = false;
 						voxel.updateMatrix();
