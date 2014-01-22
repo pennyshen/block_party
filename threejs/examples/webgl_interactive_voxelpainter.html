@@ -89,7 +89,7 @@
 			var cubeGeo, cubeMaterial;
 			var i, intersector;
 
-			var controls;
+			var controls,time = Date.now();
 			var instructions = document.getElementById( 'instructions' );
             var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 
@@ -190,7 +190,11 @@
 				container.appendChild( info );
 
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-				camera.position.y = 800;
+				// camera.position.y = 800;
+
+				camera.position.x = 0;
+				camera.position.y = 100;
+				camera.position.z = 100;
 
 				scene = new THREE.Scene();
 
@@ -425,16 +429,15 @@
 
 				}
 
-				camera.position.x = 0;
-				camera.position.y = 100;
-				camera.position.z = 100;
 
 				// camera.position.x = 1400 * Math.sin( THREE.Math.degToRad( theta ) );
 				// camera.position.z = 1400 * Math.cos( THREE.Math.degToRad( theta ) );
 
 				// camera.lookAt( scene.position );
 
+				controls.update( Date.now() - time );
 				renderer.render( scene, camera );
+				time = Date.now();
 
 			}
 
