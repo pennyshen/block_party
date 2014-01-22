@@ -142,7 +142,8 @@ THREE.PointerLockControls = function ( camera ) {
 	this.update = function ( delta ) {
 
 		if ( scope.enabled === false ) return;
-
+		
+		vScale = 3;
 		delta *= 0.1;
 
 		velocity.x += ( - velocity.x ) * 0.08 * delta;
@@ -162,9 +163,9 @@ THREE.PointerLockControls = function ( camera ) {
 
 		}
 
-		yawObject.translateX( velocity.x );
-		yawObject.translateY( velocity.y ); 
-		yawObject.translateZ( velocity.z );
+		yawObject.translateX( velocity.x*vScale );
+		yawObject.translateY( velocity.y*vScale ); 
+		yawObject.translateZ( velocity.z*vScale );
 
 		if ( yawObject.position.y < 10 ) {
 
