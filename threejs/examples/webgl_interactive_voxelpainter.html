@@ -84,6 +84,7 @@
 			rollOveredFace, isShiftDown = false,
 			theta = 45 * 0.5, isCtrlDown = false;
 			var blockNoise = new Audio("sounds/wood-cracking-1.wav");
+			var collisionNoise = new Audio("sounds/beep-03.mp3");
 
 			var rollOverMesh, rollOverMaterial;
 			var voxelPosition = new THREE.Vector3(), tmpVec = new THREE.Vector3(), normalMatrix = new THREE.Matrix3();
@@ -93,6 +94,9 @@
 			var controls, time = Date.now();
 			var instructions = document.getElementById( 'instructions' );
             var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+
+            //list to hold blocks we created
+            var block_list = new Array();
 
             if ( havePointerLock ) {
 
@@ -211,7 +215,7 @@
 				//rollOverGeo = new THREE.CubeGeometry( 50, 50, 50 );
 				//uses the new cross block
 				rollOverGeo = geometry;
-				rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
+				rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0x0000ff, opacity: 0.5, transparent: true } );
 				rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
 				scene.add( rollOverMesh );
 
@@ -362,7 +366,14 @@
 					// create cube
 
 					} else {
+						//check if there is collision
+						if(hasCollision()){
+							collisionNoise.load();
+							collisionNoise.play();
+							return;
+						}
 
+						
 						intersector = getRealIntersector( intersects );
 						setVoxelPosition( intersector );
 						//places cross block
@@ -376,6 +387,10 @@
 						scene.add( voxel );
 						blockNoise.load();
 						blockNoise.play();
+
+						//add new block to block_list
+						block_list.push(voxel);
+
 						
 					}
 
@@ -415,6 +430,29 @@
 
 			}
 
+			//check for intersection
+
+			function hasCollision(){
+				var Player = rollOverMesh;
+				for (var vertexIndex = 0; vertexIndex < Player.geometry.vertices.length; vertexIndex++){       
+    				var localVertex = Player.geometry.vertices[vertexIndex].clone();
+    				//var globalVertex = Player.matrix.multiplyVector3(localVertex);
+    				var globalVertex = localVertex.applyMatrix4(rollOverMesh.matrix);
+    				var directionVector = globalVertex.sub( Player.position );
+
+    				var ray = new THREE.Raycaster( Player.position, directionVector.clone().normalize() );
+    				var collisionResults = ray.intersectObjects( block_list );
+    				if ( collisionResults.length > 0 && 
+    					collisionResults[0].distance +0.000001< directionVector.length() ) 
+    				{
+        				console.log("collision");
+        				return true;
+    				}
+				}
+				return false;
+
+			}
+
 			function render() {
 
 				if ( isShiftDown ) {
@@ -448,6 +486,16 @@
 				// camera.position.z = 1400 * Math.cos( THREE.Math.degToRad( theta ) );
 
 				// camera.lookAt( scene.position );
+
+				//check if collision
+				if(hasCollision()){
+					//console.log("collision");
+					rollOverMesh.material.color.set(0xFF0000);
+				}
+				else{
+					//console.log("no collision");
+					rollOverMesh.material.color.set(0x0000ff);
+				}
 
 				renderer.render(scene,camera);
 				controls.update( Date.now() - time );
