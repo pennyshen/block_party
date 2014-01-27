@@ -62,6 +62,9 @@
 		<script src="js/libs/stats.min.js"></script>
 		<script src="js/controls/PointerLockControls.js"></script>
 
+		<script src="Room.js"></script>
+		<script src="Wall.js"></script>
+
         <div id="blocker">
 
             <div id="instructions">
@@ -229,32 +232,7 @@
 
 				projector = new THREE.Projector();
 
-				// grid
-
-				var size = 500, step = 50;
-
-				var geometry = new THREE.Geometry();
-
-				for ( var i = - size; i <= size; i += step ) {
-
-					geometry.vertices.push( new THREE.Vector3( - size, 0, i ) );
-					geometry.vertices.push( new THREE.Vector3(   size, 0, i ) );
-
-					geometry.vertices.push( new THREE.Vector3( i, 0, - size ) );
-					geometry.vertices.push( new THREE.Vector3( i, 0,   size ) );
-
-				}
-
-				var material = new THREE.LineBasicMaterial( { color: 0x000000, opacity: 0.2, transparent: true } );
-
-				var line = new THREE.Line( geometry, material );
-				line.type = THREE.LinePieces;
-				scene.add( line );
-
-				plane = new THREE.Mesh( new THREE.PlaneGeometry( 1000, 1000 ), new THREE.MeshBasicMaterial() );
-				plane.rotation.x = - Math.PI / 2;
-				plane.visible = false;
-				scene.add( plane );
+				createRoom(scene);
 
 				mouse2D = new THREE.Vector3( 0, 10000, 0.5 );
 
