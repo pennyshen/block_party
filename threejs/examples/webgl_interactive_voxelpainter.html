@@ -338,8 +338,11 @@
 
 						if ( intersector.object != plane ) {
 
-							scene.remove( intersector.object );
-
+							var index = block_list.indexOf(intersector.object);
+							if(index >-1){
+								block_list.splice(index, 1);
+								scene.remove( intersector.object );
+							}
 						}
 
 					// create cube
