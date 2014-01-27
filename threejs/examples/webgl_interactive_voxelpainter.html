@@ -85,7 +85,8 @@
 			var projector, plane, cube;
 			var mouse2D, mouse3D, raycaster,
 			rollOveredFace, isShiftDown = false,
-			theta = 45 * 0.5, isCtrlDown = false;
+			theta = 45 * 0.5, isCtrlDown = false,
+			isEqualsDown = false, isDashDown = false;
 			var blockNoise = new Audio("sounds/wood-cracking-1.wav");
 			var collisionNoise = new Audio("sounds/beep-03.mp3");
 
@@ -194,7 +195,7 @@
 				info.style.top = '10px';
 				info.style.width = '100%';
 				info.style.textAlign = 'center';
-				info.innerHTML = '<a href="http://threejs.org" target="_blank">three.js</a> - voxel painter - webgl<br><strong>click</strong>: add voxel, <strong>control + click</strong>: remove voxel, <strong>shift + click</strong>: rotate';
+				info.innerHTML = '<a href="http://threejs.org" target="_blank">three.js</a> - voxel painter - webgl<br><strong>click</strong>: add voxel, <strong>control + click</strong>: remove voxel, <strong>-</strong>: zoom out, <strong>=</strong>: zoom in';
 				container.appendChild( info );
 
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
@@ -381,7 +382,8 @@
 
 					case 16: isShiftDown = true; break;
 					case 17: isCtrlDown = true; break;
-
+					case 187: isEqualsDown = true; break;
+					case 189: isDashDown = true; break;
 				}
 
 			}
@@ -392,7 +394,8 @@
 
 					case 16: isShiftDown = false; break;
 					case 17: isCtrlDown = false; break;
-
+					case 187: isEqualsDown = false; break;
+					case 189: isDashDown = false; break;
 				}
 
 			}
@@ -436,6 +439,27 @@
 				if ( isShiftDown ) {
 
 					theta += mouse2D.x * 1.5;
+
+				}
+
+				if ( isEqualsDown ) {
+					if ( camera.position.y > 50 ) {
+						camera.position.y -= 2;
+					}
+					if ( camera.position.z > 50 ) {
+						camera.position.z -= 2;
+					}
+
+				}
+
+				if ( isDashDown ) {
+					if ( camera.position.y < 400 ) {
+						camera.position.y += 2;
+					}
+
+					if (camera.position.z < 400 ) {
+						camera.position.z += 2;
+					}
 
 				}
 
