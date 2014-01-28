@@ -16,10 +16,12 @@
 
 	<script src="js/libs/PointerLockControls.js"></script>
 	<script src="js/libs/Detector.js"></script>
+	<script src="js/libs/ConvexGeometry.js"></script>
 
 	<!-- our own javascript objects -->
 	<script src="js/Room.js"></script>
 	<script src="js/Wall.js"></script>
+	<script src="js/BlockGenerator.js"></script>
 
 	<!-- other javascript functions -->
 	<script src="js/controls.js"></script>
@@ -102,6 +104,8 @@
 			rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0x0000ff, opacity: 0.5, transparent: true } );
 			rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
 			scene.add( rollOverMesh );
+
+			// scene.add(BlockGenerator.basicCube());
 
 			// cubes
 			cubeGeo = new THREE.CubeGeometry( 50, 50, 50 );
