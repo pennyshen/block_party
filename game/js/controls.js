@@ -63,15 +63,17 @@ function onDocumentMouseDown( event ) {
             intersector = getRealIntersector( intersects );
             setVoxelPosition(voxelPosition, intersector);
 
-            //places cross block
-            var geometry = new THREE.CubeGeometry(150,50,50);
-            var geometry2 = new THREE.CubeGeometry(50,50,150);
-            THREE.GeometryUtils.merge(geometry, geometry2);
-            var voxel = new THREE.Mesh( geometry, cubeMaterial );
-            voxel.position.copy( voxelPosition );
+            // places rollover block down and make it static
+            voxel = rollOverMesh;
+            voxel.material.opacity = 1.0;
             voxel.matrixAutoUpdate = false;
             voxel.updateMatrix();
-            scene.add( voxel );
+
+            // create new block and use that new block as rollover
+            rollOverMesh = BlockGenerator.generate("square_flat");
+            rollOverMesh.position.copy( voxelPosition );
+            scene.add( rollOverMesh );
+
             blockNoise.load();
             blockNoise.play();
 

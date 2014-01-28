@@ -94,23 +94,14 @@
 			controls = new THREE.PointerLockControls( camera );
 			scene.add( controls.getObject() );
 
-			//cross blocks
-			var geometry = new THREE.CubeGeometry(150,50,50);
-  			var geometry2 = new THREE.CubeGeometry(50,50,150);
-  			THREE.GeometryUtils.merge(geometry, geometry2);
-
-			//uses the new cross block
-			rollOverGeo = geometry;
-			rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0x0000ff, opacity: 0.5, transparent: true } );
-			rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
+			// start with cross block
+			rollOverMesh = BlockGenerator.generate("cross_block");
 			scene.add( rollOverMesh );
 
-			// scene.add(BlockGenerator.basicCube());
-
 			// cubes
-			cubeGeo = new THREE.CubeGeometry( 50, 50, 50 );
-			cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c, ambient: 0x00ff80, shading: THREE.FlatShading, map: THREE.ImageUtils.loadTexture( "textures/square-outline-textured.png" ) } );
-			cubeMaterial.ambient = cubeMaterial.color;
+			// cubeGeo = new THREE.CubeGeometry( 50, 50, 50 );
+			// cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c, ambient: 0x00ff80, shading: THREE.FlatShading, map: THREE.ImageUtils.loadTexture( "textures/square-outline-textured.png" ) } );
+			// cubeMaterial.ambient = cubeMaterial.color;
 
 			// picking
 
@@ -173,11 +164,11 @@
 
 
 			//check if collision
-			if(hasCollision()){
+			if (hasCollision()) {
 				//console.log("collision");
 				rollOverMesh.material.color.set(0xFF0000);
 			}
-			else{
+			else {
 				//console.log("no collision");
 				rollOverMesh.material.color.set(0x0000ff);
 			}

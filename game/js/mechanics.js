@@ -22,14 +22,19 @@ function setVoxelPosition( voxelPosition, intersector ) {
 
 	voxelPosition.addVectors( intersector.point, tmpVec );
 
-	voxelPosition.x = Math.floor( voxelPosition.x / 50 ) * 50 + 25;
-	voxelPosition.y = Math.floor( voxelPosition.y / 50 ) * 50 + 25;
-	voxelPosition.z = Math.floor( voxelPosition.z / 50 ) * 50 + 25;
+	voxelPosition.x = lockPosition(voxelPosition.x);
+	voxelPosition.y = lockPosition(voxelPosition.y);
+	voxelPosition.z = lockPosition(voxelPosition.z);
+}
+
+function lockPosition(pos) {
+	return Math.floor( pos / STEP_SIZE ) * STEP_SIZE + STEP_SIZE/2;
 }
 
 //check for intersection
 function hasCollision() {
 	var Player = rollOverMesh;
+
 	for (var vertexIndex = 0; vertexIndex < Player.geometry.vertices.length; vertexIndex++){       
 		var localVertex = Player.geometry.vertices[vertexIndex].clone();
 		//var globalVertex = Player.matrix.multiplyVector3(localVertex);
