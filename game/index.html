@@ -1,515 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>three.js webgl - interactive - voxel painter</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			body {
-				font-family: Monospace;
-				background-color: #f0f0f0;
-				margin: 0px;
-				overflow: hidden;
-			}
 
-			#oldie { background-color: #ddd !important }
+<head>
+	<title>Block party!</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
 
-            #blocker {
+<body>
 
-                position: absolute;
+	<!-- javascript libraries -->
+	<script src="js/libs/three.min.js"></script>
+	<script src="js/libs/stats.min.js"></script>
 
-                width: 100%;
-                height: 100%;
+	<script src="js/libs/PointerLockControls.js"></script>
+	<script src="js/libs/Detector.js"></script>
 
-                background-color: rgba(0,0,0,0.5);
+	<!-- our own javascript objects -->
+	<script src="js/Room.js"></script>
+	<script src="js/Wall.js"></script>
 
-            }
+	<!-- other javascript functions -->
+	<script src="js/controls.js"></script>
+	<script src="js/mechanics.js"></script>
 
-            #instructions {
+    <div id="blocker">
 
-                width: 100%;
-                height: 100%;
-
-                display: -webkit-box;
-                display: -moz-box;
-                display: box;
-
-                -webkit-box-orient: horizontal;
-                -moz-box-orient: horizontal;
-                box-orient: horizontal;
-
-                -webkit-box-pack: center;
-                -moz-box-pack: center;
-                box-pack: center;
-
-                -webkit-box-align: center;
-                -moz-box-align: center;
-                box-align: center;
-
-                color: #ffffff;
-                text-align: center;
-
-                cursor: pointer;
-
-            }			
-		</style>
-	</head>
-	<body>
-
-		<script src="js/libs/three.min.js"></script>
-		<script src="js/libs/stats.min.js"></script>
-
-		<script src="js/PointerLockControls.js"></script>
-		<script src="js/Detector.js"></script>
-
-		<script src="js/Room.js"></script>
-		<script src="js/Wall.js"></script>
-
-        <div id="blocker">
-
-            <div id="instructions">
-                <span style="font-size:40px">Click to play</span>
-                <br />
-                (W,A,S,D = Move, SPACE = Jump, MOUSE = Look, CLICK = Place Voxel)
-            </div>
-
+        <div id="instructions">
+            <span style="font-size:40px">Click to play</span>
+            <br />
+            (W,A,S,D = Move, SPACE = Jump, MOUSE = Look, CLICK = Place Voxel)
         </div>
 
+    </div>
 
-		<script>
 
-			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+	<script>
 
-			var container, stats;
-			var camera, scene, renderer;
-			var projector, plane, cube;
-			var mouse2D, mouse3D, raycaster,
-			rollOveredFace, isShiftDown = false,
-			theta = 45 * 0.5, isCtrlDown = false,
-			isEqualsDown = false, isDashDown = false;
-			var blockNoise = new Audio("sounds/wood-cracking-1.wav");
-			var collisionNoise = new Audio("sounds/beep-03.mp3");
+		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-			var rollOverMesh, rollOverMaterial;
-			var voxelPosition = new THREE.Vector3(), tmpVec = new THREE.Vector3(), normalMatrix = new THREE.Matrix3();
-			var cubeGeo, cubeMaterial;
-			var i, intersector;
+		var container, stats;
+		var camera, scene, renderer;
+		var projector, plane, cube;
+		var mouse2D, mouse3D, raycaster,
+		rollOveredFace, isShiftDown = false,
+		theta = 45 * 0.5, isCtrlDown = false,
+		isEqualsDown = false, isDashDown = false;
+		var blockNoise = new Audio("sounds/wood-cracking-1.wav");
+		var collisionNoise = new Audio("sounds/beep-03.mp3");
 
-			var controls, time = Date.now();
-			var instructions = document.getElementById( 'instructions' );
-            var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+		var rollOverMesh, rollOverMaterial;
+		var voxelPosition = new THREE.Vector3(), tmpVec = new THREE.Vector3(), normalMatrix = new THREE.Matrix3();
+		var cubeGeo, cubeMaterial;
+		var i, intersector;
 
-            //list to hold blocks we created
-            var block_list = new Array();
+		var controls, time = Date.now();
+		var instructions = document.getElementById( 'instructions' );
 
-            if ( havePointerLock ) {
+        //list to hold blocks we created
+        var block_list = new Array();
 
-                var element = document.body;
+		includePointerLockControls();
 
-                var pointerlockchange = function ( event ) {
+		init();
+		animate();
 
-                    if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
+		function init() {
 
-                        controls.enabled = true;
+			container = document.createElement( 'div' );
+			document.body.appendChild( container );
 
-                        blocker.style.display = 'none';
+			var info = document.createElement( 'div' );
+			info.style.position = 'absolute';
+			info.style.top = '10px';
+			info.style.width = '100%';
+			info.style.textAlign = 'center';
+			info.innerHTML = '<a href="http://threejs.org" target="_blank">three.js</a> - voxel painter - webgl<br><strong>click</strong>: add voxel, <strong>control + click</strong>: remove voxel, <strong>-</strong>: zoom out, <strong>=</strong>: zoom in';
+			container.appendChild( info );
 
-                    } else {
+			camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+			camera.position.x = 0;
+			camera.position.y = 200;
+			camera.position.z = 200;
 
-                        controls.enabled = false;
+			scene = new THREE.Scene();
 
-                        blocker.style.display = '-webkit-box';
-                        blocker.style.display = '-moz-box';
-                        blocker.style.display = 'box';
+			// pointer lock controls
+			controls = new THREE.PointerLockControls( camera );
+			scene.add( controls.getObject() );
 
-                        instructions.style.display = '';
+			//cross blocks
+			var geometry = new THREE.CubeGeometry(150,50,50);
+  			var geometry2 = new THREE.CubeGeometry(50,50,150);
+  			THREE.GeometryUtils.merge(geometry, geometry2);
 
-                    }
+			//uses the new cross block
+			rollOverGeo = geometry;
+			rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0x0000ff, opacity: 0.5, transparent: true } );
+			rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
+			scene.add( rollOverMesh );
 
-                }
+			// cubes
+			cubeGeo = new THREE.CubeGeometry( 50, 50, 50 );
+			cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c, ambient: 0x00ff80, shading: THREE.FlatShading, map: THREE.ImageUtils.loadTexture( "textures/square-outline-textured.png" ) } );
+			cubeMaterial.ambient = cubeMaterial.color;
 
-                var pointerlockerror = function ( event ) {
-                    instructions.style.display = '';
-                }
+			// picking
 
-                // Hook pointer lock state change events
-                document.addEventListener( 'pointerlockchange', pointerlockchange, false );
-                document.addEventListener( 'mozpointerlockchange', pointerlockchange, false );
-                document.addEventListener( 'webkitpointerlockchange', pointerlockchange, false );
+			projector = new THREE.Projector();
+			mouse2D = new THREE.Vector3( 0, 10000, 0.5 );
 
-                document.addEventListener( 'pointerlockerror', pointerlockerror, false );
-                document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
-                document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
+			var floor = new Wall(1000);
+			floor.addToScene(scene);
 
-                instructions.addEventListener( 'click', function ( event ) {
-                    instructions.style.display = 'none';
+			// Lights
 
-                    // Ask the browser to lock the pointer
-                    element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+			var ambientLight = new THREE.AmbientLight( 0x606060 );
+			scene.add( ambientLight );
 
-                    if ( /Firefox/i.test( navigator.userAgent ) ) {
+			var directionalLight = new THREE.DirectionalLight( 0xffffff );
+			directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
+			scene.add( directionalLight );
 
-                        var fullscreenchange = function ( event ) {
+			renderer = new THREE.WebGLRenderer( { antialias: true } );
+			renderer.setClearColor( 0xf0f0f0 );
+			renderer.setSize( window.innerWidth, window.innerHeight );
 
-                            if ( document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element ) {
+			container.appendChild( renderer.domElement );
 
-                                document.removeEventListener( 'fullscreenchange', fullscreenchange );
-                                document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
+			stats = new Stats();
+			stats.domElement.style.position = 'absolute';
+			stats.domElement.style.top = '0px';
+			container.appendChild( stats.domElement );
 
-                                element.requestPointerLock();
-                            }
+			document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+			document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+			document.addEventListener( 'keydown', onDocumentKeyDown, false );
+			document.addEventListener( 'keyup', onDocumentKeyUp, false );
+			window.addEventListener( 'resize', onWindowResize, false );
 
-                        }
+		}
 
-                        document.addEventListener( 'fullscreenchange', fullscreenchange, false );
-                        document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
 
-                        element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
+		function animate() {
+			requestAnimationFrame( animate );
+			move();
+			render();
+			stats.update();
+		}
 
-                        element.requestFullscreen();
 
-                    } else {
+		function render() {
+			raycaster = projector.pickingRay( mouse2D.clone(), camera );
 
-                        element.requestPointerLock();
+			var intersects = raycaster.intersectObjects( scene.children );
 
-                    }
+			if ( intersects.length > 0 ) {
+				intersector = getRealIntersector( intersects );
 
-                }, false );
-
-            } else {
-                instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
-            }
-
-
-
-			init();
-			animate();
-
-			function init() {
-
-				container = document.createElement( 'div' );
-				document.body.appendChild( container );
-
-				var info = document.createElement( 'div' );
-				info.style.position = 'absolute';
-				info.style.top = '10px';
-				info.style.width = '100%';
-				info.style.textAlign = 'center';
-				info.innerHTML = '<a href="http://threejs.org" target="_blank">three.js</a> - voxel painter - webgl<br><strong>click</strong>: add voxel, <strong>control + click</strong>: remove voxel, <strong>-</strong>: zoom out, <strong>=</strong>: zoom in';
-				container.appendChild( info );
-
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-				camera.position.x = 0;
-				camera.position.y = 200;
-				camera.position.z = 200;
-
-				scene = new THREE.Scene();
-
-				// pointer lock controls
-				controls = new THREE.PointerLockControls( camera );
-				scene.add( controls.getObject() );
-
-				//cross blocks
-				var geometry = new THREE.CubeGeometry(150,50,50);
-      			var geometry2 = new THREE.CubeGeometry(50,50,150);
-      			THREE.GeometryUtils.merge(geometry, geometry2);
-
-				// roll-over helpers
-
-				//rollOverGeo = new THREE.CubeGeometry( 50, 50, 50 );
-				//uses the new cross block
-				rollOverGeo = geometry;
-				rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0x0000ff, opacity: 0.5, transparent: true } );
-				rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
-				scene.add( rollOverMesh );
-
-				// cubes
-
-				cubeGeo = new THREE.CubeGeometry( 50, 50, 50 );
-				cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c, ambient: 0x00ff80, shading: THREE.FlatShading, map: THREE.ImageUtils.loadTexture( "textures/square-outline-textured.png" ) } );
-				cubeMaterial.ambient = cubeMaterial.color;
-
-				// picking
-
-				projector = new THREE.Projector();
-
-				createRoom(scene);
-
-				// var floor = new Wall(1000);
-				// floor.addToScene(scene);
-
-				mouse2D = new THREE.Vector3( 0, 10000, 0.5 );
-
-				// Lights
-
-				var ambientLight = new THREE.AmbientLight( 0x606060 );
-				scene.add( ambientLight );
-
-				var directionalLight = new THREE.DirectionalLight( 0xffffff );
-				directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
-				scene.add( directionalLight );
-
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
-				renderer.setClearColor( 0xf0f0f0 );
-				renderer.setSize( window.innerWidth, window.innerHeight );
-
-				container.appendChild( renderer.domElement );
-
-				stats = new Stats();
-				stats.domElement.style.position = 'absolute';
-				stats.domElement.style.top = '0px';
-				container.appendChild( stats.domElement );
-
-				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-				document.addEventListener( 'keydown', onDocumentKeyDown, false );
-				document.addEventListener( 'keyup', onDocumentKeyUp, false );
-
-				//
-
-				window.addEventListener( 'resize', onWindowResize, false );
-
-			}
-
-			function onWindowResize() {
-
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-
-				renderer.setSize( window.innerWidth, window.innerHeight );
-
-			}
-
-			function getRealIntersector( intersects ) {
-
-				for( i = 0; i < intersects.length; i++ ) {
-
-					intersector = intersects[ i ];
-
-					if ( intersector.object != rollOverMesh ) {
-
-						return intersector;
-
-					}
-
-				}
-
-				return null;
-
-			}
-
-			function setVoxelPosition( intersector ) {
-
-				normalMatrix.getNormalMatrix( intersector.object.matrixWorld );
-
-				if (intersector.face) {
-					tmpVec.copy( intersector.face.normal );	
-				}
-
-				tmpVec.applyMatrix3( normalMatrix ).normalize();
-
-				voxelPosition.addVectors( intersector.point, tmpVec );
-
-				voxelPosition.x = Math.floor( voxelPosition.x / 50 ) * 50 + 25;
-				voxelPosition.y = Math.floor( voxelPosition.y / 50 ) * 50 + 25;
-				voxelPosition.z = Math.floor( voxelPosition.z / 50 ) * 50 + 25;
-
-			}
-
-			function onDocumentMouseMove( event ) {
-
-				event.preventDefault();
-
-				mouse2D.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-				mouse2D.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-
-			}
-
-			function onDocumentMouseDown( event ) {
-
-				event.preventDefault();
-
-				var intersects = raycaster.intersectObjects( scene.children );
-
-				if ( intersects.length > 0 ) {
-
-					intersector = getRealIntersector( intersects );
-
-					// delete cube
-
-					if ( isCtrlDown ) {
-
-						if ( intersector.object != plane ) {
-
-							scene.remove( intersector.object );
-
-						}
-
-					// create cube
-
-					} else {
-						//check if there is collision
-						if(hasCollision()){
-							collisionNoise.load();
-							collisionNoise.play();
-							return;
-						}
-
-						
-						intersector = getRealIntersector( intersects );
-						setVoxelPosition( intersector );
-						//places cross block
-						var geometry = new THREE.CubeGeometry(150,50,50);
-      					var geometry2 = new THREE.CubeGeometry(50,50,150);
-      					THREE.GeometryUtils.merge(geometry, geometry2);
-						var voxel = new THREE.Mesh( geometry, cubeMaterial );
-						voxel.position.copy( voxelPosition );
-						voxel.matrixAutoUpdate = false;
-						voxel.updateMatrix();
-						scene.add( voxel );
-						blockNoise.load();
-						blockNoise.play();
-
-						//add new block to block_list
-						block_list.push(voxel);
-
-						
-					}
-
+				if ( intersector ) {
+					setVoxelPosition( voxelPosition, intersector );
+					rollOverMesh.position = voxelPosition;
 				}
 			}
 
-			function onDocumentKeyDown( event ) {
 
-				switch( event.keyCode ) {
-
-					case 16: isShiftDown = true; break;
-					case 17: isCtrlDown = true; break;
-					case 187: isEqualsDown = true; break;
-					case 189: isDashDown = true; break;
-				}
-
+			//check if collision
+			if(hasCollision()){
+				//console.log("collision");
+				rollOverMesh.material.color.set(0xFF0000);
+			}
+			else{
+				//console.log("no collision");
+				rollOverMesh.material.color.set(0x0000ff);
 			}
 
-			function onDocumentKeyUp( event ) {
+			renderer.render(scene,camera);
+			controls.update( Date.now() - time );
+			renderer.render( scene, camera );
+			time = Date.now();
+		}
 
-				switch ( event.keyCode ) {
+	</script>
 
-					case 16: isShiftDown = false; break;
-					case 17: isCtrlDown = false; break;
-					case 187: isEqualsDown = false; break;
-					case 189: isDashDown = false; break;
-				}
+</body>
 
-			}
 
-			//
-
-			function animate() {
-
-				requestAnimationFrame( animate );
-
-				render();
-				stats.update();
-
-			}
-
-			//check for intersection
-
-			function hasCollision(){
-				var Player = rollOverMesh;
-				for (var vertexIndex = 0; vertexIndex < Player.geometry.vertices.length; vertexIndex++){       
-    				var localVertex = Player.geometry.vertices[vertexIndex].clone();
-    				//var globalVertex = Player.matrix.multiplyVector3(localVertex);
-    				var globalVertex = localVertex.applyMatrix4(rollOverMesh.matrix);
-    				var directionVector = globalVertex.sub( Player.position );
-
-    				var ray = new THREE.Raycaster( Player.position, directionVector.clone().normalize() );
-    				var collisionResults = ray.intersectObjects( block_list );
-    				if ( collisionResults.length > 0 && 
-    					collisionResults[0].distance +0.000001< directionVector.length() ) 
-    				{
-        				console.log("collision");
-        				return true;
-    				}
-				}
-				return false;
-
-			}
-
-			function render() {
-
-				if ( isShiftDown ) {
-
-					theta += mouse2D.x * 1.5;
-
-				}
-
-				if ( isEqualsDown ) {
-					if ( camera.position.y > 50 ) {
-						camera.position.y -= 2;
-					}
-					if ( camera.position.z > 50 ) {
-						camera.position.z -= 2;
-					}
-
-				}
-
-				if ( isDashDown ) {
-					if ( camera.position.y < 400 ) {
-						camera.position.y += 2;
-					}
-
-					if (camera.position.z < 400 ) {
-						camera.position.z += 2;
-					}
-
-				}
-
-				raycaster = projector.pickingRay( mouse2D.clone(), camera );
-
-				var intersects = raycaster.intersectObjects( scene.children );
-
-				if ( intersects.length > 0 ) {
-
-					intersector = getRealIntersector( intersects );
-
-					if ( intersector ) {
-
-						setVoxelPosition( intersector );
-						rollOverMesh.position = voxelPosition;
-
-					}
-
-				}
-
-				// camera.position.x = 0;
-				// camera.position.y = 100;
-				// camera.position.z = 100;
-
-				// camera.position.x = 1400 * Math.sin( THREE.Math.degToRad( theta ) );
-				// camera.position.z = 1400 * Math.cos( THREE.Math.degToRad( theta ) );
-
-				// camera.lookAt( scene.position );
-
-				//check if collision
-				if(hasCollision()){
-					//console.log("collision");
-					rollOverMesh.material.color.set(0xFF0000);
-				}
-				else{
-					//console.log("no collision");
-					rollOverMesh.material.color.set(0x0000ff);
-				}
-
-				renderer.render(scene,camera);
-				controls.update( Date.now() - time );
-				renderer.render( scene, camera );
-				time = Date.now();
-
-			}
-
-		</script>
-
-	</body>
 </html>
