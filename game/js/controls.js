@@ -48,26 +48,21 @@ function onDocumentMouseDown( event ) {
         // delete cube
 
         if ( isCtrlDown ) {
-
             if ( intersector.object != plane ) {
-
                 scene.remove( intersector.object );
-
             }
-
-        // create cube
 
         } else {
             //check if there is collision
-            if(hasCollision()){
+            if (hasCollision()) {
                 collisionNoise.load();
                 collisionNoise.play();
                 return;
             }
 
-            
             intersector = getRealIntersector( intersects );
-            setVoxelPosition( intersector );
+            setVoxelPosition(voxelPosition, intersector);
+
             //places cross block
             var geometry = new THREE.CubeGeometry(150,50,50);
             var geometry2 = new THREE.CubeGeometry(50,50,150);

@@ -1,4 +1,6 @@
 
+// TODO: make this into a singleton later??
+
 
 // walls are squares for now
 function Wall(wallSize) {
@@ -7,7 +9,6 @@ function Wall(wallSize) {
 }
 
 // static variables
-Wall.STEP_SIZE = 50;
 Wall.LINE_MATERIAL = new THREE.LineBasicMaterial( { color: 0x000000, opacity: 0.2, transparent: true } );
 Wall.PLANE_MATERIAL = new THREE.MeshBasicMaterial({color: 0x9ACCDB});
 
@@ -15,7 +16,7 @@ Wall.prototype.initWall = function() {
 	// init line
 	var size = this.wallSize / 2.0;
 	var geometry = new THREE.Geometry();
-	for ( var i = - size; i <= size; i += Wall.STEP_SIZE ) {
+	for ( var i = - size; i <= size; i += STEP_SIZE ) {
 		geometry.vertices.push( new THREE.Vector3( - size, 0, i ) );
 		geometry.vertices.push( new THREE.Vector3(   size, 0, i ) );
 		geometry.vertices.push( new THREE.Vector3( i, 0, - size ) );

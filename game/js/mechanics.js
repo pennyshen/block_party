@@ -1,3 +1,5 @@
+
+
 function getRealIntersector( intersects ) {
 	for( i = 0; i < intersects.length; i++ ) {
 		intersector = intersects[ i ];
@@ -26,7 +28,7 @@ function setVoxelPosition( voxelPosition, intersector ) {
 }
 
 //check for intersection
-function hasCollision(){
+function hasCollision() {
 	var Player = rollOverMesh;
 	for (var vertexIndex = 0; vertexIndex < Player.geometry.vertices.length; vertexIndex++){       
 		var localVertex = Player.geometry.vertices[vertexIndex].clone();
