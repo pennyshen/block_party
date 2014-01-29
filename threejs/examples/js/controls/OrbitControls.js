@@ -299,14 +299,15 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 			dollyStart.set( event.clientX, event.clientY );
 
-		} else if ( event.button === 2 ) {
-			if ( scope.noPan === true ) { return; }
+		} 
+		// else if ( event.button === 2 ) {
+		// 	if ( scope.noPan === true ) { return; }
 
-			state = STATE.PAN;
+		// 	state = STATE.PAN;
 
-			panStart.set( event.clientX, event.clientY );
+		// 	panStart.set( event.clientX, event.clientY );
 
-		}
+		// }
 
 		// Greggman fix: https://github.com/greggman/three.js/commit/fde9f9917d6d8381f06bf22cdff766029d1761be
 		scope.domElement.addEventListener( 'mousemove', onMouseMove, false );
