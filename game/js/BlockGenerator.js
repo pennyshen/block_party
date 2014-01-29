@@ -1,7 +1,8 @@
 
 // this part borrowed heavily from https://github.com/fridek/Threejs-Tetris
+var BlockGenerator = {};
 
-var BlockGenerator = {
+BlockGenerator.shapes = {
 	/* "2D" shapes (involving only 2 axes) */
 	"L":
 	[
@@ -41,21 +42,13 @@ var BlockGenerator = {
     ]
 };
 
+// names of all the blocks in an array
+BlockGenerator.allBlocks = (function() {
+	return Object.getOwnPropertyNames(BlockGenerator.shapes);
+})();
 
-BlockGenerator.getAllBlocks = function() {
-	var blocks = [];
-	var properties = Object.getOwnPropertyNames(this);
-	var i, property;
-
-	for (i = 0; i < properties.length; i++) {
-		property = properties[i];
-		if (typeof(property) != "function") {
-			blocks.push(property);
-		} else {
-			console.log(property);
-		}
-	}
-	return blocks;
+BlockGenerator.getRandomBlock = function() {
+	return this.generate(this.allBlocks[Math.floor(Math.random()*this.allBlocks.length)]);
 }
 
 BlockGenerator.cloneVectors = function (vectors) {
@@ -80,7 +73,7 @@ BlockGenerator.getCube = function() {
 BlockGenerator.generate = function(shapeName) {
 	// copy the shape corresponding to shapeName from internal map into a new shape
 	var geometry, tmpGeometry, i;
-	var shape = this.cloneVectors(this[shapeName]);
+	var shape = this.cloneVectors(this.shapes[shapeName]);
 	var block;
 	
 	// merge the different cube geometries together

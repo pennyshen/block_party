@@ -1,4 +1,49 @@
 
+function tryToPlaceBlock() {
+    var intersects = raycaster.intersectObjects( scene.children );
+    var intersector;
+
+    if ( intersects.length > 0 ) {
+        intersector = getRealIntersector( intersects );
+
+        // delete cube
+        if ( isCtrlDown ) {
+            if ( intersector.object != plane ) {
+                scene.remove( intersector.object );
+            }
+
+        } else {
+            //check if there is collision
+            if (hasCollision()) {
+                collisionNoise.load();
+                collisionNoise.play();
+                return;
+            }
+
+            intersector = getRealIntersector( intersects );
+            setVoxelPosition(voxelPosition, intersector);
+
+            // places rollover block down and make it static
+            voxel = rollOverMesh;
+            voxel.material.opacity = 1.0;
+            voxel.matrixAutoUpdate = false;
+            voxel.updateMatrix();
+
+            // create new block and use that new block as rollover
+            rollOverMesh = BlockGenerator.getRandomBlock();
+            rollOverMesh.position.copy( voxelPosition );
+            scene.add( rollOverMesh );
+
+            // make sound
+            blockNoise.load();
+            blockNoise.play();
+
+            //add new block to block_list
+            block_list.push(voxel);
+        }
+    }	
+}
+
 
 function getRealIntersector( intersects ) {
 	for( i = 0; i < intersects.length; i++ ) {

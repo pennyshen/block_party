@@ -43,67 +43,25 @@ function onDocumentKeyDown( event ) {
         case 17: isCtrlDown = true; break;
         case 187: isEqualsDown = true; break;
         case 189: isDashDown = true; break;
-        case 65: aDown = true;  
-        rollOverMesh.position.x -= 50;
-        camera.position.x -= 50; break;
-        case 87: wDown = true;
-        //TODO w 
-        break;
-        case 83: sDown = true;
-        //TODO s
-        break;
-        case 68: dDown = true;
-        //TODO d
-        rollOverMesh.position.x += 50;
-        camera.position.x += 50; break;
-        //TODO WDS, and camera following the rolloverMesh
-        break;
-
-
-        case 32: isSpaceDown = true; 
-        var intersects = raycaster.intersectObjects( scene.children );
-
-    if ( intersects.length > 0 ) {
-
-        intersector = getRealIntersector( intersects );
-
-        // delete cube
-
-        if ( isCtrlDown ) {
-            if ( intersector.object != plane ) {
-                scene.remove( intersector.object );
-            }
-
-        } else {
-            //check if there is collision
-            if (hasCollision()) {
-                collisionNoise.load();
-                collisionNoise.play();
-                return;
-            }
-
-            intersector = getRealIntersector( intersects );
-            setVoxelPosition(voxelPosition, intersector);
-
-            // places rollover block down and make it static
-            voxel = rollOverMesh;
-            voxel.material.opacity = 1.0;
-            voxel.matrixAutoUpdate = false;
-            voxel.updateMatrix();
-
-            // create new block and use that new block as rollover
-            rollOverMesh = BlockGenerator.generate("short_T");
-            rollOverMesh.position.copy( voxelPosition );
-            scene.add( rollOverMesh );
-
-            blockNoise.load();
-            blockNoise.play();
-
-            //add new block to block_list
-            block_list.push(voxel);
-        }
-    }
-
+        case 65: 
+            aDown = true;  
+            rollOverMesh.position.x -= STEP_SIZE;
+            camera.position.x -= STEP_SIZE; 
+            break;
+        case 87: wDown = true; break;
+            //TODO w 
+        case 83: sDown = true; break;
+            //TODO s
+        case 68: 
+            //TODO d
+            dDown = true;
+            rollOverMesh.position.x += STEP_SIZE;
+            camera.position.x += STEP_SIZE; 
+            break;
+            //TODO WDS, and camera following the rolloverMesh
+        case 32: 
+            isSpaceDown = true; 
+            tryToPlaceBlock();
     }
 }
 
