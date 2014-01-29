@@ -4,6 +4,7 @@ var BlockGenerator = {};
 
 BlockGenerator.shapes = {
 	/* "2D" shapes (involving only 2 axes) */
+	"two_blocks": [{x: 1, y: 0, z: 0}],
 	"L":
 	[
         {x: 1, y: 0, z: 0},
@@ -69,10 +70,16 @@ BlockGenerator.getCube = function() {
 }
 
 
-
 BlockGenerator.generate = function(shapeName) {
-	// copy the shape corresponding to shapeName from internal map into a new shape
+	var i, j;
 	var geometry, tmpGeometry, i;
+	var shape, block, material;
+	var normal, intersects;
+	var blockRaycaster = new THREE.Raycaster();
+	var toDelete = [];
+	
+	// copy the shape corresponding to shapeName from internal map into a new shape
+	
 	var shape = this.cloneVectors(this.shapes[shapeName]);
 	var block;
 	
@@ -86,10 +93,35 @@ BlockGenerator.generate = function(shapeName) {
 		THREE.GeometryUtils.merge(geometry, tmpGeometry);
 	}
 
-	// just use simple mesh for now - multi material object complicates things because
-	// it's not a mesh but an object3d - so you lose the handle to geometry and material
-	block = new THREE.Mesh(geometry, 
-		new THREE.MeshBasicMaterial({ color: 0x0000ff, opacity: 0.5, transparent: true }));
+	// merge them
+	geometry.mergeVertices();
+	geometry.verticesNeedUpdate = true;
+
+	// material = new THREE.MeshPhongMaterial({ color: 0x0000ff, ambient: 0x050505, opacity: 0.5, transparent: true });
+	material = new THREE.MeshLambertMaterial({ color: 0x0000ff, opacity: 0.5, transparent: true });
+	block = new THREE.Mesh(geometry, material);	
+
+	// raycast itself from the center of each face (negated normal), and whichever face gets intersected
+	// is an inner face
+	for (i = 0; i < geometry.faces.length; i++) {
+		face = geometry.faces[i];
+		if (face) {
+			normal = face.normal.clone();
+			normal.negate();
+			blockRaycaster.set(face.centroid, normal);
+			intersects = blockRaycaster.intersectObject(block);
+			for (j = 0; j < intersects.length; j++) {
+				toDelete.push(intersects[j].faceIndex);
+			}
+		}
+	}
+
+	// actually delete them
+	for (i = 0; i < toDelete.length; i++) {
+		delete geometry.faces[toDelete[i]];
+	}
+	geometry.faces = geometry.faces.filter( function(v) { return v; });
+	geometry.elementsNeedUpdate = true;	// update faces
 
 	/**
 	block = THREE.SceneUtils.createMultiMaterialObject(geometry, [
@@ -101,7 +133,6 @@ BlockGenerator.generate = function(shapeName) {
 
     return block;
 }
-
 
 
 

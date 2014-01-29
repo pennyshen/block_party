@@ -27,6 +27,7 @@
 	<!-- other javascript functions -->
 	<script src="js/controls.js"></script>
 	<script src="js/mechanics.js"></script>
+	<script src="js/gameUtils.js"></script>
 
 <!--     <div id="blocker">
 
@@ -100,8 +101,8 @@
 			controls.maxPolarAngle = Math.PI * 4 / 9;
 			scene.add( controls );
 
-			// start with cross block
-			rollOverMesh = BlockGenerator.generate("cross_block");
+			// start with random block
+			rollOverMesh = BlockGenerator.getRandomBlock();
 			scene.add( rollOverMesh );
 			rollOverMesh.position.x = 25; rollOverMesh.position.y = 25; rollOverMesh.position.z = 25;
 
