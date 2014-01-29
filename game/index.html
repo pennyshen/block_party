@@ -17,6 +17,7 @@
 	<script src="js/libs/PointerLockControls.js"></script>
 	<script src="js/libs/Detector.js"></script>
 	<script src="js/libs/ConvexGeometry.js"></script>
+	<script src="js/libs/OrbitControls.js"></script>
 
 	<!-- our own javascript objects -->
 	<script src="js/Room.js"></script>
@@ -27,7 +28,7 @@
 	<script src="js/controls.js"></script>
 	<script src="js/mechanics.js"></script>
 
-    <div id="blocker">
+<!--     <div id="blocker">
 
         <div id="instructions">
             <span style="font-size:40px">Click to play</span>
@@ -35,7 +36,7 @@
             (W,A,S,D = Move, SPACE = Jump, MOUSE = Look, CLICK = Place Voxel)
         </div>
 
-    </div>
+    </div> -->
 
 
 	<script>
@@ -59,14 +60,14 @@
 
 		var controls, time = Date.now();
 		var instructions = document.getElementById( 'instructions' );
+		var mouseFlag = true;
 
 		var STEP_SIZE = 50;
 
         //list to hold blocks we created
         var block_list = new Array();
 
-		includePointerLockControls();
-
+		// includePointerLockControls();
 		init();
 		animate();
 
@@ -91,12 +92,19 @@
 			scene = new THREE.Scene();
 
 			// pointer lock controls
-			controls = new THREE.PointerLockControls( camera );
-			scene.add( controls.getObject() );
+			// controls = new THREE.PointerLockControls( camera );
+			// scene.add( controls.getObject() );
+			controls = new THREE.OrbitControls( camera );
+			controls.rotateSpeed = 0.5;
+			controls.minPolarAngle = 0.0;
+			controls.maxPolarAngle = Math.PI * 4 / 9;
+			scene.add( controls );
 
 			// start with cross block
 			rollOverMesh = BlockGenerator.generate("cross_block");
 			scene.add( rollOverMesh );
+			rollOverMesh.position.x = 25; rollOverMesh.position.y = 25; rollOverMesh.position.z = 25;
+
 
 			// cubes
 			// cubeGeo = new THREE.CubeGeometry( 50, 50, 50 );
@@ -132,7 +140,6 @@
 			container.appendChild( stats.domElement );
 
 			document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-			document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 			document.addEventListener( 'keydown', onDocumentKeyDown, false );
 			document.addEventListener( 'keyup', onDocumentKeyUp, false );
 			window.addEventListener( 'resize', onWindowResize, false );
@@ -149,18 +156,19 @@
 
 
 		function render() {
-			raycaster = projector.pickingRay( mouse2D.clone(), camera );
+			// raycaster = projector.pickingRay( mouse2D.clone(), camera );
 
-			var intersects = raycaster.intersectObjects( scene.children );
+			// var intersects = raycaster.intersectObjects( scene.children );
 
-			if ( intersects.length > 0 ) {
-				intersector = getRealIntersector( intersects );
+			// if ( intersects.length > 0 ) {
+			// 	intersector = getRealIntersector( intersects );
 
-				if ( intersector ) {
-					setVoxelPosition( voxelPosition, intersector );
-					rollOverMesh.position = voxelPosition;
-				}
-			}
+			// 	if ( intersector ) {
+			// 		setVoxelPosition( voxelPosition, intersector );
+			// 		rollOverMesh.position = voxelPosition;
+			// 	}
+			// }
+
 
 
 			//check if collision
@@ -174,7 +182,7 @@
 			}
 
 			renderer.render(scene,camera);
-			controls.update( Date.now() - time );
+			// controls.update( Date.now() - time );
 			renderer.render( scene, camera );
 			time = Date.now();
 		}
