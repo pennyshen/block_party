@@ -41,6 +41,23 @@ var BlockGenerator = {
     ]
 };
 
+
+BlockGenerator.getAllBlocks = function() {
+	var blocks = [];
+	var properties = Object.getOwnPropertyNames(this);
+	var i, property;
+
+	for (i = 0; i < properties.length; i++) {
+		property = properties[i];
+		if (typeof(property) != "function") {
+			blocks.push(property);
+		} else {
+			console.log(property);
+		}
+	}
+	return blocks;
+}
+
 BlockGenerator.cloneVectors = function (vectors) {
 	var i;
 	var newVectors = [];
@@ -57,6 +74,7 @@ BlockGenerator.cloneVector = function (v) {
 BlockGenerator.getCube = function() {
 	return new THREE.CubeGeometry(STEP_SIZE, STEP_SIZE, STEP_SIZE);
 }
+
 
 
 BlockGenerator.generate = function(shapeName) {

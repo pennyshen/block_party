@@ -70,7 +70,7 @@ function onDocumentMouseDown( event ) {
             voxel.updateMatrix();
 
             // create new block and use that new block as rollover
-            rollOverMesh = BlockGenerator.generate("square_flat");
+            rollOverMesh = BlockGenerator.generate("short_T");
             rollOverMesh.position.copy( voxelPosition );
             scene.add( rollOverMesh );
 
