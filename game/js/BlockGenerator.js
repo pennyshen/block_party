@@ -48,7 +48,8 @@ BlockGenerator.colors = {
 	"blue": 0x0000ff, 
 	"orange": 0xff9900, 
 	"green": 0x006600,
-	"purple": 0x660099
+	"purple": 0x660099,
+	"brown": 0x70543b
 };
 
 // names of all the blocks in an array
@@ -98,7 +99,7 @@ BlockGenerator.generate = function(shapeName, colorName) {
 	// merge them
 	geometry.mergeVertices();
 	geometry.verticesNeedUpdate = true;
-	
+
 	// material = new THREE.MeshPhongMaterial({ color: 0x0000ff, ambient: 0x050505, opacity: 0.5, transparent: true });
 	material = new THREE.MeshLambertMaterial({ color: this.colors[colorName], opacity: 0.5, transparent: true });
 	currentColor = material.color;

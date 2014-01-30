@@ -129,11 +129,20 @@
 
 			var directionalLight = new THREE.DirectionalLight( 0xffffff );
 			directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
+			directionalLight.intensity = 0.8;
 			scene.add( directionalLight );
 
-			// directionalLight = new THREE.DirectionalLight( 0xffffff );
-			// directionalLight.position.set( -1, 0.75, 0.5 ).normalize();
-			// scene.add( directionalLight );
+			directionalLight = new THREE.DirectionalLight( 0xffffff );
+			directionalLight.position.set( -1, 0.75, -0.5 ).normalize();
+			directionalLight.intensity = 0.8;
+			scene.add( directionalLight );
+
+			// var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+			// hemiLight.color.setHSL( 0.6, 1, 0.6 );
+			// hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+			// hemiLight.position.set( 0, 500, 0 );
+			// scene.add( hemiLight );
+
 
 			renderer = new THREE.WebGLRenderer( { antialias: true } );
 			renderer.setClearColor( 0xf0f0f0 );
