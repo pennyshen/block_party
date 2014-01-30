@@ -32,3 +32,14 @@ function getDupVertices(vertices) {
 		}
 	}
 }
+
+// get random integer between min and max
+function getRandomInteger(min, max) {
+	return Math.floor(Math.random()*max) + min;
+}
+
+// get random array member
+function getRandomMember(array) {
+	return array[getRandomInteger(0, array.length)];
+}
+

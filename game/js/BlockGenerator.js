@@ -43,34 +43,36 @@ BlockGenerator.shapes = {
     ]
 };
 
+BlockGenerator.colors = {
+	"yellow": 0xffff00, 
+	"blue": 0x0000ff, 
+	"orange": 0xff9900, 
+	"green": 0x006600,
+	"purple": 0x660099
+};
+
 // names of all the blocks in an array
-BlockGenerator.allBlocks = (function() {
+BlockGenerator.allShapes = (function() {
 	return Object.getOwnPropertyNames(BlockGenerator.shapes);
 })();
 
+BlockGenerator.allColors = (function() {
+	return Object.getOwnPropertyNames(BlockGenerator.colors);
+})();
+
+BlockGenerator.currentColor = {};
+
 BlockGenerator.getRandomBlock = function() {
-	return this.generate(this.allBlocks[Math.floor(Math.random()*this.allBlocks.length)]);
+	return this.generate(getRandomMember(this.allShapes), getRandomMember(this.allColors));
 }
 
-BlockGenerator.cloneVectors = function (vectors) {
-	var i;
-	var newVectors = [];
-	for (i = 0; i < vectors.length; i++) {
-		newVectors[i] = this.cloneVector(vectors[i]);
-	}
-	return newVectors;
-}
-
-BlockGenerator.cloneVector = function (v) {
-  return {x: v.x, y: v.y, z: v.z};
-};
 
 BlockGenerator.getCube = function() {
 	return new THREE.CubeGeometry(STEP_SIZE, STEP_SIZE, STEP_SIZE);
 }
 
 
-BlockGenerator.generate = function(shapeName) {
+BlockGenerator.generate = function(shapeName, colorName) {
 	var i, j;
 	var geometry, tmpGeometry, i;
 	var shape, block, material;
@@ -96,10 +98,11 @@ BlockGenerator.generate = function(shapeName) {
 	// merge them
 	geometry.mergeVertices();
 	geometry.verticesNeedUpdate = true;
-
+	
 	// material = new THREE.MeshPhongMaterial({ color: 0x0000ff, ambient: 0x050505, opacity: 0.5, transparent: true });
-	material = new THREE.MeshLambertMaterial({ color: 0x0000ff, opacity: 0.5, transparent: true });
-	block = new THREE.Mesh(geometry, material);	
+	material = new THREE.MeshLambertMaterial({ color: this.colors[colorName], opacity: 0.5, transparent: true });
+	currentColor = material.color;
+	block = new THREE.Mesh(geometry, material);
 
 	// raycast itself from the center of each face (negated normal), and whichever face gets intersected
 	// is an inner face
@@ -134,38 +137,15 @@ BlockGenerator.generate = function(shapeName) {
     return block;
 }
 
-
-
-
-// disrecard these for now....
-
-BlockGenerator.basicCube = function() {
-	return this.getBlock([
-		new THREE.Vector3( STEP_SIZE, STEP_SIZE, STEP_SIZE ),
-		new THREE.Vector3( STEP_SIZE, STEP_SIZE, 0 ),
-		new THREE.Vector3( 0, STEP_SIZE, 0 ),
-		new THREE.Vector3( 0, STEP_SIZE, STEP_SIZE ),
-		new THREE.Vector3( STEP_SIZE, 0, STEP_SIZE ),
-		new THREE.Vector3( STEP_SIZE, 0, 0 ),
-		new THREE.Vector3( 0, 0, 0 ),
-		new THREE.Vector3( 0, 0, STEP_SIZE )]);
-};
-
-BlockGenerator.cross = function() {
-	return this.getBlock([
-		new THREE.Vector3(STEP_SIZE, STEP_SIZE, STEP_SIZE),
-		new THREE.Vector3(STEP_SIZE, STEP_SIZE, 0),
-		new THREE.Vector3(0, STEP_SIZE, 0),
-		new THREE.Vector3(0, STEP_SIZE, STEP_SIZE),
-		new THREE.Vector3(STEP_SIZE, 0, STEP_SIZE),
-		new THREE.Vector3(STEP_SIZE, 0, 0),
-		new THREE.Vector3(0, 0, 0),
-		new THREE.Vector3(0, 0, STEP_SIZE)]);
+BlockGenerator.cloneVectors = function (vectors) {
+	var i;
+	var newVectors = [];
+	for (i = 0; i < vectors.length; i++) {
+		newVectors[i] = this.cloneVector(vectors[i]);
+	}
+	return newVectors;
 }
 
-/**
- *	Shorthand of creating a block from the input points and material.
- */
-BlockGenerator.getBlock = function(points) {
-	return new THREE.Mesh(new THREE.ConvexGeometry(points), new THREE.MeshBasicMaterial( { color: 0x0000ff, opacity: 0.5, transparent: true } ));
+BlockGenerator.cloneVector = function (v) {
+  return {x: v.x, y: v.y, z: v.z};
 };

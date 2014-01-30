@@ -55,6 +55,7 @@
 		var collisionNoise = new Audio("sounds/beep-03.mp3");
 
 		var rollOverMesh, rollOverMaterial;
+		var rollOverColor;
 		var voxelPosition = new THREE.Vector3(), tmpVec = new THREE.Vector3(), normalMatrix = new THREE.Matrix3();
 		var cubeGeo, cubeMaterial;
 		var i, intersector;
@@ -106,7 +107,6 @@
 			scene.add( rollOverMesh );
 			rollOverMesh.position.x = 25; rollOverMesh.position.y = 25; rollOverMesh.position.z = 25;
 
-
 			// cubes
 			// cubeGeo = new THREE.CubeGeometry( 50, 50, 50 );
 			// cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c, ambient: 0x00ff80, shading: THREE.FlatShading, map: THREE.ImageUtils.loadTexture( "textures/square-outline-textured.png" ) } );
@@ -117,17 +117,23 @@
 			projector = new THREE.Projector();
 			mouse2D = new THREE.Vector3( 0, 10000, 0.5 );
 
+			// basic scene
 			var floor = new Wall(1000);
+
 			floor.addToScene(scene);
 
 			// Lights
 
-			var ambientLight = new THREE.AmbientLight( 0x606060 );
+			var ambientLight = new THREE.AmbientLight( 0x3c3c3c );
 			scene.add( ambientLight );
 
 			var directionalLight = new THREE.DirectionalLight( 0xffffff );
 			directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
 			scene.add( directionalLight );
+
+			// directionalLight = new THREE.DirectionalLight( 0xffffff );
+			// directionalLight.position.set( -1, 0.75, 0.5 ).normalize();
+			// scene.add( directionalLight );
 
 			renderer = new THREE.WebGLRenderer( { antialias: true } );
 			renderer.setClearColor( 0xf0f0f0 );
@@ -172,15 +178,14 @@
 
 
 
-			//check if collision
-			if (hasCollision()) {
-				//console.log("collision");
-				rollOverMesh.material.color.set(0xFF0000);
-			}
-			else {
-				//console.log("no collision");
-				rollOverMesh.material.color.set(0x0000ff);
-			}
+			// check if collision
+			// TODO: move this to move key - only check when we're moving the block
+			// if (hasCollision()) {
+			// 	rollOverMesh.material.color.set(0xFF0000);
+			// }
+			// else {
+			// 	rollOverMesh.material.color.set(0x0000FF);
+			// }
 
 			renderer.render(scene,camera);
 			// controls.update( Date.now() - time );
