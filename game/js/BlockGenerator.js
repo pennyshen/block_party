@@ -62,6 +62,7 @@ BlockGenerator.allColors = (function() {
 })();
 
 BlockGenerator.currentColor = {};
+BlockGenerator.generatedTime = 0;	// time at which the last block was generated
 
 BlockGenerator.getRandomBlock = function() {
 	return this.generate(getRandomMember(this.allShapes), getRandomMember(this.allColors));
@@ -134,6 +135,8 @@ BlockGenerator.generate = function(shapeName, colorName) {
     ]);
     block.overdraw = true;
 	*/
+
+	this.generatedTime = Date.now();
 
     return block;
 }

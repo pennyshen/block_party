@@ -65,6 +65,7 @@
 		var mouseFlag = true;
 
 		var STEP_SIZE = 50;
+		var ALIVE_TIME = 60000.0;	// time during which the block is alive, in milliseconds
 
         //list to hold blocks we created
         var block_list = new Array();
@@ -172,6 +173,8 @@
 
 
 		function render() {
+			var elapsed;
+
 			raycaster = projector.pickingRay( mouse2D.clone(), camera );
 
 			// var intersects = raycaster.intersectObjects( scene.children );
@@ -197,8 +200,14 @@
 			// }
 
 			// controls.update( Date.now() - time );
+
 			renderer.render( scene, camera );
 			time = Date.now();
+
+			if (rollOverMesh.material.opacity < 1.0) {
+				elapsed = time - BlockGenerator.generatedTime;
+				rollOverMesh.material.opacity = 0.5 + elapsed / ALIVE_TIME * 0.5;
+			}			
 		}
 
 	</script>
