@@ -72,7 +72,6 @@
 		var controls, time = Date.now();
 		var instructions = document.getElementById( 'instructions' );
 		var timer = document.getElementById( 'timer');
-		console.log(timer);
 		var mouseFlag = true;
 
 		var STEP_SIZE = 50;
@@ -221,10 +220,10 @@
 			if (rollOverMesh.material.opacity < 1.0) {
 				elapsedTime = time - BlockGenerator.generatedTime;
 				
-				timeRemaining = ALIVE_TIME - elapsedTime;
+				timeRemaining = Math.max(ALIVE_TIME - elapsedTime, 0);
 				secs = Math.floor(timeRemaining / 1000.0);
 				mins = Math.floor(secs / 60);
-				timer.innerHTML = mins + ":" + secs;
+				timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs).slice(-2);
 
 				rollOverMesh.material.opacity = 0.5 + elapsedTime / ALIVE_TIME * 0.5;
 			}
