@@ -387,6 +387,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 	}
 
 	function onMouseWheel( event ) {
+		console.log("a");
 
 		if ( scope.enabled === false || scope.noZoom === true ) return;
 
