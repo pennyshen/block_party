@@ -78,21 +78,41 @@ function lockPosition(pos) {
 
 //check for intersection
 function hasCollision() {
-	var Player = rollOverMesh;
+	var block = rollOverMesh;
+    var face, block2, face2;
+    var ray = new THREE.Raycaster();
+    var collided;
+    var sharedNormals;
 
-	for (var vertexIndex = 0; vertexIndex < Player.geometry.vertices.length; vertexIndex++){       
-		var localVertex = Player.geometry.vertices[vertexIndex].clone();
-		//var globalVertex = Player.matrix.multiplyVector3(localVertex);
-		var globalVertex = localVertex.applyMatrix4(rollOverMesh.matrix);
-		var directionVector = globalVertex.sub( Player.position );
+    // console.log(block);
+    // console.log("collided = ");
+    // for (var i = 0; i < block.geometry.faces.length; i++) {
+    //     face = block.geometry.faces[i];
+    //     ray.set(face.centroid, face.normal.clone().normalize());
+    //     collided = ray.intersectObjects( block_list );
+    //     if (collided.length > 0) {
+    //         console.log(collided);
+    //         for (var j = 0; j < collided.length; j++) {
+    //             block2 = collided[j].object.material.color.set(0x7F7C9C);
+    //         }    
+    //     }
+    // }
 
-		var ray = new THREE.Raycaster( Player.position, directionVector.clone().normalize() );
-		var collisionResults = ray.intersectObjects( block_list );
-		if ( collisionResults.length > 0 && collisionResults[0].distance +0.000001< directionVector.length() ) 
-		{
-			console.log("collision");
-			return true;
-		}
-	}
+ //    var Player = rollOverMesh;
+	// for (var vertexIndex = 0; vertexIndex < Player.geometry.vertices.length; vertexIndex++){       
+	// 	var localVertex = Player.geometry.vertices[vertexIndex].clone();
+	// 	//var globalVertex = Player.matrix.multiplyVector3(localVertex);
+	// 	var globalVertex = localVertex.applyMatrix4(rollOverMesh.matrix);
+	// 	var directionVector = globalVertex.sub( Player.position );
+
+	// 	var ray = new THREE.Raycaster( Player.position, directionVector.clone().normalize() );
+	// 	var collisionResults = ray.intersectObjects( block_list );
+ //        console.log(collisionResults);
+	// 	if ( collisionResults.length > 0 && collisionResults[0].distance +0.000001< directionVector.length() ) 
+	// 	{
+	// 		console.log("collision");
+	// 		return true;
+	// 	}
+	// }
 	return false;
 }

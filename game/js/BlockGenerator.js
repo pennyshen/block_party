@@ -5,42 +5,42 @@ var BlockGenerator = {};
 BlockGenerator.shapes = {
 	/* "2D" shapes (involving only 2 axes) */
 	"two_blocks": [{x: 1, y: 0, z: 0}],
-	"L":
-	[
-        {x: 1, y: 0, z: 0},
-        {x: 1, y: 1, z: 0},
-        {x: 1, y: 2, z: 0}
-    ],
-    "straight3": // one straight line consisting of 3 blocks
-    [
-        {x: 0, y: 1, z: 0},
-        {x: 0, y: 2, z: 0},
-    ],
-    "square_flat":
-    [
-        {x: 0, y: 1, z: 0},
-        {x: 1, y: 0, z: 0},
-        {x: 1, y: 1, z: 0}
-    ],
-    "short_T": // typical tetris short t 
-    [
-        {x: 0, y: 1, z: 0},
-        {x: 0, y: 2, z: 0},
-        {x: 1, y: 1, z: 0}
-    ],
-    "lightning": // typical tetris lighting-looking z
-    [
-        {x: 0, y: 1, z: 0},
-        {x: 1, y: 1, z: 0},
-        {x: 1, y: 2, z: 0}
-    ],
-    "cross_block":
-    [
-    	{x: -1, y: 0, z: 0},
-    	{x: 1, y: 0, z: 0},
-    	{x: 0, y: 0, z: 1},
-    	{x: 0, y: 0, z: -1}
-    ]
+	// "L":
+	// [
+ //        {x: 1, y: 0, z: 0},
+ //        {x: 1, y: 1, z: 0},
+ //        {x: 1, y: 2, z: 0}
+ //    ],
+ //    "straight3": // one straight line consisting of 3 blocks
+ //    [
+ //        {x: 0, y: 1, z: 0},
+ //        {x: 0, y: 2, z: 0},
+ //    ],
+ //    "square_flat":
+ //    [
+ //        {x: 0, y: 1, z: 0},
+ //        {x: 1, y: 0, z: 0},
+ //        {x: 1, y: 1, z: 0}
+ //    ],
+ //    "short_T": // typical tetris short t 
+ //    [
+ //        {x: 0, y: 1, z: 0},
+ //        {x: 0, y: 2, z: 0},
+ //        {x: 1, y: 1, z: 0}
+ //    ],
+ //    "lightning": // typical tetris lighting-looking z
+ //    [
+ //        {x: 0, y: 1, z: 0},
+ //        {x: 1, y: 1, z: 0},
+ //        {x: 1, y: 2, z: 0}
+ //    ],
+ //    "cross_block":
+ //    [
+ //    	{x: -1, y: 0, z: 0},
+ //    	{x: 1, y: 0, z: 0},
+ //    	{x: 0, y: 0, z: 1},
+ //    	{x: 0, y: 0, z: -1}
+ //    ]
 };
 
 BlockGenerator.colors = {
@@ -138,7 +138,6 @@ BlockGenerator.generate = function(shapeName, colorName) {
 
 	this.generatedTime = Date.now();
 
-	console.log(block);
 	// testing bounding box
 	// console.log("bounding box");
 	// block.geometry.computeBoundingBox();
