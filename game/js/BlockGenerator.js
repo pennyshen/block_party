@@ -138,6 +138,7 @@ BlockGenerator.generate = function(shapeName, colorName) {
 
 	this.generatedTime = Date.now();
 
+	console.log(block);
 	// testing bounding box
 	// console.log("bounding box");
 	// block.geometry.computeBoundingBox();
