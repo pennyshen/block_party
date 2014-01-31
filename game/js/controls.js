@@ -5,26 +5,6 @@ function move() {
     if ( isShiftDown ) {
         theta += mouse2D.x * 1.5;
     }
-
-    if ( isEqualsDown ) {
-        if ( camera.position.y > 50 ) {
-            camera.position.y -= CAMERA_MOVE_LENGTH;
-        }
-        if ( camera.position.z > 50 ) {
-            camera.position.z -= CAMERA_MOVE_LENGTH;
-        }
-    }
-
-    if ( isDashDown ) {
-        if ( camera.position.y < 400 ) {
-            camera.position.y += CAMERA_MOVE_LENGTH;
-        }
-
-        if (camera.position.z < 400 ) {
-            camera.position.z += CAMERA_MOVE_LENGTH;
-        }
-
-    }
 }
 
 
@@ -44,26 +24,38 @@ function onDocumentKeyDown( event ) {
         case 187: isEqualsDown = true; break;
         case 189: isDashDown = true; break;
         case 65: aDown = true;  
-        rollOverMesh.position.x -= 50;
+        rollOverMesh.position.x -= STEP_SIZE;
         // camera.position.x -= 50;
         break;
 
         case 87: wDown = true;
         //TODO w 
-        rollOverMesh.position.z -= 50;
+        rollOverMesh.position.z -= STEP_SIZE;
         // camera.position.z -= 50;
         break;
         case 83: sDown = true;
         //TODO s
-        rollOverMesh.position.z += 50;
+        rollOverMesh.position.z += STEP_SIZE;
         // camera.position.z += 50;
         break;
+        case 81: qDown = true;
+        rollOverMesh.position.y += STEP_SIZE;
+        break;
+
+
         case 68: dDown = true;
         //TODO d
-        rollOverMesh.position.x += 50;
+        rollOverMesh.position.x += STEP_SIZE;
         // camera.position.x += 50; break;
         //TODO WDS, and camera following the rolloverMesh
         break;
+
+        case 69: eDown = true;
+        if (rollOverMesh.position.y >= STEP_SIZE) {
+            rollOverMesh.position.y -= STEP_SIZE;
+        }
+        break;
+        
         case 37: isLeftDown = true;
         controls.rotateLeft(Math.PI/2);
 
@@ -101,7 +93,7 @@ function onDocumentKeyDown( event ) {
             // create new block and use that new block as rollover
             rollOverMesh = BlockGenerator.getRandomBlock();
             // rollOverMesh.position.copy( voxelPosition );
-            rollOverMesh.position.x = 25, rollOverMesh.position.y = 25, rollOverMesh.position.z = 25;
+            rollOverMesh.position.x = STEP_SIZE/2, rollOverMesh.position.y = STEP_SIZE/2, rollOverMesh.position.z = STEP_SIZE/2;
             scene.add( rollOverMesh );
 
             blockNoise.load();
