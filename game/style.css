@@ -7,6 +7,15 @@ body {
 
 #oldie { background-color: #ddd !important }
 
+#info {
+    top: 5px;
+    right: 10px;
+    width: 100%;
+    text-align: right;
+    position: absolute;        
+    font-size: 200%;
+}
+
 #blocker {
 
     position: absolute;
