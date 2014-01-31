@@ -100,7 +100,8 @@ function onDocumentKeyDown( event ) {
 
             // create new block and use that new block as rollover
             rollOverMesh = BlockGenerator.getRandomBlock();
-            rollOverMesh.position.copy( voxelPosition );
+            // rollOverMesh.position.copy( voxelPosition );
+            rollOverMesh.position.x = 25, rollOverMesh.position.y = 25, rollOverMesh.position.z = 25;
             scene.add( rollOverMesh );
 
             blockNoise.load();

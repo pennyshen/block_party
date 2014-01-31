@@ -20,8 +20,8 @@ function tryToPlaceBlock() {
                 return;
             }
 
-            intersector = getRealIntersector( intersects );
-            setVoxelPosition(voxelPosition, intersector);
+            // intersector = getRealIntersector( intersects );
+            // setVoxelPosition(voxelPosition, intersector);
 
             // places rollover block down and make it static
             voxel = rollOverMesh;
@@ -31,8 +31,9 @@ function tryToPlaceBlock() {
 
             // create new block and use that new block as rollover
             rollOverMesh = BlockGenerator.getRandomBlock();
-            rollOverMesh.position.copy( voxelPosition );
+            // rollOverMesh.position.copy( voxelPosition );
             scene.add( rollOverMesh );
+            console.log(voxelPosition);
 
             // make sound
             blockNoise.load();
