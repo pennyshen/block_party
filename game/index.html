@@ -88,9 +88,10 @@
 			container.appendChild( info );
 
 			camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-			camera.position.x = 0;
-			camera.position.y = 200;
-			camera.position.z = 200;
+            camera.position.x = -13;
+            camera.position.y = 158;
+            camera.position.z = 232;
+            camera.lookAt(new THREE.Vector3(25,25,25));
 
 			scene = new THREE.Scene();
 
