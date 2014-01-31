@@ -94,11 +94,14 @@
             camera.lookAt(new THREE.Vector3(25,25,25));
 
 			scene = new THREE.Scene();
+			renderer = new THREE.WebGLRenderer( { antialias: true } );
+			renderer.setClearColor( 0xf0f0f0 );
+			renderer.setSize( window.innerWidth, window.innerHeight );
 
 			// pointer lock controls
 			// controls = new THREE.PointerLockControls( camera );
 			// scene.add( controls.getObject() );
-			controls = new THREE.OrbitControls( camera );
+			controls = new THREE.OrbitControls( camera , renderer.domElement );
 			controls.rotateSpeed = 0.5;
 			controls.minPolarAngle = 0.0;
 			controls.maxPolarAngle = Math.PI * 4 / 9;
@@ -146,9 +149,7 @@
 			// scene.add( hemiLight );
 
 
-			renderer = new THREE.WebGLRenderer( { antialias: true } );
-			renderer.setClearColor( 0xf0f0f0 );
-			renderer.setSize( window.innerWidth, window.innerHeight );
+
 
 			container.appendChild( renderer.domElement );
 
@@ -168,6 +169,7 @@
 		function animate() {
 			requestAnimationFrame( animate );
 			move();
+			controls.update();
 			render();
 			stats.update();
 		}
