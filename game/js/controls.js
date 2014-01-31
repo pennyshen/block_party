@@ -126,36 +126,36 @@ function onDocumentKeyUp( event ) {
 function moveLeft( axis ) {
     switch ( axis ) {
         case 1: rollOverMesh.position.x -= STEP_SIZE; break;
-        case 2: break;
-        case 3: break;
-        case 4: break;
+        case 2: rollOverMesh.position.z -= STEP_SIZE; break;
+        case 3: rollOverMesh.position.z += STEP_SIZE; break;
+        case 4: rollOverMesh.position.x += STEP_SIZE; break;
     }
 }
 
 function moveRight( axis ) {
     switch ( axis ) {
         case 1: rollOverMesh.position.x += STEP_SIZE; break;
-        case 2: break;
-        case 3: break;
-        case 4: break;
+        case 2: rollOverMesh.position.z += STEP_SIZE; break;
+        case 3: rollOverMesh.position.z -= STEP_SIZE; break;
+        case 4: rollOverMesh.position.x -= STEP_SIZE; break;
     }    
 }
 
 function moveForward( axis ) {
     switch ( axis ) {
-        case 1: rollOverMesh.position.z -= STEP_SIZE;break;
-        case 2: break;
-        case 3: break;
-        case 4: break;
+        case 1: rollOverMesh.position.z -= STEP_SIZE; break;
+        case 2: rollOverMesh.position.x += STEP_SIZE; break;
+        case 3: rollOverMesh.position.x -= STEP_SIZE; break;
+        case 4: rollOverMesh.position.z += STEP_SIZE; break;
     }  
 }
 
 function moveBackward( axis ) {
     switch ( axis ) {
         case 1: rollOverMesh.position.z += STEP_SIZE; break;
-        case 2: break;
-        case 3: break;
-        case 4: break;
+        case 2: rollOverMesh.position.x -= STEP_SIZE; break;
+        case 3: rollOverMesh.position.x += STEP_SIZE; break;
+        case 4: rollOverMesh.position.z -= STEP_SIZE; break;
     }
 }
 
