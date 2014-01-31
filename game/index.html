@@ -39,6 +39,15 @@
 
     </div> -->
 
+    <div id="game">
+	    <div id="info">
+		    Score: <span id="score">0</span>
+		    <br>
+		    <span id="timer">0:00</span>
+		    <br>
+	    </div>
+    </div>
+
 
 	<script>
 
@@ -62,10 +71,14 @@
 
 		var controls, time = Date.now();
 		var instructions = document.getElementById( 'instructions' );
+		var timer = document.getElementById( 'timer');
+		console.log(timer);
 		var mouseFlag = true;
 
 		var STEP_SIZE = 50;
 		var ALIVE_TIME = 60000.0;	// time during which the block is alive, in milliseconds
+
+		var elapsedTime, timeRemaining, mins, secs;
 
         //list to hold blocks we created
         var block_list = new Array();
@@ -75,17 +88,17 @@
 		animate();
 
 		function init() {
-
-			container = document.createElement( 'div' );
+			container = document.getElementById( 'game' );
+			// container = document.createElement( 'div' );
 			document.body.appendChild( container );
 
-			var info = document.createElement( 'div' );
-			info.style.position = 'absolute';
-			info.style.top = '10px';
-			info.style.width = '100%';
-			info.style.textAlign = 'center';
-			info.innerHTML = '<a href="http://threejs.org" target="_blank">three.js</a> - voxel painter - webgl<br><strong>click</strong>: add voxel, <strong>control + click</strong>: remove voxel, <strong>-</strong>: zoom out, <strong>=</strong>: zoom in';
-			container.appendChild( info );
+			// var info = document.createElement( 'div' );
+			// info.style.position = 'absolute';
+			// info.style.top = '10px';
+			// info.style.width = '100%';
+			// info.style.textAlign = 'center';
+			// info.innerHTML = 'Instructions: <br><strong>click</strong>: add voxel, <strong>control + click</strong>: remove voxel, <strong>-</strong>: zoom out, <strong>=</strong>: zoom in';
+			// container.appendChild( info );
 
 			camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
             camera.position.x = -13;
@@ -176,8 +189,6 @@
 
 
 		function render() {
-			var elapsed;
-
 			raycaster = projector.pickingRay( mouse2D.clone(), camera );
 
 			// var intersects = raycaster.intersectObjects( scene.children );
@@ -208,9 +219,15 @@
 			time = Date.now();
 
 			if (rollOverMesh.material.opacity < 1.0) {
-				elapsed = time - BlockGenerator.generatedTime;
-				rollOverMesh.material.opacity = 0.5 + elapsed / ALIVE_TIME * 0.5;
-			}			
+				elapsedTime = time - BlockGenerator.generatedTime;
+				
+				timeRemaining = ALIVE_TIME - elapsedTime;
+				secs = Math.floor(timeRemaining / 1000.0);
+				mins = Math.floor(secs / 60);
+				timer.innerHTML = mins + ":" + secs;
+
+				rollOverMesh.material.opacity = 0.5 + elapsedTime / ALIVE_TIME * 0.5;
+			}
 		}
 
 	</script>
