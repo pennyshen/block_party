@@ -68,11 +68,13 @@
 		var voxelPosition = new THREE.Vector3(), tmpVec = new THREE.Vector3(), normalMatrix = new THREE.Matrix3();
 		var cubeGeo, cubeMaterial;
 		var i, intersector;
+		var gameBoardOrientation;
 
 		var controls, time = Date.now();
 		var instructions = document.getElementById( 'instructions' );
 		var timer = document.getElementById( 'timer');
 		var mouseFlag = true;
+		cameraFocus = new THREE.Vector3(25,25,25);
 
 		var STEP_SIZE = 50;
 		var ALIVE_TIME = 60000.0;	// time during which the block is alive, in milliseconds
@@ -190,16 +192,7 @@
 		function render() {
 			raycaster = projector.pickingRay( mouse2D.clone(), camera );
 
-			// var intersects = raycaster.intersectObjects( scene.children );
 
-			// if ( intersects.length > 0 ) {
-			// 	intersector = getRealIntersector( intersects );
-
-			// 	if ( intersector ) {
-			// 		setVoxelPosition( voxelPosition, intersector );
-			// 		rollOverMesh.position = voxelPosition;
-			// 	}
-			// }
 
 
 
@@ -216,6 +209,9 @@
 
 			renderer.render( scene, camera );
 			time = Date.now();
+
+			// console.log(camera.position.x - cameraFocus.x, camera.position.y - cameraFocus.y, camera.position.z - cameraFocus.z);
+			gameBoardOrientation = 1;
 
 			if (rollOverMesh.material.opacity < 1.0) {
 				elapsedTime = time - BlockGenerator.generatedTime;

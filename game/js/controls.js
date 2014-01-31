@@ -24,18 +24,19 @@ function onDocumentKeyDown( event ) {
         case 187: isEqualsDown = true; break;
         case 189: isDashDown = true; break;
         case 65: aDown = true;  
-        rollOverMesh.position.x -= STEP_SIZE;
+        moveLeft(gameBoardOrientation);
+        
         // camera.position.x -= 50;
         break;
 
         case 87: wDown = true;
         //TODO w 
-        rollOverMesh.position.z -= STEP_SIZE;
+        moveForward(gameBoardOrientation);
         // camera.position.z -= 50;
         break;
         case 83: sDown = true;
         //TODO s
-        rollOverMesh.position.z += STEP_SIZE;
+        moveBackward(gameBoardOrientation);
         // camera.position.z += 50;
         break;
         case 81: qDown = true;
@@ -45,7 +46,8 @@ function onDocumentKeyDown( event ) {
 
         case 68: dDown = true;
         //TODO d
-        rollOverMesh.position.x += STEP_SIZE;
+        moveRight(gameBoardOrientation);
+        
         // camera.position.x += 50; break;
         //TODO WDS, and camera following the rolloverMesh
         break;
@@ -121,6 +123,41 @@ function onDocumentKeyUp( event ) {
     }
 }
 
+function moveLeft( axis ) {
+    switch ( axis ) {
+        case 1: rollOverMesh.position.x -= STEP_SIZE; break;
+        case 2: break;
+        case 3: break;
+        case 4: break;
+    }
+}
+
+function moveRight( axis ) {
+    switch ( axis ) {
+        case 1: rollOverMesh.position.x += STEP_SIZE; break;
+        case 2: break;
+        case 3: break;
+        case 4: break;
+    }    
+}
+
+function moveForward( axis ) {
+    switch ( axis ) {
+        case 1: rollOverMesh.position.z -= STEP_SIZE;break;
+        case 2: break;
+        case 3: break;
+        case 4: break;
+    }  
+}
+
+function moveBackward( axis ) {
+    switch ( axis ) {
+        case 1: rollOverMesh.position.z += STEP_SIZE; break;
+        case 2: break;
+        case 3: break;
+        case 4: break;
+    }
+}
 
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
