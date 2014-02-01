@@ -63,6 +63,7 @@ BlockGenerator.allColors = (function() {
 
 BlockGenerator.currentColor = {};
 BlockGenerator.generatedTime = 0;	// time at which the last block was generated
+BlockGenerator.volume = 0; // volume of the shape created
 
 BlockGenerator.getRandomBlock = function() {
 	return this.generate(getRandomMember(this.allShapes), getRandomMember(this.allColors));
@@ -86,7 +87,7 @@ BlockGenerator.generate = function(shapeName, colorName) {
 	
 	var shape = this.cloneVectors(this.shapes[shapeName]);
 	var block;
-	
+
 	// merge the different cube geometries together
 	geometry = this.getCube();
 	for (i = 0; i < shape.length; i++) {
@@ -137,6 +138,9 @@ BlockGenerator.generate = function(shapeName, colorName) {
 	*/
 
 	this.generatedTime = Date.now();
+	this.volume = shape.length + 1;
+
+
 
 	// testing bounding box
 	// console.log("bounding box");

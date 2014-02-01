@@ -45,6 +45,8 @@
 		    <br>
 		    <span id="timer">0:00</span>
 		    <br>
+		    Volume: <span id ="volume_used">0</span>
+		    <br>
 	    </div>
     </div>
 
@@ -73,6 +75,8 @@
 		var controls, time = Date.now();
 		var instructions = document.getElementById( 'instructions' );
 		var timer = document.getElementById( 'timer');
+		var volume_doc = document.getElementById( 'volume_used' );
+		var volume_used;
 		var mouseFlag = true;
 		cameraFocus = new THREE.Vector3(25,25,25);
 
@@ -106,6 +110,7 @@
             camera.position.y = 158;
             camera.position.z = 232;
             camera.lookAt(new THREE.Vector3(25,25,25));
+            volume_used = 0;
 
 			scene = new THREE.Scene();
 			renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -162,7 +167,13 @@
 			// hemiLight.position.set( 0, 500, 0 );
 			// scene.add( hemiLight );
 
+			// making a bounding box
+			// minX =  0, minY = 0, minZ = 0, maxX = 50, maxY = 50, maxZ = 50;
+			// var bBox_min = new THREE.Vector3 (minX, minY, minZ);
+			// var bBox_max = new THREE.Vector3 (maxX, maxY, maxZ);
+			// var bBox_new = new THREE.Box3 (bBox_min, bBox_max);
 
+			// scene.add (bBox_new);
 
 
 			container.appendChild( renderer.domElement );
@@ -179,6 +190,7 @@
 
 		}
 
+		var txtNode = document.createTextNode("Hello. This is a new node."); 
 
 		function animate() {
 			requestAnimationFrame( animate );
@@ -192,8 +204,10 @@
 		function render() {
 			raycaster = projector.pickingRay( mouse2D.clone(), camera );
 
-
-
+			// for (item in block_list) {
+			// 	console.log(block_list);
+			// }
+			
 
 
 			// check if collision
@@ -210,8 +224,8 @@
 			renderer.render( scene, camera );
 			time = Date.now();
 
-			console.log(camera.position.x - cameraFocus.x, camera.position.y - cameraFocus.y, camera.position.z - cameraFocus.z);
-			gameBoardOrientation = 1;
+
+			// console.log(rollOverMesh.position);
 			if (Math.abs(camera.position.x) > Math.abs(camera.position.z)) {
 				if (camera.position.x < 0) {
 					gameBoardOrientation = 2;
@@ -228,11 +242,12 @@
 
 			if (rollOverMesh.material.opacity < 1.0) {
 				elapsedTime = time - BlockGenerator.generatedTime;
-				
 				timeRemaining = Math.max(ALIVE_TIME - elapsedTime, 0);
 				secs = Math.floor(timeRemaining / 1000.0);
 				mins = Math.floor(secs / 60);
 				timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs).slice(-2);
+
+
 
 				rollOverMesh.material.opacity = 0.5 + elapsedTime / ALIVE_TIME * 0.5;
 			}

@@ -62,49 +62,8 @@ function onDocumentKeyDown( event ) {
         controls.rotateLeft(Math.PI/2);
 
         case 32: isSpaceDown = true; 
-        var intersects = raycaster.intersectObjects( scene.children );
-
-        if ( intersects.length > 0 ) {
-
-            intersector = getRealIntersector( intersects );
-
-        // delete cube
-
-        if ( isCtrlDown ) {
-            if ( intersector.object != plane ) {
-                scene.remove( intersector.object );
-            }
-
-        } else {
-            //check if there is collision
-            if (hasCollision()) {
-                collisionNoise.load();
-                collisionNoise.play();
-                return;
-            }
-
-            intersector = getRealIntersector( intersects );
-            setVoxelPosition(voxelPosition, intersector);
-
-            // places rollover block down and make it static
-            voxel = rollOverMesh;
-            voxel.material.opacity = 1.0;
-            voxel.matrixAutoUpdate = false;
-            voxel.updateMatrix();
-
-            // create new block and use that new block as rollover
-            rollOverMesh = BlockGenerator.getRandomBlock();
-            // rollOverMesh.position.copy( voxelPosition );
-            rollOverMesh.position.x = STEP_SIZE/2, rollOverMesh.position.y = STEP_SIZE/2, rollOverMesh.position.z = STEP_SIZE/2;
-            scene.add( rollOverMesh );
-
-            blockNoise.load();
-            blockNoise.play();
-
-            //add new block to block_list
-            block_list.push(voxel);
-        }
-    }
+        add_voxel();
+        break;
 
 }
 }
@@ -156,6 +115,59 @@ function moveBackward( axis ) {
         case 2: rollOverMesh.position.x -= STEP_SIZE; break;
         case 3: rollOverMesh.position.x += STEP_SIZE; break;
         case 4: rollOverMesh.position.z -= STEP_SIZE; break;
+    }
+}
+
+function add_voxel( ) {
+        var intersects = raycaster.intersectObjects( scene.children );
+
+        if ( intersects.length > 0 ) {
+
+            intersector = getRealIntersector( intersects );
+
+        // delete cube
+
+        if ( isCtrlDown ) {
+            if ( intersector.object != plane ) {
+                scene.remove( intersector.object );
+            }
+
+        } else {
+            //check if there is collision
+            if (hasCollision()) {
+                collisionNoise.load();
+                collisionNoise.play();
+                return;
+            }
+
+            intersector = getRealIntersector( intersects );
+            setVoxelPosition(voxelPosition, intersector);
+
+            // places rollover block down and make it static
+            voxel = rollOverMesh;
+            voxel.material.opacity = 1.0;
+            voxel.matrixAutoUpdate = false;
+            voxel.updateMatrix();
+
+            
+            // scorekeeping
+            volume_used += ( BlockGenerator.volume );
+            volume_doc.innerHTML = volume_used; 
+
+            // create new block and use that new block as rollover
+            rollOverMesh = BlockGenerator.getRandomBlock();
+
+            // rollOverMesh.position.copy( voxelPosition );
+            rollOverMesh.position.x = STEP_SIZE/2, rollOverMesh.position.y = STEP_SIZE/2, rollOverMesh.position.z = STEP_SIZE/2;
+            scene.add( rollOverMesh );
+
+            blockNoise.load();
+            blockNoise.play();
+
+            // add new block to block_list
+            block_list.push(voxel);
+
+        }
     }
 }
 
