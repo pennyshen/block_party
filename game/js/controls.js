@@ -59,7 +59,10 @@ function onDocumentKeyDown( event ) {
         break;
         
         case 37: isLeftDown = true;
-        controls.rotateLeft(Math.PI/2);
+
+        //TODO rotation
+        // controls.rotateLeft(Math.PI/2);
+        break;
 
         case 32: isSpaceDown = true; 
         add_voxel();
@@ -149,7 +152,7 @@ function add_voxel( ) {
             voxel.matrixAutoUpdate = false;
             voxel.updateMatrix();
 
-            
+
             // scorekeeping
             volume_used += ( BlockGenerator.volume );
             volume_doc.innerHTML = volume_used; 
