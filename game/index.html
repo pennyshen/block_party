@@ -76,7 +76,6 @@
 		var instructions = document.getElementById( 'instructions' );
 		var timer = document.getElementById( 'timer');
 		var volume_doc = document.getElementById( 'volume_used' );
-		var volume_used = 0;
 		var mouseFlag = true;
 		cameraFocus = new THREE.Vector3(25,25,25);
 
@@ -188,28 +187,9 @@
 		function render() {
 			raycaster = projector.pickingRay( mouse2D.clone(), camera );
 
-			// for (item in block_list) {
-			// 	console.log(block_list);
-			// }
-			
-
-
-			// check if collision
-			// TODO: move this to move key - only check when we're moving the block
-			// if (hasCollision()) {
-			// 	rollOverMesh.material.color.set(0xFF0000);
-			// }
-			// else {
-			// 	rollOverMesh.material.color.set(0x0000FF);
-			// }
-
-			// controls.update( Date.now() - time );
-
 			renderer.render( scene, camera );
 			time = Date.now();
 
-
-			// console.log(rollOverMesh.position);
 			if (Math.abs(camera.position.x) > Math.abs(camera.position.z)) {
 				if (camera.position.x < 0) {
 					gameBoardOrientation = 2;

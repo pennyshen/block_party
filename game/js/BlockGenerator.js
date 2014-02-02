@@ -49,7 +49,8 @@ BlockGenerator.colors = {
 	"orange": 0xff9900, 
 	"green": 0x006600,
 	"purple": 0x660099,
-	"brown": 0x70543b
+	"brown": 0x70543b,
+	"red": 0xFF0000
 };
 
 // names of all the blocks in an array
@@ -61,19 +62,71 @@ BlockGenerator.allColors = (function() {
 	return Object.getOwnPropertyNames(BlockGenerator.colors);
 })();
 
-BlockGenerator.currentColor = {};
 BlockGenerator.generatedTime = 0;	// time at which the last block was generated
-BlockGenerator.volume = 0; // volume of the shape created
+BlockGenerator.currentBlock = {};	// name of the current block
 
-BlockGenerator.getRandomBlock = function() {
-	return this.generate(getRandomMember(this.allShapes), getRandomMember(this.allColors));
+// all positions of existing blocks
+BlockGenerator.existingBlocks = {};
+
+BlockGenerator.totalVolume = 0;
+
+
+BlockGenerator.isPosLegal = function(realPosition) {
+	var positions, i, pos;
+	var isLegal = true;
+
+    positions = this.getPositions(realPosition);
+    for (i = 0; i < positions.length; i++) {
+        pos = positions[i];
+        if (getKeyString(pos) in this.existingBlocks) {
+            isLegal = false;
+            break;
+        }
+    }
+
+    return isLegal;
 }
 
+BlockGenerator.addToExisting = function(realPosition) {
+	var i, positions, position;
+	
+	positions = this.getPositions(realPosition);
+	for (i = 0; i < positions.length; i++) {
+		position = positions[i];
+		this.existingBlocks[getKeyString(position)] = true;
+	}
+	this.totalVolume += positions.length;
+}
+
+BlockGenerator.getPositions = function(realPosition) {
+	var shape = this.shapes[this.currentBlock];
+	var position = realPosition.clone();
+	var positions = [];
+	var i, shapePos;
+
+	position.x = Math.floor(position.x / STEP_SIZE);
+	position.y = Math.floor(position.y / STEP_SIZE);
+	position.z = Math.floor(position.z / STEP_SIZE);
+	positions.push(position);
+
+	for (i = 0; i < shape.length; i++) {
+		shapePos = this.cloneVector(shape[i]);
+		shapePos.x += position.x;
+		shapePos.y += position.y;
+		shapePos.z += position.z;
+		positions.push(shapePos);
+	}
+
+	return positions;
+}
 
 BlockGenerator.getCube = function() {
 	return new THREE.CubeGeometry(STEP_SIZE, STEP_SIZE, STEP_SIZE);
 }
 
+BlockGenerator.getRandomBlock = function() {
+	return this.generate(getRandomMember(this.allShapes), getRandomMember(this.allColors));
+}
 
 BlockGenerator.generate = function(shapeName, colorName) {
 	var i, j;
@@ -104,7 +157,7 @@ BlockGenerator.generate = function(shapeName, colorName) {
 
 	// material = new THREE.MeshPhongMaterial({ color: 0x0000ff, ambient: 0x050505, opacity: 0.5, transparent: true });
 	material = new THREE.MeshLambertMaterial({ color: this.colors[colorName], opacity: 0.5, transparent: true });
-	currentColor = material.color;
+	this.currentBlock = shapeName;
 	block = new THREE.Mesh(geometry, material);
 
 	// raycast itself from the center of each face (negated normal), and whichever face gets intersected
@@ -129,23 +182,8 @@ BlockGenerator.generate = function(shapeName, colorName) {
 	geometry.faces = geometry.faces.filter( function(v) { return v; });
 	geometry.elementsNeedUpdate = true;	// update faces
 
-	/**
-	block = THREE.SceneUtils.createMultiMaterialObject(geometry, [
-        new THREE.MeshBasicMaterial({color:0x000000, shading:THREE.FlatShading, wireframe:true, transparent:true}),
-        new THREE.MeshBasicMaterial({ color: 0x0000ff, opacity: 0.5, transparent: true })
-    ]);
-    block.overdraw = true;
-	*/
-
 	this.generatedTime = Date.now();
 	this.volume = shape.length + 1;
-
-
-
-	// testing bounding box
-	// console.log("bounding box");
-	// block.geometry.computeBoundingBox();
-	// console.log(block.geometry.boundingBox);
 
     return block;
 }

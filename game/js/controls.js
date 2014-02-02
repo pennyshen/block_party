@@ -18,57 +18,65 @@ function onDocumentMouseMove( event ) {
 }
 
 function onDocumentKeyDown( event ) {
+    var toMove = new THREE.Vector3(0, 0, 0);
+    var moved = false;
+    var newPos;
+
     switch( event.keyCode ) {
         case 16: isShiftDown = true; break;
         case 17: isCtrlDown = true; break;
         case 187: isEqualsDown = true; break;
         case 189: isDashDown = true; break;
         case 65: aDown = true;  
-        moveLeft(gameBoardOrientation);
-        
-        // camera.position.x -= 50;
-        break;
-
+            moveLeft(gameBoardOrientation, toMove);
+            moved = true;
+            break;
         case 87: wDown = true;
-        //TODO w 
-        moveForward(gameBoardOrientation);
-        // camera.position.z -= 50;
-        break;
+            //TODO w 
+            moveForward(gameBoardOrientation, toMove);
+            moved = true;
+            break;
         case 83: sDown = true;
-        //TODO s
-        moveBackward(gameBoardOrientation);
-        // camera.position.z += 50;
-        break;
-        case 81: qDown = true;
-        rollOverMesh.position.y += STEP_SIZE;
-        break;
-
-
+            //TODO s
+            moveBackward(gameBoardOrientation, toMove);
+            moved = true;
+            break;
         case 68: dDown = true;
-        //TODO d
-        moveRight(gameBoardOrientation);
-        
-        // camera.position.x += 50; break;
-        //TODO WDS, and camera following the rolloverMesh
-        break;
-
+            //TODO d
+            moveRight(gameBoardOrientation, toMove);
+            moved = true;
+            break;
+        case 81: qDown = true;
+            toMove.y += STEP_SIZE;
+            moved = true;
+            break;
         case 69: eDown = true;
-        if (rollOverMesh.position.y >= STEP_SIZE) {
-            rollOverMesh.position.y -= STEP_SIZE;
-        }
-        break;
-        
+            if (rollOverMesh.position.y >= STEP_SIZE) {
+                toMove.y -= STEP_SIZE;
+            }
+            moved = true;
+            break;
         case 37: isLeftDown = true;
-
-        //TODO rotation
-        // controls.rotateLeft(Math.PI/2);
-        break;
-
+            //TODO rotation
+            // controls.rotateLeft(Math.PI/2);
+            break;
         case 32: isSpaceDown = true; 
-        add_voxel();
-        break;
+            add_voxel();
+            break;
+    }
 
-}
+    // check if move is legal
+    if (moved) {
+        newPos = rollOverMesh.position.clone();
+        newPos.add(toMove);
+
+        if (BlockGenerator.isPosLegal(newPos)) {
+            rollOverMesh.position.add(toMove);
+        } else {
+            collisionNoise.load();
+            collisionNoise.play();            
+        }
+    }
 }
 
 function onDocumentKeyUp( event ) {
@@ -85,39 +93,39 @@ function onDocumentKeyUp( event ) {
     }
 }
 
-function moveLeft( axis ) {
+function moveLeft( axis, position ) {
     switch ( axis ) {
-        case 1: rollOverMesh.position.x -= STEP_SIZE; break;
-        case 2: rollOverMesh.position.z -= STEP_SIZE; break;
-        case 3: rollOverMesh.position.z += STEP_SIZE; break;
-        case 4: rollOverMesh.position.x += STEP_SIZE; break;
+        case 1: position.x -= STEP_SIZE; break;
+        case 2: position.z -= STEP_SIZE; break;
+        case 3: position.z += STEP_SIZE; break;
+        case 4: position.x += STEP_SIZE; break;
     }
 }
 
-function moveRight( axis ) {
+function moveRight( axis, position ) {
     switch ( axis ) {
-        case 1: rollOverMesh.position.x += STEP_SIZE; break;
-        case 2: rollOverMesh.position.z += STEP_SIZE; break;
-        case 3: rollOverMesh.position.z -= STEP_SIZE; break;
-        case 4: rollOverMesh.position.x -= STEP_SIZE; break;
+        case 1: position.x += STEP_SIZE; break;
+        case 2: position.z += STEP_SIZE; break;
+        case 3: position.z -= STEP_SIZE; break;
+        case 4: position.x -= STEP_SIZE; break;
     }    
 }
 
-function moveForward( axis ) {
+function moveForward( axis, position ) {
     switch ( axis ) {
-        case 1: rollOverMesh.position.z -= STEP_SIZE; break;
-        case 2: rollOverMesh.position.x += STEP_SIZE; break;
-        case 3: rollOverMesh.position.x -= STEP_SIZE; break;
-        case 4: rollOverMesh.position.z += STEP_SIZE; break;
+        case 1: position.z -= STEP_SIZE; break;
+        case 2: position.x += STEP_SIZE; break;
+        case 3: position.x -= STEP_SIZE; break;
+        case 4: position.z += STEP_SIZE; break;
     }  
 }
 
-function moveBackward( axis ) {
+function moveBackward( axis, position ) {
     switch ( axis ) {
-        case 1: rollOverMesh.position.z += STEP_SIZE; break;
-        case 2: rollOverMesh.position.x -= STEP_SIZE; break;
-        case 3: rollOverMesh.position.x += STEP_SIZE; break;
-        case 4: rollOverMesh.position.z -= STEP_SIZE; break;
+        case 1: position.z += STEP_SIZE; break;
+        case 2: position.x -= STEP_SIZE; break;
+        case 3: position.x += STEP_SIZE; break;
+        case 4: position.z -= STEP_SIZE; break;
     }
 }
 
@@ -136,13 +144,6 @@ function add_voxel( ) {
             }
 
         } else {
-            //check if there is collision
-            if (hasCollision()) {
-                collisionNoise.load();
-                collisionNoise.play();
-                return;
-            }
-
             intersector = getRealIntersector( intersects );
             setVoxelPosition(voxelPosition, intersector);
 
@@ -150,12 +151,12 @@ function add_voxel( ) {
             voxel = rollOverMesh;
             voxel.material.opacity = 1.0;
             voxel.matrixAutoUpdate = false;
+            voxel.geometry.verticesNeedUpdate = true;
             voxel.updateMatrix();
 
-
-            // scorekeeping
-            volume_used += ( BlockGenerator.volume );
-            volume_doc.innerHTML = volume_used; 
+            // update all blocks
+            BlockGenerator.addToExisting(voxel.position);
+            volume_doc.innerHTML = BlockGenerator.totalVolume; 
 
             // create new block and use that new block as rollover
             rollOverMesh = BlockGenerator.getRandomBlock();

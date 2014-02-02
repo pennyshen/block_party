@@ -1,21 +1,18 @@
 
+// draws the normal line for debugging
+function drawNormal(origin, normal) {
+	var lineGeo = new THREE.Geometry();
+	var secondPoint = origin.clone();
+
+	lineGeo.vertices.push(origin.clone());
+	secondPoint.add(normal.clone().multiplyScalar(25));
+    lineGeo.vertices.push(secondPoint);
+    scene.add(new THREE.Line( lineGeo , new THREE.LineBasicMaterial( { color: 0x000000 } )));
+}
+
 // get sorted key string from object propertis' values
 function getKeyString(obj) {
-	var props = Object.getOwnPropertyNames(obj);
-	var i, keyString;
-	var valueList = [];
-
-	for (i = 0; i < props.length; i++) {
-		valueList.push(obj[props[i]]);
-	}
-	valueList.sort();
-
-	keyString = valueList[0] + "";
-	for (i = 1; i < valueList.length; i++) {
-		keyString = keyString + "," + valueList[i];
-	}
-
-	return keyString;
+	return obj.x + "," + obj.y + "," + obj.z;
 }
 
 function getDupVertices(vertices) {
