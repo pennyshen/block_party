@@ -62,6 +62,20 @@ BlockGenerator.allColors = (function() {
 	return Object.getOwnPropertyNames(BlockGenerator.colors);
 })();
 
+BlockGenerator.shapesToColors = (function() {
+	var shapeIdx, colorIdx;
+	var toReturn = {};
+
+	colorIdx = 0;
+	for (shapeIdx = 0; shapeIdx < BlockGenerator.allShapes.length; shapeIdx++) {
+		toReturn[BlockGenerator.allShapes[shapeIdx]] = BlockGenerator.allColors[colorIdx];
+		colorIdx = (colorIdx + 1) % BlockGenerator.allColors.length;
+	}
+
+	console.log(toReturn);
+	return toReturn;
+})();
+
 BlockGenerator.generatedTime = 0;	// time at which the last block was generated
 BlockGenerator.currentBlock = {};	// name of the current block
 
@@ -131,7 +145,8 @@ BlockGenerator.getCube = function() {
 }
 
 BlockGenerator.getRandomBlock = function() {
-	return this.generate(getRandomMember(this.allShapes), getRandomMember(this.allColors));
+	var shape = getRandomMember(this.allShapes);
+	return this.generate(shape, this.shapesToColors[shape]);
 }
 
 BlockGenerator.generate = function(shapeName, colorName) {
