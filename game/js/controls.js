@@ -153,15 +153,15 @@ function add_voxel( ) {
     // placement of the new block - first move towards user's perspective until we can't move anymore
     moveBackward(gameBoardOrientation, oldPos);
     while (!BlockGenerator.isPosLegal(oldPos)) {
-        if (POS_ILLEGAL_CODE == 1) {
+        if (pos_illegal_code == 1) {
             moveBackward(gameBoardOrientation, oldPos);
-        } else if (POS_ILLEGAL_CODE == 2) {
+        } else if (pos_illegal_code == 2) {
             break;
         }
     }
 
     // on the edge already. move up until we're okay
-    if (POS_ILLEGAL_CODE == 2) {
+    if (pos_illegal_code == 2) {
         moveForward(gameBoardOrientation, oldPos);
         while (!BlockGenerator.isPosLegal(oldPos)) {
             oldPos.y += STEP_SIZE;

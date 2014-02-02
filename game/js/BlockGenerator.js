@@ -94,13 +94,13 @@ BlockGenerator.isPosLegal = function(realPosition) {
 
         // check with other existing blocks
         if (getKeyString(pos) in this.existingBlocks) {
-        	POS_ILLEGAL_CODE = 1;
+        	pos_illegal_code = 1;
             return false;
         }
         // check with edges
         if (pos.y < 0 || pos.x < -numUnits || pos.x >= numUnits
         	|| pos.z < -numUnits || pos.z >= numUnits) {
-        	POS_ILLEGAL_CODE = 2;
+        	pos_illegal_code = 2;
         	return false
         }
     }
@@ -177,8 +177,7 @@ BlockGenerator.generate = function(shapeName, colorName) {
 	geometry.mergeVertices();
 	geometry.verticesNeedUpdate = true;
 
-	// material = new THREE.MeshPhongMaterial({ color: 0x0000ff, ambient: 0x050505, opacity: 0.5, transparent: true });
-	material = new THREE.MeshLambertMaterial({ color: this.colors[colorName], opacity: 0.5, transparent: true });
+	material = new THREE.MeshLambertMaterial({ color: this.colors[colorName], opacity: INIT_OPACITY, transparent: true });
 	this.currentBlock = shapeName;
 	block = new THREE.Mesh(geometry, material);
 
