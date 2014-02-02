@@ -134,9 +134,10 @@ function moveBackward( axis, position ) {
 
 function add_voxel( ) {
     // var intersects = raycaster.intersectObjects( block_list );
+    var voxel = rollOverMesh;
+    var oldPos = voxel.position.clone();
 
     // places rollover block down and make it static
-    voxel = rollOverMesh;
     voxel.material.opacity = 1.0;
     voxel.matrixAutoUpdate = false;
     voxel.geometry.verticesNeedUpdate = true;
@@ -148,9 +149,29 @@ function add_voxel( ) {
 
     // create new block and use that new block as rollover
     rollOverMesh = BlockGenerator.getRandomBlock();
+    
+    // placement of the new block - first move towards user's perspective until we can't move anymore
+    moveBackward(gameBoardOrientation, oldPos);
+    while (!BlockGenerator.isPosLegal(oldPos)) {
+        if (POS_ILLEGAL_CODE == 1) {
+            moveBackward(gameBoardOrientation, oldPos);
+        } else if (POS_ILLEGAL_CODE == 2) {
+            break;
+        }
+    }
+
+    // on the edge already. move up until we're okay
+    if (POS_ILLEGAL_CODE == 2) {
+        moveForward(gameBoardOrientation, oldPos);
+        while (!BlockGenerator.isPosLegal(oldPos)) {
+            oldPos.y += STEP_SIZE;
+        }        
+    }
 
     // rollOverMesh.position.copy( voxelPosition );
-    rollOverMesh.position.x = STEP_SIZE/2, rollOverMesh.position.y = STEP_SIZE/2, rollOverMesh.position.z = STEP_SIZE/2;
+    rollOverMesh.position.x = oldPos.x;
+    rollOverMesh.position.y = oldPos.y;
+    rollOverMesh.position.z = oldPos.z;
     scene.add( rollOverMesh );
 
     blockNoise.load();

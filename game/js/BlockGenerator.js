@@ -94,11 +94,13 @@ BlockGenerator.isPosLegal = function(realPosition) {
 
         // check with other existing blocks
         if (getKeyString(pos) in this.existingBlocks) {
+        	POS_ILLEGAL_CODE = 1;
             return false;
         }
         // check with edges
         if (pos.y < 0 || pos.x < -numUnits || pos.x >= numUnits
         	|| pos.z < -numUnits || pos.z >= numUnits) {
+        	POS_ILLEGAL_CODE = 2;
         	return false
         }
     }
