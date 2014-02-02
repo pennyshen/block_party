@@ -40,3 +40,29 @@ function getRandomMember(array) {
 	return array[getRandomInteger(0, array.length)];
 }
 
+//check for intersection
+function hasCollision() {
+	var block = rollOverMesh;
+    var face, block2, face2;
+    var ray = new THREE.Raycaster();
+    var collided;
+    var sharedNormals;
+
+    console.log(block.position);
+    console.log("collided = ");
+    for (var i = 0; i < block.geometry.faces.length; i++) {
+        face = block.geometry.faces[i];
+        facePoint = face.centroid.clone();
+        rollOverMesh.localToWorld(facePoint);
+        ray.set(facePoint, face.normal.clone());
+        collided = ray.intersectObjects( block_list );
+        if (collided.length > 0) {
+            for (var j = 0; j < collided.length; j++) {
+                block2 = collided[j].object.material.color.set(0x7F7C9C);
+                console.log(collided[j]);
+            }    
+        }
+    }
+
+	return false;
+}

@@ -27,38 +27,43 @@ function onDocumentKeyDown( event ) {
         case 17: isCtrlDown = true; break;
         case 187: isEqualsDown = true; break;
         case 189: isDashDown = true; break;
-        case 65: aDown = true;  
+        case 65: 
+            aDown = true;  
             moveLeft(gameBoardOrientation, toMove);
             moved = true;
             break;
-        case 87: wDown = true;
-            //TODO w 
+        case 87: 
+            wDown = true;
             moveForward(gameBoardOrientation, toMove);
             moved = true;
             break;
-        case 83: sDown = true;
-            //TODO s
+        case 83: 
+            sDown = true;
             moveBackward(gameBoardOrientation, toMove);
             moved = true;
             break;
-        case 68: dDown = true;
-            //TODO d
+        case 68: 
+            dDown = true;
             moveRight(gameBoardOrientation, toMove);
             moved = true;
             break;
-        case 81: qDown = true;
+        case 81: 
+            qDown = true;
             toMove.y += STEP_SIZE;
             moved = true;
             break;
-        case 69: eDown = true;
+        case 69: 
+            eDown = true;
             toMove.y -= STEP_SIZE;
             moved = true;
             break;
-        case 37: isLeftDown = true;
+        case 37: 
+            isLeftDown = true;
             //TODO rotation
             // controls.rotateLeft(Math.PI/2);
             break;
-        case 32: isSpaceDown = true; 
+        case 32: 
+            isSpaceDown = true; 
             add_voxel();
             break;
     }
@@ -128,47 +133,31 @@ function moveBackward( axis, position ) {
 }
 
 function add_voxel( ) {
-    var intersects = raycaster.intersectObjects( scene.children );
+    // var intersects = raycaster.intersectObjects( block_list );
 
-    if ( intersects.length > 0 ) {
-        intersector = getRealIntersector( intersects );
+    // places rollover block down and make it static
+    voxel = rollOverMesh;
+    voxel.material.opacity = 1.0;
+    voxel.matrixAutoUpdate = false;
+    voxel.geometry.verticesNeedUpdate = true;
+    voxel.updateMatrix();
 
-        // delete cube
-        if ( isCtrlDown ) {
-            if ( intersector.object != plane ) {
-                scene.remove( intersector.object );
-            }
+    // update all blocks
+    BlockGenerator.addToExisting(voxel.position);
+    volume_doc.innerHTML = BlockGenerator.totalVolume; 
 
-        } else {
-            intersector = getRealIntersector( intersects );
-            setVoxelPosition(voxelPosition, intersector);
+    // create new block and use that new block as rollover
+    rollOverMesh = BlockGenerator.getRandomBlock();
 
-            // places rollover block down and make it static
-            voxel = rollOverMesh;
-            voxel.material.opacity = 1.0;
-            voxel.matrixAutoUpdate = false;
-            voxel.geometry.verticesNeedUpdate = true;
-            voxel.updateMatrix();
+    // rollOverMesh.position.copy( voxelPosition );
+    rollOverMesh.position.x = STEP_SIZE/2, rollOverMesh.position.y = STEP_SIZE/2, rollOverMesh.position.z = STEP_SIZE/2;
+    scene.add( rollOverMesh );
 
-            // update all blocks
-            BlockGenerator.addToExisting(voxel.position);
-            volume_doc.innerHTML = BlockGenerator.totalVolume; 
+    blockNoise.load();
+    blockNoise.play();
 
-            // create new block and use that new block as rollover
-            rollOverMesh = BlockGenerator.getRandomBlock();
-
-            // rollOverMesh.position.copy( voxelPosition );
-            rollOverMesh.position.x = STEP_SIZE/2, rollOverMesh.position.y = STEP_SIZE/2, rollOverMesh.position.z = STEP_SIZE/2;
-            scene.add( rollOverMesh );
-
-            blockNoise.load();
-            blockNoise.play();
-
-            // add new block to block_list
-            block_list.push(voxel);
-
-        }
-    }
+    // add new block to block_list
+    block_list.push(voxel);
 }
 
 function onWindowResize() {

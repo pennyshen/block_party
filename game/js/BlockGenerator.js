@@ -72,7 +72,6 @@ BlockGenerator.shapesToColors = (function() {
 		colorIdx = (colorIdx + 1) % BlockGenerator.allColors.length;
 	}
 
-	console.log(toReturn);
 	return toReturn;
 })();
 
