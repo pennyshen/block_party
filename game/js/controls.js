@@ -128,14 +128,12 @@ function moveBackward( axis, position ) {
 }
 
 function add_voxel( ) {
-        var intersects = raycaster.intersectObjects( scene.children );
+    var intersects = raycaster.intersectObjects( scene.children );
 
-        if ( intersects.length > 0 ) {
-
-            intersector = getRealIntersector( intersects );
+    if ( intersects.length > 0 ) {
+        intersector = getRealIntersector( intersects );
 
         // delete cube
-
         if ( isCtrlDown ) {
             if ( intersector.object != plane ) {
                 scene.remove( intersector.object );
