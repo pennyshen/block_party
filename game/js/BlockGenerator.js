@@ -73,18 +73,24 @@ BlockGenerator.totalVolume = 0;
 
 BlockGenerator.isPosLegal = function(realPosition) {
 	var positions, i, pos;
-	var isLegal = true;
+	var numUnits = FLOOR_SIZE_HALF / STEP_SIZE;
 
     positions = this.getPositions(realPosition);
     for (i = 0; i < positions.length; i++) {
         pos = positions[i];
+
+        // check with other existing blocks
         if (getKeyString(pos) in this.existingBlocks) {
-            isLegal = false;
-            break;
+            return false;
+        }
+        // check with edges
+        if (pos.y < 0 || pos.x < -numUnits || pos.x >= numUnits
+        	|| pos.z < -numUnits || pos.z >= numUnits) {
+        	return false
         }
     }
 
-    return isLegal;
+    return true;
 }
 
 BlockGenerator.addToExisting = function(realPosition) {

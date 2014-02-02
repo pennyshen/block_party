@@ -51,9 +51,7 @@ function onDocumentKeyDown( event ) {
             moved = true;
             break;
         case 69: eDown = true;
-            if (rollOverMesh.position.y >= STEP_SIZE) {
-                toMove.y -= STEP_SIZE;
-            }
+            toMove.y -= STEP_SIZE;
             moved = true;
             break;
         case 37: isLeftDown = true;

@@ -81,6 +81,8 @@
 
 		var STEP_SIZE = 50;
 		var ALIVE_TIME = 60000.0;	// time during which the block is alive, in milliseconds
+		var FLOOR_SIZE = 1000;
+		var FLOOR_SIZE_HALF = FLOOR_SIZE / 2;
 
 		var elapsedTime, timeRemaining, mins, secs;
 
@@ -125,7 +127,7 @@
 			mouse2D = new THREE.Vector3( 0, 10000, 0.5 );
 
 			// basic scene
-			var floor = new Wall(1000);
+			var floor = new Wall(FLOOR_SIZE);
 
 			floor.addToScene(scene);
 
