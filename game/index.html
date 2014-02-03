@@ -88,6 +88,13 @@
 
 		var elapsedTime, timeRemaining, mins, secs;
 
+		//ADD
+        //keeping track of max and min of x,y,z coordinates
+        var min_x, min_y, min_z, max_x, max_y, max_z;
+        var box_material = new THREE.MeshBasicMaterial({ color: 0xFFFFCC });
+        box_material.transparent = true;
+        box_material.opacity = 0.5;
+        var cube = null;
         //list to hold blocks we created
         var block_list = new Array();
 
@@ -201,6 +208,12 @@
 		function render() {
 			raycaster = projector.pickingRay( mouse2D.clone(), camera );
 
+			//added for bounding box
+			getBoundingBox();
+			if(isShiftDown==true){
+				scene.add(cube);
+			}
+
 			renderer.render( scene, camera );
 			time = Date.now();
 
@@ -234,6 +247,8 @@
 					add_voxel();
 				}
 			}
+
+			
 		}
 
 	</script>
