@@ -98,13 +98,9 @@
 		var elapsedTime, timeRemaining, mins, secs;
 
 		//ADD
-        //keeping track of max and min of x,y,z coordinates
+        // keeping track of max and min of x,y,z coordinates
         var min_x, min_y, min_z, max_x, max_y, max_z;
-        // var box_material = new THREE.MeshBasicMaterial({ color: 0xFFFFCC });
-        // box_material.transparent = true;
-        // box_material.opacity = 0.5;        
-        var box_material = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true });
-        // var box_material = new THREE.LineDashedMaterial( { color: 0x00cc00, dashSize: 4, gapSize: 2 } );
+        var box_material = new THREE.LineBasicMaterial( { color: 0x000000 } );
         var cube = null, cube_vol = 0;
 
         //list to hold blocks we created
@@ -144,11 +140,12 @@
 			// basic scene
 			var floor = new Wall(FLOOR_SIZE);
 			floor.plane.receiveShadow = true;
-
 			floor.addToScene(scene);
 
-			// Lights
+			// placeholder so there's no error
+			rollOverMesh = new THREE.Mesh();
 
+			// Lights
 			var ambientLight = new THREE.AmbientLight( 0x3c3c3c );
 			scene.add( ambientLight );
 
@@ -236,14 +233,18 @@
 			}
 			
 		}
+
 		function hideBlocker() {
 			var blocker = document.getElementById("blocker");
 			blocker.style.display = "none";
 
+
 			// start with random block
 			rollOverMesh = BlockGenerator.getRandomBlock();
 			scene.add( rollOverMesh );
-			rollOverMesh.position.x = 25; rollOverMesh.position.y = 25; rollOverMesh.position.z = 25;
+			rollOverMesh.position.x = STEP_SIZE / 2; 
+			rollOverMesh.position.y = STEP_SIZE / 2; 
+			rollOverMesh.position.z = STEP_SIZE / 2;			
 		}
 	</script>
 

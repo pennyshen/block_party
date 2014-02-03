@@ -67,6 +67,35 @@ function hasCollision() {
 	return false;
 }
 
+function geo2line( geo ) // credit to WestLangley!
+{
+    var geometry = new THREE.Geometry();
+    var vertices = geometry.vertices;
+
+	for ( i = 0; i < geo.faces.length; i++ ) 
+	{
+        var face = geo.faces[ i ];
+        if ( face instanceof THREE.Face3 ) 
+		{
+            var a = geo.vertices[ face.a ].clone();
+			var b = geo.vertices[ face.b ].clone();
+			var c = geo.vertices[ face.c ].clone();
+            vertices.push( a,b, b,c, c,a );
+        } 
+		else if ( face instanceof THREE.Face4 ) 
+		{
+			var a = geo.vertices[ face.a ].clone();
+			var b = geo.vertices[ face.b ].clone();
+			var c = geo.vertices[ face.c ].clone();
+			var d = geo.vertices[ face.d ].clone();
+            vertices.push( a,b, b,c, c,d, d,a );
+        }
+    }
+
+    geometry.computeLineDistances();
+    return geometry;
+}
+
 //get show minimum bounding box
 function getBoundingBox() {
 	//goes through all the cubes and find the minimum and maximum x, y, z
@@ -120,51 +149,13 @@ function getBoundingBox() {
 	
 	//creates a new cube
 	scene.remove(cube);
-	// var offset = 1;
-	// min_x -= offset;
-	// min_y -= offset;
-	// min_z -= offset;
-	// max_x += offset;
-	// max_y += offset;
-	// max_z += offset;
-	
-	//var geometry = new THREE.CubeGeometry(max_x-min_x, max_y - min_y, max_z-min_z);
-	var geom = new THREE.Geometry();
-	var v1 = new THREE.Vector3(min_x,min_y, max_z);
-	var v2 = new THREE.Vector3(max_x,min_y,max_z);
-	var v3 = new THREE.Vector3(max_x,max_y,max_z);
-	var v4 = new THREE.Vector3(min_x,max_y,max_z);
-	var v5 = new THREE.Vector3(min_x,min_y, min_z);
-	var v6 = new THREE.Vector3(max_x,min_y, min_z);
-	var v7 = new THREE.Vector3(max_x,max_y, min_z);
-	var v8 = new THREE.Vector3(min_x,max_y, min_z);
-	geom.vertices.push(v1);
-	geom.vertices.push(v2);
-	geom.vertices.push(v3);
-	geom.vertices.push(v4);
-	geom.vertices.push(v5);
-	geom.vertices.push(v6);
-	geom.vertices.push(v7);
-	geom.vertices.push(v8);
-    geom.faces.push(new THREE.Face3(2, 5, 6));
-    geom.faces.push(new THREE.Face3(2, 1, 5));
-    geom.faces.push(new THREE.Face3(2, 0, 1));
-    geom.faces.push(new THREE.Face3(2, 3, 0));
-    geom.faces.push(new THREE.Face3(2, 7, 3));
-    geom.faces.push(new THREE.Face3(2, 6, 7));
-    geom.faces.push(new THREE.Face3(4, 6, 5));
-    geom.faces.push(new THREE.Face3(4, 5, 1));
-    geom.faces.push(new THREE.Face3(4, 1, 0));
-    geom.faces.push(new THREE.Face3(4, 0, 3));
-    geom.faces.push(new THREE.Face3(4, 3, 7));
-    geom.faces.push(new THREE.Face3(4, 7, 6));
 
-	geom.computeFaceNormals();
+	var geom = new THREE.CubeGeometry(max_x - min_x, max_y - min_y, max_z - min_z);
+	cube = new THREE.Line( geo2line(geom), box_material, THREE.LinePieces );
+	cube.position.x = (max_x + min_x) / 2;
+	cube.position.y = (max_y + min_y) / 2;
+	cube.position.z = (max_z + min_z) / 2;
 
-	cube = new THREE.Mesh( geom, box_material );
 	cube.visible = false;
 	scene.add(cube);
-	//cube = new THREE.Mesh(geom, box_material);
-    //cube.position.y = 150;
-
 }
