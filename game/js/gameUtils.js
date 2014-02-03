@@ -114,15 +114,17 @@ function getBoundingBox(){
 		}
 	}
 
+	//calcualtes the volume of the bounding box
+	cube_vol = (max_x - min_x)*(max_y-min_y)*(max_z-min_z);
 	//creates a new cube
 	scene.remove(cube);
 	var offset = 1;
-	min_x -= offset;
-	min_y -= offset;
-	min_z -= offset;
-	max_x += offset;
-	max_y += offset;
-	max_z += offset;
+	// min_x -= offset;
+	// min_y -= offset;
+	// min_z -= offset;
+	// max_x += offset;
+	// max_y += offset;
+	// max_z += offset;
 	
 	//var geometry = new THREE.CubeGeometry(max_x-min_x, max_y - min_y, max_z-min_z);
 	var geom = new THREE.Geometry();

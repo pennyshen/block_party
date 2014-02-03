@@ -94,7 +94,7 @@
         var box_material = new THREE.MeshBasicMaterial({ color: 0xFFFFCC });
         box_material.transparent = true;
         box_material.opacity = 0.5;
-        var cube = null;
+        var cube = null, cube_vol = 0;
         //list to hold blocks we created
         var block_list = new Array();
 
@@ -212,6 +212,7 @@
 			// if (isShiftDown==true){
 			// 	scene.add(cube);
 			// }
+			score.innerHTML = '' + Math.round((BlockGenerator.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100)+ '%';
 
 			renderer.render( scene, camera );
 			time = Date.now();
