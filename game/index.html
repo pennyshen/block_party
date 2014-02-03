@@ -92,9 +92,9 @@
         //keeping track of max and min of x,y,z coordinates
         var min_x, min_y, min_z, max_x, max_y, max_z;
         // var box_material = new THREE.MeshBasicMaterial({ color: 0xFFFFCC });
-        var box_material = new THREE.MeshBasicMaterial({ color: 0x000000 });
         // box_material.transparent = true;
-        // box_material.opacity = 0.5;
+        // box_material.opacity = 0.5;        
+        var box_material = new THREE.MeshBasicMaterial({ color: 0x000000 });
         var cube = null, cube_vol = 0;
 
         //list to hold blocks we created
@@ -172,15 +172,6 @@
 			// hemiLight.position.set( 0, 500, 0 );
 			// scene.add( hemiLight );
 
-			// making a bounding box
-			// minX =  0, minY = 0, minZ = 0, maxX = 50, maxY = 50, maxZ = 50;
-			// var bBox_min = new THREE.Vector3 (minX, minY, minZ);
-			// var bBox_max = new THREE.Vector3 (maxX, maxY, maxZ);
-			// var bBox_new = new THREE.Box3 (bBox_min, bBox_max);
-
-			// scene.add (bBox_new);
-
-
 			container.appendChild( renderer.domElement );
 
 			stats = new Stats();
@@ -194,8 +185,6 @@
 			window.addEventListener( 'resize', onWindowResize, false );
 
 		}
-
-		var txtNode = document.createTextNode("Hello. This is a new node."); 
 
 		function animate() {
 			requestAnimationFrame( animate );

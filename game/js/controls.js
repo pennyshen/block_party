@@ -83,15 +83,6 @@ function onDocumentKeyDown( event ) {
             newPos.y += STEP_SIZE;
         }
         rollOverMesh.position = newPos;
-
-        // if (BlockGenerator.isPosLegal(newPos)) {
-        //     rollOverMesh.position.add(toMove);
-        // } else {
-        //     collisionNoise.load();
-        //     collisionNoise.play();            
-        // }
-
-        // shadowLight.position = rollOverMesh.position;
     }
 }
 
@@ -146,7 +137,6 @@ function moveBackward( axis, position ) {
 }
 
 function add_voxel( ) {
-    // var intersects = raycaster.intersectObjects( block_list );
     var voxel = rollOverMesh;
     var oldPos = voxel.position.clone();
     oldPos.y = STEP_SIZE / 2;
@@ -196,7 +186,6 @@ function add_voxel( ) {
         }
     }
 
-    // rollOverMesh.position.copy( voxelPosition );
     rollOverMesh.position.x = oldPos.x;
     rollOverMesh.position.y = oldPos.y;
     rollOverMesh.position.z = oldPos.z;
