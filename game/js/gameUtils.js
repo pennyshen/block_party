@@ -9,7 +9,7 @@ function startGame() {
 	scene.add( rollOverMesh );
 	rollOverMesh.position.x = STEP_SIZE / 2; 
 	rollOverMesh.position.y = STEP_SIZE / 2; 
-	rollOverMesh.position.z = STEP_SIZE / 2;			
+	rollOverMesh.position.z = STEP_SIZE / 2;
 }
 
 // draws the normal line for debugging
@@ -18,7 +18,7 @@ function drawNormal(origin, normal) {
 	var secondPoint = origin.clone();
 
 	lineGeo.vertices.push(origin.clone());
-	secondPoint.add(normal.clone().multiplyScalar(25));
+	secondPoint.add(normal.clone().multiplyScalar(STEP_SIZE / 2));
     lineGeo.vertices.push(secondPoint);
     scene.add(new THREE.Line( lineGeo , new THREE.LineBasicMaterial( { color: 0x000000 } )));
 }
