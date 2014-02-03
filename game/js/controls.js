@@ -72,6 +72,12 @@ function onDocumentKeyDown( event ) {
         newPos.y = STEP_SIZE / 2;
 
         while ( !BlockGenerator.isPosLegal(newPos) ) {
+            // if it's the boundary, just don't let the player move it
+            if (pos_illegal_code == 2) {
+                collisionNoise.load();
+                collisionNoise.play(); 
+                return;
+            }
             newPos.y += STEP_SIZE;
         }
         rollOverMesh.position = newPos;

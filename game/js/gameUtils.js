@@ -116,9 +116,10 @@ function getBoundingBox(){
 
 	//calcualtes the volume of the bounding box
 	cube_vol = (max_x - min_x)*(max_y-min_y)*(max_z-min_z);
+	score.innerHTML = '' + Math.round((BlockGenerator.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100)+ '%';
 	//creates a new cube
 	scene.remove(cube);
-	var offset = 1;
+	// var offset = 1;
 	// min_x -= offset;
 	// min_y -= offset;
 	// min_z -= offset;

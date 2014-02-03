@@ -207,13 +207,6 @@
 		function render() {
 			raycaster = projector.pickingRay( mouse2D.clone(), camera );
 
-			//added for bounding box
-			
-			// if (isShiftDown==true){
-			// 	scene.add(cube);
-			// }
-			score.innerHTML = '' + Math.round((BlockGenerator.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100)+ '%';
-
 			renderer.render( scene, camera );
 			time = Date.now();
 
