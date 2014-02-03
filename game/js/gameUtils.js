@@ -161,8 +161,6 @@ function getBoundingBox() {
 
 	geom.computeFaceNormals();
 
-	// console.log(box_material.wireframe);
-	box_material.wireframe = true;
 	cube = new THREE.Mesh( geom, box_material );
 	cube.visible = false;
 	scene.add(cube);

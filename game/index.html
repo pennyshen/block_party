@@ -30,9 +30,18 @@
 
     <div id="blocker", onclick=hideBlocker()>
         <div id="instructions">
-            <span style="font-size:40px">Click to play</span>
+            <span style="font-size:60px">Click to play</span>
             <br />
-            (W,A,S,D = Move, SPACE = Place piece, MOUSE WHEEL= Zoom, CLICK = Rotate camera, SHIFT = Toggle bounding box)
+            <br />
+            W,A,S,D = Move
+            <br /> 
+            SPACE = Place piece
+            <br />
+            MOUSE WHEEL = Zoom
+            <br />
+            CLICK and DRAG = Rotate camera
+            <br />
+            SHIFT = Toggle bounding box
         </div>
 
     </div> >
@@ -94,7 +103,8 @@
         // var box_material = new THREE.MeshBasicMaterial({ color: 0xFFFFCC });
         // box_material.transparent = true;
         // box_material.opacity = 0.5;        
-        var box_material = new THREE.MeshBasicMaterial({ color: 0x000000 });
+        var box_material = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true });
+        // var box_material = new THREE.LineDashedMaterial( { color: 0x00cc00, dashSize: 4, gapSize: 2 } );
         var cube = null, cube_vol = 0;
 
         //list to hold blocks we created
@@ -125,12 +135,6 @@
 			controls.minPolarAngle = 0.0;
 			controls.maxPolarAngle = Math.PI * 4 / 9;
 			scene.add( controls );
-
-			// start with random block
-			rollOverMesh = BlockGenerator.getRandomBlock();
-
-			scene.add( rollOverMesh );
-			rollOverMesh.position.x = 25; rollOverMesh.position.y = 25; rollOverMesh.position.z = 25;
 
 			// picking
 
@@ -235,6 +239,11 @@
 		function hideBlocker() {
 			var blocker = document.getElementById("blocker");
 			blocker.style.display = "none";
+
+			// start with random block
+			rollOverMesh = BlockGenerator.getRandomBlock();
+			scene.add( rollOverMesh );
+			rollOverMesh.position.x = 25; rollOverMesh.position.y = 25; rollOverMesh.position.z = 25;
 		}
 	</script>
 
