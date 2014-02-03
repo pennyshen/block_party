@@ -198,7 +198,6 @@
 
 		function animate() {
 			requestAnimationFrame( animate );
-			move();
 			controls.update();
 			render();
 			stats.update();
@@ -209,10 +208,10 @@
 			raycaster = projector.pickingRay( mouse2D.clone(), camera );
 
 			//added for bounding box
-			getBoundingBox();
-			if(isShiftDown==true){
-				scene.add(cube);
-			}
+			
+			// if (isShiftDown==true){
+			// 	scene.add(cube);
+			// }
 
 			renderer.render( scene, camera );
 			time = Date.now();

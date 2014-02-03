@@ -148,7 +148,9 @@ function getBoundingBox(){
 
 	geom.computeFaceNormals();
 
-	cube= new THREE.Mesh( geom, box_material );
+	cube = new THREE.Mesh( geom, box_material );
+	cube.visible = false;
+	scene.add(cube);
 	//cube = new THREE.Mesh(geom, box_material);
     //cube.position.y = 150;
 

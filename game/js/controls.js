@@ -1,12 +1,6 @@
 
 var CAMERA_MOVE_LENGTH = 2;
 
-function move() {
-    if ( isShiftDown ) {
-        theta += mouse2D.x * 1.5;
-    }
-}
-
 
 function onDocumentMouseMove( event ) {
     event.preventDefault();
@@ -23,7 +17,10 @@ function onDocumentKeyDown( event ) {
     var newPos;
 
     switch( event.keyCode ) {
-        case 16: isShiftDown = true; break;
+        case 16: 
+            isShiftDown = true; 
+            cube.visible = true;
+            break;
         case 17: isCtrlDown = true; break;
         case 187: isEqualsDown = true; break;
         case 189: isDashDown = true; break;
@@ -86,7 +83,10 @@ function onDocumentKeyDown( event ) {
 
 function onDocumentKeyUp( event ) {
     switch ( event.keyCode ) {
-        case 16: isShiftDown = false; break;
+        case 16: 
+            isShiftDown = false; 
+            cube.visible = false;
+            break;
         case 17: isCtrlDown = false; break;
         case 187: isEqualsDown = false; break;
         case 189: isDashDown = false; break;
@@ -150,6 +150,15 @@ function add_voxel( ) {
     BlockGenerator.addToExisting(voxel.position);
     volume_doc.innerHTML = BlockGenerator.totalVolume; 
 
+    blockNoise.load();
+    blockNoise.play();
+
+    // add new block to block_list
+    block_list.push(voxel);
+
+    // calculate new bounding box
+    getBoundingBox();
+
     // create new block and use that new block as rollover
     rollOverMesh = BlockGenerator.getRandomBlock();
     
@@ -176,12 +185,6 @@ function add_voxel( ) {
     rollOverMesh.position.y = oldPos.y;
     rollOverMesh.position.z = oldPos.z;
     scene.add( rollOverMesh );
-
-    blockNoise.load();
-    blockNoise.play();
-
-    // add new block to block_list
-    block_list.push(voxel);
 }
 
 function onWindowResize() {
