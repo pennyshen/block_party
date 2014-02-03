@@ -28,15 +28,15 @@
 	<script src="js/controls.js"></script>
 	<script src="js/gameUtils.js"></script>
 
-<!--     <div id="blocker">
-
+    <div id="blocker", onclick=hideBlocker()>
         <div id="instructions">
             <span style="font-size:40px">Click to play</span>
             <br />
-            (W,A,S,D = Move, SPACE = Jump, MOUSE = Look, CLICK = Place Voxel)
+            (W,A,S,D = Move, SPACE = Place piece, MOUSE WHEEL= Zoom, CLICK = Rotate camera, SHIFT = Toggle bounding box)
         </div>
 
-    </div> -->
+    </div> >
+
 
     <div id="game">
 	    <div id="info">
@@ -232,7 +232,10 @@
 			}
 			
 		}
-
+		function hideBlocker() {
+			var blocker = document.getElementById("blocker");
+			blocker.style.display = "none";
+		}
 	</script>
 
 </body>
