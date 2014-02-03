@@ -19,7 +19,9 @@ function onDocumentKeyDown( event ) {
     switch( event.keyCode ) {
         case 16: 
             isShiftDown = true; 
-            cube.visible = true;
+            if (cube) {
+                cube.visible = !cube.visible;
+            }
             break;
         case 17: isCtrlDown = true; break;
         case 187: isEqualsDown = true; break;
@@ -95,10 +97,7 @@ function onDocumentKeyDown( event ) {
 
 function onDocumentKeyUp( event ) {
     switch ( event.keyCode ) {
-        case 16: 
-            isShiftDown = false; 
-            cube.visible = false;
-            break;
+        case 16: isShiftDown = false; break;
         case 17: isCtrlDown = false; break;
         case 187: isEqualsDown = false; break;
         case 189: isDashDown = false; break;

@@ -68,7 +68,7 @@ function hasCollision() {
 }
 
 //get show minimum bounding box
-function getBoundingBox(){
+function getBoundingBox() {
 	//goes through all the cubes and find the minimum and maximum x, y, z
 	for(var i =0; i<block_list.length;i++){
 		var ver = block_list[i].geometry.vertices;
@@ -117,6 +117,7 @@ function getBoundingBox(){
 	//calcualtes the volume of the bounding box
 	cube_vol = (max_x - min_x)*(max_y-min_y)*(max_z-min_z);
 	score.innerHTML = '' + Math.round((BlockGenerator.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100)+ '%';
+	
 	//creates a new cube
 	scene.remove(cube);
 	// var offset = 1;
@@ -160,6 +161,8 @@ function getBoundingBox(){
 
 	geom.computeFaceNormals();
 
+	// console.log(box_material.wireframe);
+	box_material.wireframe = true;
 	cube = new THREE.Mesh( geom, box_material );
 	cube.visible = false;
 	scene.add(cube);
