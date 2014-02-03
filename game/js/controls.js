@@ -184,12 +184,16 @@ function add_voxel( ) {
         }
     }
 
-    // on the edge already. move up until we're okay
+    // on the edge already. first move back until we're okay then move up until we're okay
     if (pos_illegal_code == 2) {
         moveForward(gameBoardOrientation, oldPos);
         while (!BlockGenerator.isPosLegal(oldPos)) {
-            oldPos.y += STEP_SIZE;
-        }        
+            if (pos_illegal_code == 1) {
+                oldPos.y += STEP_SIZE;
+            } else if (pos_illegal_code == 2) {
+                moveForward(gameBoardOrientation, oldPos);
+            }
+        }
     }
 
     // rollOverMesh.position.copy( voxelPosition );
