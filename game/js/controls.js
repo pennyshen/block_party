@@ -12,6 +12,10 @@ function onDocumentMouseMove( event ) {
 }
 
 function onDocumentKeyDown( event ) {
+    if (!gameInProgress) {
+        return;
+    }
+
     var toMove = new THREE.Vector3(0, 0, 0);
     var moved = false;
     var newPos;
@@ -19,8 +23,8 @@ function onDocumentKeyDown( event ) {
     switch( event.keyCode ) {
         case 16: 
             isShiftDown = true; 
-            if (cube) {
-                cube.visible = !cube.visible;
+            if (boundingBox) {
+                boundingBox.visible = !boundingBox.visible;
             }
             break;
         case 17: isCtrlDown = true; break;

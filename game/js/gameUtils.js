@@ -1,4 +1,17 @@
 
+
+function startGame() {
+	blocker.style.display = "none";
+	gameInProgress = true;
+
+	// start with random block
+	rollOverMesh = BlockGenerator.getRandomBlock();
+	scene.add( rollOverMesh );
+	rollOverMesh.position.x = STEP_SIZE / 2; 
+	rollOverMesh.position.y = STEP_SIZE / 2; 
+	rollOverMesh.position.z = STEP_SIZE / 2;			
+}
+
 // draws the normal line for debugging
 function drawNormal(origin, normal) {
 	var lineGeo = new THREE.Geometry();
@@ -93,22 +106,19 @@ function geo2line( geo ) // credit to WestLangley!
 	for ( i = 0; i < geo.faces.length; i++ ) 
 	{
         var face = geo.faces[ i ];
-        if ( face instanceof THREE.Face3 ) 
-		{
-            var a = geo.vertices[ face.a ].clone();
-			var b = geo.vertices[ face.b ].clone();
-			var c = geo.vertices[ face.c ].clone();
+        var a = geo.vertices[ face.a ].clone();
+		var b = geo.vertices[ face.b ].clone();
+		var c = geo.vertices[ face.c ].clone();
 
-            if ( !isDiagonal(a, b) ) {
-            	vertices.push(a, b);
-            }
-            if ( !isDiagonal(b, c) ) {
-            	vertices.push(b, c);
-            }
-            if ( !isDiagonal(c, a) ) {
-            	vertices.push(c, a);
-            }
-        } 
+        if ( !isDiagonal(a, b) ) {
+        	vertices.push(a, b);
+        }
+        if ( !isDiagonal(b, c) ) {
+        	vertices.push(b, c);
+        }
+        if ( !isDiagonal(c, a) ) {
+        	vertices.push(c, a);
+        }
     }
 
     geometry.computeLineDistances();
@@ -118,9 +128,9 @@ function geo2line( geo ) // credit to WestLangley!
 //get show minimum bounding box
 function getBoundingBox() {
 	//goes through all the cubes and find the minimum and maximum x, y, z
-	for(var i =0 ; i < block_list.length; i++){
+	for (var i =0 ; i < block_list.length; i++) {
 		var ver = block_list[i].geometry.vertices;
-		for(var j = 0; j < ver.length; j++){
+		for (var j = 0; j < ver.length; j++) {
 			var pos = new THREE.Vector3();
 			pos.addVectors(ver[j], block_list[i].position);
 
@@ -134,20 +144,19 @@ function getBoundingBox() {
 		}
 	}
 
-	//calcualtes the volume of the bounding box
-	cube_vol = (max_x - min_x)*(max_y-min_y)*(max_z-min_z);
+	// calcualtes the volume of the bounding box
+	cube_vol = (max_x - min_x) * (max_y - min_y) * (max_z - min_z);
 	score.innerHTML = '' + Math.round((BlockGenerator.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100)+ '%';
 	
-	//creates a new cube
-	scene.remove(cube);
+	scene.remove(boundingBox);
 
 	var geom = new THREE.CubeGeometry(max_x - min_x, max_y - min_y, max_z - min_z);
-	cube = new THREE.Line( geo2line(geom), box_material, THREE.LinePieces );
+	boundingBox = new THREE.Line( geo2line(geom), box_material, THREE.LinePieces );
 
-	cube.position.x = (max_x + min_x) / 2;
-	cube.position.y = (max_y + min_y) / 2;
-	cube.position.z = (max_z + min_z) / 2;
+	boundingBox.position.x = (max_x + min_x) / 2;
+	boundingBox.position.y = (max_y + min_y) / 2;
+	boundingBox.position.z = (max_z + min_z) / 2;
 
-	cube.visible = false;
-	scene.add(cube);
+	boundingBox.visible = false;
+	scene.add(boundingBox);
 }
