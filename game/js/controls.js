@@ -69,13 +69,19 @@ function onDocumentKeyDown( event ) {
     if (moved) {
         newPos = rollOverMesh.position.clone();
         newPos.add(toMove);
+        newPos.y = STEP_SIZE / 2;
 
-        if (BlockGenerator.isPosLegal(newPos)) {
-            rollOverMesh.position.add(toMove);
-        } else {
-            collisionNoise.load();
-            collisionNoise.play();            
+        while ( !BlockGenerator.isPosLegal(newPos) ) {
+            newPos.y += STEP_SIZE;
         }
+        rollOverMesh.position = newPos;
+
+        // if (BlockGenerator.isPosLegal(newPos)) {
+        //     rollOverMesh.position.add(toMove);
+        // } else {
+        //     collisionNoise.load();
+        //     collisionNoise.play();            
+        // }
 
         // shadowLight.position = rollOverMesh.position;
     }
@@ -138,6 +144,7 @@ function add_voxel( ) {
     // var intersects = raycaster.intersectObjects( block_list );
     var voxel = rollOverMesh;
     var oldPos = voxel.position.clone();
+    oldPos.y = STEP_SIZE / 2;
 
     // places rollover block down and make it static
     voxel.material.opacity = 1.0;

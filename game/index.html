@@ -243,11 +243,10 @@
 				rollOverMesh.material.opacity = INIT_OPACITY + elapsedTime / ALIVE_TIME * (1 - INIT_OPACITY);
 
 				// check if we need new block
-				if (rollOverMesh.material.opacity > 1.0) {
+				if (rollOverMesh.material.opacity >= 1.0) {
 					add_voxel();
 				}
 			}
-
 			
 		}
 
