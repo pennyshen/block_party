@@ -203,6 +203,11 @@ BlockGenerator.generate = function(shapeName, colorName) {
 	geometry.faces = geometry.faces.filter( function(v) { return v; });
 	geometry.elementsNeedUpdate = true;	// update faces
 
+	// shadow settings
+	block.castShadow = true;
+	block.receiveShadow = true;
+
+	// book keeping
 	this.generatedTime = Date.now();
 	this.volume = shape.length + 1;
 

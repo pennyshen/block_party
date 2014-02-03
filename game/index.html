@@ -70,6 +70,7 @@
 		var cubeGeo, cubeMaterial;
 		var i, intersector;
 		var gameBoardOrientation;
+		var shadowLight;
 
 		var controls, time = Date.now();
 		var instructions = document.getElementById( 'instructions' );
@@ -107,8 +108,9 @@
 
 			scene = new THREE.Scene();
 			renderer = new THREE.WebGLRenderer( { antialias: true } );
-			renderer.setClearColor( 0xf0f0f0 );
+			renderer.setClearColor( 0xf0f0f0, 1 );
 			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.shadowMapEnabled = true;
 
 			controls = new THREE.OrbitControls( camera , renderer.domElement );
 			controls.rotateSpeed = 0.5;
@@ -129,6 +131,7 @@
 
 			// basic scene
 			var floor = new Wall(FLOOR_SIZE);
+			floor.plane.receiveShadow = true;
 
 			floor.addToScene(scene);
 
@@ -146,6 +149,14 @@
 			directionalLight.position.set( -1, 0.75, -0.5 ).normalize();
 			directionalLight.intensity = 0.8;
 			scene.add( directionalLight );
+
+			shadowLight = new THREE.DirectionalLight( 0xffffff );
+			shadowLight.position.set( 0, 1, 0 ).normalize();
+			shadowLight.castShadow = true;
+			shadowLight.shadowCameraNear = -1000;
+			shadowLight.shadowCameraFar = 10;
+			shadowLight.onlyShadow = true;
+			scene.add( shadowLight );
 
 			// var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
 			// hemiLight.color.setHSL( 0.6, 1, 0.6 );

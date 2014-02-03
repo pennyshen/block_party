@@ -79,6 +79,8 @@ function onDocumentKeyDown( event ) {
             collisionNoise.load();
             collisionNoise.play();            
         }
+
+        // shadowLight.position = rollOverMesh.position;
     }
 }
 
@@ -141,6 +143,7 @@ function add_voxel( ) {
     voxel.material.opacity = 1.0;
     voxel.matrixAutoUpdate = false;
     voxel.geometry.verticesNeedUpdate = true;
+    voxel.castShadow = false;
     voxel.updateMatrix();
 
     // update all blocks
