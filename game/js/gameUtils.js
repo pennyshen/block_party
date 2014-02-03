@@ -67,6 +67,24 @@ function hasCollision() {
 	return false;
 }
 
+function isDiagonal(point1, point2) {
+	var sameNum = 0;
+	if (point1.x == point2.x) {
+		sameNum++;
+	}
+	if (point1.y == point2.y) {
+		sameNum++;
+	}	
+	if (point1.z == point2.z) {
+		sameNum++;
+	}	
+	if (sameNum <= 1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 function geo2line( geo ) // credit to WestLangley!
 {
     var geometry = new THREE.Geometry();
@@ -80,16 +98,17 @@ function geo2line( geo ) // credit to WestLangley!
             var a = geo.vertices[ face.a ].clone();
 			var b = geo.vertices[ face.b ].clone();
 			var c = geo.vertices[ face.c ].clone();
-            vertices.push( a,b, b,c, c,a );
+
+            if ( !isDiagonal(a, b) ) {
+            	vertices.push(a, b);
+            }
+            if ( !isDiagonal(b, c) ) {
+            	vertices.push(b, c);
+            }
+            if ( !isDiagonal(c, a) ) {
+            	vertices.push(c, a);
+            }
         } 
-		else if ( face instanceof THREE.Face4 ) 
-		{
-			var a = geo.vertices[ face.a ].clone();
-			var b = geo.vertices[ face.b ].clone();
-			var c = geo.vertices[ face.c ].clone();
-			var d = geo.vertices[ face.d ].clone();
-            vertices.push( a,b, b,c, c,d, d,a );
-        }
     }
 
     geometry.computeLineDistances();
@@ -99,47 +118,19 @@ function geo2line( geo ) // credit to WestLangley!
 //get show minimum bounding box
 function getBoundingBox() {
 	//goes through all the cubes and find the minimum and maximum x, y, z
-	for(var i =0; i<block_list.length;i++){
+	for(var i =0 ; i < block_list.length; i++){
 		var ver = block_list[i].geometry.vertices;
-		for(var j = 0; j<ver.length;j++){
+		for(var j = 0; j < ver.length; j++){
 			var pos = new THREE.Vector3();
 			pos.addVectors(ver[j], block_list[i].position);
-			if(min_x==null){
-				min_x = pos.x;
-			}
-			else{
-				min_x = Math.min(min_x, pos.x);
-			}
-			if(min_y==null){
-				min_y = pos.y;
-			}
-			else{
-				min_y = Math.min(min_y, pos.y);
-			}
-			if(min_z==null){
-				min_z = pos.z;
-			}
-			else{
-				min_z = Math.min(min_z, pos.z);
-			}
-			if(max_x==null){
-				max_x = pos.x;
-			}
-			else{
-				max_x = Math.max(max_x, pos.x);
-			}
-			if(max_y==null){
-				max_y = pos.y;
-			}
-			else{
-				max_y = Math.max(max_y, pos.y);
-			}
-			if(max_z==null){
-				max_z = pos.z;
-			}
-			else{
-				max_z = Math.max(max_z, pos.z);
-			}	
+
+			min_x = Math.min(min_x, pos.x);
+			min_y = Math.min(min_y, pos.y);
+			min_z = Math.min(min_z, pos.z);
+
+			max_x = Math.max(max_x, pos.x);
+			max_y = Math.max(max_y, pos.y);
+			max_z = Math.max(max_z, pos.z);
 		}
 	}
 
@@ -152,6 +143,7 @@ function getBoundingBox() {
 
 	var geom = new THREE.CubeGeometry(max_x - min_x, max_y - min_y, max_z - min_z);
 	cube = new THREE.Line( geo2line(geom), box_material, THREE.LinePieces );
+
 	cube.position.x = (max_x + min_x) / 2;
 	cube.position.y = (max_y + min_y) / 2;
 	cube.position.z = (max_z + min_z) / 2;

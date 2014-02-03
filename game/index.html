@@ -97,21 +97,27 @@
 
 		var elapsedTime, timeRemaining, mins, secs;
 
-		//ADD
         // keeping track of max and min of x,y,z coordinates
         var min_x, min_y, min_z, max_x, max_y, max_z;
         var box_material = new THREE.LineBasicMaterial( { color: 0x000000 } );
         var cube = null, cube_vol = 0;
 
-        //list to hold blocks we created
+        // list to hold blocks we created
         var block_list = new Array();
 
 		init();
 		animate();
 
 		function init() {
+			// initialize min max value
+			min_x = Number.MAX_VALUE;
+			min_y = Number.MAX_VALUE;
+			min_z = Number.MAX_VALUE;
+			max_x = Number.MIN_VALUE;
+			max_y = Number.MIN_VALUE;
+			max_z = Number.MIN_VALUE;
+
 			container = document.getElementById( 'game' );
-			// container = document.createElement( 'div' );
 			document.body.appendChild( container );
 
 			camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
@@ -237,7 +243,6 @@
 		function hideBlocker() {
 			var blocker = document.getElementById("blocker");
 			blocker.style.display = "none";
-
 
 			// start with random block
 			rollOverMesh = BlockGenerator.getRandomBlock();
