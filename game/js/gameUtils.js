@@ -5,6 +5,8 @@ function moveIntoBounds(pos) {
 	var numUnits = FLOOR_SIZE_HALF / STEP_SIZE;
 	var axis;
 
+	console.log("moving into bounds");
+
 	while (!BlockGenerator.isPosLegal(pos)) {
 		if (pos_illegal_code != 2) {
 			return;

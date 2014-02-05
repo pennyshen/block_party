@@ -98,7 +98,8 @@ BlockGenerator.isPosLegal = function(realPosition) {
             return false;
         }
         // check with edges
-        if (pos.y < 0 || pos.x < -numUnits || pos.x >= numUnits
+        if (pos.y < 0
+        	|| pos.x < -numUnits || pos.x >= numUnits
         	|| pos.z < -numUnits || pos.z >= numUnits) {
         	pos_illegal_code = 2;
         	return false
@@ -159,7 +160,6 @@ BlockGenerator.getBlock = function(shape, colorName) {
 	var blockRaycaster = new THREE.Raycaster();
 	var toDelete = [];
 	var mesh;
-	console.log(shape);
 
 	// copy the shape corresponding to shapeName from internal map into a new shape
 	
@@ -215,7 +215,6 @@ BlockGenerator.getBlock = function(shape, colorName) {
 }
 
 BlockGenerator.generate = function(shapeName) {
-	console.log("shapename" + shapeName);
 	block = this.getBlock(this.shapes[shapeName], this.shapesToColors[shapeName]);
 	var mesh = block.mesh;
 	// shadow settings
@@ -252,7 +251,6 @@ BlockGenerator.rotate = function ( x, y, z ) {
         //     this.cloneVector(this.shapes[block.shapeName][i])
         // );
         this.roundVector(block.shape[i]);
-        console.log(block.shape[i]);
     }
 
     this.shape = block.shape;

@@ -23,9 +23,17 @@ function onDocumentKeyDown( event ) {
 
     switch( event.keyCode ) {
         case 49: // NUMBER 1
-        rotate( "yaw" );
-        rotated = true;
-        break;
+            rotate( "yaw" );
+            rotated = true;
+            break;
+        case 50: // NUMBER 2
+            rotate( "pitch" );
+            rotated = true;
+            break;
+        case 51: // NUMBER 3
+            rotate( "roll" );
+            rotated = true;
+            break;            
         case 16: 
             isShiftDown = true; 
             if (boundingBox) {
@@ -82,6 +90,7 @@ function onDocumentKeyDown( event ) {
                 moveIntoBounds(newPos);
                 rollOverMesh.position = newPos;    
             } else {
+                console.log("wahh");
                 newPos.y += STEP_SIZE;
             }
         }
