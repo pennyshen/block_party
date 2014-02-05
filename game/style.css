@@ -1,8 +1,13 @@
+
 body {
-	font-family: Monospace;
-	background-color: #ffffff;
-	margin: 0px;
-	overflow: hidden;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    height: 100%;    
+    margin: 0;
+    font-family: Monospace;
+    background-color: #ffffff;
+    overflow: hidden;
 }
 
 #oldie { background-color: #ddd !important }

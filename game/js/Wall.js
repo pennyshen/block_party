@@ -11,7 +11,7 @@ function Wall(wallSize) {
 // static variables
 Wall.LINE_MATERIAL = new THREE.LineBasicMaterial( { color: 0x000000, opacity: 0.2, transparent: true } );
 // Wall.PLANE_MATERIAL = new THREE.MeshBasicMaterial({color: 0xD1D1D1});
-Wall.PLANE_MATERIAL = new THREE.MeshBasicMaterial({color: 0xFFFFFF});
+Wall.PLANE_MATERIAL = new THREE.MeshBasicMaterial({color: 0xFFFFFF, opacity: 0.6, transparent: true });
 
 Wall.prototype.initWall = function() {
 	// init line

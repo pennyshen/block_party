@@ -46,7 +46,7 @@
             SHIFT = Toggle bounding box
         </div>
 
-    </div> >
+    </div> 
 
 
     <div id="game">
@@ -76,6 +76,8 @@
 		var collisionNoise = new Audio("sounds/beep-03.mp3");
 
 		var rollOverMesh, rollOverMaterial;
+		var floor;
+		var previewMesh;
 		var i, intersector;
 		var gameBoardOrientation;
 		var controls, time = Date.now();
@@ -97,15 +99,16 @@
 
         // keeping track of max and min of x,y,z coordinates
         var min_x, min_y, min_z, max_x, max_y, max_z;
-        var box_material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+        var box_material = new THREE.LineBasicMaterial( { color: colorAgainstTexture } );
         var boundingBox = null, cube_vol = 0;
 
         // list to hold blocks we created
         var block_list = new Array();
 
 		// Load the background texture
-        var texture = THREE.ImageUtils.loadTexture( 'textures/galaxy2.jpg' );
-        //variables for the background images
+        var texture = THREE.ImageUtils.loadTexture( 'textures/space2.jpg' );
+        var colorAgainstTexture = 0xffffff;var floor
+        // variables for the background images
         var backgroundMesh;
         var backgroundScene;
         var backgroundCamera;
@@ -123,25 +126,21 @@
 			container = document.getElementById( 'game' );
 			document.body.appendChild( container );
 
-			//initializes values for backgroud image
+			// initializes values for backgroud image
 			backgroundMesh = new THREE.Mesh(
-            new THREE.PlaneGeometry(400, 400,0),
-            new THREE.MeshBasicMaterial({map: texture}));
-            backgroundMesh.position.z = -100;	   
-			backgroundMesh.position.x= 50;	       
-			backgroundMesh.position.y= 60;	            	
-        	backgroundMesh .material.depthTest = false;
-        	backgroundMesh .material.depthWrite = false;
+            	new THREE.PlaneGeometry(1440 / 900, 1, 0),	// width must be image_width / image_height to perserve ratio
+            	new THREE.MeshBasicMaterial({map: texture}));
+			// must set z to negative because the normal is (0, 0, 1)
+			backgroundMesh.position.set(0, 0, -1);	
+        	backgroundMesh.material.depthTest = false;
+        	backgroundMesh.material.depthWrite = false;
 
         	// Create your background scene
         	backgroundScene = new THREE.Scene();
         	backgroundCamera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-        	backgroundCamera.position.x = 50;
-            backgroundCamera.position.y = 50;
-            backgroundCamera.position.z = 50;
-            //backgroundCamera.lookAt(new THREE.Vector3(25,25,25));
-        	backgroundScene .add(backgroundCamera );
-        	backgroundScene .add(backgroundMesh );
+        	backgroundScene.add( backgroundCamera );
+        	backgroundScene.add( backgroundMesh );
+        	backgroundCamera.lookAt(backgroundMesh.position);
 
 			camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
             camera.position.x = 5;
@@ -162,12 +161,11 @@
 			scene.add( controls );
 
 			// picking
-
 			projector = new THREE.Projector();
 			mouse2D = new THREE.Vector3( 0, 10000, 0.5 );
 
 			// basic scene
-			var floor = new Wall(FLOOR_SIZE);
+			floor = new Wall(FLOOR_SIZE);
 			floor.plane.receiveShadow = true;
 			floor.addToScene(scene);
 
@@ -223,7 +221,7 @@
 
 			renderer.autoClear = false;
 			renderer.clear();
-			renderer.render(backgroundScene , backgroundCamera );
+			renderer.render( backgroundScene , backgroundCamera );
 			renderer.render( scene, camera );
 			time = Date.now();
 

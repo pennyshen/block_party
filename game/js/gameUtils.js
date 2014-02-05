@@ -10,6 +10,10 @@ function startGame() {
 	rollOverMesh.position.x = STEP_SIZE / 2; 
 	rollOverMesh.position.y = STEP_SIZE / 2; 
 	rollOverMesh.position.z = STEP_SIZE / 2;
+
+	// previewMesh = BlockGenerator.getBlock("two_blocks", "red");
+	// previewMesh.position.set(100, 100, 100);
+	// scene.add( previewMesh );
 }
 
 // draws the normal line for debugging

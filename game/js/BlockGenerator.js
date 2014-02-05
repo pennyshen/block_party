@@ -150,14 +150,15 @@ BlockGenerator.getRandomBlock = function() {
 	return this.generate(shape, this.shapesToColors[shape]);
 }
 
-BlockGenerator.generate = function(shapeName, colorName) {
+BlockGenerator.getBlock = function(shapeName, colorName) {
+	var block;
 	var i, j;
-	var geometry, tmpGeometry, i;
+	var geometry, tmpGeometry;
 	var shape, block, material;
 	var normal, intersects;
 	var blockRaycaster = new THREE.Raycaster();
 	var toDelete = [];
-	
+
 	// copy the shape corresponding to shapeName from internal map into a new shape
 	
 	var shape = this.cloneVectors(this.shapes[shapeName]);
@@ -203,13 +204,19 @@ BlockGenerator.generate = function(shapeName, colorName) {
 	geometry.faces = geometry.faces.filter( function(v) { return v; });
 	geometry.elementsNeedUpdate = true;	// update faces
 
+	return block;
+}
+
+BlockGenerator.generate = function(shapeName, colorName) {
+	var block = this.getBlock(shapeName, colorName);
+	
 	// shadow settings
 	block.castShadow = true;
 	block.receiveShadow = true;
 
 	// book keeping
 	this.generatedTime = Date.now();
-	this.volume = shape.length + 1;
+	this.volume = this.shapes[shapeName].length + 1;
 
     return block;
 }
