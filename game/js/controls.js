@@ -67,8 +67,6 @@ function onDocumentKeyDown( event ) {
             break;
         case 37: 
             isLeftDown = true;
-            //TODO rotation
-            // controls.rotateLeft(Math.PI/2);
             break;
         case 32: 
             isSpaceDown = true; 
@@ -80,9 +78,12 @@ function onDocumentKeyDown( event ) {
         newPos = rollOverMesh.position.clone();
 
         while (!BlockGenerator.isPosLegal(newPos)) {
-            newPos.y += STEP_SIZE;
-            collisionNoise.load();
-            collisionNoise.play();
+            if (pos_illegal_code == 2) {
+                moveIntoBounds(newPos);
+                rollOverMesh.position = newPos;    
+            } else {
+                newPos.y += STEP_SIZE;
+            }
         }
         rollOverMesh.position = newPos;
     }

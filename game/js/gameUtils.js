@@ -1,5 +1,27 @@
 
 
+function moveIntoBounds(pos) {
+	var axes = ['x', 'y', 'z'];
+	var numUnits = FLOOR_SIZE_HALF / STEP_SIZE;
+	var axis;
+
+	while (!BlockGenerator.isPosLegal(pos)) {
+		if (pos_illegal_code != 2) {
+			return;
+		}
+
+		for (var i = 0; i < axes.length; i++) {
+			axis = axes[i];
+			if (pos[axis] < 0) {
+				pos[axis] += STEP_SIZE;
+			} else if (pos[axis] >= numUnits) {
+				pos[axis] -= STEP_SIZE;
+			}
+		}
+
+	}
+}
+
 function startGame() {
 	blocker.style.display = "none";
 	gameInProgress = true;
