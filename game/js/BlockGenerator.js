@@ -147,10 +147,11 @@ BlockGenerator.getCube = function() {
 
 BlockGenerator.getRandomBlock = function() {
 	var shape = getRandomMember(this.allShapes);
-	return this.generate(shape, this.shapesToColors[shape]);
+	return this.generate(shape);
 }
 
-BlockGenerator.getBlock = function(shapeName, colorName) {
+BlockGenerator.getBlock = function(shapeName) {
+	var colorName = this.shapesToColors[shapeName];
 	var block;
 	var i, j;
 	var geometry, tmpGeometry;
@@ -207,8 +208,8 @@ BlockGenerator.getBlock = function(shapeName, colorName) {
 	return block;
 }
 
-BlockGenerator.generate = function(shapeName, colorName) {
-	var block = this.getBlock(shapeName, colorName);
+BlockGenerator.generate = function(shapeName) {
+	var block = this.getBlock(shapeName);
 	
 	// shadow settings
 	block.castShadow = true;

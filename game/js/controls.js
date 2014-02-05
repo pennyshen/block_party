@@ -166,7 +166,9 @@ function add_voxel( ) {
     getBoundingBox();
 
     // create new block and use that new block as rollover
-    rollOverMesh = BlockGenerator.getRandomBlock();
+    rollOverMesh = BlockGenerator.generate(nextPiece);
+    nextPiece = getRandomMember(BlockGenerator.allShapes);
+    nextPiece_doc.innerHTML = nextPiece;
     
     // placement of the new block - first move towards user's perspective until we can't move anymore
     moveBackward(gameBoardOrientation, oldPos);

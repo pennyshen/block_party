@@ -3,6 +3,8 @@
 function startGame() {
 	blocker.style.display = "none";
 	gameInProgress = true;
+	nextPiece = getRandomMember(BlockGenerator.allShapes);
+	nextPiece_doc.innerHTML = nextPiece;
 
 	// start with random block
 	rollOverMesh = BlockGenerator.getRandomBlock();
@@ -13,7 +15,7 @@ function startGame() {
 
 	// previewMesh = BlockGenerator.getBlock("two_blocks", "red");
 	// previewMesh.position.set(100, 100, 100);
-	// scene.add( previewMesh );
+	// backgroundScene.add( previewMesh );
 }
 
 // draws the normal line for debugging

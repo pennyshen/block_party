@@ -54,9 +54,11 @@
 	    	<font color ="white">
 		    Score: <span id="score">0</span>
 		    <br>
+		    Volume: <span id ="volume_used">0</span>
+		    <br>
 		    <span id="timer">0:00</span>
 		    <br>
-		    Volume: <span id ="volume_used">0</span>
+		    Next piece: <span id="nextPiece"></span>
 		    <br>
 		</font>
 	    </div>
@@ -86,6 +88,7 @@
 		var timer = document.getElementById( 'timer');
 		var volume_doc = document.getElementById( 'volume_used' );
 		var blocker = document.getElementById("blocker");
+		var nextPiece_doc = document.getElementById( 'nextPiece' );
 
 		var STEP_SIZE = 50;
 		var ALIVE_TIME = 60000.0;	// time during which the block is alive, in milliseconds
@@ -114,6 +117,7 @@
         var backgroundCamera;
 
         var gameInProgress = false;
+        var nextPiece = "";
 
 		init();
 		animate();
@@ -127,8 +131,9 @@
 			document.body.appendChild( container );
 
 			// initializes values for backgroud image
+			// width must be image_width / image_height to perserve ratio
 			backgroundMesh = new THREE.Mesh(
-            	new THREE.PlaneGeometry(1440 / 900, 1, 0),	// width must be image_width / image_height to perserve ratio
+            	new THREE.PlaneGeometry(1440 / 900, 1, 0),	
             	new THREE.MeshBasicMaterial({map: texture}));
 			// must set z to negative because the normal is (0, 0, 1)
 			backgroundMesh.position.set(0, 0, -1);	
@@ -146,7 +151,6 @@
             camera.position.x = 5;
             camera.position.y = 325;
             camera.position.z = 694;
-            camera.lookAt(new THREE.Vector3(25,25,25));
 
 			scene = new THREE.Scene();
 			renderer = new THREE.WebGLRenderer( { antialias: true } );
