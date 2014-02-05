@@ -51,12 +51,14 @@
 
     <div id="game">
 	    <div id="info">
+	    	<font color ="white">
 		    Score: <span id="score">0</span>
 		    <br>
 		    <span id="timer">0:00</span>
 		    <br>
 		    Volume: <span id ="volume_used">0</span>
 		    <br>
+		</font>
 	    </div>
     </div>
 
@@ -101,6 +103,13 @@
         // list to hold blocks we created
         var block_list = new Array();
 
+		// Load the background texture
+        var texture = THREE.ImageUtils.loadTexture( 'textures/galaxy2.jpg' );
+        //variables for the background images
+        var backgroundMesh;
+        var backgroundScene;
+        var backgroundCamera;
+
         var gameInProgress = false;
 
 		init();
@@ -114,6 +123,26 @@
 			container = document.getElementById( 'game' );
 			document.body.appendChild( container );
 
+			//initializes values for backgroud image
+			backgroundMesh = new THREE.Mesh(
+            new THREE.PlaneGeometry(400, 400,0),
+            new THREE.MeshBasicMaterial({map: texture}));
+            backgroundMesh.position.z = -100;	   
+			backgroundMesh.position.x= 50;	       
+			backgroundMesh.position.y= 60;	            	
+        	backgroundMesh .material.depthTest = false;
+        	backgroundMesh .material.depthWrite = false;
+
+        	// Create your background scene
+        	backgroundScene = new THREE.Scene();
+        	backgroundCamera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+        	backgroundCamera.position.x = 50;
+            backgroundCamera.position.y = 50;
+            backgroundCamera.position.z = 50;
+            //backgroundCamera.lookAt(new THREE.Vector3(25,25,25));
+        	backgroundScene .add(backgroundCamera );
+        	backgroundScene .add(backgroundMesh );
+
 			camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
             camera.position.x = 5;
             camera.position.y = 325;
@@ -122,7 +151,7 @@
 
 			scene = new THREE.Scene();
 			renderer = new THREE.WebGLRenderer( { antialias: true } );
-			renderer.setClearColor( 0xf0f0f0, 1 );
+			renderer.setClearColor(0xFFFFFF,0);
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			renderer.shadowMapEnabled = true;
 
@@ -192,6 +221,9 @@
 		function render() {
 			raycaster = projector.pickingRay( mouse2D.clone(), camera );
 
+			renderer.autoClear = false;
+			renderer.clear();
+			renderer.render(backgroundScene , backgroundCamera );
 			renderer.render( scene, camera );
 			time = Date.now();
 
