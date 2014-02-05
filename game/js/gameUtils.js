@@ -7,7 +7,9 @@ function startGame() {
 	nextPiece_doc.innerHTML = nextPiece;
 
 	// start with random block
-	rollOverMesh = BlockGenerator.getRandomBlock();
+	block = BlockGenerator.getRandomBlock();
+	rollOverMesh = block.mesh;
+
 	scene.add( rollOverMesh );
 	rollOverMesh.position.x = STEP_SIZE / 2; 
 	rollOverMesh.position.y = STEP_SIZE / 2; 

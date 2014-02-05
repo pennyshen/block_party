@@ -19,8 +19,13 @@ function onDocumentKeyDown( event ) {
     var toMove = new THREE.Vector3(0, 0, 0);
     var moved = false;
     var newPos;
+    var rotated = false;
 
     switch( event.keyCode ) {
+        case 49: // NUMBER 1
+        rotate( "yaw" );
+        rotated = true;
+        break;
         case 16: 
             isShiftDown = true; 
             if (boundingBox) {
@@ -69,6 +74,17 @@ function onDocumentKeyDown( event ) {
             isSpaceDown = true; 
             add_voxel();
             break;
+    }
+
+    if ( rotated ) {
+        newPos = rollOverMesh.position.clone();
+
+        while (!BlockGenerator.isPosLegal(newPos)) {
+            newPos.y += STEP_SIZE;
+            collisionNoise.load();
+            collisionNoise.play();
+        }
+        rollOverMesh.position = newPos;
     }
 
     // check if move is legal
@@ -140,6 +156,19 @@ function moveBackward( axis, position ) {
     }
 }
 
+// directions: "pitch", "yaw", "roll"
+function rotate( direction ) {
+    if ( direction == "yaw" ) {
+        BlockGenerator.rotate( 0, 90, 0 );
+    }
+    if ( direction == "pitch" ) {
+        BlockGenerator.rotate( 90, 0, 0 );
+    }
+    if ( direction == "roll" ) {
+        BlockGenerator.rotate( 0, 0, 90 );
+    }
+}
+
 function add_voxel( ) {
     var voxel = rollOverMesh;
     var oldPos = voxel.position.clone();
@@ -164,9 +193,10 @@ function add_voxel( ) {
 
     // calculate new bounding box
     getBoundingBox();
-
+   
     // create new block and use that new block as rollover
-    rollOverMesh = BlockGenerator.generate(nextPiece);
+    block = BlockGenerator.generate(nextPiece);
+    rollOverMesh = block.mesh;
     nextPiece = getRandomMember(BlockGenerator.allShapes);
     nextPiece_doc.innerHTML = nextPiece;
     
