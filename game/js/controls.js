@@ -186,6 +186,7 @@ function add_voxel( ) {
 
     // places rollover block down and make it static
     voxel.material.opacity = 1.0;
+    voxel.material.transparent = false;
     voxel.matrixAutoUpdate = false;
     voxel.geometry.verticesNeedUpdate = true;
     voxel.castShadow = false;
@@ -242,6 +243,7 @@ function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 
+    console.log(window.innerWidth / window.innerHeight);
     backgroundCamera.aspect = window.innerWidth / window.innerHeight;
     backgroundCamera.updateProjectionMatrix();
 

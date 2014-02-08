@@ -220,6 +220,7 @@ BlockGenerator.generate = function(shapeName) {
 	// shadow settings
 	mesh.castShadow = true;
 	mesh.receiveShadow = true;
+	mesh.renderDepth = 0.5;
 
 	// book keeping
 	this.generatedTime = Date.now();

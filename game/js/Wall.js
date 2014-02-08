@@ -39,8 +39,10 @@ Wall.prototype.addToScene = function(scene) {
 	scene.add(this.plane);
 
 	this.plane.matrixAutoUpdate = false;
+	this.plane.renderDepth = 1.0;
 	this.plane.updateMatrix();
 	this.line.matrixAutoUpdate = false;
+	this.line.renderDepth = 1.0;
 	this.line.updateMatrix();	
 }
 

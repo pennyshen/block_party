@@ -13,8 +13,8 @@
 	<!-- javascript libraries -->
 	<script src="js/libs/three.min.js"></script>
 	<script src="js/libs/stats.min.js"></script>
+	<script src="js/libs/ShaderParticles.min.js"></script>
 
-	<script src="js/libs/PointerLockControls.js"></script>
 	<script src="js/libs/Detector.js"></script>
 	<script src="js/libs/ConvexGeometry.js"></script>
 	<script src="js/libs/OrbitControls.js"></script>
@@ -111,16 +111,22 @@
 
 		// Load the background texture
         var texture = THREE.ImageUtils.loadTexture( 'textures/space2.jpg' );
-        var colorAgainstTexture = 0xffffff;var floor
+        var colorAgainstTexture = 0xffffff;
+        var floor
         // variables for the background images
         var backgroundMesh;
         var backgroundScene;
         var backgroundCamera;
+        var backgroundRatio = 1440 / 900;
 
         var gameInProgress = false;
         var nextPiece = "";
 
+        // Used in initParticles()
+		var emitter, particleGroup;
+
 		init();
+		initParticles();
 		animate();
 
 		function init() {
@@ -133,11 +139,11 @@
 
 			// initializes values for backgroud image
 			// width must be image_width / image_height to perserve ratio
+			var background_scale = 100;
 			backgroundMesh = new THREE.Mesh(
-            	new THREE.PlaneGeometry(1440 / 900, 1, 0),	
+            	new THREE.PlaneGeometry(backgroundRatio * background_scale, background_scale, 0),	
             	new THREE.MeshBasicMaterial({map: texture}));
-			// must set z to negative because the normal is (0, 0, 1)
-			backgroundMesh.position.set(0, 0, -1);	
+			backgroundMesh.position.set(0, 0, -background_scale);	// must set z to negative because the normal is (0, 0, 1)
         	backgroundMesh.material.depthTest = false;
         	backgroundMesh.material.depthWrite = false;
 
@@ -155,7 +161,8 @@
 
 			scene = new THREE.Scene();
 			renderer = new THREE.WebGLRenderer( { antialias: true } );
-			renderer.setClearColor(0xFFFFFF,0);
+			// renderer.setClearColor(0xFFFFFF,0);
+			renderer.setClearColor(0x000000,0);
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			renderer.shadowMapEnabled = true;
 
@@ -213,15 +220,50 @@
 
 		}
 
+        // Create particle group and emitter
+        function initParticles() {
+        	particleGroup = new SPE.Group({
+        		texture: THREE.ImageUtils.loadTexture('./textures/star2.png'),
+        		maxAge: 2,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false,
+                depthTest: false
+        	});
+
+        	emitter = new SPE.Emitter({
+        		positionSpread: new THREE.Vector3(1000, 1000, 1000),
+
+                acceleration: new THREE.Vector3(0, 0, 10),
+
+        		velocity: new THREE.Vector3(0, 0, 10),
+
+        		colorStart: new THREE.Color('white'),
+        		colorEnd: new THREE.Color('white'),
+        		sizeStart: 40,
+        		sizeEnd: 40,
+                opacityStart: 0,
+                opacityMiddle: 1,
+                opacityEnd: 0,
+
+        		particleCount: 10000
+        	});
+
+        	particleGroup.addEmitter( emitter );
+        	scene.add( particleGroup.mesh );
+        	console.log(scene);
+        }		
+
 		function animate() {
 			requestAnimationFrame( animate );
 			controls.update();
-			render();
+			render(0.016);
 			stats.update();
 		}
 
 
-		function render() {
+		function render(dt) {
+			particleGroup.tick( dt );
+
 			raycaster = projector.pickingRay( mouse2D.clone(), camera );
 
 			renderer.autoClear = false;
