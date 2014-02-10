@@ -28,8 +28,7 @@ LevelMode.prototype.populateSelection = function() {
         avail_blocks.add(option);
     }
 
-    avail_blocks.size = 0;
-    avail_blocks.selectedIndex = 0;
+    avail_blocks.blur();
 }
 
 LevelMode.prototype.switchBlock = function(index) {
