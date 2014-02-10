@@ -102,17 +102,45 @@ function onDocumentKeyDown( event ) {
     if (moved) {
         newPos = rollOverMesh.position.clone();
         newPos.add(toMove);
-        newPos.y = STEP_SIZE / 2;
-
-        while ( !BlockGenerator.isPosLegal(newPos) ) {
-            // if it's the boundary, just don't let the player move it
+        var isClimbing = false;
+        //try to move in direction specified
+        if ( !BlockGenerator.isPosLegal(newPos) ) {
+            // ran into a wall, play error noise
             if (pos_illegal_code == 2) {
                 collisionNoise.load();
-                collisionNoise.play(); 
+                collisionNoise.play();
                 return;
             }
-            newPos.y += STEP_SIZE;
+            // ran into a block, move up instead of over
+            if (pos_illegal_code == 1) {
+                newPos.y += STEP_SIZE;
+                newPos.sub(toMove);
+                rollOverMesh.position = newPos;
+                isClimbing = true;
+                return;
+            }
         }
+
+        // Didn't run into a block or a wall, try to lower the piece as much as possible. 
+        while (true) {
+            newPos.y -= STEP_SIZE;
+            if (!BlockGenerator.isPosLegal(newPos)) {
+                newPos.y += STEP_SIZE;
+                break;
+            }
+        } 
+        // if( !isClimbing ) {
+            // newPos.y = 25;
+            // if (BlockGenerator.isPosLegal(newPos)) {
+            //     rollOverMesh.position = newPos;
+            // } else {
+            //     return;
+            // }
+            // while( BlockGenerator.isPosLegal(newPos) && newPos.y >= 75)  {
+            //     newPos.y -= STEP_SIZE;
+            // }
+        // }
+
         rollOverMesh.position = newPos;
     }
 }
