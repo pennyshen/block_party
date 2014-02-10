@@ -43,7 +43,6 @@ function onDocumentKeyDown( event ) {
         case 17: isCtrlDown = true; break;
         case 187: isEqualsDown = true; break;
         case 189: isDashDown = true; break;
-        case 76: change_to_level(); break;//the "l" key
         case 65: 
             aDown = true;  
             moveLeft(gameBoardOrientation, toMove);
@@ -83,15 +82,16 @@ function onDocumentKeyDown( event ) {
             break;
     }
 
+
+    // TODO: merge rotated and moved
     if ( rotated ) {
         newPos = rollOverMesh.position.clone();
 
-        while (!BlockGenerator.isPosLegal(newPos)) {
+        while (!game.isPosLegal(newPos)) {
             if (pos_illegal_code == 2) {
                 moveIntoBounds(newPos);
                 rollOverMesh.position = newPos;    
             } else {
-                console.log("wahh");
                 newPos.y += STEP_SIZE;
             }
         }
@@ -102,47 +102,65 @@ function onDocumentKeyDown( event ) {
     if (moved) {
         newPos = rollOverMesh.position.clone();
         newPos.add(toMove);
-        var isClimbing = false;
-        //try to move in direction specified
-        if ( !BlockGenerator.isPosLegal(newPos) ) {
-            // ran into a wall, play error noise
+        newPos.y = STEP_SIZE / 2;
+
+        while ( !game.isPosLegal(newPos) ) {
+            // if it's the boundary, just don't let the player move it
             if (pos_illegal_code == 2) {
                 collisionNoise.load();
-                collisionNoise.play();
+                collisionNoise.play(); 
                 return;
             }
-            // ran into a block, move up instead of over
-            if (pos_illegal_code == 1) {
-                newPos.y += STEP_SIZE;
-                newPos.sub(toMove);
-                rollOverMesh.position = newPos;
-                isClimbing = true;
-                return;
-            }
+            newPos.y += STEP_SIZE;
         }
-
-        // Didn't run into a block or a wall, try to lower the piece as much as possible. 
-        while (true) {
-            newPos.y -= STEP_SIZE;
-            if (!BlockGenerator.isPosLegal(newPos)) {
-                newPos.y += STEP_SIZE;
-                break;
-            }
-        } 
-        // if( !isClimbing ) {
-            // newPos.y = 25;
-            // if (BlockGenerator.isPosLegal(newPos)) {
-            //     rollOverMesh.position = newPos;
-            // } else {
-            //     return;
-            // }
-            // while( BlockGenerator.isPosLegal(newPos) && newPos.y >= 75)  {
-            //     newPos.y -= STEP_SIZE;
-            // }
-        // }
-
         rollOverMesh.position = newPos;
     }
+
+    // // check if move is legal
+    // if (moved) {
+    //     newPos = rollOverMesh.position.clone();
+    //     newPos.add(toMove);
+    //     var isClimbing = false;
+    //     //try to move in direction specified
+    //     if ( !game.isPosLegal(newPos) ) {
+    //         // ran into a wall, play error noise
+    //         if (pos_illegal_code == 2) {
+    //             collisionNoise.load();
+    //             collisionNoise.play();
+    //             return;
+    //         }
+    //         // ran into a block, move up instead of over
+    //         if (pos_illegal_code == 1) {
+    //             newPos.y += STEP_SIZE;
+    //             newPos.sub(toMove);
+    //             rollOverMesh.position = newPos;
+    //             isClimbing = true;
+    //             return;
+    //         }
+    //     }
+
+    //     // Didn't run into a block or a wall, try to lower the piece as much as possible. 
+    //     while (true) {
+    //         newPos.y -= STEP_SIZE;
+    //         if (!game.isPosLegal(newPos)) {
+    //             newPos.y += STEP_SIZE;
+    //             break;
+    //         }
+    //     } 
+    //     // if( !isClimbing ) {
+    //         // newPos.y = 25;
+    //         // if (game.isPosLegal(newPos)) {
+    //         //     rollOverMesh.position = newPos;
+    //         // } else {
+    //         //     return;
+    //         // }
+    //         // while( game.isPosLegal(newPos) && newPos.y >= 75)  {
+    //         //     newPos.y -= STEP_SIZE;
+    //         // }
+    //     // }
+
+    //     rollOverMesh.position = newPos;
+    // }
 }
 
 function onDocumentKeyUp( event ) {
@@ -198,32 +216,16 @@ function moveBackward( axis, position ) {
 // directions: "pitch", "yaw", "roll"
 function rotate( direction ) {
     if ( direction == "yaw" ) {
-        BlockGenerator.rotate( 0, 90, 0 );
+        game.currentBlock.rotate( 0, 90, 0 );
     }
     if ( direction == "pitch" ) {
-        BlockGenerator.rotate( 90, 0, 0 );
+        game.currentBlock.rotate( 90, 0, 0 );
     }
     if ( direction == "roll" ) {
-        BlockGenerator.rotate( 0, 0, 90 );
+        game.currentBlock.rotate( 0, 0, 90 );
     }
 }
 
-function change_to_level(){
-    if(level_mode==true)
-        return;
-    game_mode.innerHTML = "Level 1";
-    
-    change_rollOver(level_1[0]);
-
-    level_mode = true;
-    //populates the selection button
-    for(var i =0; i<level_1.length;i++){
-        var option = document.createElement("option");
-        option.text = level_1[i];
-        avail_blocks.add(option);
-    }
-    nextPiece_doc.innerHTML = '';
-}
 
 function change_rollOver(shape){
     block = BlockGenerator.generate(shape);
@@ -231,8 +233,18 @@ function change_rollOver(shape){
     scene.remove(rollOverMesh);
     rollOverMesh = block.mesh;
 
-    moveBackward(gameBoardOrientation, oldPos);
-    while (!BlockGenerator.isPosLegal(oldPos)) {
+    moveTowardsPlayer(oldPos);
+
+    rollOverMesh.position.x = oldPos.x;
+    rollOverMesh.position.y = oldPos.y;
+    rollOverMesh.position.z = oldPos.z;
+    scene.add(rollOverMesh);
+
+}
+
+function moveTowardsPlayer(oldPos) {
+    // placement of the new block - first move towards user's perspective until we can't move anymore
+    while (!game.isPosLegal(oldPos)) {
         if (pos_illegal_code == 1) {
             moveBackward(gameBoardOrientation, oldPos);
         } else if (pos_illegal_code == 2) {
@@ -243,21 +255,16 @@ function change_rollOver(shape){
     // on the edge already. first move back until we're okay then move up until we're okay
     if (pos_illegal_code == 2) {
         moveForward(gameBoardOrientation, oldPos);
-        while (!BlockGenerator.isPosLegal(oldPos)) {
+        while (!game.isPosLegal(oldPos)) {
             if (pos_illegal_code == 1) {
                 oldPos.y += STEP_SIZE;
             } else if (pos_illegal_code == 2) {
                 moveForward(gameBoardOrientation, oldPos);
             }
         }
-    }
+    }    
+};
 
-    rollOverMesh.position.x = oldPos.x;
-    rollOverMesh.position.y = oldPos.y;
-    rollOverMesh.position.z = oldPos.z;
-    scene.add(rollOverMesh);
-
-}
 
 function add_voxel( ) {
     var voxel = rollOverMesh;
@@ -273,58 +280,20 @@ function add_voxel( ) {
     voxel.updateMatrix();
 
     // update all blocks
-    BlockGenerator.addToExisting(voxel.position);
-    volume_doc.innerHTML = BlockGenerator.totalVolume; 
+    game.addCurrentToExisting(voxel.position);
+    volume_doc.innerHTML = game.totalVolume; 
 
     blockNoise.load();
     blockNoise.play();
 
-    // add new block to block_list
-    block_list.push(voxel);
-
     // calculate new bounding box
     getBoundingBox();
-
-    //check to see if level mode
-    if(level_mode){
-        avail_blocks.remove(avail_blocks.selectedIndex);
-        if(avail_blocks.length==0){
-            endLevel();
-            return;
-        }
-        nextPiece = avail_blocks[avail_blocks.selectedIndex].innerHTML;
-    }
    
     // create new block and use that new block as rollover
-    block = BlockGenerator.generate(nextPiece);
-    rollOverMesh = block.mesh;
+    game.getNextBlock();
+    rollOverMesh = game.currentBlock.mesh;
 
-    if(!level_mode){
-        nextPiece = getRandomMember(BlockGenerator.allShapes);
-        nextPiece_doc.innerHTML = nextPiece;
-    }
-    
-    // placement of the new block - first move towards user's perspective until we can't move anymore
-    moveBackward(gameBoardOrientation, oldPos);
-    while (!BlockGenerator.isPosLegal(oldPos)) {
-        if (pos_illegal_code == 1) {
-            moveBackward(gameBoardOrientation, oldPos);
-        } else if (pos_illegal_code == 2) {
-            break;
-        }
-    }
-
-    // on the edge already. first move back until we're okay then move up until we're okay
-    if (pos_illegal_code == 2) {
-        moveForward(gameBoardOrientation, oldPos);
-        while (!BlockGenerator.isPosLegal(oldPos)) {
-            if (pos_illegal_code == 1) {
-                oldPos.y += STEP_SIZE;
-            } else if (pos_illegal_code == 2) {
-                moveForward(gameBoardOrientation, oldPos);
-            }
-        }
-    }
+    moveTowardsPlayer(oldPos);
 
     rollOverMesh.position.x = oldPos.x;
     rollOverMesh.position.y = oldPos.y;
@@ -336,7 +305,6 @@ function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 
-    console.log(window.innerWidth / window.innerHeight);
     backgroundCamera.aspect = window.innerWidth / window.innerHeight;
     backgroundCamera.updateProjectionMatrix();
 

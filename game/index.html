@@ -23,12 +23,33 @@
 	<script src="js/Room.js"></script>
 	<script src="js/Wall.js"></script>
 	<script src="js/BlockGenerator.js"></script>
+	<script src="js/Game.js"></script>
+	<script src="js/RandomMode.js"></script>
+	<script src="js/LevelMode.js"></script>
+	<script src="js/Block.js"></script>
 
 	<!-- other javascript functions -->
 	<script src="js/controls.js"></script>
 	<script src="js/gameUtils.js"></script>
+	<script src="js/navigation.js"></script>
 
-    <div id="blocker", onclick=startGame()>
+	<div id="reMenu">
+		<h1>Block Party</h1>
+		<p id="info2">Game Over</p>
+		<a href="javascript: void(0)" id="restart" onclick="reset()" >Restart</a> 
+	</div>
+
+	<div id="menu">
+		<h1>Block Party</h1>
+		<a href="javascript: void(0)" class="menuItem" onclick="startGame('level')" >Level mode</a>
+		<br>
+		<a href="javascript: void(0)" class="menuItem" onclick="startGame('random')" >Random mode</a>
+		<br>
+		<a href="javascript: void(0)" class="menuItem" onclick="init()" >Instructions</a>
+		<br>
+	</div>	
+
+<!--     <div id="blocker" onclick=startGame()>
         <div id="instructions">
             <span style="font-size:60px">Click to play</span>
             <br />
@@ -46,26 +67,24 @@
             SHIFT = Toggle bounding box
         </div>
 
-    </div> 
+    </div>  -->
 
 
     <div id="game">
 	    <div id="info">
-	    	<font color ="white">
-	    	Mode: <span id = "mode">Freeplay</span>
-	    	<br>	
-		    Score: <span id="score">0</span>
-		    <br>
-		    Volume: <span id ="volume_used">0</span>
-		    <br>
-		    <span id="timer">0:00</span>
-		    <br>
-		    Next piece: <span id="nextPiece"></span>
-		    <br>
-		</font>
-		<select id = "avail_blocks" onchange = "selectChange(this)">
-		</select>
-  			<br>
+	    	<font color ="white">	    	
+		    	Mode: <span id = "mode">Freeplay</span>
+		    	<br/>	
+			    Volume: <span id ="volume_used">0</span>
+			    <br/>
+			    Score: <span id="score">0</span>
+			    <br/>			    
+			    <span id="timer">0:00</span>
+			    <br/>
+			    <span id="showNextPiece">Next piece: <span id="nextPiece"></span><br/></span>
+			    <select id="avail_blocks" onchange="selectChange(this)">
+				</select>
+			</font>
 	    </div>
     </div>
 
@@ -94,12 +113,16 @@
 		var volume_doc = document.getElementById( 'volume_used' );
 		var blocker = document.getElementById("blocker");
 		var nextPiece_doc = document.getElementById( 'nextPiece' );
+		var showNextPiece_doc = document.getElementById( 'showNextPiece' );
 		var game_mode = document.getElementById("mode");
 		var avail_blocks = document.getElementById("avail_blocks");
-		var block;
+		var score_doc = document.getElementById("score");
+		var menu_doc = document.getElementById("menu");
+		var reMenu_doc = document.getElementById("reMenu");
+
 
 		var STEP_SIZE = 50;
-		var ALIVE_TIME = 60000.0;	// time during which the block is alive, in milliseconds
+		var ALIVE_TIME = 30 * 1000.0;	// time during which the block is alive, in milliseconds
 		var FLOOR_SIZE = 1000;
 		var FLOOR_SIZE_HALF = FLOOR_SIZE / 2;
 		var INIT_OPACITY = 0.7;
@@ -112,14 +135,6 @@
         var min_x, min_y, min_z, max_x, max_y, max_z;
         var box_material = new THREE.LineBasicMaterial( { color: colorAgainstTexture } );
         var boundingBox = null, cube_vol = 0;
-
-        // list to hold blocks we created
-        var block_list = new Array();
-
-        //level variables
-		var level_mode = false;
-		//var level_1 = ["straight3","straight3","straight3","straight3","cross_block","cross_block","cross_block"];
-		var level_1 = ["cross_block", "lightning", "straight3", "two_blocks", "short_T", "straight3", "lightning", "two_blocks"];
 
 		// Load the background texture
         var texture = THREE.ImageUtils.loadTexture( 'textures/space2.jpg' );
@@ -137,9 +152,10 @@
         // Used in initParticles()
 		var emitter, particleGroup;
 
-		init();
-		initParticles();
-		animate();
+		var game;
+
+		// initial javascript code
+		hideElement(reMenu_doc);
 
 		function init() {
 			// initialize min max value
@@ -262,7 +278,6 @@
 
         	particleGroup.addEmitter( emitter );
         	scene.add( particleGroup.mesh );
-        	console.log(scene);
         }		
 
 		function animate() {
@@ -300,7 +315,7 @@
 
 			if (rollOverMesh.material.opacity < 1.0) {
 				// update time
-				elapsedTime = time - BlockGenerator.generatedTime;
+				elapsedTime = time - game.currentBlock.generatedTime;
 				timeRemaining = Math.max(ALIVE_TIME - elapsedTime, 0);
 				secs = Math.floor(timeRemaining / 1000.0);
 				mins = Math.floor(secs / 60);

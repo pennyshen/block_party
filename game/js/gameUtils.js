@@ -24,24 +24,29 @@ function moveIntoBounds(pos) {
 	}
 }
 
-function startGame() {
-	blocker.style.display = "none";
-	gameInProgress = true;
-	nextPiece = getRandomMember(BlockGenerator.allShapes);
-	nextPiece_doc.innerHTML = nextPiece;
+function startGame(gameMode) {
+	hideElement(menu_doc);
+	init();
+	initParticles();
+	animate();
+	
+	if (gameMode == "level") {
+		hideElement(showNextPiece_doc);
+		game = new LevelMode(0);
+	} else if (gameMode == "random") {
+		hideElement(avail_blocks);
+		game = new RandomMode();
+	}
 
-	// start with random block
-	block = BlockGenerator.getRandomBlock();
-	rollOverMesh = block.mesh;
+	// blocker.style.display = "none";
+	gameInProgress = true;
+
+	rollOverMesh = game.currentBlock.mesh;
 
 	scene.add( rollOverMesh );
 	rollOverMesh.position.x = STEP_SIZE / 2; 
 	rollOverMesh.position.y = STEP_SIZE / 2; 
 	rollOverMesh.position.z = STEP_SIZE / 2;
-
-	// previewMesh = BlockGenerator.getBlock("two_blocks", "red");
-	// previewMesh.position.set(100, 100, 100);
-	// backgroundScene.add( previewMesh );
 }
 
 // draws the normal line for debugging
@@ -160,11 +165,11 @@ function geo2line( geo ) // credit to WestLangley!
 //get show minimum bounding box
 function getBoundingBox() {
 	//goes through all the cubes and find the minimum and maximum x, y, z
-	for (var i =0 ; i < block_list.length; i++) {
-		var ver = block_list[i].geometry.vertices;
+	for (var i =0 ; i < game.existingBlocks.length; i++) {
+		var ver = game.existingBlocks[i].mesh.geometry.vertices;
 		for (var j = 0; j < ver.length; j++) {
 			var pos = new THREE.Vector3();
-			pos.addVectors(ver[j], block_list[i].position);
+			pos.addVectors(ver[j], game.existingBlocks[i].mesh.position);
 
 			min_x = Math.min(min_x, pos.x);
 			min_y = Math.min(min_y, pos.y);
@@ -178,7 +183,7 @@ function getBoundingBox() {
 
 	// calcualtes the volume of the bounding box
 	cube_vol = (max_x - min_x) * (max_y - min_y) * (max_z - min_z);
-	score.innerHTML = '' + Math.round((BlockGenerator.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100)+ '%';
+	score_doc.innerHTML = '' + Math.round((game.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100) + '%';
 	
 	scene.remove(boundingBox);
 
@@ -193,17 +198,33 @@ function getBoundingBox() {
 	scene.add(boundingBox);
 }
 //handler for change in block selection list
-function selectChange(select){
-	var selectedOption = select.options[select.selectedIndex];
-	change_rollOver(selectedOption.innerHTML);
+function selectChange(select) {
+	game.switchBlock(select.selectedIndex);
+	// var selectedOption = select.options[select.selectedIndex];
+	// change_rollOver(selectedOption.innerHTML);
 
 }
 //called at the end of the level
-function endLevel(){
-	score.innerHTML = '' + Math.round((BlockGenerator.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100) + "/100";
+function endLevel() {
+	score_doc.innerHTML = '' + Math.round((BlockGenerator.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100) + "/100";
 	gameInProgress = false;
 	timer.innerHTML = '';
 	nextPiece_doc.innerHTML = '';
 	//clear unnecessary fields
 
+}
+
+function cloneVector(v) {
+  	return {x: v.x, y: v.y, z: v.z};
+};
+
+
+
+function cloneVectors(vectors) {
+	var i;
+	var newVectors = [];
+	for (i = 0; i < vectors.length; i++) {
+		newVectors[i] = cloneVector(vectors[i]);
+	}
+	return newVectors;
 }

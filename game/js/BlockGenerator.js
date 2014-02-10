@@ -75,73 +75,6 @@ BlockGenerator.shapesToColors = (function() {
 	return toReturn;
 })();
 
-BlockGenerator.generatedTime = 0;	// time at which the last block was generated
-BlockGenerator.currentBlock = {};	// name of the current block
-
-// all positions of existing blocks
-BlockGenerator.existingBlocks = {};
-
-BlockGenerator.totalVolume = 0;
-
-
-BlockGenerator.isPosLegal = function(realPosition) {
-	var positions, i, pos;
-	var numUnits = FLOOR_SIZE_HALF / STEP_SIZE;
-
-    positions = this.getPositions(realPosition);
-    for (i = 0; i < positions.length; i++) {
-        pos = positions[i];
-
-        // check with other existing blocks
-        if (getKeyString(pos) in this.existingBlocks) {
-        	pos_illegal_code = 1;
-            return false;
-        }
-        // check with edges
-        if (pos.y < 0
-        	|| pos.x < -numUnits || pos.x >= numUnits
-        	|| pos.z < -numUnits || pos.z >= numUnits) {
-        	pos_illegal_code = 2;
-        	return false
-        }
-    }
-
-    return true;
-}
-
-BlockGenerator.addToExisting = function(realPosition) {
-	var i, positions, position;
-	
-	positions = this.getPositions(realPosition);
-	for (i = 0; i < positions.length; i++) {
-		position = positions[i];
-		this.existingBlocks[getKeyString(position)] = true;
-	}
-	this.totalVolume += positions.length;
-}
-
-BlockGenerator.getPositions = function(realPosition) {
-	var shape = this.currentBlock;
-	var position = realPosition.clone();
-	var positions = [];
-	var i, shapePos;
-
-	position.x = Math.floor(position.x / STEP_SIZE);
-	position.y = Math.floor(position.y / STEP_SIZE);
-	position.z = Math.floor(position.z / STEP_SIZE);
-	positions.push(position);
-
-	for (i = 0; i < shape.length; i++) {
-		shapePos = this.cloneVector(shape[i]);
-		shapePos.x += position.x;
-		shapePos.y += position.y;
-		shapePos.z += position.z;
-		positions.push(shapePos);
-	}
-
-	return positions;
-}
-
 BlockGenerator.getCube = function() {
 	return new THREE.CubeGeometry(STEP_SIZE, STEP_SIZE, STEP_SIZE);
 }
@@ -151,18 +84,16 @@ BlockGenerator.getRandomBlock = function() {
 	return this.generate(shapeName);
 }
 
-BlockGenerator.getBlock = function(shape, colorName) {
-	var block = {};
+BlockGenerator.getBlock = function(shapeName) {
+	var shape = this.shapes[shapeName];
+	var colorName = this.shapesToColors[shapeName];
 	var i, j;
 	var geometry, tmpGeometry;
-	var shape, material;
+	var material;
 	var normal, intersects;
 	var blockRaycaster = new THREE.Raycaster();
 	var toDelete = [];
 	var mesh;
-
-	// copy the shape corresponding to shapeName from internal map into a new shape
-	
 
 	// merge the different cube geometries together
 	geometry = this.getCube();
@@ -179,8 +110,10 @@ BlockGenerator.getBlock = function(shape, colorName) {
 	geometry.verticesNeedUpdate = true;
 
 	material = new THREE.MeshLambertMaterial({ color: this.colors[colorName], opacity: INIT_OPACITY, transparent: true });
-	this.currentBlock = shape;
 	mesh = new THREE.Mesh(geometry, material);
+	mesh.castShadow = true;
+	mesh.receiveShadow = true;
+	mesh.renderDepth = 0.5;	// must be set to < 1 to avoid z-fighting
 
 
 	// raycast itself from the center of each face (negated normal), and whichever face gets intersected
@@ -205,81 +138,11 @@ BlockGenerator.getBlock = function(shape, colorName) {
 	geometry.faces = geometry.faces.filter( function(v) { return v; });
 	geometry.elementsNeedUpdate = true;	// update faces
 
-	//rotation
-	block.rotation = {x:0,y:0,z:0};
-	block.shape = shape;
-	block.mesh = mesh;
-
-
-	return block;
+	return new Block(shapeName, cloneVectors(shape), mesh, Date.now(), {x:0,y:0,z:0});
 }
 
 BlockGenerator.generate = function(shapeName) {
-	block = this.getBlock(this.shapes[shapeName], this.shapesToColors[shapeName]);
-	var mesh = block.mesh;
-	// shadow settings
-	mesh.castShadow = true;
-	mesh.receiveShadow = true;
-	mesh.renderDepth = 0.5;
-
-	// book keeping
-	this.generatedTime = Date.now();
-	this.volume = block.shape.length + 1;
-
-    return block;
+    return this.getBlock(shapeName);
 }
 
-BlockGenerator.rotate = function ( x, y, z ) {
-    block.mesh.rotation.x += x * Math.PI / 180;
-    block.mesh.rotation.y += y * Math.PI / 180;
-    block.mesh.rotation.z += z * Math.PI / 180;
-    // console.log(block.shape[0].x);
-    // var rotationMatrix = new THREE.Quaternion();/
-    // rotationMatrix.setFromEuler(block.mesh.rotation);
-    var rotationMatrix = new THREE.Matrix3();
-    rotationMatrix.set(0,0,1,0,1,0,-1,0,0);
-    // rotationMatrix.makeRotationFromEuler(block.mesh.rotation);
-    for (var i = 0; i < block.shape.length; i++) {
-    	var THREEvector = new THREE.Vector3();
-    	THREEvector = this.cloneVector3(block.shape[i]);
-    	// THREEvector.x = this.cloneVector(block.shape[i]).x, THREEvector.y = this.cloneVector(block.shape[i]).y, THREEvector.z = this.cloneVector(block.shape[i]).z;
-    	
-        // block.shape[i] = THREEvector.applyQuaternion( rotationMatrix );
-        // block.shape[i] = THREEvector.applyAxisAngle(new THREE.Vector3(0,0,0), Math.PI / 180);
-        block.shape[i] = THREEvector.applyMatrix3( rotationMatrix );
 
-        // rotationMatrix.multiplyVector3(
-        //     this.cloneVector(this.shapes[block.shapeName][i])
-        // );
-        this.roundVector(block.shape[i]);
-    }
-
-    this.shape = block.shape;
-
-    // if (Tetris.Board.testCollision(false) === Tetris.Board.COLLISION.WALL) {
-    //     Tetris.Block.rotate(-x, -y, -z); // laziness FTW
-    // }
-};
-
-BlockGenerator.roundVector = function(v) {
-    v.x = Math.round(v.x);
-    v.y = Math.round(v.y);
-    v.z = Math.round(v.z);
-};
-
-BlockGenerator.cloneVectors = function (vectors) {
-	var i;
-	var newVectors = [];
-	for (i = 0; i < vectors.length; i++) {
-		newVectors[i] = this.cloneVector(vectors[i]);
-	}
-	return newVectors;
-}
-
-BlockGenerator.cloneVector = function (v) {
-  return {x: v.x, y: v.y, z: v.z};
-};
-
-BlockGenerator.cloneVector3 = function ( v ) {
-	return new THREE.Vector3( v.x, v.y, v.z );
-};
