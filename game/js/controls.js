@@ -43,6 +43,7 @@ function onDocumentKeyDown( event ) {
         case 17: isCtrlDown = true; break;
         case 187: isEqualsDown = true; break;
         case 189: isDashDown = true; break;
+        case 76: change_to_level(); break;//the "l" key
         case 65: 
             aDown = true;  
             moveLeft(gameBoardOrientation, toMove);
@@ -179,6 +180,57 @@ function rotate( direction ) {
     }
 }
 
+function change_to_level(){
+    if(level_mode==true)
+        return;
+    game_mode.innerHTML = "Level 1";
+    
+    change_rollOver(level_1[0]);
+
+    level_mode = true;
+    //populates the selection button
+    for(var i =0; i<level_1.length;i++){
+        var option = document.createElement("option");
+        option.text = level_1[i];
+        avail_blocks.add(option);
+    }
+    nextPiece_doc.innerHTML = '';
+}
+
+function change_rollOver(shape){
+    block = BlockGenerator.generate(shape);
+    var oldPos = rollOverMesh.position.clone();
+    scene.remove(rollOverMesh);
+    rollOverMesh = block.mesh;
+
+    moveBackward(gameBoardOrientation, oldPos);
+    while (!BlockGenerator.isPosLegal(oldPos)) {
+        if (pos_illegal_code == 1) {
+            moveBackward(gameBoardOrientation, oldPos);
+        } else if (pos_illegal_code == 2) {
+            break;
+        }
+    }
+
+    // on the edge already. first move back until we're okay then move up until we're okay
+    if (pos_illegal_code == 2) {
+        moveForward(gameBoardOrientation, oldPos);
+        while (!BlockGenerator.isPosLegal(oldPos)) {
+            if (pos_illegal_code == 1) {
+                oldPos.y += STEP_SIZE;
+            } else if (pos_illegal_code == 2) {
+                moveForward(gameBoardOrientation, oldPos);
+            }
+        }
+    }
+
+    rollOverMesh.position.x = oldPos.x;
+    rollOverMesh.position.y = oldPos.y;
+    rollOverMesh.position.z = oldPos.z;
+    scene.add(rollOverMesh);
+
+}
+
 function add_voxel( ) {
     var voxel = rollOverMesh;
     var oldPos = voxel.position.clone();
@@ -204,12 +256,25 @@ function add_voxel( ) {
 
     // calculate new bounding box
     getBoundingBox();
+
+    //check to see if level mode
+    if(level_mode){
+        avail_blocks.remove(avail_blocks.selectedIndex);
+        if(avail_blocks.length==0){
+            endLevel();
+            return;
+        }
+        nextPiece = avail_blocks[avail_blocks.selectedIndex].innerHTML;
+    }
    
     // create new block and use that new block as rollover
     block = BlockGenerator.generate(nextPiece);
     rollOverMesh = block.mesh;
-    nextPiece = getRandomMember(BlockGenerator.allShapes);
-    nextPiece_doc.innerHTML = nextPiece;
+
+    if(!level_mode){
+        nextPiece = getRandomMember(BlockGenerator.allShapes);
+        nextPiece_doc.innerHTML = nextPiece;
+    }
     
     // placement of the new block - first move towards user's perspective until we can't move anymore
     moveBackward(gameBoardOrientation, oldPos);

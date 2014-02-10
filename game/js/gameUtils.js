@@ -192,3 +192,18 @@ function getBoundingBox() {
 	boundingBox.visible = false;
 	scene.add(boundingBox);
 }
+//handler for change in block selection list
+function selectChange(select){
+	var selectedOption = select.options[select.selectedIndex];
+	change_rollOver(selectedOption.innerHTML);
+
+}
+//called at the end of the level
+function endLevel(){
+	score.innerHTML = '' + Math.round((BlockGenerator.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100) + "/100";
+	gameInProgress = false;
+	timer.innerHTML = '';
+	nextPiece_doc.innerHTML = '';
+	//clear unnecessary fields
+
+}
