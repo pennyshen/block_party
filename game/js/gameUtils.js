@@ -29,7 +29,7 @@ function startGame(gameMode) {
 	init();
 	initParticles();
 	animate();
-	
+
 	if (gameMode == "level") {
 		hideElement(showNextPiece_doc);
 		game = new LevelMode(0);
@@ -162,41 +162,7 @@ function geo2line( geo ) // credit to WestLangley!
     return geometry;
 }
 
-//get show minimum bounding box
-function getBoundingBox() {
-	//goes through all the cubes and find the minimum and maximum x, y, z
-	for (var i =0 ; i < game.existingBlocks.length; i++) {
-		var ver = game.existingBlocks[i].mesh.geometry.vertices;
-		for (var j = 0; j < ver.length; j++) {
-			var pos = new THREE.Vector3();
-			pos.addVectors(ver[j], game.existingBlocks[i].mesh.position);
 
-			min_x = Math.min(min_x, pos.x);
-			min_y = Math.min(min_y, pos.y);
-			min_z = Math.min(min_z, pos.z);
-
-			max_x = Math.max(max_x, pos.x);
-			max_y = Math.max(max_y, pos.y);
-			max_z = Math.max(max_z, pos.z);
-		}
-	}
-
-	// calcualtes the volume of the bounding box
-	cube_vol = (max_x - min_x) * (max_y - min_y) * (max_z - min_z);
-	score_doc.innerHTML = '' + Math.round((game.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100) + '%';
-	
-	scene.remove(boundingBox);
-
-	var geom = new THREE.CubeGeometry(max_x - min_x, max_y - min_y, max_z - min_z);
-	boundingBox = new THREE.Line( geo2line(geom), box_material, THREE.LinePieces );
-
-	boundingBox.position.x = (max_x + min_x) / 2;
-	boundingBox.position.y = (max_y + min_y) / 2;
-	boundingBox.position.z = (max_z + min_z) / 2;
-
-	boundingBox.visible = false;
-	scene.add(boundingBox);
-}
 //handler for change in block selection list
 function selectChange(select) {
 	game.switchBlock(select.selectedIndex);

@@ -10,7 +10,7 @@ body {
     overflow: hidden;
 }
 
-#menu, #reMenu {
+.nav {
     position: absolute;
     z-index: 1;
     top: 0;
@@ -20,7 +20,9 @@ body {
     background: black;
 }
 
-#reMenu {background: transparent;}
+#endScreen {
+    background-color: rgba(0,0,0,0.5);
+}
 
 h1, p, a {
     position: relative;  

@@ -13,6 +13,10 @@ LevelMode.levels = [
 	["cross_block", "lightning", "straight3", "two_blocks", "short_T", "straight3", "lightning", "two_blocks"]
 ];
 
+LevelMode.passRate = [
+	60
+];
+
 LevelMode.prototype = Object.create(Game.prototype);
 
 LevelMode.prototype.populateSelection = function() {
@@ -54,11 +58,30 @@ LevelMode.prototype.switchBlock = function(index) {
 }
 
 LevelMode.prototype.getNextBlock = function() {
-	var block;
+	if (this.levelBlocks.length <= 0) {
+		this.endGame();
+		return;
+	}
 
+	var block;
 	block = BlockGenerator.generate(this.levelBlocks[0]);
 	this.currentBlock = block;
 	this.levelBlocks.splice( this.levelBlocks.indexOf(this.currentBlock.shapeName), 1 );
 	this.populateSelection();
+};
+
+LevelMode.prototype.endGame = function() {
+	// hideElement(container);
+	showElement(endScreen_doc);
+	passOrFail = '';
+	console.log(endScreen_doc);
+
+	if (game.score >= LevelMode.passRate[this.level]) {
+		passOrFail = "PASSED!";
+	} else {
+		passOrFail = "FAILED!";
+	}
+
+	endScreen_doc.innerHTML = '<h1>' + passOrFail + "</h1>";
 
 };

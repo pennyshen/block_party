@@ -17,3 +17,7 @@ RandomMode.prototype.getNextBlock = function() {
 	return toReturn;
 };
 
+RandomMode.prototype.endGame = function() {
+
+};
+

@@ -36,8 +36,8 @@ function onDocumentKeyDown( event ) {
             break;            
         case 16: 
             isShiftDown = true; 
-            if (boundingBox) {
-                boundingBox.visible = !boundingBox.visible;
+            if (game.boundingBox) {
+                game.boundingBox.visible = !game.boundingBox.visible;
             }
             break;
         case 17: isCtrlDown = true; break;
@@ -285,9 +285,6 @@ function add_voxel( ) {
 
     blockNoise.load();
     blockNoise.play();
-
-    // calculate new bounding box
-    getBoundingBox();
    
     // create new block and use that new block as rollover
     game.getNextBlock();
