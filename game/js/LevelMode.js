@@ -72,6 +72,7 @@ LevelMode.prototype.getNextBlock = function() {
 
 LevelMode.prototype.endGame = function() {
 	// hideElement(container);
+	gameInProgress = false;
 	showElement(endScreen_doc);
 	passOrFail = '';
 	console.log(endScreen_doc);
