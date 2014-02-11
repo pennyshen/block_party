@@ -45,33 +45,32 @@
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onclick="startGame('random')" >Random mode</a>
 		<br>
-		<a href="javascript: void(0)" class="menuItem">Instructions</a>
+		<a href="javascript: void(0)" class="menuItem" onClick="showElement(instructions_doc)">Instructions</a>
 		<br>
 	</div>	
 
-	<div id="endScreen" class="nav">
+	<div id="instructions" class="nav">
+		<h1>Instructions</h1>
+		<br>
+		<a class="instructions">W,A,S,D = Move</a>
+		<br>
+		<a class="instructions">1,2,3 = Rotate</a>
+		<br>
+		<a class="instructions">SPACE = Place block</a>
+		<br>
+		<a class="instructions">MOUSE WHEEL = Zoom</a>
+		<br>
+		<a class="instructions">LEFT CLICK and DRAG = Rotate camera</a>
+		<br>
+		<a class="instructions">RIGHT CLICK and DRAG = Pan camera</a>
+		<br>
+		<a class="instructions">SHIFT = Toggle bounding box</a>
+		<br>
+		<a href="javascript: void(0)" class="menuItem" onClick="showElement(menu_doc)">Back</a>
 	</div>
 
-<!--     <div id="blocker" onclick=startGame()>
-        <div id="instructions">
-            <span style="font-size:60px">Click to play</span>
-            <br />
-            <br />
-            W,A,S,D = Move
-            <br /> 
-            SPACE = Place piece
-            <br />
-            MOUSE WHEEL = Zoom
-            <br />
-            LEFT CLICK and DRAG = Rotate camera
-            <br />
-            RIGHT CLICK and DRAG = Pan camera
-            <br />
-            SHIFT = Toggle bounding box
-        </div>
-
-    </div>  -->
-
+	<div id="endScreen" class="nav">
+	</div>
 
     <div id="game">
 	    <div id="info">
@@ -109,7 +108,6 @@
 		var gameBoardOrientation;
 		var controls, time = Date.now();
 
-		var instructions = document.getElementById( 'instructions' );
 		var timer = document.getElementById( 'timer');
 		var volume_doc = document.getElementById( 'volume_used' );
 		var blocker = document.getElementById("blocker");
@@ -120,7 +118,8 @@
 		var menu_doc = document.getElementById("menu");
 		var reMenu_doc = document.getElementById("reMenu");
 		var endScreen_doc = document.getElementById("endScreen");
-		var nav_items = [menu_doc, reMenu_doc, endScreen_doc];
+		var instructions_doc = document.getElementById("instructions");
+		var nav_items = [menu_doc, reMenu_doc, endScreen_doc, instructions_doc];
 
 
 		var STEP_SIZE = 50;
@@ -155,8 +154,7 @@
 
 		var game;
 
-		hideElement(endScreen_doc);
-		hideElement(reMenu_doc);
+		showElement(menu_doc);
 
 		function init() {
 			// initialize min max value
@@ -268,10 +266,10 @@
 
         		colorStart: new THREE.Color('white'),
         		colorEnd: new THREE.Color('white'),
-        		sizeStart: 30,
-        		sizeEnd: 30,
+        		sizeStart: 35,
+        		sizeEnd: 35,
                 opacityStart: 0,
-                opacityMiddle: 1,
+                opacityMiddle: .5,
                 opacityEnd: 0,
 
         		particleCount: 10000

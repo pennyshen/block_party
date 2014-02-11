@@ -102,6 +102,8 @@ Game.prototype = {
 		score_doc.innerHTML = this.score + '%';
 		
 		scene.remove(this.boundingBox);
+		this.boundingBox.geometry.dispose();
+		this.boundingBox.material.dispose();
 
 		var geom = new THREE.CubeGeometry(max_x - min_x, max_y - min_y, max_z - min_z);
 		this.boundingBox = new THREE.Line( geo2line(geom), Game.box_material, THREE.LinePieces );

@@ -7,6 +7,11 @@ function Block(shapeName, shape, mesh, generatedTime, rotation) {
 	this.rotation = rotation;
 }
 
+Block.prototype.removeFromScene() {
+    scene.remove(this.mesh);
+    this.mesh.geometry.dispose();
+    this.mesh.material.dispose();
+}
 
 Block.prototype.rotate = function ( x, y, z ) {
     this.mesh.rotation.x += x * Math.PI / 180;

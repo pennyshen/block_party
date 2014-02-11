@@ -40,7 +40,7 @@ LevelMode.prototype.switchBlock = function(index) {
 
 	// first push the current block back in and then remove it
 	this.levelBlocks.push(this.currentBlock.shapeName);
-	scene.remove(this.currentBlock.mesh);
+	this.currentBlock.removeFromScene();
 
 	this.currentBlock = BlockGenerator.generate(this.levelBlocks[index]);
 	rollOverMesh = this.currentBlock.mesh;

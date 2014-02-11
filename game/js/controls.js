@@ -180,22 +180,6 @@ function rotate( direction ) {
     }
 }
 
-
-function change_rollOver(shape){
-    block = BlockGenerator.generate(shape);
-    var oldPos = rollOverMesh.position.clone();
-    scene.remove(rollOverMesh);
-    rollOverMesh = block.mesh;
-
-    moveTowardsPlayer(oldPos);
-
-    rollOverMesh.position.x = oldPos.x;
-    rollOverMesh.position.y = oldPos.y;
-    rollOverMesh.position.z = oldPos.z;
-    scene.add(rollOverMesh);
-
-}
-
 function moveTowardsPlayer(oldPos) {
     // placement of the new block - first move towards user's perspective until we can't move anymore
     while (!game.isPosLegal(oldPos)) {
