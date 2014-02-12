@@ -34,6 +34,7 @@ Game.prototype = {
 	addCurrentToExisting: function(realPosition) {
 		var i, positions, position;
 		positions = this._getPositions(realPosition, this.currentBlock.shape);
+		console.log(positions);
 		for (i = 0; i < positions.length; i++) {
 			position = positions[i];
 			this.existingBlocks[getKeyString(position)] = true;

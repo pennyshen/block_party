@@ -85,7 +85,7 @@ BlockGenerator.getRandomBlock = function() {
 }
 
 BlockGenerator.getBlock = function(shapeName) {
-	var shape = this.shapes[shapeName];
+	var shape = []; 
 	var colorName = this.shapesToColors[shapeName];
 	var i, j;
 	var geometry, tmpGeometry;
@@ -94,6 +94,11 @@ BlockGenerator.getBlock = function(shapeName) {
 	var blockRaycaster = new THREE.Raycaster();
 	var toDelete = [];
 	var mesh;
+
+	// clone the shape.
+	for ( i = 0; i < this.shapes[shapeName].length; i++ ) {
+		shape[i] = cloneVector(this.shapes[shapeName][i]);
+	}
 
 	// merge the different cube geometries together
 	geometry = this.getCube();
@@ -138,7 +143,7 @@ BlockGenerator.getBlock = function(shapeName) {
 	geometry.faces = geometry.faces.filter( function(v) { return v; });
 	geometry.elementsNeedUpdate = true;	// update faces
 
-	return new Block(shapeName, cloneVectors(shape), mesh, Date.now(), {x:0,y:0,z:0});
+	return new Block(shapeName, shape, mesh, Date.now(), {x:0,y:0,z:0});
 }
 
 BlockGenerator.generate = function(shapeName) {

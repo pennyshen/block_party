@@ -23,15 +23,15 @@ function onDocumentKeyDown( event ) {
 
     switch( event.keyCode ) {
         case 49: // NUMBER 1
-            rotate( "yaw" );
+            rotate( gameBoardOrientation, "yaw" );
             rotated = true;
             break;
         case 50: // NUMBER 2
-            rotate( "pitch" );
+            rotate( gameBoardOrientation, "pitch" );
             rotated = true;
             break;
         case 51: // NUMBER 3
-            rotate( "roll" );
+            rotate( gameBoardOrientation, "roll" );
             rotated = true;
             break;            
         case 16: 
@@ -88,12 +88,13 @@ function onDocumentKeyDown( event ) {
         newPos = rollOverMesh.position.clone();
 
         while (!game.isPosLegal(newPos)) {
-            if (pos_illegal_code == 2) {
-                moveIntoBounds(newPos);
-                rollOverMesh.position = newPos;    
-            } else {
-                newPos.y += STEP_SIZE;
-            }
+            // if (pos_illegal_code == 2) {
+            //     moveIntoBounds(newPos);
+            //     rollOverMesh.position = newPos;    
+            // } else {
+            //     newPos.y += STEP_SIZE;
+            // }
+            newPos.y += STEP_SIZE;
         }
         rollOverMesh.position = newPos;
     }
@@ -214,16 +215,28 @@ function moveBackward( axis, position ) {
 }
 
 // directions: "pitch", "yaw", "roll"
-function rotate( direction ) {
+function rotate( axis, direction ) {
+    console.log(axis);
     if ( direction == "yaw" ) {
         game.currentBlock.rotate( 0, 90, 0 );
     }
     if ( direction == "pitch" ) {
-        game.currentBlock.rotate( 90, 0, 0 );
+        switch ( axis ) {
+            case 1: game.currentBlock.rotate(0,0,90); break;
+            case 2: game.currentBlock.rotate(90,0,0); break;
+            case 3: game.currentBlock.rotate(90,0,0); break;
+            case 4: game.currentBlock.rotate(0,0,90); break;
+      }  
     }
     if ( direction == "roll" ) {
-        game.currentBlock.rotate( 0, 0, 90 );
+        switch ( axis ) {
+            case 1: game.currentBlock.rotate(0,0,-90); break;
+            case 2: game.currentBlock.rotate(-90,0,0); break;
+            case 3: game.currentBlock.rotate(-90,0,0); break;
+            case 4: game.currentBlock.rotate(0,0,-90); break;
+        }
     }
+
 }
 
 

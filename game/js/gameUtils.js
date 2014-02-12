@@ -7,21 +7,21 @@ function moveIntoBounds(pos) {
 
 	console.log("moving into bounds");
 
-	while (!BlockGenerator.isPosLegal(pos)) {
-		if (pos_illegal_code != 2) {
-			return;
-		}
+	// while (!BlockGenerator.isPosLegal(pos)) {
+	// 	if (pos_illegal_code != 2) {
+	// 		return;
+	// 	}
 
-		for (var i = 0; i < axes.length; i++) {
-			axis = axes[i];
-			if (pos[axis] < 0) {
-				pos[axis] += STEP_SIZE;
-			} else if (pos[axis] >= numUnits) {
-				pos[axis] -= STEP_SIZE;
-			}
-		}
+	// 	for (var i = 0; i < axes.length; i++) {
+	// 		axis = axes[i];
+	// 		if (pos[axis] < 0) {
+	// 			pos[axis] += STEP_SIZE;
+	// 		} else if (pos[axis] >= numUnits) {
+	// 			pos[axis] -= STEP_SIZE;
+	// 		}
+	// 	}
 
-	}
+	// }
 }
 
 function startGame(gameMode) {
