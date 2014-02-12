@@ -7,14 +7,14 @@ BlockGenerator.shapes = {
 	"two_blocks": [{x: 1, y: 0, z: 0}],
 	"L":
 	[
-        {x: -1, y: 0, z: 0},
-        {x: -1, y: 1, z: 0},
-        {x: -1, y: 2, z: 0}
+        {x: 0, y: -1, z: 0},
+        {x: 0, y: 1, z: 0},
+        {x: -1, y: -1, z: 0}
     ],
     "straight3": // one straight line consisting of 3 blocks
     [
         {x: 0, y: 1, z: 0},
-        {x: 0, y: 2, z: 0},
+        {x: 0, y: -1, z: 0},
     ],
     "square_flat":
     [
@@ -24,15 +24,15 @@ BlockGenerator.shapes = {
     ],
     "short_T": // typical tetris short t 
     [
-        {x: 1, y: 1, z: 0},
+        {x: 0, y: 1, z: 0},
         {x: 1, y: 0, z: 0},
-        {x: 2, y: 0, z: 0}
+        {x: -1, y: 0, z: 0}
     ],
     "lightning": // typical tetris lighting-looking z
     [
-        {x: 0, y: 1, z: 0},
-        {x: -1, y: 1, z: 0},
-        {x: -1, y: 2, z: 0}
+        {x: 0, y: -1, z: 0},
+        {x: 1, y: 0, z: 0},
+        {x: 1, y: 1, z: 0}
     ],
     "cross_block":
     [
