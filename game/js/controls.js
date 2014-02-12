@@ -32,7 +32,8 @@ function onDocumentKeyDown( event ) {
             break;
         case 51: // NUMBER 3
             rotate( gameBoardOrientation, "roll" );
-            rotated = true;          
+            rotated = true;    
+            break;      
         case 16: 
             isShiftDown = true; 
             if (game.boundingBox) {
@@ -99,6 +100,10 @@ function onDocumentKeyDown( event ) {
             // }
             newPos.y += STEP_SIZE;
         }
+        while(game.isPosLegal(newPos)) {
+            newPos.y -= STEP_SIZE;
+        }
+        newPos.y += STEP_SIZE;
         rollOverMesh.position = newPos;
     }
 
@@ -106,7 +111,6 @@ function onDocumentKeyDown( event ) {
     if (moved) {
         newPos = rollOverMesh.position.clone();
         newPos.add(toMove);
-        newPos.y = STEP_SIZE / 2;
 
         while ( !game.isPosLegal(newPos) ) {
             // if it's the boundary, just don't let the player move it
@@ -117,6 +121,11 @@ function onDocumentKeyDown( event ) {
             }
             newPos.y += STEP_SIZE;
         }
+        while(game.isPosLegal(newPos)) {
+            newPos.y -= STEP_SIZE;
+        }
+        newPos.y += STEP_SIZE;
+
         rollOverMesh.position = newPos;
     }
 }
