@@ -96,17 +96,19 @@
 		var container, stats;
 		var camera, scene, renderer, projector;
 		var mouse2D, mouse3D, raycaster;
+		var cameraInitPos = new THREE.Vector3(5, 325, 694);
+		var cameraInitRotation = new THREE.Euler(-0.4379673247787578, 0.00652451553634967, 0.00305539757043725, "XYZ");
 
 		var theta = 45 * 0.5;
 		var blockNoise = new Audio("sounds/wood-cracking-1.wav");
 		var collisionNoise = new Audio("sounds/beep-03.mp3");
 
-		var rollOverMesh, rollOverMaterial;
+		var rollOverMesh;
 		var floor;
-		var previewMesh;
 		var i, intersector;
 		var gameBoardOrientation;
-		var controls, time = Date.now();
+		var controls;
+		var time = Date.now();
 
 		var timer = document.getElementById( 'timer');
 		var volume_doc = document.getElementById( 'volume_used' );
@@ -121,6 +123,8 @@
 		var instructions_doc = document.getElementById("instructions");
 		var nav_items = [menu_doc, reMenu_doc, endScreen_doc, instructions_doc];
 
+		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Back</a>';
+
 
 		var STEP_SIZE = 50;
 		var ALIVE_TIME = 30 * 1000.0;	// time during which the block is alive, in milliseconds
@@ -131,10 +135,6 @@
 		var pos_illegal_code = 0;
 
 		var elapsedTime, timeRemaining, mins, secs;
-
-        // keeping track of max and min of x,y,z coordinates
-        var min_x, min_y, min_z, max_x, max_y, max_z;
-        
 
 		// Load the background texture
         var texture = THREE.ImageUtils.loadTexture( 'textures/space2.jpg' );
@@ -155,12 +155,11 @@
 		var game;
 
 		showElement(menu_doc);
+		init();
+		initParticles();
+		animate();
 
 		function init() {
-			// initialize min max value
-			min_x = min_y = min_z = Number.MAX_VALUE;
-			max_x = max_y = max_z = Number.MIN_VALUE;
-
 			container = document.getElementById( 'game' );
 			document.body.appendChild( container );
 
@@ -182,9 +181,9 @@
         	backgroundCamera.lookAt(backgroundMesh.position);
 
 			camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-            camera.position.x = 5;
-            camera.position.y = 325;
-            camera.position.z = 694;
+            // camera.position.x = 5;
+            // camera.position.y = 325;
+            // camera.position.z = 694;
 
 			scene = new THREE.Scene();
 			renderer = new THREE.WebGLRenderer( { antialias: true } );

@@ -83,6 +83,7 @@ LevelMode.prototype.endGame = function() {
 		passOrFail = "FAILED!";
 	}
 
-	endScreen_doc.innerHTML = '<h1>' + passOrFail + "</h1>";
+	endScreen_doc.innerHTML = '<h1>' + passOrFail + "</h1><br>"
+		+ backToMenu_string;
 
 };

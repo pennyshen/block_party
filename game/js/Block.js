@@ -7,7 +7,7 @@ function Block(shapeName, shape, mesh, generatedTime, rotation) {
 	this.rotation = rotation;
 }
 
-Block.prototype.removeFromScene() {
+Block.prototype.removeFromScene = function() {
     scene.remove(this.mesh);
     this.mesh.geometry.dispose();
     this.mesh.material.dispose();
