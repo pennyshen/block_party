@@ -31,7 +31,6 @@ Block.prototype.rotate = function ( x, y, z ) {
         // this.shape[i] = THREEvector.applyQuaternion( rotationMatrix );
         // this.shape[i] = THREEvector.applyAxisAngle(new THREE.Vector3(0,0,0), Math.PI / 180);
         this.shape[i] = THREEvector.applyMatrix3( rotationMatrix );
-
         // rotationMatrix.multiplyVector3(
         //     this.cloneVector(this.shapes[this.shapeName][i])
         // );

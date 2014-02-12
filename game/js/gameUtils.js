@@ -44,7 +44,6 @@ function startGame(gameMode) {
 		game = new RandomMode();
 	}
 
-	// blocker.style.display = "none";
 	gameInProgress = true;
 
 	rollOverMesh = game.currentBlock.mesh;

@@ -27,12 +27,12 @@ function onDocumentKeyDown( event ) {
             rotated = true;
             break;
         case 50: // NUMBER 2
-            // rotate( "pitch" );
-            // rotated = true;
+            rotate( "pitch" );
+            rotated = true;
             break;
         case 51: // NUMBER 3
-            // rotate( "roll" );
-            // rotated = true;
+            rotate( "roll" );
+            rotated = true;
             break;            
         case 16: 
             isShiftDown = true; 
@@ -169,6 +169,7 @@ function moveBackward( axis, position ) {
 
 // directions: "pitch", "yaw", "roll"
 function rotate( direction ) {
+    console.log(direction);
     if ( direction == "yaw" ) {
         game.currentBlock.rotate( 0, 90, 0 );
     }

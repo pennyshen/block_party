@@ -4,6 +4,7 @@ function Game() {
 	this.score = 0;
 	this.existingBlocks = [];
 	this.currentBlock = {};
+	this.currentAliveTime = 0;
 	this.boundingBox = null;
 	
 	// keeping track of max and min of x,y,z coordinates

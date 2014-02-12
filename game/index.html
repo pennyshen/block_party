@@ -127,14 +127,14 @@
 
 
 		var STEP_SIZE = 50;
-		var ALIVE_TIME = 30 * 1000.0;	// time during which the block is alive, in milliseconds
+		var ALIVE_TIME = 10 * 1000.0;	// time during which the block is alive, in milliseconds
 		var FLOOR_SIZE = 1000;
 		var FLOOR_SIZE_HALF = FLOOR_SIZE / 2;
 		var INIT_OPACITY = 0.7;
 
 		var pos_illegal_code = 0;
 
-		var elapsedTime, timeRemaining, mins, secs;
+		var timeRemaining, mins, secs;
 
 		// Load the background texture
         var texture = THREE.ImageUtils.loadTexture( 'textures/space2.jpg' );
@@ -295,7 +295,7 @@
 			renderer.clear();
 			renderer.render( backgroundScene , backgroundCamera );
 			renderer.render( scene, camera );
-			time = Date.now();
+			
 
 			if (Math.abs(camera.position.x) > Math.abs(camera.position.z)) {
 				if (camera.position.x < 0) {
@@ -311,23 +311,24 @@
 				}
 			}
 
-			if (rollOverMesh.material.opacity < 1.0) {
-				// update time
-				elapsedTime = time - game.currentBlock.generatedTime;
-				timeRemaining = Math.max(ALIVE_TIME - elapsedTime, 0);
-				secs = Math.floor(timeRemaining / 1000.0);
-				mins = Math.floor(secs / 60);
-				timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs).slice(-2);
+			if (gameInProgress) {
+				if (game.currentAliveTime < ALIVE_TIME) {
+					// update time
+					timeRemaining = Math.max(ALIVE_TIME - game.currentAliveTime, 0);
+					secs = Math.floor(timeRemaining / 1000.0);
+					mins = Math.floor(secs / 60);
+					timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs).slice(-2);
 
-				// update opacity
-				rollOverMesh.material.opacity = INIT_OPACITY + elapsedTime / ALIVE_TIME * (1 - INIT_OPACITY);
-
-				// check if we need new block
-				if (rollOverMesh.material.opacity >= 1.0) {
+					// update opacity
+					rollOverMesh.material.opacity = INIT_OPACITY + game.currentAliveTime / ALIVE_TIME * (1 - INIT_OPACITY);
+				} else {
 					add_voxel();
-				}
+				}				
+
+				game.currentAliveTime += Date.now() - time;
 			}
-			
+
+			time = Date.now();
 		}
 
 	</script>
