@@ -1,11 +1,4 @@
 
-function backToMenu() {
-	game.clearScene();
-	game = null;
-	// camera.position.set(cameraPos.x, cameraPos.y, cameraPos.z);
-	// camera.lookAt(new THREE.Vector3(0, 0, 0));
-	showElement(menu_doc);
-}
 
 function moveIntoBounds(pos) {
 	var axes = ['x', 'y', 'z'];

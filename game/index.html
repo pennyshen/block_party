@@ -72,6 +72,14 @@
 	<div id="endScreen" class="nav">
 	</div>
 
+	<div id="pauseScreen" class="nav">
+		<h1>Paused</h1>
+		<br>
+		<a href="javascript: void(0)" class="menuItem" onClick="resumeGame()">Resume</a>
+		<br>
+		<a href="javascript: void(0)" class="menuItem" onClick="showElement(menu_doc)">End Game</a>
+	</div>
+
     <div id="game">
 	    <div id="info">
 	    	<font color ="white">	    	
@@ -121,7 +129,8 @@
 		var reMenu_doc = document.getElementById("reMenu");
 		var endScreen_doc = document.getElementById("endScreen");
 		var instructions_doc = document.getElementById("instructions");
-		var nav_items = [menu_doc, reMenu_doc, endScreen_doc, instructions_doc];
+		var pauseScreen_doc = document.getElementById("pauseScreen");
+		var nav_items = [menu_doc, reMenu_doc, endScreen_doc, instructions_doc, pauseScreen_doc];
 
 		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Back</a>';
 

@@ -80,6 +80,10 @@ function onDocumentKeyDown( event ) {
             isSpaceDown = true; 
             add_voxel();
             break;
+        case 27:    // esc
+            gameInProgress = false;
+            showElement(pauseScreen_doc);
+            break;
     }
 
 
