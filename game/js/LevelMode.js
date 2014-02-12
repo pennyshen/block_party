@@ -65,6 +65,7 @@ LevelMode.prototype.getNextBlock = function() {
 
 	var block;
 	block = BlockGenerator.generate(this.levelBlocks[0]);
+	this.currentAliveTime = 0;
 	this.currentBlock = block;
 	this.levelBlocks.splice( this.levelBlocks.indexOf(this.currentBlock.shapeName), 1 );
 	this.populateSelection();

@@ -28,6 +28,7 @@ function onDocumentKeyDown( event ) {
             break;
         case 50: // NUMBER 2
 <<<<<<< HEAD
+<<<<<<< HEAD
             rotate( gameBoardOrientation, "pitch" );
             rotated = true;
             break;
@@ -42,6 +43,14 @@ function onDocumentKeyDown( event ) {
             // rotate( "roll" );
             // rotated = true;
 >>>>>>> fec08dffc833218ead4680cd6d2f56f88061c115
+=======
+            rotate( "pitch" );
+            rotated = true;
+            break;
+        case 51: // NUMBER 3
+            rotate( "roll" );
+            rotated = true;
+>>>>>>> 30363ddcf56aa16a247452d94bec2adef64d9a2a
             break;            
         case 16: 
             isShiftDown = true; 
@@ -88,6 +97,10 @@ function onDocumentKeyDown( event ) {
         case 32: 
             isSpaceDown = true; 
             add_voxel();
+            break;
+        case 27:    // esc
+            gameInProgress = false;
+            showElement(pauseScreen_doc);
             break;
     }
 
@@ -178,8 +191,13 @@ function moveBackward( axis, position ) {
 }
 
 // directions: "pitch", "yaw", "roll"
+<<<<<<< HEAD
 function rotate( axis, direction ) {
     console.log(axis);
+=======
+function rotate( direction ) {
+    console.log(direction);
+>>>>>>> 30363ddcf56aa16a247452d94bec2adef64d9a2a
     if ( direction == "yaw" ) {
         game.currentBlock.rotate( 0, 90, 0 );
     }

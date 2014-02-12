@@ -1,11 +1,4 @@
 
-function backToMenu() {
-	game.clearScene();
-	game = null;
-	// camera.position.set(cameraPos.x, cameraPos.y, cameraPos.z);
-	// camera.lookAt(new THREE.Vector3(0, 0, 0));
-	showElement(menu_doc);
-}
 
 function moveIntoBounds(pos) {
 	var axes = ['x', 'y', 'z'];
@@ -64,7 +57,6 @@ function startGame(gameMode) {
 		game = new RandomMode();
 	}
 
-	// blocker.style.display = "none";
 	gameInProgress = true;
 
 	rollOverMesh = game.currentBlock.mesh;
