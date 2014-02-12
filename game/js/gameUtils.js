@@ -5,7 +5,6 @@ function moveIntoBounds(pos) {
 	var numUnits = FLOOR_SIZE_HALF / STEP_SIZE;
 	var axis;
 
-<<<<<<< HEAD
 	console.log("moving into bounds");
 
 	// while (!BlockGenerator.isPosLegal(pos)) {
@@ -23,23 +22,6 @@ function moveIntoBounds(pos) {
 	// 	}
 
 	// }
-=======
-	while (!BlockGenerator.isPosLegal(pos)) {
-		if (pos_illegal_code != 2) {
-			return;
-		}
-
-		for (var i = 0; i < axes.length; i++) {
-			axis = axes[i];
-			if (pos[axis] < 0) {
-				pos[axis] += STEP_SIZE;
-			} else if (pos[axis] >= numUnits) {
-				pos[axis] -= STEP_SIZE;
-			}
-		}
-
-	}
->>>>>>> fec08dffc833218ead4680cd6d2f56f88061c115
 }
 
 function startGame(gameMode) {

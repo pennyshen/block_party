@@ -27,31 +27,12 @@ function onDocumentKeyDown( event ) {
             rotated = true;
             break;
         case 50: // NUMBER 2
-<<<<<<< HEAD
-<<<<<<< HEAD
             rotate( gameBoardOrientation, "pitch" );
             rotated = true;
             break;
         case 51: // NUMBER 3
             rotate( gameBoardOrientation, "roll" );
-            rotated = true;
-=======
-            // rotate( "pitch" );
-            // rotated = true;
-            break;
-        case 51: // NUMBER 3
-            // rotate( "roll" );
-            // rotated = true;
->>>>>>> fec08dffc833218ead4680cd6d2f56f88061c115
-=======
-            rotate( "pitch" );
-            rotated = true;
-            break;
-        case 51: // NUMBER 3
-            rotate( "roll" );
-            rotated = true;
->>>>>>> 30363ddcf56aa16a247452d94bec2adef64d9a2a
-            break;            
+            rotated = true;          
         case 16: 
             isShiftDown = true; 
             if (game.boundingBox) {
@@ -191,13 +172,7 @@ function moveBackward( axis, position ) {
 }
 
 // directions: "pitch", "yaw", "roll"
-<<<<<<< HEAD
 function rotate( axis, direction ) {
-    console.log(axis);
-=======
-function rotate( direction ) {
-    console.log(direction);
->>>>>>> 30363ddcf56aa16a247452d94bec2adef64d9a2a
     if ( direction == "yaw" ) {
         game.currentBlock.rotate( 0, 90, 0 );
     }
