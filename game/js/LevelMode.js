@@ -40,7 +40,7 @@ LevelMode.prototype.switchBlock = function(index) {
 
 	// first push the current block back in and then remove it
 	this.levelBlocks.push(this.currentBlock.shapeName);
-	scene.remove(this.currentBlock.mesh);
+	this.currentBlock.removeFromScene();
 
 	this.currentBlock = BlockGenerator.generate(this.levelBlocks[index]);
 	rollOverMesh = this.currentBlock.mesh;
@@ -72,6 +72,7 @@ LevelMode.prototype.getNextBlock = function() {
 
 LevelMode.prototype.endGame = function() {
 	// hideElement(container);
+	gameInProgress = false;
 	showElement(endScreen_doc);
 	passOrFail = '';
 	console.log(endScreen_doc);
@@ -82,6 +83,7 @@ LevelMode.prototype.endGame = function() {
 		passOrFail = "FAILED!";
 	}
 
-	endScreen_doc.innerHTML = '<h1>' + passOrFail + "</h1>";
+	endScreen_doc.innerHTML = '<h1>' + passOrFail + "</h1><br>"
+		+ backToMenu_string;
 
 };

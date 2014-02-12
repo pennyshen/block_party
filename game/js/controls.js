@@ -27,12 +27,21 @@ function onDocumentKeyDown( event ) {
             rotated = true;
             break;
         case 50: // NUMBER 2
+<<<<<<< HEAD
             rotate( gameBoardOrientation, "pitch" );
             rotated = true;
             break;
         case 51: // NUMBER 3
             rotate( gameBoardOrientation, "roll" );
             rotated = true;
+=======
+            // rotate( "pitch" );
+            // rotated = true;
+            break;
+        case 51: // NUMBER 3
+            // rotate( "roll" );
+            // rotated = true;
+>>>>>>> fec08dffc833218ead4680cd6d2f56f88061c115
             break;            
         case 16: 
             isShiftDown = true; 
@@ -116,52 +125,6 @@ function onDocumentKeyDown( event ) {
         }
         rollOverMesh.position = newPos;
     }
-
-    // // check if move is legal
-    // if (moved) {
-    //     newPos = rollOverMesh.position.clone();
-    //     newPos.add(toMove);
-    //     var isClimbing = false;
-    //     //try to move in direction specified
-    //     if ( !game.isPosLegal(newPos) ) {
-    //         // ran into a wall, play error noise
-    //         if (pos_illegal_code == 2) {
-    //             collisionNoise.load();
-    //             collisionNoise.play();
-    //             return;
-    //         }
-    //         // ran into a block, move up instead of over
-    //         if (pos_illegal_code == 1) {
-    //             newPos.y += STEP_SIZE;
-    //             newPos.sub(toMove);
-    //             rollOverMesh.position = newPos;
-    //             isClimbing = true;
-    //             return;
-    //         }
-    //     }
-
-    //     // Didn't run into a block or a wall, try to lower the piece as much as possible. 
-    //     while (true) {
-    //         newPos.y -= STEP_SIZE;
-    //         if (!game.isPosLegal(newPos)) {
-    //             newPos.y += STEP_SIZE;
-    //             break;
-    //         }
-    //     } 
-    //     // if( !isClimbing ) {
-    //         // newPos.y = 25;
-    //         // if (game.isPosLegal(newPos)) {
-    //         //     rollOverMesh.position = newPos;
-    //         // } else {
-    //         //     return;
-    //         // }
-    //         // while( game.isPosLegal(newPos) && newPos.y >= 75)  {
-    //         //     newPos.y -= STEP_SIZE;
-    //         // }
-    //     // }
-
-    //     rollOverMesh.position = newPos;
-    // }
 }
 
 function onDocumentKeyUp( event ) {
@@ -236,22 +199,6 @@ function rotate( axis, direction ) {
             case 4: game.currentBlock.rotate(0,0,-90); break;
         }
     }
-
-}
-
-
-function change_rollOver(shape){
-    block = BlockGenerator.generate(shape);
-    var oldPos = rollOverMesh.position.clone();
-    scene.remove(rollOverMesh);
-    rollOverMesh = block.mesh;
-
-    moveTowardsPlayer(oldPos);
-
-    rollOverMesh.position.x = oldPos.x;
-    rollOverMesh.position.y = oldPos.y;
-    rollOverMesh.position.z = oldPos.z;
-    scene.add(rollOverMesh);
 
 }
 

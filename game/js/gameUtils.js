@@ -1,10 +1,18 @@
 
+function backToMenu() {
+	game.clearScene();
+	game = null;
+	// camera.position.set(cameraPos.x, cameraPos.y, cameraPos.z);
+	// camera.lookAt(new THREE.Vector3(0, 0, 0));
+	showElement(menu_doc);
+}
 
 function moveIntoBounds(pos) {
 	var axes = ['x', 'y', 'z'];
 	var numUnits = FLOOR_SIZE_HALF / STEP_SIZE;
 	var axis;
 
+<<<<<<< HEAD
 	console.log("moving into bounds");
 
 	// while (!BlockGenerator.isPosLegal(pos)) {
@@ -22,13 +30,31 @@ function moveIntoBounds(pos) {
 	// 	}
 
 	// }
+=======
+	while (!BlockGenerator.isPosLegal(pos)) {
+		if (pos_illegal_code != 2) {
+			return;
+		}
+
+		for (var i = 0; i < axes.length; i++) {
+			axis = axes[i];
+			if (pos[axis] < 0) {
+				pos[axis] += STEP_SIZE;
+			} else if (pos[axis] >= numUnits) {
+				pos[axis] -= STEP_SIZE;
+			}
+		}
+
+	}
+>>>>>>> fec08dffc833218ead4680cd6d2f56f88061c115
 }
 
 function startGame(gameMode) {
-	hideElement(menu_doc);
-	init();
-	initParticles();
-	animate();
+	hideAllNav(menu_doc);
+
+	// reset camera position and orbit controls
+	camera.position.set(cameraInitPos.x, cameraInitPos.y, cameraInitPos.z);
+	controls.center.set(0,0,0);
 
 	if (gameMode == "level") {
 		hideElement(showNextPiece_doc);
