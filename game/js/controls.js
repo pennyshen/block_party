@@ -155,20 +155,22 @@ function rotate( axis, direction ) {
         game.currentBlock.rotate( 0, 90, 0 );
     }
     if ( direction == "pitch" ) {
-        switch ( axis ) {
-            case 1: game.currentBlock.rotate(0,0,90); break;
-            case 2: game.currentBlock.rotate(90,0,0); break;
-            case 3: game.currentBlock.rotate(90,0,0); break;
-            case 4: game.currentBlock.rotate(0,0,90); break;
-      }  
+        game.currentBlock.rotate( 0, 0, 90 ); 
+        // switch ( axis ) {
+        //     case 1: game.currentBlock.rotate(0,0,90); break;
+        //     case 2: game.currentBlock.rotate(90,0,0); break;
+        //     case 3: game.currentBlock.rotate(90,0,0); break;
+        //     case 4: game.currentBlock.rotate(0,0,90); break;
+        // }  
     }
     if ( direction == "roll" ) {
-        switch ( axis ) {
-            case 1: game.currentBlock.rotate(0,0,-90); break;
-            case 2: game.currentBlock.rotate(-90,0,0); break;
-            case 3: game.currentBlock.rotate(-90,0,0); break;
-            case 4: game.currentBlock.rotate(0,0,-90); break;
-        }
+        game.currentBlock.rotate( 90, 0, 0 );
+        // switch ( axis ) {
+        //     case 1: game.currentBlock.rotate(0,0,-90); break;
+        //     case 2: game.currentBlock.rotate(-90,0,0); break;
+        //     case 3: game.currentBlock.rotate(-90,0,0); break;
+        //     case 4: game.currentBlock.rotate(0,0,-90); break;
+        // }
     }
 
 }
