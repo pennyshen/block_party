@@ -88,8 +88,10 @@ Game.prototype = {
 
 		this.currentBlock.removeFromScene();
 
-		scene.remove(this.boundingBox);
-		this.boundingBox.geometry.dispose();
+		if (this.boundingBox) {
+			scene.remove(this.boundingBox);
+			this.boundingBox.geometry.dispose();
+		}
 	}
 
 

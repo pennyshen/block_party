@@ -5,6 +5,9 @@ function LevelMode(level) {
 	this.level = level;
 	this.levelBlocks = [];
 	this.levelBlocks = LevelMode.levels[level].slice(0);
+
+	hideElement(showNextPiece_doc);
+	// showElement(avail_blocks);	
 }
 
 // levels by index. level1 = index 0

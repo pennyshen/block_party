@@ -24,5 +24,5 @@ function hideElement(element) {
 
 function showElement(element) {
 	hideAllNav();
-	element.style.display = "block";
+	element.style.display = "";
 }

@@ -9,10 +9,8 @@ function startGame(gameMode) {
 	controls.center.set(0,0,0);
 
 	if (gameMode == "level") {
-		hideElement(showNextPiece_doc);
 		game = new LevelMode(0);
 	} else if (gameMode == "random") {
-		hideElement(avail_blocks);
 		game = new RandomMode();
 	}
 
