@@ -5,11 +5,11 @@ function LevelMode(level) {
 	this.level = level;
 	this.levelBlocks = [];
 	this.levelBlocks = LevelMode.levels[level].slice(0);
-	this.getNextBlock();
 }
 
 // levels by index. level1 = index 0
 LevelMode.levels = [
+	// ["two_blocks", "short_T"],
 	["cross_block", "lightning", "straight3", "two_blocks", "short_T", "straight3", "lightning", "two_blocks"]
 ];
 
@@ -45,11 +45,11 @@ LevelMode.prototype.switchBlock = function(index) {
 	this.currentBlock = BlockGenerator.generate(this.levelBlocks[index]);
 	rollOverMesh = this.currentBlock.mesh;
 
-	moveTowardsPlayer(oldPos);
+	rollOverMesh.position.x += oldPos.x;
+	rollOverMesh.position.y += oldPos.y;
+	rollOverMesh.position.z += oldPos.z;
 
-	rollOverMesh.position.x = oldPos.x;
-	rollOverMesh.position.y = oldPos.y;
-	rollOverMesh.position.z = oldPos.z;
+	moveTowardsPlayer(rollOverMesh.position);
 
 	this.levelBlocks.splice( index, 1 );
 	this.populateSelection();

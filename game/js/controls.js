@@ -86,48 +86,17 @@ function onDocumentKeyDown( event ) {
             break;
     }
 
-
-    // TODO: merge rotated and moved
-    if ( rotated ) {
+    if ( rotated || moved ) {
         newPos = rollOverMesh.position.clone();
 
-        while (!game.isPosLegal(newPos)) {
-            // if (pos_illegal_code == 2) {
-            //     moveIntoBounds(newPos);
-            //     rollOverMesh.position = newPos;    
-            // } else {
-            //     newPos.y += STEP_SIZE;
-            // }
-            newPos.y += STEP_SIZE;
-        }
-        while(game.isPosLegal(newPos)) {
-            newPos.y -= STEP_SIZE;
-        }
-        newPos.y += STEP_SIZE;
+        if (moved) {
+            newPos.add(toMove);
+        } 
+
+        moveToLegal(game.currentBlock, newPos);
         rollOverMesh.position = newPos;
-    }
-
-    // check if move is legal
-    if (moved) {
-        newPos = rollOverMesh.position.clone();
-        newPos.add(toMove);
-
-        while ( !game.isPosLegal(newPos) ) {
-            // if it's the boundary, just don't let the player move it
-            if (pos_illegal_code == 2) {
-                collisionNoise.load();
-                collisionNoise.play(); 
-                return;
-            }
-            newPos.y += STEP_SIZE;
-        }
-        while(game.isPosLegal(newPos)) {
-            newPos.y -= STEP_SIZE;
-        }
-        newPos.y += STEP_SIZE;
-
-        rollOverMesh.position = newPos;
-    }
+        return;
+    } 
 }
 
 function onDocumentKeyUp( event ) {
@@ -204,9 +173,27 @@ function rotate( axis, direction ) {
 
 }
 
+function moveToLegal(block, newPos) {
+    while (!block.isPosLegal(newPos)) {
+        if (pos_illegal_code == 1) {
+            // move up until we're legal
+            newPos.y += STEP_SIZE;
+        } else if (pos_illegal_code == 2) {
+            // make sure we're in bounds
+            block.moveIntoBounds(newPos);
+        }
+    }
+
+    // then make sure we're stuck to the ground
+    while(game.currentBlock.isPosLegal(newPos)) {
+        newPos.y -= STEP_SIZE;
+    }
+    newPos.y += STEP_SIZE;
+}
+
 function moveTowardsPlayer(oldPos) {
     // placement of the new block - first move towards user's perspective until we can't move anymore
-    while (!game.isPosLegal(oldPos)) {
+    while (!game.currentBlock.isPosLegal(oldPos)) {
         if (pos_illegal_code == 1) {
             moveBackward(gameBoardOrientation, oldPos);
         } else if (pos_illegal_code == 2) {
@@ -214,24 +201,13 @@ function moveTowardsPlayer(oldPos) {
         }
     }
 
-    // on the edge already. first move back until we're okay then move up until we're okay
-    if (pos_illegal_code == 2) {
-        moveForward(gameBoardOrientation, oldPos);
-        while (!game.isPosLegal(oldPos)) {
-            if (pos_illegal_code == 1) {
-                oldPos.y += STEP_SIZE;
-            } else if (pos_illegal_code == 2) {
-                moveForward(gameBoardOrientation, oldPos);
-            }
-        }
-    }    
-};
+    moveToLegal(game.currentBlock, oldPos);
+}
 
 
 function add_voxel( ) {
     var voxel = rollOverMesh;
     var oldPos = voxel.position.clone();
-    oldPos.y = STEP_SIZE / 2;
 
     // places rollover block down and make it static
     voxel.material.opacity = 1.0;
@@ -252,11 +228,12 @@ function add_voxel( ) {
     game.getNextBlock();
     rollOverMesh = game.currentBlock.mesh;
 
-    moveTowardsPlayer(oldPos);
+    rollOverMesh.position.x += oldPos.x;
+    rollOverMesh.position.y += oldPos.y;
+    rollOverMesh.position.z += oldPos.z;
 
-    rollOverMesh.position.x = oldPos.x;
-    rollOverMesh.position.y = oldPos.y;
-    rollOverMesh.position.z = oldPos.z;
+    moveTowardsPlayer(rollOverMesh.position);
+
     scene.add( rollOverMesh );
 }
 

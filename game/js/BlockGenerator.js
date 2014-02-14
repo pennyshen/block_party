@@ -94,6 +94,7 @@ BlockGenerator.getBlock = function(shapeName) {
 	var blockRaycaster = new THREE.Raycaster();
 	var toDelete = [];
 	var mesh;
+	var block;
 
 	// clone the shape.
 	for ( i = 0; i < this.shapes[shapeName].length; i++ ) {
@@ -120,7 +121,6 @@ BlockGenerator.getBlock = function(shapeName) {
 	mesh.receiveShadow = true;
 	mesh.renderDepth = 0.5;	// must be set to < 1 to avoid z-fighting
 
-
 	// raycast itself from the center of each face (negated normal), and whichever face gets intersected
 	// is an inner face
 	for (i = 0; i < geometry.faces.length; i++) {
@@ -143,7 +143,11 @@ BlockGenerator.getBlock = function(shapeName) {
 	geometry.faces = geometry.faces.filter( function(v) { return v; });
 	geometry.elementsNeedUpdate = true;	// update faces
 
-	return new Block(shapeName, shape, mesh, Date.now(), {x:0,y:0,z:0});
+	block = new Block(shapeName, shape, mesh, Date.now(), {x:0,y:0,z:0});
+
+	block.moveIntoBounds(block.mesh.position);
+
+	return block;
 }
 
 BlockGenerator.generate = function(shapeName) {

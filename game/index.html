@@ -49,6 +49,12 @@
 		<br>
 	</div>	
 
+	<div id="levelModeMenu" class="nav">
+		<a href="javascript: void(0)" class="menuItem">1</a>
+		<a href="javascript: void(0)" class="menuItem">2</a>
+		<a href="javascript: void(0)" class="menuItem">3</a>
+	</div>
+
 	<div id="instructions" class="nav">
 		<h1>Instructions</h1>
 		<br>
@@ -130,7 +136,8 @@
 		var endScreen_doc = document.getElementById("endScreen");
 		var instructions_doc = document.getElementById("instructions");
 		var pauseScreen_doc = document.getElementById("pauseScreen");
-		var nav_items = [menu_doc, reMenu_doc, endScreen_doc, instructions_doc, pauseScreen_doc];
+		var levelModeMenu_doc = document.getElementById("levelModeMenu");
+		var nav_items = [menu_doc, reMenu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc];
 
 		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Back</a>';
 
@@ -163,6 +170,7 @@
 
 		var game;
 
+		// showElement(levelModeMenu_doc);
 		showElement(menu_doc);
 		init();
 		initParticles();
