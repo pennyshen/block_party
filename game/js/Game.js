@@ -26,39 +26,17 @@ Game.prototype = {
 		for (i = 0; i < positions.length; i++) {
 			position = positions[i];
 			this.existingBlocks[getKeyString(position)] = true;
+
+			this.min_x = Math.min(this.min_x, position.x * STEP_SIZE);
+			this.min_y = Math.min(this.min_y, position.y * STEP_SIZE);
+			this.min_z = Math.min(this.min_z, position.z * STEP_SIZE);
+
+			this.max_x = Math.max(this.max_x, position.x * STEP_SIZE + STEP_SIZE);
+			this.max_y = Math.max(this.max_y, position.y * STEP_SIZE + STEP_SIZE);
+			this.max_z = Math.max(this.max_z, position.z * STEP_SIZE + STEP_SIZE);			
 		}
 		this.totalVolume += positions.length;		
 		this.existingBlocks.push(this.currentBlock);
-
-		this.computeBoundingBox();
-	},
-
-	getNextBlock: function() {
-		throw 'nextBlock must be implemented';
-	},
-
-	endGame: function() {
-		throw 'endGame must be implemented';	
-	},
-
-	//get show minimum bounding box
-	computeBoundingBox: function() {
-		//goes through all the cubes and find the minimum and maximum x, y, z
-		for (var i =0 ; i < this.existingBlocks.length; i++) {
-			var ver = this.existingBlocks[i].mesh.geometry.vertices;
-			for (var j = 0; j < ver.length; j++) {
-				var pos = new THREE.Vector3();
-				pos.addVectors(ver[j], this.existingBlocks[i].mesh.position);
-
-				this.min_x = Math.min(this.min_x, pos.x);
-				this.min_y = Math.min(this.min_y, pos.y);
-				this.min_z = Math.min(this.min_z, pos.z);
-
-				this.max_x = Math.max(this.max_x, pos.x);
-				this.max_y = Math.max(this.max_y, pos.y);
-				this.max_z = Math.max(this.max_z, pos.z);
-			}
-		}
 
 		// calcualtes the volume of the bounding box
 		var cube_vol = (this.max_x - this.min_x) * (this.max_y - this.min_y) * (this.max_z - this.min_z);
@@ -78,7 +56,15 @@ Game.prototype = {
 		this.boundingBox.position.z = (this.max_z + this.min_z) / 2;
 
 		this.boundingBox.visible = false;
-		scene.add(this.boundingBox);
+		scene.add(this.boundingBox);		
+	},
+
+	getNextBlock: function() {
+		throw 'nextBlock must be implemented';
+	},
+
+	endGame: function() {
+		throw 'endGame must be implemented';	
 	},
 
 	clearScene: function() {
