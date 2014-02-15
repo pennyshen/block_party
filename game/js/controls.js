@@ -20,7 +20,8 @@ function onDocumentKeyDown( event ) {
     var moved = false;
     var newPos;
     var rotated = false;
-
+    var climbed = 0;
+    var climbedTooFar = false;
     switch( event.keyCode ) {
         case 49: // NUMBER 1
             rotate( gameBoardOrientation, "yaw" );
@@ -66,12 +67,12 @@ function onDocumentKeyDown( event ) {
         case 81: 
             qDown = true;
             toMove.y += STEP_SIZE;
-            moved = true;
+            climbed = 1;
             break;
         case 69: 
             eDown = true;
             toMove.y -= STEP_SIZE;
-            moved = true;
+            climbed = -1;
             break;
         case 37: 
             isLeftDown = true;
@@ -97,6 +98,28 @@ function onDocumentKeyDown( event ) {
         rollOverMesh.position = newPos;
         return;
     } 
+
+    if ( climbed == 1) {
+        console.log("climbing");
+        newPos = rollOverMesh.position.clone();
+
+        climbToLegal(game.currentBlock, newPos);
+        if (!climbedTooFar) {
+           rollOverMesh.position = newPos;
+        
+        } else if (climbedTooFar) {
+            alert("cannot move in that direction");
+        }
+
+
+    }
+    if (climbed == -1) {
+        console.log("falling");
+        newPos = rollOverMesh.position.clone();
+        fallToLegal(game.currentBlock,newPos);
+        rollOverMesh.position = newPos;
+
+    }
 }
 
 function onDocumentKeyUp( event ) {
@@ -174,7 +197,7 @@ function rotate( axis, direction ) {
     }
 
 }
-
+//assumes that you are in an illegal position
 function moveToLegal(block, newPos) {
     while (!block.isPosLegal(newPos)) {
         if (pos_illegal_code == 1) {
@@ -191,6 +214,67 @@ function moveToLegal(block, newPos) {
         newPos.y -= STEP_SIZE;
     }
     newPos.y += STEP_SIZE;
+}
+
+function climbToLegal(block, newPos) {
+    while (block.isPosLegal(newPos)) {
+        // move up until illegal
+        newPos.y += STEP_SIZE;
+        if (Math.abs(block.mesh.position.y - newPos.y) > 200) {
+            climbedTooFar = true;
+            while(block.isPosLegal(newPos)) {
+                newPos.y -= STEP_SIZE;
+            }
+            newPos.y += STEP_SIZE;
+            return;
+        }
+    }
+    climbToLegalAgain(block,newPos);
+    if (pos_illegal_code == 1 || pos_illegal_code == 2) {
+        climbedTooFar = true;
+    } 
+
+
+
+}
+function climbToLegalAgain(block, newPos) {
+    if (block.isPosLegal(newPos)) {
+        return;
+    }
+    while (!block.isPosLegal(newPos)) {
+        if (pos_illegal_code == 2) {
+            console.log("here this now");
+            break;
+        }
+        newPos.y += STEP_SIZE;
+    }
+    if (pos_illegal_code == 1 || pos_illegal_code == 2) {
+        climbedTooFar = true;
+    }
+}
+
+function fallToLegal(block,newPos) {
+
+    {
+        while (block.isPosLegal(newPos)) {
+            newPos.y -= STEP_SIZE;
+            }
+    }
+    if (pos_illegal_code == 2) {
+        newPos.y += STEP_SIZE
+    }
+    else {
+        fallToLegalAgain(block,newPos);
+    }
+}
+
+function fallToLegalAgain (block, newPos) {
+    if (block.isPosLegal(newPos)) {
+        return;
+    }
+    while(!block.isPosLegal(newPos)) {
+        newPos.y -= STEP_SIZE;
+    }
 }
 
 function moveTowardsPlayer(oldPos) {
