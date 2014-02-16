@@ -3,6 +3,7 @@ function RandomMode() {
 	Game.call( this );
 
 	this.nextBlockName = getRandomMember(BlockGenerator.allShapes);
+	this.mode = "random";
 
 	hideElement(avail_blocks);
 	hideElement(hint_doc);

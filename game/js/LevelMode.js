@@ -8,6 +8,7 @@ function LevelMode(toPopulateMenu) {
 			new Level(['lightning', 'short_T', 'L', 'two_blocks', 'short_T'], 80),
 			new Level(["cross_block", "lightning", "straight3", "two_blocks", "short_T", "straight3", "lightning", "two_blocks"], 80)
 		];
+		this.mode = "level";
 	}
 
 	this.showLevelMenu();
@@ -96,15 +97,21 @@ LevelMode.prototype.endGame = function() {
 	// hideElement(container);
 	gameInProgress = false;
 	showElement(endScreen_doc);
-	passOrFail = '';
+	var passOrFail = '';
+	var nextLevel = '';
 
-	if (game.score >= this.toPass) {
+	if (this.score >= this.toPass) {
 		passOrFail = "PASSED!";
 	} else {
 		passOrFail = "FAILED!";
 	}
 
+	if (this.level + 1 < this.levels.length) {
+		nextLevel = '<a href="javascript: void(0)" class="menuItem" onClick="nextLevel()">Next level</a><br>'; 
+	}
+
 	endScreen_doc.innerHTML = '<h1>' + passOrFail + "</h1><br>"
+		+ nextLevel
 		+ backToMenu_string;
 
 };

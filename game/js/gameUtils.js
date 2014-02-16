@@ -12,7 +12,7 @@ function initGame(gameMode) {
 		game = new RandomMode();
 		startGame();
 	} else if (gameMode == "tutorial") {
-		game = new TutorialMode(0);
+		game = new TutorialMode();
 	}
 
 }
