@@ -26,6 +26,7 @@
 	<script src="js/Game.js"></script>
 	<script src="js/RandomMode.js"></script>
 	<script src="js/LevelMode.js"></script>
+	<script src="js/TutorialMode.js"></script>
 	<script src="js/Block.js"></script>
 
 	<!-- other javascript functions -->
@@ -41,20 +42,24 @@
 
 	<div id="menu" class="nav">
 		<h1>Block Party</h1>
-		<a href="javascript: void(0)" class="menuItem" onclick="startGame('level')" >Level mode</a>
+		<a href="javascript: void(0)" class="menuItem" onclick="initGame('tutorial')" >Tutorial</a>
 		<br>
-		<a href="javascript: void(0)" class="menuItem" onclick="startGame('random')" >Random mode</a>
+		<a href="javascript: void(0)" class="menuItem" onclick="initGame('level')" >Level mode</a>
 		<br>
-		<a href="javascript: void(0)" class="menuItem" onClick="showElement(instructions_doc)">Instructions</a>
+		<a href="javascript: void(0)" class="menuItem" onclick="initGame('random')" >Random mode</a>
+		<br>
+		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(instructions_doc)">Instructions</a>
 		<br>
 	</div>	
 
 	<div id="levelModeMenu" class="nav">
 		<h1>Level mode</h1>
-		<br>
 		<a href="javascript: void(0)" class="menuItem">1</a>
+		<br>
 		<a href="javascript: void(0)" class="menuItem">2</a>
+		<br>
 		<a href="javascript: void(0)" class="menuItem">3</a>
+		<br>
 		<a href="javascript: void(0)" class="menuItem">4</a>
 	</div>
 
@@ -66,6 +71,8 @@
 		<a class="instructions">1,2,3 = Rotate</a>
 		<br>
 		<a class="instructions">SPACE = Place block</a>
+		<br>
+		<a class="instructions">R,F = Go up/down to next legal spot</a>
 		<br>
 		<a class="instructions">MOUSE WHEEL = Zoom</a>
 		<br>
@@ -101,6 +108,8 @@
 			    <span id="showNextPiece">Next piece: <span id="nextPiece"></span><br/></span>
 			    <select id="avail_blocks" onchange="selectChange(this)">
 				</select>
+				<br/>
+				<span id="hint"></span>
 			</font>
 	    </div>
     </div>
@@ -140,6 +149,7 @@
 		var instructions_doc = document.getElementById("instructions");
 		var pauseScreen_doc = document.getElementById("pauseScreen");
 		var levelModeMenu_doc = document.getElementById("levelModeMenu");
+		var hint_doc = document.getElementById("hint");
 		var nav_items = [menu_doc, reMenu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc];
 
 		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Back</a>';
@@ -173,8 +183,8 @@
 
 		var game;
 
-		// showElement(levelModeMenu_doc);
-		showElement(menu_doc);
+		// showElementAndHideNav(levelModeMenu_doc);
+		showElementAndHideNav(menu_doc);
 		init();
 		initParticles();
 		animate();

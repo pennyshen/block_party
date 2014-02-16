@@ -1,19 +1,23 @@
 
-
-
-function startGame(gameMode) {
-	hideAllNav(menu_doc);
+function initGame(gameMode) {
+	hideAllNav();
 
 	// reset camera position and orbit controls
 	camera.position.set(cameraInitPos.x, cameraInitPos.y, cameraInitPos.z);
 	controls.center.set(0,0,0);
 
 	if (gameMode == "level") {
-		game = new LevelMode(0);
+		game = new LevelMode(true);
 	} else if (gameMode == "random") {
 		game = new RandomMode();
+		startGame();
+	} else if (gameMode == "tutorial") {
+		game = new TutorialMode(0);
 	}
 
+}
+
+function startGame() {
 	game.getNextBlock();
 
 	rollOverMesh = game.currentBlock.mesh;
@@ -22,6 +26,8 @@ function startGame(gameMode) {
 	rollOverMesh.position.x += STEP_SIZE / 2; 
 	rollOverMesh.position.y += STEP_SIZE / 2; 
 	rollOverMesh.position.z += STEP_SIZE / 2;
+
+	moveTowardsPlayer(rollOverMesh.position);
 
 	gameInProgress = true;
 }

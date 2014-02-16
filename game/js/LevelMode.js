@@ -1,26 +1,63 @@
 
-function LevelMode(level) {
+function LevelMode(toPopulateMenu) {
 	Game.call( this );
 
-	this.level = level;
-	this.levelBlocks = [];
-	this.levelBlocks = LevelMode.levels[level].slice(0);
-
-	hideElement(showNextPiece_doc);
-	// showElement(avail_blocks);	
+	if (toPopulateMenu) {
+		this.showLevelMenu(LevelMode.levels);
+	}
 }
 
 // levels by index. level1 = index 0
 LevelMode.levels = [
-	["two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks"],
+	// ["lightning", "short_T", "L", "two_blocks", "lightning", "square_flat"],
+	// ["two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", 
+	// 	"two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks",
+	// 	"two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks",
+	// 	"two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks",
+	// 	"two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks",
+	// 	"two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks",
+	// 	"two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks",
+	// 	'straight3', 'straight3', 'straight3',
+	// 	'lightning', 'short_T', 'L', 'two_blocks', 'short_T'],
+
+	// start of actual levels
+	['L', 'lightning', 'L'],	
+	['lightning', 'short_T', 'L', 'two_blocks', 'short_T'],	// 3x2x3	
 	["cross_block", "lightning", "straight3", "two_blocks", "short_T", "straight3", "lightning", "two_blocks"]
 ];
 
 LevelMode.passRate = [
-	60
+	80,
+	80,
+	80
 ];
 
 LevelMode.prototype = Object.create(Game.prototype);
+
+LevelMode.prototype.showLevelMenu = function(levels) {
+	levelModeMenu_doc.innerHTML = "<h1>Levels</h1>";
+	for (var i = 0; i < levels.length; i++) {
+		levelModeMenu_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="game.startLevel(' + i + ')">' + (i+1) + '</a><br>';
+	}
+	showElementAndHideNav(levelModeMenu);
+}
+
+LevelMode.prototype.showLevel = function() {
+	hideAllNav();
+	hideElement(showNextPiece_doc);
+	showElement(avail_blocks);
+	showElement(hint_doc);	
+	startGame();
+}
+
+LevelMode.prototype.startLevel = function(level) {
+	this.level = level;
+	this.levelBlocks = [];
+	this.levelBlocks = LevelMode.levels[level].slice(0);
+	this.toPass = LevelMode.passRate[level];
+
+	this.showLevel();
+} 
 
 LevelMode.prototype.populateSelection = function() {
 	// clear
@@ -79,9 +116,8 @@ LevelMode.prototype.endGame = function() {
 	gameInProgress = false;
 	showElement(endScreen_doc);
 	passOrFail = '';
-	console.log(endScreen_doc);
 
-	if (game.score >= LevelMode.passRate[this.level]) {
+	if (game.score >= this.toPass) {
 		passOrFail = "PASSED!";
 	} else {
 		passOrFail = "FAILED!";

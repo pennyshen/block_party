@@ -50,7 +50,8 @@ BlockGenerator.colors = {
 	"red": 0xFF0000,
 	"purple": 0x660099,
 	"orange": 0xff9900, 
-	"brown": 0x70543b
+	"brown": 0x70543b,
+	"grey": 0xADADAD
 };
 
 // names of all the blocks in an array

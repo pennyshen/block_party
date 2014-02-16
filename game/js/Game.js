@@ -36,7 +36,7 @@ Game.prototype = {
 			this.max_z = Math.max(this.max_z, position.z * STEP_SIZE + STEP_SIZE);			
 		}
 		this.totalVolume += positions.length;		
-		this.existingBlocks.push(this.block);
+		this.existingBlocks.push(block);
 
 		this.computeBoundingBox();	
 	},
@@ -105,7 +105,7 @@ Game.prototype = {
 
 		for (var i = 0; i < blocks.length; i++) {
 			block = blocks[i];
-			block = BlockGenerator.getBlock(blocks[i].shapeName, blocks[i].shape, "red");
+			block = BlockGenerator.getBlock(blocks[i].shapeName, blocks[i].shape, "grey");
 			block.mesh.position.x = blocks[i].position.x;
 			block.mesh.position.y = blocks[i].position.y;
 			block.mesh.position.z = blocks[i].position.z;

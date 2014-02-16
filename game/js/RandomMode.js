@@ -5,6 +5,7 @@ function RandomMode() {
 	this.nextBlockName = getRandomMember(BlockGenerator.allShapes);
 
 	hideElement(avail_blocks);
+	hideElement(hint_doc);
 	showElement(showNextPiece_doc);
 }
 

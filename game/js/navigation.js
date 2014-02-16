@@ -7,9 +7,7 @@ function resumeGame() {
 function backToMenu() {
 	game.clearScene();
 	game = null;
-	// camera.position.set(cameraPos.x, cameraPos.y, cameraPos.z);
-	// camera.lookAt(new THREE.Vector3(0, 0, 0));
-	showElement(menu_doc);
+	showElementAndHideNav(menu_doc);
 }
 
 function hideAllNav() {
@@ -23,6 +21,10 @@ function hideElement(element) {
 }
 
 function showElement(element) {
-	hideAllNav();
 	element.style.display = "";
+}
+
+function showElementAndHideNav(element) {
+	hideAllNav();
+	showElement(element);
 }

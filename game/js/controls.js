@@ -64,13 +64,13 @@ function onDocumentKeyDown( event ) {
             moveRight(gameBoardOrientation, toMove);
             moved = true;
             break;
-        case 81: 
-            qDown = true;
+        case 82: 
+            rDown = true;
             toMove.y += STEP_SIZE;
             climbed = 1;
             break;
-        case 69: 
-            eDown = true;
+        case 70: 
+            fDown = true;
             toMove.y -= STEP_SIZE;
             climbed = -1;
             break;
@@ -86,6 +86,12 @@ function onDocumentKeyDown( event ) {
             showElement(pauseScreen_doc);
             break;
     }
+
+    // // !! only for building levels!!
+    // if (climbed) {
+    //     rollOverMesh.position.add(toMove);
+    //     return;
+    // }
 
     if ( rotated || moved ) {
         newPos = rollOverMesh.position.clone();
