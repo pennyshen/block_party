@@ -26,9 +26,11 @@ LevelMode.prototype.showLevelMenu = function() {
 
 LevelMode.prototype.showLevel = function() {
 	hideAllNav();
-	hideElement(showNextPiece_doc);
+	hideAllInfo();
 	showElement(avail_blocks);
-	showElement(hint_doc);	
+	if (this.mode == "tutorial") {
+		showElement(hint_doc);		
+	}
 	startGame();
 }
 

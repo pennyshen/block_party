@@ -1,4 +1,5 @@
 
+
 function resumeGame() {
 	gameInProgress = true;
 	hideElement(pauseScreen_doc);
@@ -22,6 +23,12 @@ function nextLevel() {
 function hideAllNav() {
 	for (var i = 0; i < nav_items.length; i++) {
 		hideElement(nav_items[i]);
+	}
+}
+
+function hideAllInfo() {
+	for (var i = 0; i < info_items.length; i++) {
+		hideElement(info_items[i]);
 	}
 }
 
