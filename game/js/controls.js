@@ -290,21 +290,15 @@ function moveTowardsPlayer(oldPos) {
     moveToLegal(game.currentBlock, oldPos);
 }
 
-
 function add_voxel( ) {
     var voxel = rollOverMesh;
     var oldPos = voxel.position.clone();
 
     // places rollover block down and make it static
-    voxel.material.opacity = 1.0;
-    voxel.material.transparent = false;
-    voxel.matrixAutoUpdate = false;
-    voxel.geometry.verticesNeedUpdate = true;
-    voxel.castShadow = false;
-    voxel.updateMatrix();
+    game.currentBlock.makeStatic();
 
     // update all blocks
-    game.addCurrentToExisting(voxel.position);
+    game.addToExisting(game.currentBlock, voxel.position);
     volume_doc.innerHTML = game.totalVolume; 
 
     blockNoise.load();

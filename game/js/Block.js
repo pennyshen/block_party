@@ -13,6 +13,17 @@ Block.prototype.removeFromScene = function() {
     this.mesh.material.dispose();
 }
 
+Block.prototype.makeStatic = function() {
+    var voxel = this.mesh;
+    
+    voxel.material.opacity = 1.0;
+    voxel.material.transparent = false;
+    voxel.matrixAutoUpdate = false;
+    voxel.geometry.verticesNeedUpdate = true;
+    voxel.castShadow = false;
+    voxel.updateMatrix();    
+}
+
 Block.prototype._getPositions = function(realPosition) {
     var position = realPosition.clone();
     var positions = [];

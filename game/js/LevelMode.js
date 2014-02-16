@@ -12,7 +12,7 @@ function LevelMode(level) {
 
 // levels by index. level1 = index 0
 LevelMode.levels = [
-	// ["two_blocks", "short_T"],
+	["two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks", "two_blocks"],
 	["cross_block", "lightning", "straight3", "two_blocks", "short_T", "straight3", "lightning", "two_blocks"]
 ];
 

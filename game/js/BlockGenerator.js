@@ -84,9 +84,8 @@ BlockGenerator.getRandomBlock = function() {
 	return this.generate(shapeName);
 }
 
-BlockGenerator.getBlock = function(shapeName) {
+BlockGenerator.getBlock = function(shapeName, originalShape, color) {
 	var shape = []; 
-	var colorName = this.shapesToColors[shapeName];
 	var i, j;
 	var geometry, tmpGeometry;
 	var material;
@@ -97,8 +96,8 @@ BlockGenerator.getBlock = function(shapeName) {
 	var block;
 
 	// clone the shape.
-	for ( i = 0; i < this.shapes[shapeName].length; i++ ) {
-		shape[i] = cloneVector(this.shapes[shapeName][i]);
+	for ( i = 0; i < originalShape.length; i++ ) {
+		shape[i] = cloneVector(originalShape[i]);
 	}
 
 	// merge the different cube geometries together
@@ -115,7 +114,7 @@ BlockGenerator.getBlock = function(shapeName) {
 	geometry.mergeVertices();
 	geometry.verticesNeedUpdate = true;
 
-	material = new THREE.MeshLambertMaterial({ color: this.colors[colorName], opacity: INIT_OPACITY, transparent: true });
+	material = new THREE.MeshLambertMaterial({ color: color, opacity: INIT_OPACITY, transparent: true });
 	mesh = new THREE.Mesh(geometry, material);
 	mesh.castShadow = true;
 	mesh.receiveShadow = true;
@@ -151,7 +150,7 @@ BlockGenerator.getBlock = function(shapeName) {
 }
 
 BlockGenerator.generate = function(shapeName) {
-    return this.getBlock(shapeName);
+    return this.getBlock(shapeName, this.shapes[shapeName], this.colors[this.shapesToColors[shapeName]]);
 }
 
 
