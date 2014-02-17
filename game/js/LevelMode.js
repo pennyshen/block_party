@@ -21,6 +21,8 @@ LevelMode.prototype.showLevelMenu = function() {
 	for (var i = 0; i < this.levels.length; i++) {
 		levelModeMenu_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="game.startLevel(' + i + ')">' + (i+1) + '</a><br>';
 	}
+	levelModeMenu_doc.innerHTML += '<br><br><a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Back</a>';
+
 	showElementAndHideNav(levelModeMenu);
 }
 
