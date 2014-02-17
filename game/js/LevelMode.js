@@ -105,12 +105,11 @@ LevelMode.prototype.endGame = function() {
 
 	if (this.score >= this.toPass) {
 		passOrFail = "PASSED!";
+		if (this.level + 1 < this.levels.length) {
+			nextLevel = '<a href="javascript: void(0)" class="menuItem" onClick="nextLevel()">Next level</a><br>'; 
+		}		
 	} else {
 		passOrFail = "FAILED!";
-	}
-
-	if (this.level + 1 < this.levels.length) {
-		nextLevel = '<a href="javascript: void(0)" class="menuItem" onClick="nextLevel()">Next level</a><br>'; 
 	}
 
 	endScreen_doc.innerHTML = '<h1>' + passOrFail + "</h1><br>"
