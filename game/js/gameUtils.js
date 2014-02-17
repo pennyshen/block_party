@@ -28,7 +28,9 @@ function startGame() {
 	rollOverMesh.position.z += STEP_SIZE / 2;
 
 	moveTowardsPlayer(rollOverMesh.position);
-
+	
+	mainMusic.currentTime = 0;
+	mainMusic.play();
 	gameInProgress = true;
 }
 

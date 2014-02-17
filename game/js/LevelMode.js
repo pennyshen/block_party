@@ -98,7 +98,9 @@ LevelMode.prototype.getNextBlock = function() {
 LevelMode.prototype.endGame = function() {
 	// hideElement(container);
 	gameInProgress = false;
+	mainMusic.pause();
 	showElement(endScreen_doc);
+
 	var passOrFail = '';
 	var nextLevel = '';
 	var playAgain = '<a href="javascript: void(0)" class="menuItem" onClick="restartLevel()">Play again</a><br>'; 
@@ -108,8 +110,14 @@ LevelMode.prototype.endGame = function() {
 		if (this.level + 1 < this.levels.length) {
 			nextLevel = '<a href="javascript: void(0)" class="menuItem" onClick="nextLevel()">Next level</a><br>'; 
 		}		
+
+		successSound.load();
+		successSound.play();
 	} else {
 		passOrFail = "FAILED!";
+
+		failSound.load();
+		failSound.play();
 	}
 
 	endScreen_doc.innerHTML = '<h1>' + passOrFail + "</h1><br>"

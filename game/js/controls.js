@@ -82,8 +82,7 @@ function onDocumentKeyDown( event ) {
             add_voxel();
             break;
         case 27:    // esc
-            gameInProgress = false;
-            showElement(pauseScreen_doc);
+            pauseGame()
             break;
     }
 

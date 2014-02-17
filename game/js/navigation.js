@@ -1,6 +1,12 @@
 
+function pauseGame() {
+	mainMusic.pause();
+    gameInProgress = false;
+    showElement(pauseScreen_doc);	
+}
 
 function resumeGame() {
+	mainMusic.play();
 	gameInProgress = true;
 	hideElement(pauseScreen_doc);
 }
@@ -8,6 +14,7 @@ function resumeGame() {
 function backToMenu() {
 	game.clearScene();
 	game = null;
+	// main
 	showElementAndHideNav(menu_doc);
 }
 

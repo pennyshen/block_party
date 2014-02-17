@@ -114,6 +114,18 @@
 	    </div>
     </div>
 
+    <audio id="main_music" loop>
+    	<source src="https://dl.dropboxusercontent.com/u/87553861/spaceForest.mp3" type="audio/mp3" />
+		<!-- <source src="sounds/spaceForest.mp3" type="audio/mp3" /> -->
+	</audio>
+
+    <audio id="success_sound">
+    	<source src="sounds/ahh.mp3" type="audio/mp3" />
+	</audio>
+
+    <audio id="fail_sound">
+    	<source src="sounds/aww.mp3" type="audio/mp3" />
+	</audio>
 
 	<script>
 
@@ -128,6 +140,9 @@
 		var theta = 45 * 0.5;
 		var blockNoise = new Audio("sounds/wood-cracking-1.wav");
 		var collisionNoise = new Audio("sounds/beep-03.mp3");
+		var mainMusic = document.getElementById("main_music");
+		var successSound = document.getElementById("success_sound");
+		var failSound = document.getElementById("fail_sound");
 
 		var rollOverMesh;
 		var floor;
@@ -193,6 +208,8 @@
 		function init() {
 			container = document.getElementById( 'game' );
 			document.body.appendChild( container );
+
+
 
 			// initializes values for backgroud image
 			// width must be image_width / image_height to perserve ratio
@@ -326,23 +343,22 @@
 			renderer.clear();
 			renderer.render( backgroundScene , backgroundCamera );
 			renderer.render( scene, camera );
-			
-
-			if (Math.abs(camera.position.x) > Math.abs(camera.position.z)) {
-				if (camera.position.x < 0) {
-					gameBoardOrientation = 2;
-				} else {
-					gameBoardOrientation = 3;
-				}
-			} else {
-				if (camera.position.z < 0) {
-					gameBoardOrientation = 4;
-				} else {
-					gameBoardOrientation = 1;
-				}
-			}
 
 			if (gameInProgress) {
+				if (Math.abs(camera.position.x) > Math.abs(camera.position.z)) {
+					if (camera.position.x < 0) {
+						gameBoardOrientation = 2;
+					} else {
+						gameBoardOrientation = 3;
+					}
+				} else {
+					if (camera.position.z < 0) {
+						gameBoardOrientation = 4;
+					} else {
+						gameBoardOrientation = 1;
+					}
+				}
+
 				if (game.currentAliveTime < ALIVE_TIME) {
 					// update time
 					timeRemaining = Math.max(ALIVE_TIME - game.currentAliveTime, 0);
