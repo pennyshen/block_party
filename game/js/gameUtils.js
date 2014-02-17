@@ -15,6 +15,9 @@ function initGame(gameMode) {
 		game = new TutorialMode();
 	}
 
+	volume_doc.innerHTML = game.totalVolume;
+	score_doc.innerHTML = game.score;
+
 }
 
 function startGame() {
