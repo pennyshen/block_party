@@ -12,8 +12,14 @@ function backToMenu() {
 }
 
 function nextLevel() {
-	var level = game.level + 1;
-	var mode = game.mode;
+	goToLevel(game.level + 1, game.mode);
+}
+
+function restartLevel()　{
+	goToLevel(game.level, game.mode);
+}
+
+function goToLevel(level, mode) {
 	game.clearScene();
 	game = null;
 	initGame(mode);

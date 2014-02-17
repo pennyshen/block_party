@@ -101,6 +101,7 @@ LevelMode.prototype.endGame = function() {
 	showElement(endScreen_doc);
 	var passOrFail = '';
 	var nextLevel = '';
+	var playAgain = '<a href="javascript: void(0)" class="menuItem" onClick="restartLevel()">Play again</a><br>'; 
 
 	if (this.score >= this.toPass) {
 		passOrFail = "PASSED!";
@@ -113,6 +114,7 @@ LevelMode.prototype.endGame = function() {
 	}
 
 	endScreen_doc.innerHTML = '<h1>' + passOrFail + "</h1><br>"
+		+ playAgain
 		+ nextLevel
 		+ backToMenu_string;
 
