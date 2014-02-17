@@ -344,21 +344,21 @@
 			renderer.render( backgroundScene , backgroundCamera );
 			renderer.render( scene, camera );
 
-			if (gameInProgress) {
-				if (Math.abs(camera.position.x) > Math.abs(camera.position.z)) {
-					if (camera.position.x < 0) {
-						gameBoardOrientation = 2;
-					} else {
-						gameBoardOrientation = 3;
-					}
+			if (Math.abs(camera.position.x) > Math.abs(camera.position.z)) {
+				if (camera.position.x < 0) {
+					gameBoardOrientation = 2;
 				} else {
-					if (camera.position.z < 0) {
-						gameBoardOrientation = 4;
-					} else {
-						gameBoardOrientation = 1;
-					}
+					gameBoardOrientation = 3;
 				}
+			} else {
+				if (camera.position.z < 0) {
+					gameBoardOrientation = 4;
+				} else {
+					gameBoardOrientation = 1;
+				}
+			}
 
+			if (gameInProgress) {
 				if (game.currentAliveTime < ALIVE_TIME) {
 					// update time
 					timeRemaining = Math.max(ALIVE_TIME - game.currentAliveTime, 0);
