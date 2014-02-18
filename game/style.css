@@ -49,6 +49,17 @@ p {
     padding-left: 200px;
 }
 
+#hint {
+    font-size: 24px;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    z-index: 10;
+    display: inline-block;
+    position: absolute;
+    background-color: rgba(255,0,0,0.5);
+}
+
 a.instructions {
     font-size: 20px;
     display: block;
