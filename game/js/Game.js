@@ -84,6 +84,10 @@ Game.prototype = {
 		scene.add(this.boundingBox);	
 	},
 
+	exportFromCurrent: function() {
+		return JSON.stringify(this.currentBlock._getPositions(this.currentBlock.mesh.position));
+	},
+
 	exportFromExisting: function() {
 		var tmpBlock;
 		var blocks = [];

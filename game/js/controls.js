@@ -22,6 +22,7 @@ function onDocumentKeyDown( event ) {
     var rotated = false;
     var climbed = 0;
     var climbedTooFar = false;
+
     switch( event.keyCode ) {
         case 49: // NUMBER 1
             rotate( gameBoardOrientation, "yaw" );
@@ -101,7 +102,6 @@ function onDocumentKeyDown( event ) {
 
         moveToLegal(game.currentBlock, newPos);
         rollOverMesh.position = newPos;
-        return;
     } 
 
     if ( climbed == 1) {
@@ -115,15 +115,18 @@ function onDocumentKeyDown( event ) {
         } else if (climbedTooFar) {
             alert("cannot move in that direction");
         }
-
-
-    }
-    if (climbed == -1) {
+    } else if (climbed == -1) {
         console.log("falling");
         newPos = rollOverMesh.position.clone();
         fallToLegal(game.currentBlock,newPos);
         rollOverMesh.position = newPos;
 
+    }
+
+    if ( rotated || moved || climbed) {
+        if (toCheckGoal) {
+            game.checkGoal();
+        }  
     }
 }
 

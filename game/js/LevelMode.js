@@ -89,6 +89,10 @@ LevelMode.prototype.getNextBlock = function() {
 		return;
 	}
 
+	if (this.lastColor) {
+		this.lastColor = null;
+	}
+
 	var block;
 	block = BlockGenerator.generate(this.levelBlocks[0]);
 	this.currentAliveTime = 0;

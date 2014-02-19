@@ -143,7 +143,7 @@ BlockGenerator.getBlock = function(shapeName, originalShape, color) {
 	geometry.faces = geometry.faces.filter( function(v) { return v; });
 	geometry.elementsNeedUpdate = true;	// update faces
 
-	block = new Block(shapeName, shape, mesh, Date.now(), {x:0,y:0,z:0});
+	block = new Block(shapeName, shape, color, mesh, Date.now(), {x:0,y:0,z:0});
 
 	block.moveIntoBounds(block.mesh.position);
 

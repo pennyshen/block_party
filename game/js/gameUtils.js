@@ -6,6 +6,9 @@ function initGame(gameMode) {
 	camera.position.set(cameraInitPos.x, cameraInitPos.y, cameraInitPos.z);
 	controls.center.set(0,0,0);
 
+	// don't check for goal unless told otherwise
+	toCheckGoal = false;
+
 	if (gameMode == "level") {
 		game = new LevelMode(true);
 	} else if (gameMode == "random") {
@@ -13,6 +16,7 @@ function initGame(gameMode) {
 		startGame();
 	} else if (gameMode == "tutorial") {
 		game = new TutorialMode();
+		toCheckGoal = true;
 	}
 
 	volume_doc.innerHTML = game.totalVolume;

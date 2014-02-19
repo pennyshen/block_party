@@ -1,7 +1,8 @@
 
-function Block(shapeName, shape, mesh, generatedTime, rotation) {
+function Block(shapeName, shape, color, mesh, generatedTime, rotation) {
 	this.shapeName = shapeName;
 	this.shape = shape;
+    this.color = color;
 	this.mesh = mesh;
 	this.generatedTime = generatedTime;
 	this.rotation = rotation;
@@ -119,9 +120,9 @@ Block.prototype.moveIntoBounds = function(realPosition) {
 
 
 Block.prototype.rotate = function ( x, y, z ) {
-    this.mesh.rotation.x += x * Math.PI / 180;
-    this.mesh.rotation.y += y * Math.PI / 180;
-    this.mesh.rotation.z += z * Math.PI / 180;
+    this.mesh.rotation.x = (this.mesh.rotation.x + x * Math.PI / 180) % (2*Math.PI);
+    this.mesh.rotation.y = (this.mesh.rotation.y + y * Math.PI / 180) % (2*Math.PI);
+    this.mesh.rotation.z = (this.mesh.rotation.z + z * Math.PI / 180) % (2*Math.PI);
 
     var tshape = BlockGenerator.shapes[this.shapeName];
     var quat = this.mesh.quaternion;
