@@ -119,8 +119,6 @@ function onDocumentKeyDown( event ) {
         console.log("falling");
         newPos = rollOverMesh.position.clone();
         fallToLegal(game.currentBlock,newPos);
-        rollOverMesh.position = newPos;
-
     }
 
     if ( rotated || moved || climbed) {
@@ -266,7 +264,7 @@ function fallToLegal(block,newPos) {
     {
         while (block.isPosLegal(newPos)) {
             newPos.y -= STEP_SIZE;
-            }
+        }
     }
     if (pos_illegal_code == 2) {
         newPos.y += STEP_SIZE
@@ -279,7 +277,7 @@ function fallToLegal(block,newPos) {
 function fallToLegalAgain (block, newPos) {
     if (block.isPosLegal(newPos)) {
         return;
-    }
+    } 
     while(!block.isPosLegal(newPos)) {
         newPos.y -= STEP_SIZE;
     }

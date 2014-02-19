@@ -128,6 +128,10 @@
     	<source src="sounds/aww.mp3" type="audio/mp3" />
 	</audio>
 
+    <audio id="ding_sound">
+    	<source src="sounds/ding.mp3" type="audio/mp3" />
+	</audio>
+
 	<script>
 
 		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
@@ -144,6 +148,7 @@
 		var mainMusic = document.getElementById("main_music");
 		var successSound = document.getElementById("success_sound");
 		var failSound = document.getElementById("fail_sound");
+		var dingSound = document.getElementById("ding_sound");
 
 		var rollOverMesh;
 		var floor;

@@ -86,6 +86,8 @@ TutorialMode.prototype.checkGoal = function() {
         if (matchGoal) {
         	this.lastColor = this.currentBlock.mesh.material.color;
         	this.currentBlock.mesh.material.color = new THREE.Color("grey");
+        	dingSound.load();
+        	dingSound.play();
             break;
         }
     }
