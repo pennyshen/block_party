@@ -115,10 +115,15 @@ function onDocumentKeyDown( event ) {
         } else if (climbedTooFar) {
             alert("cannot move in that direction");
         }
-    } else if (climbed == -1) {
+
+
+    }
+    if (climbed == -1) {
         console.log("falling");
         newPos = rollOverMesh.position.clone();
         fallToLegal(game.currentBlock,newPos);
+        rollOverMesh.position = newPos;
+
     }
 
     if ( rotated || moved || climbed) {
@@ -181,9 +186,11 @@ function moveBackward( axis, position ) {
 // directions: "pitch", "yaw", "roll"
 function rotate( axis, direction ) {
     if ( direction == "yaw" ) {
+        // game.currentBlock.rotateAroundWorldAxis("y", 90);
         game.currentBlock.rotate( 0, 90, 0 );
     }
     if ( direction == "pitch" ) {
+        // game.currentBlock.rotateAroundWorldAxis("z", 90);
         game.currentBlock.rotate( 0, 0, 90 ); 
         // switch ( axis ) {
         //     case 1: game.currentBlock.rotate(0,0,90); break;
@@ -193,6 +200,7 @@ function rotate( axis, direction ) {
         // }  
     }
     if ( direction == "roll" ) {
+        // game.currentBlock.rotateAroundWorldAxis("x", 90);
         game.currentBlock.rotate( 90, 0, 0 );
         // switch ( axis ) {
         //     case 1: game.currentBlock.rotate(0,0,-90); break;
@@ -264,7 +272,7 @@ function fallToLegal(block,newPos) {
     {
         while (block.isPosLegal(newPos)) {
             newPos.y -= STEP_SIZE;
-        }
+            }
     }
     if (pos_illegal_code == 2) {
         newPos.y += STEP_SIZE
@@ -277,7 +285,7 @@ function fallToLegal(block,newPos) {
 function fallToLegalAgain (block, newPos) {
     if (block.isPosLegal(newPos)) {
         return;
-    } 
+    }
     while(!block.isPosLegal(newPos)) {
         newPos.y -= STEP_SIZE;
     }

@@ -119,6 +119,39 @@ Block.prototype.moveIntoBounds = function(realPosition) {
 }
 
 
+// Rotate an object around an arbitrary axis in world space       
+Block.prototype.rotateAroundWorldAxis = function(axisName, degrees) {
+    var axis;
+    var radians = degrees * Math.PI / 180;
+
+    if (axisName == "x") {
+        axis = new THREE.Vector3(1, 0, 0);
+    } else if (axisName == "y") {
+        axis = new THREE.Vector3(0, 1, 0);
+    } else if (axisName == "z") {
+        axis = new THREE.Vector3(0, 0, 1);
+    }
+
+    var object = this.mesh;
+    var rotWorldMatrix;
+    rotWorldMatrix = new THREE.Matrix4();
+    rotWorldMatrix.makeRotationAxis(axis.normalize(), radians);
+
+    rotWorldMatrix.multiply(object.matrix);                // pre-multiply
+
+    object.matrix = rotWorldMatrix;
+    object.rotation.setFromRotationMatrix(object.matrix);
+
+    var quat = this.mesh.quaternion;
+    for (var i = 0; i < tshape.length; i++) {
+        var THREEvector = new THREE.Vector3();
+        THREEvector = this.cloneVector3(tshape[i]);
+        this.shape[i] = THREEvector.applyQuaternion( quat );
+        this.roundVector(this.shape[i]);
+    }    
+}
+
+
 Block.prototype.rotate = function ( x, y, z ) {
     this.mesh.rotation.x = (this.mesh.rotation.x + x * Math.PI / 180) % (2*Math.PI);
     this.mesh.rotation.y = (this.mesh.rotation.y + y * Math.PI / 180) % (2*Math.PI);
