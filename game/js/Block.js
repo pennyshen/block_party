@@ -134,6 +134,7 @@ Block.prototype.rotateAroundWorldAxis = function(axisName, degrees) {
 
     var object = this.mesh;
     var rotWorldMatrix;
+    var tshape = BlockGenerator.shapes[this.shapeName];
     rotWorldMatrix = new THREE.Matrix4();
     rotWorldMatrix.makeRotationAxis(axis.normalize(), radians);
 

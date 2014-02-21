@@ -184,30 +184,26 @@ function moveBackward( axis, position ) {
 }
 
 // directions: "pitch", "yaw", "roll"
-function rotate( axis, direction ) {
+function rotate( camera_axis, direction ) {
     if ( direction == "yaw" ) {
-        // game.currentBlock.rotateAroundWorldAxis("y", 90);
-        game.currentBlock.rotate( 0, 90, 0 );
+        game.currentBlock.rotateAroundWorldAxis("y", 90);  
     }
+
     if ( direction == "pitch" ) {
-        // game.currentBlock.rotateAroundWorldAxis("z", 90);
-        game.currentBlock.rotate( 0, 0, 90 ); 
-        // switch ( axis ) {
-        //     case 1: game.currentBlock.rotate(0,0,90); break;
-        //     case 2: game.currentBlock.rotate(90,0,0); break;
-        //     case 3: game.currentBlock.rotate(90,0,0); break;
-        //     case 4: game.currentBlock.rotate(0,0,90); break;
-        // }  
+        switch ( camera_axis ) {
+            case 1: game.currentBlock.rotateAroundWorldAxis("z",90); console.log(camera_axis); break;
+            case 2: game.currentBlock.rotateAroundWorldAxis("x",90); console.log(camera_axis); break;
+            case 3: game.currentBlock.rotateAroundWorldAxis("x",90); console.log(camera_axis); break;
+            case 4: game.currentBlock.rotateAroundWorldAxis("z",90); console.log(camera_axis); break;
+        }  
     }
     if ( direction == "roll" ) {
-        // game.currentBlock.rotateAroundWorldAxis("x", 90);
-        game.currentBlock.rotate( 90, 0, 0 );
-        // switch ( axis ) {
-        //     case 1: game.currentBlock.rotate(0,0,-90); break;
-        //     case 2: game.currentBlock.rotate(-90,0,0); break;
-        //     case 3: game.currentBlock.rotate(-90,0,0); break;
-        //     case 4: game.currentBlock.rotate(0,0,-90); break;
-        // }
+        switch ( camera_axis ) {
+            case 1: game.currentBlock.rotateAroundWorldAxis("z",-90); console.log(camera_axis); break;
+            case 2: game.currentBlock.rotateAroundWorldAxis("x",-90); console.log(camera_axis); break;
+            case 3: game.currentBlock.rotateAroundWorldAxis("x",-90); console.log(camera_axis); break;
+            case 4: game.currentBlock.rotateAroundWorldAxis("z",-90); console.log(camera_axis); break;
+        }  
     }
 
 }
