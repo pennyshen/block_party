@@ -22,6 +22,7 @@ function onDocumentKeyDown( event ) {
     var rotated = false;
     var climbed = 0;
     var climbedTooFar = false;
+    var noLegalSpot;
 
     switch( event.keyCode ) {
         case 49: // NUMBER 1
@@ -72,7 +73,6 @@ function onDocumentKeyDown( event ) {
             break;
         case 70: 
             fDown = true;
-            toMove.y -= STEP_SIZE;
             climbed = -1;
             break;
         case 37: 
@@ -121,9 +121,14 @@ function onDocumentKeyDown( event ) {
     if (climbed == -1) {
         console.log("falling");
         newPos = rollOverMesh.position.clone();
-        fallToLegal(game.currentBlock,newPos);
-        rollOverMesh.position = newPos;
-
+        fallToLegal(game.currentBlock,newPos,noLegalSpot);
+        if (!noLegalSpot) {
+            rollOverMesh.position = newPos;
+        }
+        else if (noLegalSpot) {
+            alert("cannot move in that direction");
+        }
+        
     }
 
     if ( rotated || moved || climbed) {
@@ -253,7 +258,7 @@ function climbToLegalAgain(block, newPos) {
     }
     while (!block.isPosLegal(newPos)) {
         if (pos_illegal_code == 2) {
-            console.log("here this now");
+            console.log("ran into floor");
             break;
         }
         newPos.y += STEP_SIZE;
@@ -263,27 +268,38 @@ function climbToLegalAgain(block, newPos) {
     }
 }
 
-function fallToLegal(block,newPos) {
+function fallToLegal(block,newPos,flag) {
+    while (block.isPosLegal(newPos)) {
+        newPos.y -= STEP_SIZE;
 
-    {
-        while (block.isPosLegal(newPos)) {
-            newPos.y -= STEP_SIZE;
-            }
     }
+    
     if (pos_illegal_code == 2) {
         newPos.y += STEP_SIZE
     }
     else {
-        fallToLegalAgain(block,newPos);
+        fallToLegalAgain(block,newPos,flag);
     }
 }
 
-function fallToLegalAgain (block, newPos) {
+function fallToLegalAgain (block, newPos,flag) {
+    console.log(block.isPosLegal(newPos));
     if (block.isPosLegal(newPos)) {
         return;
     }
     while(!block.isPosLegal(newPos)) {
+        if (pos_illegal_code == 2) {
+            console.log("no legal spots");
+            var reGrow = true;
+            break;
+        }
         newPos.y -= STEP_SIZE;
+    }
+    console.log("regrow",reGrow);
+    if (reGrow) {
+        while(!block.isPosLegal(newPos)) {
+            newPos.y += STEP_SIZE;
+        }
     }
 }
 
