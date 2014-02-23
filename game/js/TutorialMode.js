@@ -140,7 +140,6 @@ TutorialMode.prototype.checkGoal = function(moved, rotated, placed) {
     	if (playDing) {
     		if (placed) {
     			// can move on and don't have to play ding
-    			console.log("placed");
     			this.nextGoal();
     		} else {
 		    	dingSound.load();
@@ -150,12 +149,11 @@ TutorialMode.prototype.checkGoal = function(moved, rotated, placed) {
 		    	}
     		}
     	} else {
-    		console.log("matched");
     		this.nextGoal();
     	}
     } else {
     	// MIGHT BE BUGGY
-    	if (moved || rotated || placed) {
+    	if (goal.goalPos != "ROTATE" && goal.goalPos != "MOVE") {
     		hideElement(center_tooltip_doc);
     	}
     }
