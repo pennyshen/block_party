@@ -36,6 +36,8 @@ function TutorialMode() {
 		)
 	];
 	this.mode = "tutorial";
+	this.titleText = "Tutorial Mode";
+	this.objectiveText = "Fill in the missing spots!";
 	this.goals = [];
 	this.goalIdx = -1;
 

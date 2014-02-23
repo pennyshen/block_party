@@ -11,6 +11,8 @@ function LevelMode(toPopulateMenu) {
 			new Level(["lightning", "lightning", "lightning", "lightning", "two_blocks"], 80, '', '', '', [3,3,2])
 		];
 		this.mode = "level";
+		this.titleText = "Level Mode"
+		this.objectiveText = "Use given pieces to fill the shape!"
 	}
 
 	this.showLevelMenu();
@@ -19,7 +21,8 @@ function LevelMode(toPopulateMenu) {
 LevelMode.prototype = Object.create(Game.prototype);
 
 LevelMode.prototype.showLevelMenu = function() {
-	levelModeMenu_doc.innerHTML = "<h1>Levels</h1>";
+	levelModeMenu_doc.innerHTML = "<h1>" + this.titleText + "</h1><br>";
+	levelModeMenu_doc.innerHTML += "<p id='helperText'>" + this.objectiveText + "</p>";
 	for (var i = 0; i < this.levels.length; i++) {
 		levelModeMenu_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="game.startLevel(' + i + ')">' + (i+1) + '</a><br>';
 	}

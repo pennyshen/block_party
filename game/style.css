@@ -123,3 +123,7 @@ a#start{top: 100%;}
     font-size: 200%;
 }
 
+#helperText {
+    font-size: 20px;
+    padding: 0;
+}
