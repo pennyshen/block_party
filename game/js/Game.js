@@ -6,6 +6,7 @@ function Game() {
 	this.currentBlock = {};
 	this.currentAliveTime = 0;
 	this.boundingBox = null;
+	this.goalShape = null;
 	
 	// keeping track of max and min of x,y,z coordinates
 	this.min_x = Number.MAX_VALUE;
@@ -59,6 +60,9 @@ Game.prototype = {
 		if (this.boundingBox) {
 			scene.remove(this.boundingBox);
 			this.boundingBox.geometry.dispose();
+		}
+		if(this.goalShape){
+			scene.remove(this.goalShape);
 		}
 	},
 
@@ -120,6 +124,24 @@ Game.prototype = {
 		}
 
 		this.computeBoundingBox();
+	},
+
+	//create the goal shape using the given x, y, and z values position at the origin.
+	createGoalShape:function(x,y,z){
+
+		var x_adjusted = x * STEP_SIZE;
+		var y_adjusted = y * STEP_SIZE;
+		var z_adjusted = z * STEP_SIZE;
+		var geom = new THREE.CubeGeometry(x_adjusted, y_adjusted, z_adjusted);
+		this.goalShape = new THREE.Line( geo2line(geom), new THREE.LineBasicMaterial( { color: 0xFF0000 } ), THREE.LinePieces );
+		this.goalShape.visible = true;
+		if(x%2==1)
+			this.goalShape.position.x += STEP_SIZE/2;
+		this.goalShape.position.y += y_adjusted/2;
+		if(z%2==1)
+			this.goalShape.position.z +=STEP_SIZE/2;
+		scene.add(this.goalShape);
+
 	}
 
 }

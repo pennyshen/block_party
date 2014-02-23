@@ -4,9 +4,9 @@ function LevelMode(toPopulateMenu) {
 
 	if (toPopulateMenu) {
 		this.levels = [
-			new Level(['L', 'lightning', 'L'], 80),
-			new Level(['lightning', 'short_T', 'L', 'two_blocks', 'short_T'], 80),
-			new Level(["cross_block", "lightning", "straight3", "two_blocks", "short_T", "straight3", "lightning", "two_blocks"], 80)
+			new Level(['L', 'lightning', 'L'], 80, '', '', '',[4,1,3]),
+			new Level(['lightning', 'short_T', 'L', 'two_blocks', 'short_T'], 80, '','', '', [3,2,3]),
+			new Level(["cross_block", "lightning", "straight3", "two_blocks", "short_T", "straight3", "lightning", "two_blocks"], 80, '', '', '', [3,3,3])
 		];
 		this.mode = "level";
 	}
@@ -41,6 +41,9 @@ LevelMode.prototype.startLevel = function(level) {
 	this.levelBlocks = [];
 	this.levelBlocks = this.levels[level].blocks.slice(0);
 	this.toPass = this.levels[level].passRate;
+	var gs = this.levels[level].goalShape;
+
+	this.createGoalShape(gs[0],gs[1],gs[2]);
 
 	this.showLevel();
 } 
