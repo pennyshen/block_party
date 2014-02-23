@@ -12,7 +12,7 @@ body {
 
 .nav {
     position: absolute;
-    z-index: 1;
+    z-index: 10;
     top: 0;
     left: 0;
     width: 100%;
@@ -54,7 +54,7 @@ p {
     color: white;
     text-align: left;
     padding: 10px;
-    z-index: 10;
+    z-index: 2;
     display: inline-block;
     position: absolute;
     background-color: rgba(255,0,0,0.5);
@@ -64,7 +64,7 @@ p {
     font: 30px "Press Start 2P", cursive; 
     position: absolute;
     color: yellow;
-    z-index: 10;
+    z-index: 2;
     text-align: center;
     display: block;
     top: 50%;
@@ -123,3 +123,7 @@ a#start{top: 100%;}
     font-size: 200%;
 }
 
+#helperText {
+    font-size: 20px;
+    padding: 0;
+}

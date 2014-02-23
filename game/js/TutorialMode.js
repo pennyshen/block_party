@@ -30,7 +30,7 @@ function TutorialMode() {
 			100,
 			'Rotate with 2',
 			'[{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-25,"y":25,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":25,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-25,"y":25,"z":-75}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":25,"z":-75}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":-25,"y":75,"z":-25}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":125,"y":75,"z":-25}},{"shape":[{"x":0,"y":1,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":75,"z":-75}},{"shape":[{"x":0,"y":1,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":75,"z":-75}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":-25,"y":125,"z":-25}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":125,"y":125,"z":-25}},{"shape":[{"x":0,"y":1,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":75,"z":-25}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":125,"y":175,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":175,"z":-75}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":-25,"y":175,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-25,"y":225,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":225,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":225,"z":-75}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-25,"y":225,"z":-75}}]',
-			[new Goal('ROTATE', '2 Rotates about your view.'),
+			[new Goal('ROTATE', '2 always rotates clockwise'),
 			new Goal('[{"x":0,"y":2,"z":-1},{"x":0,"y":3,"z":-1},{"x":0,"y":1,"z":-1},{"x":1,"y":3,"z":-1}]','')]
 		),  new Level(
 			['L'],
@@ -57,6 +57,8 @@ function TutorialMode() {
 		)
 	];
 	this.mode = "tutorial";
+	this.titleText = "Tutorial Mode";
+	this.objectiveText = "Fill in the missing spots!";
 	this.goals = [];
 	this.goalIdx = -1;
 
@@ -161,7 +163,6 @@ TutorialMode.prototype.checkGoal = function(moved, rotated, placed) {
     	if (playDing) {
     		if (placed) {
     			// can move on and don't have to play ding
-    			console.log("placed");
     			this.nextGoal();
     		} else {
 		    	dingSound.load();
@@ -171,12 +172,11 @@ TutorialMode.prototype.checkGoal = function(moved, rotated, placed) {
 		    	}
     		}
     	} else {
-    		console.log("matched");
     		this.nextGoal();
     	}
     } else {
     	// MIGHT BE BUGGY
-    	if (moved || rotated || placed) {
+    	if (goal.goalPos != "ROTATE" && goal.goalPos != "MOVE") {
     		hideElement(center_tooltip_doc);
     	}
     }
