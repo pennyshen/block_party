@@ -12,7 +12,7 @@ function LevelMode(toPopulateMenu) {
 		];
 		this.mode = "level";
 		this.titleText = "Level Mode"
-		this.objectiveText = "Use given pieces to fill the shape!"
+		this.objectiveText = "Use given pieces to fill the red box!"
 	}
 
 	this.showLevelMenu();
