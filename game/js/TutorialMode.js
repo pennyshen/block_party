@@ -6,30 +6,38 @@ function TutorialMode() {
 			100,
 			'W,A,S,D to move<br>SPACE to place block',
 			'[{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":25,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":25,"z":-25}},{"shape":[{"x":0,"y":1,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":25,"z":25}},{"shape":[{"x":0,"y":1,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":25,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":75,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":75,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-25,"y":25,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":125,"z":25}},{"shape":[{"x":0,"y":1,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":125,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":125,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":125,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":175,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":175,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":175,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":225,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":225,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":225,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":225,"z":25}}]',
-			['[{"x":0,"y":2,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":3,"z":0},{"x":-1,"y":1,"z":0}]']
+			[new Goal('MOVE', 'W,A,S,D to move'),
+			new Goal('[{"x":0,"y":2,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":3,"z":0},{"x":-1,"y":1,"z":0}]',
+				'Hit SPACE to place block')]
 		), new Level(
 			['L', 'lightning'],
 			100,
 			'Left click and drag to look around <br> New block will appear after current block is placed',
 			'[{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":25,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":25,"z":25}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":125,"y":25,"z":75}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":25,"z":75}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":25,"z":75}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":75,"z":75}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":75,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":75,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":75,"z":75}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":125,"y":75,"z":75}},{"shape":[{"x":0,"y":1,"z":0}],"shapeName":"two_blocks","position":{"x":125,"y":25,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":25,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":25,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":75,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":75,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":125,"z":75}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-25,"y":125,"z":75}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":-75,"y":125,"z":75}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-25,"y":125,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":125,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":125,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-25,"y":125,"z":-25}},{"shape":[{"x":0,"y":1,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":25,"z":-75}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":125,"z":-75}},{"shape":[{"x":0,"y":1,"z":0}],"shapeName":"two_blocks","position":{"x":125,"y":25,"z":-75}},{"shape":[{"x":0,"y":1,"z":0}],"shapeName":"two_blocks","position":{"x":125,"y":125,"z":-75}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":75,"y":175,"z":-25}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":125,"y":175,"z":25}},{"shape":[{"x":0,"y":-1,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":175,"z":-25}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":-25,"y":175,"z":25}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":-75,"y":175,"z":75}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":175,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-25,"y":175,"z":75}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":175,"z":75}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":25,"y":175,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":175,"z":-75}}]',
-			['[{"x":1,"y":1,"z":-2},{"x":1,"y":0,"z":-2},{"x":1,"y":2,"z":-2},{"x":0,"y":0,"z":-2}]', '[{"x":-1,"y":1,"z":-2},{"x":-1,"y":0,"z":-2},{"x":0,"y":1,"z":-2},{"x":0,"y":2,"z":-2}]']
+			[new Goal('MOVE', 'Left click and drag to look around'),
+			new Goal('[{"x":1,"y":1,"z":-2},{"x":1,"y":0,"z":-2},{"x":1,"y":2,"z":-2},{"x":0,"y":0,"z":-2}]',
+				'New block will appear after current block is placed'),
+			new Goal('[{"x":-1,"y":1,"z":-2},{"x":-1,"y":0,"z":-2},{"x":0,"y":1,"z":-2},{"x":0,"y":2,"z":-2}]', '')]
 		), new Level(
 			['short_T'],
 			100,
 			'1,2,3 to rotate. <br> Try rotating after moving the camera around!',
 			'[{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":25,"y":25,"z":-75}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":75,"y":25,"z":75}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":75,"y":25,"z":-75}},{"shape":[{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":-1}],"shapeName":"straight3","position":{"x":25,"y":25,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":75,"z":75}},{"shape":[{"x":0,"y":0,"z":1}],"shapeName":"two_blocks","position":{"x":25,"y":75,"z":-25}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":25,"y":75,"z":-75}},{"shape":[{"x":0,"y":1,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":75,"z":-125}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":125,"z":75}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":25,"y":125,"z":-75}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":25,"y":125,"z":25}},{"shape":[{"x":0,"y":0,"z":-1},{"x":0,"y":0,"z":1}],"shapeName":"straight3","position":{"x":75,"y":125,"z":-25}}]',
-			['[{"x":1,"y":1,"z":-1},{"x":1,"y":0,"z":-1},{"x":1,"y":1,"z":0},{"x":1,"y":1,"z":-2}]']
+			[new Goal('ROTATE', '1,2,3 to rotate'),
+			new Goal('[{"x":1,"y":1,"z":-1},{"x":1,"y":0,"z":-1},{"x":1,"y":1,"z":0},{"x":1,"y":1,"z":-2}]', '')]
 		), new Level(
 			['two_blocks'],
 			100,
 			'R to go up, F to go down <br> Can only move up or down if it fits <br> Mouse wheel to zoom',
 			'[{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":25,"z":425}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":125,"y":25,"z":475}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-25,"y":25,"z":475}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-25,"y":75,"z":475}},{"shape":[{"x":0,"y":1,"z":0}],"shapeName":"two_blocks","position":{"x":-25,"y":25,"z":425}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":75,"z":425}},{"shape":[{"x":0,"y":0,"z":-1}],"shapeName":"two_blocks","position":{"x":125,"y":75,"z":475}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":125,"z":475}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":125,"z":425}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-25,"y":125,"z":475}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-25,"y":125,"z":425}}]',
-			['[{"x":1,"y":0,"z":9},{"x":1,"y":1,"z":9}]']
+			[new Goal('MOVE', 'Mouse wheel to zoom'),
+			new Goal('ROTATE', 'R,F to go up and down. But make sure block fits first!'),
+			new Goal('[{"x":1,"y":0,"z":9},{"x":1,"y":1,"z":9}]', 'R to go up, F to go down')]
 		)
 	];
 	this.mode = "tutorial";
 	this.goals = [];
-	this.lastColor = null;
+	this.goalIdx = -1;
 
 	LevelMode.call( this );
 }
@@ -50,51 +58,105 @@ TutorialMode.prototype.startLevel = function(level) {
 
 TutorialMode.prototype.initTutorial = function() {
 	this.importToExisting(this.levels[this.level].toImport);
-
-	var goalsToImport = this.levels[this.level].goals;
+	this.goals = this.levels[this.level].goals;
 	var goal, pos;
 
-	for (var i = 0; i < goalsToImport.length; i++) {
-		var goal = JSON.parse(goalsToImport[i]);
-		var goalMap = {};
-		for (var j = 0; j < goal.length; j++) {
-			goalMap[getKeyString(goal[j])] = true;	
+	for (var i = 0; i < this.goals.length; i++) {
+		if (this.goals[i].goalPos != "MOVE" && this.goals[i].goalPos != "ROTATE") {
+			var goal = JSON.parse(this.goals[i].goalPos);	
+			var goalMap = {};
+			for (var j = 0; j < goal.length; j++) {
+				goalMap[getKeyString(goal[j])] = true;	
+			}			
+			// replace goalPos with goalMap
+			this.goals[i].goalPos = goalMap;
 		}
-		this.goals.push(goalMap);
+	}
+
+	this.nextGoal();
+}
+
+TutorialMode.prototype.showToolTip = function() {
+	var goal = this.goals[this.goalIdx];
+
+	if (goal.goalPos == "MOVE" || goal.goalPos == "ROTATE") {
+		// show tool tip immediately
+		if (center_tooltip_doc.innerHTML != '') {
+			showElement(center_tooltip_doc);
+		}
+	} else {
+		// double check if we're at the goal
+		this.checkGoal(false, false, false);
 	}
 }
 
-TutorialMode.prototype.checkGoal = function() {
+TutorialMode.prototype.nextGoal = function() {
+	if (this.goalIdx >= this.goals.length) {
+		hideElement(center_tooltip_doc);
+		return;
+	}
+
+	this.goalIdx++;
+	center_tooltip_doc.innerHTML = this.goals[this.goalIdx].goalText;
+	hideElement(center_tooltip_doc);
+	this.showToolTip();
+}
+
+TutorialMode.prototype.checkGoal = function(moved, rotated, placed) {
     var shapeStrings = [];
     var positions = this.currentBlock._getPositions(this.currentBlock.mesh.position);
-    var matchGoal;
-    for (var i = 0; i < positions.length; i++) {
-        shapeStrings.push(getKeyString(positions[i]));
+    var matchGoal = false;
+    var playDing = false;
+
+    var goal = this.goals[this.goalIdx];
+    var goalObj;
+
+    if (goal.goalPos == "MOVE") {
+    	if (moved) {
+    		matchGoal = true;
+    	}
+    } else if (goal.goalPos == "ROTATE") {
+    	if (rotated) {
+    		matchGoal = true;
+    	}
+    } else {
+	    for (var i = 0; i < positions.length; i++) {
+	        shapeStrings.push(getKeyString(positions[i]));
+	    }
+
+	    matchGoal = true;
+	    playDing = true;
+
+	    for (var j = 0; j < shapeStrings.length; j++) {
+	        if (!(shapeStrings[j] in goal.goalPos)) {
+	            matchGoal = false;
+	            playDing = false;
+	            break;
+	        }
+	    }    	
     }
 
-    for (var i = 0; i < this.goals.length; i++) {
-        var goal = this.goals[i];
-        matchGoal = true;
-
-        for (var j = 0; j < shapeStrings.length; j++) {
-            if (!(shapeStrings[j] in goal)) {
-                matchGoal = false;
-                break;
-            }
-        }
-
-        if (matchGoal) {
-        	this.lastColor = this.currentBlock.mesh.material.color;
-        	this.currentBlock.mesh.material.color = new THREE.Color("grey");
-        	dingSound.load();
-        	dingSound.play();
-            break;
-        }
-    }
-
-    if (!matchGoal)	{
-    	if (this.lastColor) {
-    		this.currentBlock.mesh.material.color = this.lastColor;
+    if (matchGoal) {
+    	if (playDing) {
+    		if (placed) {
+    			// can move on and don't have to play ding
+    			console.log("placed");
+    			this.nextGoal();
+    		} else {
+		    	dingSound.load();
+		    	dingSound.play();
+		    	if (center_tooltip_doc.innerHTML != '') {
+		    		showElement(center_tooltip_doc);
+		    	}
+    		}
+    	} else {
+    		console.log("matched");
+    		this.nextGoal();
+    	}
+    } else {
+    	// MIGHT BE BUGGY
+    	if (moved || rotated || placed) {
+    		hideElement(center_tooltip_doc);
     	}
     }
 }

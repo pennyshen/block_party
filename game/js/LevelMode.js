@@ -33,7 +33,10 @@ LevelMode.prototype.showLevel = function() {
 	hideAllInfo();
 	showElement(avail_blocks);
 	if (this.mode == "tutorial") {
-		showElement(hint_doc);		
+		showElement(hint_doc);
+		if (center_tooltip_doc.innerHTML != '') {
+			showElement(center_tooltip_doc);
+		}		
 	}
 	startGame();
 }

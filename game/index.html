@@ -113,6 +113,7 @@
 			</font>
 	    </div>
 	    <span id="hint"></span>
+	    <span id="center_tooltip"></span>
     </div>
 
     <audio id="main_music" loop>
@@ -171,8 +172,9 @@
 		var pauseScreen_doc = document.getElementById("pauseScreen");
 		var levelModeMenu_doc = document.getElementById("levelModeMenu");
 		var hint_doc = document.getElementById("hint");
+		var center_tooltip_doc = document.getElementById("center_tooltip");
 		var nav_items = [menu_doc, reMenu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc];
-		var info_items = [showNextPiece_doc, hint_doc, avail_blocks];
+		var info_items = [showNextPiece_doc, hint_doc, avail_blocks, center_tooltip_doc];
 
 		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Back</a>';
 

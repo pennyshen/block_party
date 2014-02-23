@@ -7,3 +7,9 @@ function Level(blocks, passRate, hint, toImport, goals, goalShape) {
 	this.goals = goals;
 	this.goalShape = goalShape;
 }
+
+
+function Goal(goalPos, goalText) {
+	this.goalPos = goalPos;
+	this.goalText = goalText;
+}

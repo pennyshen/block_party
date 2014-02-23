@@ -133,7 +133,7 @@ function onDocumentKeyDown( event ) {
 
     if ( rotated || moved || climbed) {
         if (toCheckGoal) {
-            game.checkGoal();
+            game.checkGoal(moved, rotated, false);
         }  
     }
 }
@@ -339,6 +339,10 @@ function add_voxel( ) {
     rollOverMesh.position.z += oldPos.z;
 
     moveTowardsPlayer(rollOverMesh.position);
+
+    if (toCheckGoal) {
+        game.checkGoal(false, false, true);
+    }
 
     scene.add( rollOverMesh );
 }

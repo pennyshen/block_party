@@ -60,6 +60,17 @@ p {
     background-color: rgba(255,0,0,0.5);
 }
 
+#center_tooltip {
+    font: 30px "Press Start 2P", cursive; 
+    position: absolute;
+    color: yellow;
+    z-index: 10;
+    text-align: center;
+    display: block;
+    top: 50%;
+    width: 100%;
+}
+
 a.instructions {
     font-size: 20px;
     display: block;

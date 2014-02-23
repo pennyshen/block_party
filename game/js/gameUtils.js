@@ -38,6 +38,7 @@ function startGame() {
 	
 	mainMusic.currentTime = 0;
 	mainMusic.play();
+
 	gameInProgress = true;
 }
 
