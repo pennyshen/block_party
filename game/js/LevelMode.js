@@ -7,7 +7,8 @@ function LevelMode(toPopulateMenu) {
 			new Level(['L', 'lightning', 'L'], 80, '', '', '',[4,1,3]),
 			new Level(['lightning', 'short_T', 'L', 'two_blocks', 'short_T'], 80, '','', '', [3,2,3]),
 			new Level(["cross_block", "lightning", "straight3", "two_blocks", "short_T", "straight3", "lightning", "two_blocks"], 80, '', '', '', [3,3,3]),
-			new Level(["L", "short_T", "short_T", "straight3", "lightning", "two_blocks", "L", "two_blocks"], 80, '','','', [3,3,3])
+			new Level(["L", "short_T", "short_T", "straight3", "lightning", "two_blocks", "L", "two_blocks"], 80, '','','', [3,3,3]),
+			new Level(["lightning", "lightning", "lightning", "lightning", "two_blocks"], 80, '', '', '', [3,3,2])
 		];
 		this.mode = "level";
 	}
