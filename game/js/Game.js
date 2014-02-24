@@ -68,9 +68,21 @@ Game.prototype = {
 
 	computeBoundingBox: function() {
 		// calcualtes the volume of the bounding box
-		var cube_vol = (this.max_x - this.min_x) * (this.max_y - this.min_y) * (this.max_z - this.min_z);
+		var x_dif = this.max_x - this.min_x;
+		var y_dif = this.max_y - this.min_y;
+		var z_dif = this.max_z - this.min_z;
+		var cube_vol = x_dif * y_dif * z_dif;
 		this.score = Math.round((this.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100);
-		score_doc.innerHTML = this.score + '%';
+		//if random mode, calculate bonus scores
+		var bonus = '';
+		if(this.mode=='random'){
+			var dim_dif =  (Math.max(x_dif, y_dif, z_dif) - Math.min(x_dif, y_dif, z_dif))/STEP_SIZE;
+			if(dim_dif == 0)
+				bonus = ' +10';
+			else if (dim_dif ==1)
+				bonus = ' +5';
+		}	
+		score_doc.innerHTML = this.score + '%' + bonus;
 		
 		if (this.boundingBox) {
 			scene.remove(this.boundingBox);
