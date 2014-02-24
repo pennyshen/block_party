@@ -88,20 +88,23 @@
 		<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">End Game</a>
 	</div>
 
+	<div id="selectBlockScreen" class="nav">
+	</div>
+
     <div id="game">
 	    <div id="info">
 	    	<font color ="white">	    	
 			    Volume: <span id ="volume_used">0</span>
-			    <br/>
+			    <br>
 			    Score: <span id="score">0</span>
-			    <br/>			    
+			    <br>			    
 			    <span id="timer">0:00</span>
-			    <br/>
+			    <br>
+			    Pieces left: <span id="piecesLeft">0</span>
+			    <br>
 			    <span id="showNextPiece">Next piece: <span id="nextPiece"></span><br/></span>
-			    <select id="avail_blocks" onchange="selectChange(this)">
-				</select>
-				<br/>
-				<!-- <span id="hint"></span> -->
+			    <button id="avail_blocks" onclick="game.showAvailable()">Switch block</button>
+				<br>
 			</font>
 	    </div>
 	    <span id="hint"></span>
@@ -131,7 +134,7 @@
 
 		var container, stats;
 		var camera, scene, renderer, projector;
-		var mouse2D, mouse3D, raycaster;
+		var mouse2D, mouse3D;
 		var cameraInitPos = new THREE.Vector3(5, 325, 694);
 		var cameraInitRotation = new THREE.Euler(-0.4379673247787578, 0.00652451553634967, 0.00305539757043725, "XYZ");
 
@@ -165,7 +168,10 @@
 		var levelModeMenu_doc = document.getElementById("levelModeMenu");
 		var hint_doc = document.getElementById("hint");
 		var center_tooltip_doc = document.getElementById("center_tooltip");
-		var nav_items = [menu_doc, reMenu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc];
+		var selectBlockScreen_doc = document.getElementById("selectBlockScreen");
+		var piecesLeft_doc = document.getElementById("piecesLeft");
+		var nav_items = [menu_doc, reMenu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
+			selectBlockScreen_doc];
 		var info_items = [showNextPiece_doc, hint_doc, avail_blocks, center_tooltip_doc];
 
 		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Back</a>';
@@ -199,6 +205,8 @@
 		var emitter, particleGroup;
 
 		var game;
+
+		var tmpLight;
 
 		// showElementAndHideNav(levelModeMenu_doc);
 		showElementAndHideNav(menu_doc);
@@ -248,7 +256,6 @@
 			scene.add( controls );
 
 			// picking
-			projector = new THREE.Projector();
 			mouse2D = new THREE.Vector3( 0, 10000, 0.5 );
 
 			// basic scene
@@ -288,6 +295,7 @@
 			stats.domElement.style.bottom = '0px';
 			container.appendChild( stats.domElement );
 
+			document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 			document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 			document.addEventListener( 'keydown', onDocumentKeyDown, false );
 			document.addEventListener( 'keyup', onDocumentKeyUp, false );
@@ -338,8 +346,6 @@
 		function render(dt) {
 			particleGroup.tick( dt );
 
-			raycaster = projector.pickingRay( mouse2D.clone(), camera );
-
 			renderer.autoClear = false;
 			renderer.clear();
 			renderer.render( backgroundScene , backgroundCamera );
@@ -374,6 +380,14 @@
 				}				
 
 				game.currentAliveTime += Date.now() - time;
+			}
+
+			if (game) {
+				if (game.showingPreview) {
+					game.findIntersected();
+					renderer.clear( false, true, false );
+					renderer.render( game.previewScene, game.previewCamera );
+				}				
 			}
 
 			time = Date.now();

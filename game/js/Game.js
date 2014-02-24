@@ -55,7 +55,9 @@ Game.prototype = {
 			this.existingBlocks[i].removeFromScene();
 		}
 
-		this.currentBlock.removeFromScene();
+		if (this.currentBlock) {
+			this.currentBlock.removeFromScene();
+		}
 
 		if (this.boundingBox) {
 			scene.remove(this.boundingBox);

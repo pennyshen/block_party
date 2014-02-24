@@ -9,7 +9,8 @@ function Block(shapeName, shape, color, mesh, generatedTime, rotation) {
 }
 
 Block.prototype.removeFromScene = function() {
-    scene.remove(this.mesh);
+    var currentScene = this.mesh.parent;
+    currentScene.remove(this.mesh);
     this.mesh.geometry.dispose();
     this.mesh.material.dispose();
 }

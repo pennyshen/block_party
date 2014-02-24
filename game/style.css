@@ -20,6 +20,10 @@ body {
     background: black;
 }
 
+#selectBlockScreen {
+    background-color: rgba(0,0,0,0.7);
+}
+
 #endScreen {
     background-color: rgba(0,0,0,0.7);
 }

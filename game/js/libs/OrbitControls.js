@@ -100,6 +100,10 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 	var changeEvent = { type: 'change' };
 
+	this.resetState = function() {
+		state = STATE.NONE;
+	};
+
 
 	this.rotateLeft = function ( angle ) {
 

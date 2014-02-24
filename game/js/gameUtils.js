@@ -14,6 +14,7 @@ function initGame(gameMode) {
 	} else if (gameMode == "random") {
 		game = new RandomMode();
 		startGame();
+		piecesLeft_doc.innerHTML = "?";
 	} else if (gameMode == "tutorial") {
 		game = new TutorialMode();
 		toCheckGoal = true;
@@ -155,14 +156,6 @@ function geo2line( geo ) // credit to WestLangley!
     return geometry;
 }
 
-
-//handler for change in block selection list
-function selectChange(select) {
-	game.switchBlock(select.selectedIndex);
-	// var selectedOption = select.options[select.selectedIndex];
-	// change_rollOver(selectedOption.innerHTML);
-
-}
 //called at the end of the level
 function endLevel() {
 	score_doc.innerHTML = '' + Math.round((BlockGenerator.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100) + "/100";

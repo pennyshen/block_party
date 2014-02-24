@@ -1,6 +1,30 @@
 
 var CAMERA_MOVE_LENGTH = 2;
 
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    backgroundCamera.aspect = window.innerWidth / window.innerHeight;
+    backgroundCamera.updateProjectionMatrix();
+
+    if (game) {
+        if (game.showingPreview) {
+            game.previewCamera.aspect = window.innerWidth / window.innerHeight;
+            game.previewCamera.updateProjectionMatrix();
+        }
+    }
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+}
+
+function onDocumentMouseDown( event ) {
+    if (game) {
+        if (game.showingPreview) {
+            game.switchBlock();
+        }
+    }
+}
 
 function onDocumentMouseMove( event ) {
     event.preventDefault();
@@ -332,6 +356,11 @@ function add_voxel( ) {
    
     // create new block and use that new block as rollover
     game.getNextBlock();
+
+    if (game.currentBlock == null) {
+        return;
+    }
+
     rollOverMesh = game.currentBlock.mesh;
 
     rollOverMesh.position.x += oldPos.x;
@@ -347,12 +376,3 @@ function add_voxel( ) {
     scene.add( rollOverMesh );
 }
 
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-
-    backgroundCamera.aspect = window.innerWidth / window.innerHeight;
-    backgroundCamera.updateProjectionMatrix();
-
-    renderer.setSize( window.innerWidth, window.innerHeight );
-}
