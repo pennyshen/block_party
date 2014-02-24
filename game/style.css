@@ -38,12 +38,9 @@ h1, p, a {
 }
 
 
-/*#levelModeMenu a {
-    height: 50px;
-    width: 50px;    
-    margin: 5px;
-    float: left;
-}*/
+#levelModeMenu {
+    overflow-y: scroll;
+}
 
 h1 {margin-top: 5%;}
 
