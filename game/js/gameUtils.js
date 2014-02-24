@@ -35,12 +35,30 @@ function startGame() {
 	rollOverMesh.position.y += STEP_SIZE / 2; 
 	rollOverMesh.position.z += STEP_SIZE / 2;
 
+	calculateGameBoardOrientation();
+
 	moveTowardsPlayer(rollOverMesh.position);
 	
 	mainMusic.currentTime = 0;
 	mainMusic.play();
 
 	gameInProgress = true;
+}
+
+function calculateGameBoardOrientation() {
+	if (Math.abs(camera.position.x) > Math.abs(camera.position.z)) {
+		if (camera.position.x < 0) {
+			gameBoardOrientation = 2;
+		} else {
+			gameBoardOrientation = 3;
+		}
+	} else {
+		if (camera.position.z < 0) {
+			gameBoardOrientation = 4;
+		} else {
+			gameBoardOrientation = 1;
+		}
+	}	
 }
 
 // draws the normal line for debugging
