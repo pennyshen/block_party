@@ -172,6 +172,10 @@ LevelMode.prototype.showAvailable = function() {
 		this.previewBlocks.push(block);
 		zPos += 200;
 	}
+	
+	if(this.levelBlocks.length==0){
+		gameInProgress = true;
+	}
 
 	avail_blocks.blur();
 
