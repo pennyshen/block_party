@@ -111,6 +111,10 @@
 	    <span id="center_tooltip"></span>
     </div>
 
+    <div id="loading" class="nav">
+    	<p id="loading_text">Loading...</p>
+    </div>
+
     <audio id="main_music" loop>
     	<source src="https://dl.dropboxusercontent.com/u/87553861/spaceForest.mp3" type="audio/mp3" />
 		<!-- <source src="sounds/spaceForest.mp3" type="audio/mp3" /> -->
@@ -170,8 +174,9 @@
 		var center_tooltip_doc = document.getElementById("center_tooltip");
 		var selectBlockScreen_doc = document.getElementById("selectBlockScreen");
 		var piecesLeft_doc = document.getElementById("piecesLeft");
+		var loading_doc = document.getElementById("loading");
 		var nav_items = [menu_doc, reMenu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
-			selectBlockScreen_doc];
+			selectBlockScreen_doc, loading_doc];
 		var info_items = [showNextPiece_doc, hint_doc, avail_blocks, center_tooltip_doc];
 
 		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Back</a>';
@@ -206,10 +211,11 @@
 
 		var game;
 
-		var tmpLight;
-
-		// showElementAndHideNav(levelModeMenu_doc);
-		showElementAndHideNav(menu_doc);
+		// load main music first
+		mainMusic.addEventListener("loadeddata", function() {
+			showElementAndHideNav(menu_doc);
+		});
+		showElementAndHideNav(loading_doc);
 		init();
 		initParticles();
 		animate();
