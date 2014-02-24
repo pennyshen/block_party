@@ -56,6 +56,24 @@ LevelMode.prototype.startLevel = function(level) {
 	this.showLevel();
 } 
 
+//create the goal shape using the given x, y, and z values position at the origin.
+LevelMode.prototype.createGoalShape = function(x,y,z) {
+
+	var x_adjusted = x * STEP_SIZE;
+	var y_adjusted = y * STEP_SIZE;
+	var z_adjusted = z * STEP_SIZE;
+	var geom = new THREE.CubeGeometry(x_adjusted, y_adjusted, z_adjusted);
+	this.goalShape = new THREE.Line( geo2line(geom), new THREE.LineBasicMaterial( { color: 0xFF0000 } ), THREE.LinePieces );
+	this.goalShape.visible = true;
+	if(x%2==1)
+		this.goalShape.position.x += STEP_SIZE/2;
+	this.goalShape.position.y += y_adjusted/2;
+	if(z%2==1)
+		this.goalShape.position.z +=STEP_SIZE/2;
+	scene.add(this.goalShape);
+
+}
+
 LevelMode.prototype.populateSelection = function() {
 	// clear
 	for (var i = avail_blocks.options.length - 1; i >= 0; i--) {
