@@ -4,6 +4,11 @@ function LevelMode(toPopulateMenu) {
 
 	if (toPopulateMenu) {
 		this.levels = [
+			new Level(['two_blocks', 'two_blocks',
+				'two_blocks', 'two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks'
+				,'two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks'
+				,'two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks'
+				], 80, '', '', '', [1,1,1]),
 			new Level(['L', 'lightning', 'L'], 80, '', '', '',[4,1,3]),
 			new Level(['lightning', 'short_T', 'L', 'two_blocks', 'short_T'], 80, '','', '', [3,2,3]),
 			new Level(["cross_block", "lightning", "straight3", "two_blocks", "short_T", "straight3", "lightning", "two_blocks"], 80, '', '', '', [3,3,3]),
@@ -169,6 +174,10 @@ LevelMode.prototype.showAvailable = function() {
 	}
 
 	avail_blocks.blur();
+
+	if (toCheckGoal) {
+		this.checkGoal(true, false, false);	// count this as move
+	}
 }
 
 LevelMode.prototype.populateSelection = function() {

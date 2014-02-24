@@ -354,6 +354,10 @@ function add_voxel( ) {
     blockNoise.load();
     blockNoise.play();
    
+    if (toCheckGoal) {
+        game.checkGoal(false, false, true);
+    }
+   
     // create new block and use that new block as rollover
     game.getNextBlock();
 
@@ -368,10 +372,6 @@ function add_voxel( ) {
     rollOverMesh.position.z += oldPos.z;
 
     moveTowardsPlayer(rollOverMesh.position);
-
-    if (toCheckGoal) {
-        game.checkGoal(false, false, true);
-    }
 
     scene.add( rollOverMesh );
 }

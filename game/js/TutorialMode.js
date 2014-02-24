@@ -54,6 +54,14 @@ function TutorialMode() {
 			[new Goal('MOVE', 'Mouse wheel to zoom'),
 			new Goal('ROTATE', 'R,F to go up and down. But make sure block fits first!'),
 			new Goal('[{"x":1,"y":0,"z":9},{"x":1,"y":1,"z":9}]', 'R to go up, F to go down')]
+		), new Level(
+			['L', 'two_blocks'],
+			100,
+			'Click on "switch block" button to see other given blocks',
+			'[{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":25,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":25,"z":-25}},{"shape":[{"x":0,"y":-1,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":75,"z":25}},{"shape":[{"x":0,"y":1,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":25,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":75,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":75,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":125,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":125,"z":-25}},{"shape":[{"x":0,"y":-1,"z":0}],"shapeName":"two_blocks","position":{"x":75,"y":175,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":125,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":175,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":175,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":175,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":225,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":225,"z":-25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":25,"y":225,"z":25}},{"shape":[{"x":1,"y":0,"z":0}],"shapeName":"two_blocks","position":{"x":-75,"y":225,"z":25}}]',
+			[new Goal('MOVE', 'Click on "switch block" button to choose from all given blocks'),
+			new Goal('[{"x":-1,"y":0,"z":0},{"x":0,"y":0,"z":0}]', ''),
+			new Goal('[{"x":0,"y":2,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":3,"z":0},{"x":-1,"y":1,"z":0}]', '')]
 		)
 	];
 	this.mode = "tutorial";
@@ -114,7 +122,7 @@ TutorialMode.prototype.showToolTip = function() {
 }
 
 TutorialMode.prototype.nextGoal = function() {
-	if (this.goalIdx >= this.goals.length) {
+	if (this.goalIdx >= this.goals.length-1) {
 		hideElement(center_tooltip_doc);
 		return;
 	}
