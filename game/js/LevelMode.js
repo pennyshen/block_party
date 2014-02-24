@@ -4,11 +4,12 @@ function LevelMode(toPopulateMenu) {
 
 	if (toPopulateMenu) {
 		this.levels = [
+			/*
 			new Level(['two_blocks', 'two_blocks',
 				'two_blocks', 'two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks'
 				,'two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks'
 				,'two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks'
-				], 80, '', '', '', [1,1,1]),
+				], 80, '', '', '', [1,1,1]), */
 			new Level(['L', 'lightning', 'L'], 80, '', '', '',[4,1,3]),
 			new Level(['lightning', 'short_T', 'L', 'two_blocks', 'short_T'], 80, '','', '', [3,2,3]),
 			new Level(["cross_block", "lightning", "straight3", "two_blocks", "short_T", "straight3", "lightning", "two_blocks"], 80, '', '', '', [3,3,3]),
@@ -143,7 +144,7 @@ LevelMode.prototype.createGoalShape = function(x,y,z) {
 }
 
 LevelMode.prototype.showAvailable = function() {
-	if (this.showingPreview) {
+	if (this.showingPreview || this.levelBlocks.length ==0) {
 		// already showing preview. ignore
 		return;
 	}
@@ -171,10 +172,6 @@ LevelMode.prototype.showAvailable = function() {
 		this.previewScene.add(block.mesh);
 		this.previewBlocks.push(block);
 		zPos += 200;
-	}
-	
-	if(this.levelBlocks.length==0){
-		gameInProgress = true;
 	}
 
 	avail_blocks.blur();
