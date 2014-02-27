@@ -215,6 +215,7 @@
 		mainMusic.addEventListener("loadeddata", function() {
 			showElementAndHideNav(menu_doc);
 		});
+		
 		showElementAndHideNav(loading_doc);
 		init();
 		initParticles();
@@ -255,10 +256,11 @@
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			renderer.shadowMapEnabled = true;
 
-			controls = new THREE.OrbitControls( camera , renderer.domElement );
+			controls = new THREE.OrbitControls( camera );
 			controls.rotateSpeed = 0.5;
 			controls.minPolarAngle = 0.0;
 			controls.maxPolarAngle = Math.PI * 4 / 9;
+			controls.noKeys = true;
 			scene.add( controls );
 
 			// picking
