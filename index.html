@@ -211,6 +211,10 @@
         // Used in initParticles()
 		var emitter, particleGroup;
 
+		var projector = new THREE.Projector();
+		var raycaster = new THREE.Raycaster();		
+		var INTERSECTED = null;
+
 		var game;
 
 		// load main music first
@@ -378,6 +382,8 @@
 				}				
 
 				game.currentAliveTime += Date.now() - time;
+
+				intersectToHighlight();
 			}
 
 			if (game) {

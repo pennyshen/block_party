@@ -61,6 +61,40 @@ function calculateGameBoardOrientation() {
 	}	
 }
 
+function intersectToHighlight() {
+	var vector = new THREE.Vector3( mouse2D.x, mouse2D.y, 1 );
+	projector.unprojectVector( vector, camera );
+
+	raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
+
+	var toIntersect = [];
+	for (var i = 0; i < game.existingBlocks.length; i++) {
+		toIntersect.push(game.existingBlocks[i].mesh);
+	}
+
+	var intersects = raycaster.intersectObjects( toIntersect );
+
+	if ( intersects.length > 0 ) {
+
+		if ( INTERSECTED != intersects[ 0 ].object ) {
+
+			if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+
+			INTERSECTED = intersects[ 0 ].object;
+			INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+			INTERSECTED.material.emissive.setHex( 0xff0000 );
+
+		}
+
+	} else {
+
+		if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+
+		INTERSECTED = null;
+
+	}		
+}
+
 // draws the normal line for debugging
 function drawNormal(origin, normal) {
 	var lineGeo = new THREE.Geometry();
