@@ -181,22 +181,6 @@ LevelMode.prototype.showAvailable = function() {
 	}
 }
 
-LevelMode.prototype.populateSelection = function() {
-	// clear
-	for (var i = avail_blocks.options.length - 1; i >= 0; i--) {
-        avail_blocks.remove(i);
-    }
-
-	// populates the selection button
-    for (var i = 0; i < this.levelBlocks.length; i++) {
-        var option = document.createElement("option");
-        option.text = this.levelBlocks[i];
-        avail_blocks.add(option);
-    }
-
-    avail_blocks.blur();
-}
-
 LevelMode.prototype.switchBlock = function() {
 	if (this.INTERSECTED == null) {
 		return;
