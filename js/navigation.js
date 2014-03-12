@@ -1,12 +1,16 @@
 
 function pauseGame() {
-	mainMusic.pause();
+	if (mainMusic) {
+		mainMusic.pause();
+	}
     gameInProgress = false;
     showElement(pauseScreen_doc);	
 }
 
 function resumeGame() {
-	mainMusic.play();
+	if (mainMusic) {
+		mainMusic.play();
+	}
 	gameInProgress = true;
 	hideElement(pauseScreen_doc);
 }

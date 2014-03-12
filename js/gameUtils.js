@@ -1,4 +1,8 @@
 
+function canPlayAudio(a) {
+	return !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
+}
+
 function initGame(gameMode) {
 	hideAllNav();
 
@@ -39,8 +43,10 @@ function startGame() {
 
 	moveTowardsPlayer(rollOverMesh.position);
 	
-	mainMusic.currentTime = 0;
-	mainMusic.play();
+	if (mainMusic) {
+		mainMusic.currentTime = 0;
+		mainMusic.play();		
+	}
 
 	gameInProgress = true;
 }
