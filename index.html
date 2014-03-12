@@ -219,12 +219,16 @@
 
 		var mainMusic;
 
-		// mainMusic = new Audio("http://whateverwhouare.github.io/block_party/sounds/spaceForest.mp3");
 		mainMusic = document.getElementById("main_music");
-		mainMusic.addEventListener("loadeddata", function() {
+		if (canPlayAudio(mainMusic)) {
+			mainMusic.addEventListener("loadeddata", function() {
+				showElementAndHideNav(menu_doc);
+			});
+			showElementAndHideNav(loading_doc);			
+		} else {
+			mainMusic = null;
 			showElementAndHideNav(menu_doc);
-		});
-		showElementAndHideNav(loading_doc);
+		}
 
 		init();
 		initParticles();
