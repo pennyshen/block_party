@@ -3,7 +3,6 @@ function canPlayAudio(a) {
 	return !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
 }
 
-
 function startMovingBlock(meshToMove) {
 	var blockToMove;
 	var blockIdx;
@@ -110,24 +109,32 @@ function intersectToHighlight() {
 	}
 
 	var intersects = raycaster.intersectObjects( toIntersect );
+	var idx;
 
 	if ( intersects.length > 0 ) {
-		// check if we're already moving the intersected object
-		if ( intersects[ 0 ].object.id == rollOverMesh.id ) {
-			return;
-		}
-
 		if ( INTERSECTED != intersects[ 0 ].object ) {
+			// rolled from one object onto another
 
 			if ( INTERSECTED ) {
 				if ( INTERSECTED.id != rollOverMesh.id ) {
 					INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
-				}				
-				
+				}
+			}
+
+			// check if we're already moving the intersected object
+			if ( intersects[ 0 ].object.id == rollOverMesh.id ) {
+				return;
+			}			
+
+			// only highlight if we can actually move it
+			idx = game.getIndexFromExistingBlocks(intersects[ 0 ].object);
+			if (!game.canMoveBlock(game.existingBlocks[idx])) {
+				intersects[ 0 ].object.material.emissive.setHex( intersects[ 0 ].object.currentHex );
+				INTERSECTED = null;
+				return;
 			}
 
 			INTERSECTED = intersects[ 0 ].object;
-			INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
 			INTERSECTED.material.emissive.setHex( 0xff0000 );
 
 		}

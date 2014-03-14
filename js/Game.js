@@ -51,6 +51,47 @@ Game.prototype = {
 		return -1;
 	},
 
+	canMoveBlock: function(block) {
+		var positions = block._getPositions(block.mesh.position);
+		var position, posAbove;
+		var maxY = -1;
+		var currentPositions = this.currentBlock._getPositions(this.currentBlock.mesh.position);
+		var currentMap = {};
+		var blockMap = {};
+		var key;
+
+		// make a map of the current positions because we'll need to check that too
+		for (var i = 0; i < currentPositions.length; i++) {
+			currentMap[getKeyString(currentPositions[i])] = true;
+		}
+
+		for (var i = 0; i < positions.length; i++) {
+			blockMap[getKeyString(positions[i])] = true;
+		}
+
+		// find all positions that have the max y 
+		for (var i = 0; i < positions.length; i++) {
+			position = positions[i];
+			
+			// see if these top positions have anything above them
+			posAbove = cloneVector(position);
+			posAbove.y += 1;
+			key = getKeyString(posAbove);
+			if (key in blockMap) {
+				// ignore if position above is occupied by the block itself
+				continue;
+			}
+			if (key in game.existingBlocks) {
+				return false;	
+			}
+			if (key in currentMap) {
+				return false;
+			}
+		}
+
+		return true;
+	},
+
 	getNextBlock: function() {
 		throw 'nextBlock must be implemented';
 	},

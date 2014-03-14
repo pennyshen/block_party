@@ -115,7 +115,12 @@ function onDocumentKeyDown( event ) {
             isSpaceDown = true; 
             if (game.mode == "level") {
                 // move the next block
-                startMovingBlock(game.existingBlocks[0].mesh);
+                for (var i = 0; i < game.existingBlocks.length; i++) {
+                    if (game.canMoveBlock(game.existingBlocks[i])) {
+                        startMovingBlock(game.existingBlocks[i].mesh);
+                        break;
+                    }
+                }
             } else {
                 add_voxel();    
             }
@@ -173,6 +178,11 @@ function onDocumentKeyDown( event ) {
         if (toCheckGoal) {
             game.checkGoal(moved, rotated, false);
         }  
+
+        // check if the intersected block can still be moved
+        if (game.mode == "level") {
+            intersectToHighlight();
+        }
     }
 }
 
