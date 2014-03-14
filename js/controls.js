@@ -8,22 +8,31 @@ function onWindowResize() {
     backgroundCamera.aspect = window.innerWidth / window.innerHeight;
     backgroundCamera.updateProjectionMatrix();
 
-    if (game) {
-        if (game.showingPreview) {
-            game.previewCamera.aspect = window.innerWidth / window.innerHeight;
-            game.previewCamera.updateProjectionMatrix();
-        }
-    }
+    // if (game) {
+    //     if (game.showingPreview) {
+    //         game.previewCamera.aspect = window.innerWidth / window.innerHeight;
+    //         game.previewCamera.updateProjectionMatrix();
+    //     }
+    // }
 
     renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
 function onDocumentMouseDown( event ) {
     if (game) {
-        if (game.showingPreview) {
-            game.switchBlock();
+        if (INTERSECTED) {
+            if (INTERSECTED.id != rollOverMesh.id) {
+                // only update if it's a different block from the one we're on right now
+                startMovingBlock(INTERSECTED);
+            }
         }
     }
+
+    // if (game) {
+    //     if (game.showingPreview) {
+    //         game.switchBlock();
+    //     }
+    // }
 }
 
 function onDocumentMouseMove( event ) {
@@ -104,7 +113,12 @@ function onDocumentKeyDown( event ) {
             break;
         case 32: 
             isSpaceDown = true; 
-            add_voxel();
+            if (game.mode == "level") {
+                // move the next block
+                startMovingBlock(game.existingBlocks[0].mesh);
+            } else {
+                add_voxel();    
+            }
             break;
         case 27:    // esc
             pauseGame()

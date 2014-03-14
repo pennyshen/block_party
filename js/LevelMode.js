@@ -81,7 +81,36 @@ LevelMode.prototype.showLevel = function() {
 			showElement(center_tooltip_doc);
 		}		
 	}
-	startGame();
+
+	// TODO: DON'T CALL THIS FOR NOW
+	// TODO: REORGANIZE HOW WE'RE STARTING A GAME
+	// startGame();
+
+	while (this.getNextBlock()) {
+		// create
+		rollOverMesh = this.currentBlock.mesh;
+		scene.add(rollOverMesh);
+		rollOverMesh.position.x = getRandomInteger(-7, 7)*STEP_SIZE + STEP_SIZE/2;
+		rollOverMesh.position.y += STEP_SIZE/2;
+		rollOverMesh.position.z = getRandomInteger(-7, 7)*STEP_SIZE + STEP_SIZE/2;
+		rollOverMesh.currentHex = rollOverMesh.material.emissive.getHex();
+		moveToLegal(this.currentBlock, this.currentBlock.mesh.position);
+
+		// add
+		this.currentBlock.makeStatic();
+		this.addToExisting(this.currentBlock, rollOverMesh.position);
+	}
+
+	rollOverMesh = null;
+	startMovingBlock(this.currentBlock.mesh);
+
+	if (mainMusic) {
+		mainMusic.currentTime = 0;
+		mainMusic.play();		
+	}
+
+	gameInProgress = true;
+	// volume_doc.innerHTML = this.totalVolume;
 }
 
 LevelMode.prototype.findIntersected = function() {
@@ -228,13 +257,10 @@ LevelMode.prototype.switchBlock = function() {
 
 LevelMode.prototype.getNextBlock = function() {
 	if (this.levelBlocks.length <= 0) {
-		this.currentBlock = null;
-		this.endGame();
-		return;
-	}
-
-	if (this.lastColor) {
-		this.lastColor = null;
+		// this.currentBlock = null;
+		// this.endGame();
+		// return;
+		return false;
 	}
 
 	var block;
@@ -244,6 +270,8 @@ LevelMode.prototype.getNextBlock = function() {
 	this.levelBlocks.splice( this.levelBlocks.indexOf(this.currentBlock.shapeName), 1 );
 	piecesLeft_doc.innerHTML = game.levelBlocks.length;
 	// this.populateSelection();
+
+	return true;
 };
 
 LevelMode.prototype.endGame = function() {

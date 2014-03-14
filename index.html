@@ -228,7 +228,8 @@
 		} else {
 			mainMusic = null;
 			showElementAndHideNav(menu_doc);
-		}
+		}			
+
 
 		init();
 		initParticles();
@@ -375,31 +376,31 @@
 			calculateGameBoardOrientation();
 
 			if (gameInProgress) {
-				if (game.currentAliveTime < ALIVE_TIME) {
-					// update time
-					timeRemaining = Math.max(ALIVE_TIME - game.currentAliveTime, 0);
-					secs = Math.floor(timeRemaining / 1000.0);
-					mins = Math.floor(secs / 60);
-					timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs).slice(-2);
+				// if (game.currentAliveTime < ALIVE_TIME) {
+				// 	// update time
+				// 	timeRemaining = Math.max(ALIVE_TIME - game.currentAliveTime, 0);
+				// 	secs = Math.floor(timeRemaining / 1000.0);
+				// 	mins = Math.floor(secs / 60);
+				// 	timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs).slice(-2);
 
-					// update opacity
-					rollOverMesh.material.opacity = INIT_OPACITY + game.currentAliveTime / ALIVE_TIME * (1 - INIT_OPACITY);
-				} else {
-					add_voxel();
-				}				
+				// 	// update opacity
+				// 	rollOverMesh.material.opacity = INIT_OPACITY + game.currentAliveTime / ALIVE_TIME * (1 - INIT_OPACITY);
+				// } else {
+				// 	add_voxel();
+				// }				
 
 				game.currentAliveTime += Date.now() - time;
 
 				intersectToHighlight();
 			}
 
-			if (game) {
-				if (game.showingPreview) {
-					game.findIntersected();
-					renderer.clear( false, true, false );
-					renderer.render( game.previewScene, game.previewCamera );
-				}				
-			}
+			// if (game) {
+			// 	if (game.showingPreview) {
+			// 		game.findIntersected();
+			// 		renderer.clear( false, true, false );
+			// 		renderer.render( game.previewScene, game.previewCamera );
+			// 	}				
+			// }
 
 			time = Date.now();
 		}

@@ -15,6 +15,15 @@ Block.prototype.removeFromScene = function() {
     this.mesh.material.dispose();
 }
 
+Block.prototype.makeMovable = function() {
+    var voxel = this.mesh;
+
+    voxel.matrixAutoUpdate = true;
+    voxel.geometry.verticesNeedUpdate = false;
+    voxel.castShadow = true;
+    voxel.updateMatrix();        
+}
+
 Block.prototype.makeStatic = function() {
     var voxel = this.mesh;
     

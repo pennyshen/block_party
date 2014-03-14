@@ -3,6 +3,37 @@ function canPlayAudio(a) {
 	return !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
 }
 
+
+function startMovingBlock(meshToMove) {
+	var blockToMove;
+	var blockIdx;
+	var positions;
+
+	// unlighlight and put down the old block
+	if (rollOverMesh) {
+		game.currentBlock.makeStatic();
+		game.addToExisting(game.currentBlock, rollOverMesh.position);
+		rollOverMesh.material.emissive.setHex( rollOverMesh.currentHex );
+	}
+	rollOverMesh = meshToMove;
+
+	// find which block it is from the mesh
+	blockIdx = game.getIndexFromExistingBlocks(meshToMove);
+	blockToMove = game.existingBlocks[blockIdx];
+
+	// remove from existingBlocks
+	game.currentBlock = blockToMove;
+	blockToMove.makeMovable();
+	game.existingBlocks.splice(blockIdx, 1);
+	positions = blockToMove._getPositions(meshToMove.position, blockToMove.shape);
+	for (var i = 0; i < positions.length; i++) {
+		delete game.existingBlocks[getKeyString(positions[i])];
+	}
+
+	// permanently highlight this block
+	meshToMove.material.emissive.setHex( 0xff0000 );
+}
+
 function initGame(gameMode) {
 	hideAllNav();
 
@@ -81,10 +112,19 @@ function intersectToHighlight() {
 	var intersects = raycaster.intersectObjects( toIntersect );
 
 	if ( intersects.length > 0 ) {
+		// check if we're already moving the intersected object
+		if ( intersects[ 0 ].object.id == rollOverMesh.id ) {
+			return;
+		}
 
 		if ( INTERSECTED != intersects[ 0 ].object ) {
 
-			if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+			if ( INTERSECTED ) {
+				if ( INTERSECTED.id != rollOverMesh.id ) {
+					INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+				}				
+				
+			}
 
 			INTERSECTED = intersects[ 0 ].object;
 			INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
@@ -93,8 +133,11 @@ function intersectToHighlight() {
 		}
 
 	} else {
-
-		if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+		if ( INTERSECTED )  {
+			if ( INTERSECTED.id != rollOverMesh.id ) {
+				INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+			}
+		}
 
 		INTERSECTED = null;
 
@@ -134,7 +177,7 @@ function getDupVertices(vertices) {
 
 // get random integer between min and max
 function getRandomInteger(min, max) {
-	return Math.floor(Math.random()*max) + min;
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // get random array member
