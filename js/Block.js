@@ -35,6 +35,11 @@ Block.prototype.makeStatic = function() {
     voxel.updateMatrix();    
 }
 
+
+Block.prototype.getMyPositions = function() {
+    return this._getPositions(this.mesh.position);
+}
+
 Block.prototype._getPositions = function(realPosition) {
     var position = realPosition.clone();
     var positions = [];

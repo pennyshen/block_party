@@ -4,6 +4,8 @@ var BlockGenerator = {};
 
 BlockGenerator.shapes = {
 	/* "2D" shapes (involving only 2 axes) */
+	// "cube": []
+
 	"two_blocks": [{x: 1, y: 0, z: 0}],
 	"L":
 	[
@@ -120,6 +122,10 @@ BlockGenerator.getBlock = function(shapeName, originalShape, color) {
 	mesh.castShadow = true;
 	mesh.receiveShadow = true;
 	mesh.renderDepth = 0.5;	// must be set to < 1 to avoid z-fighting
+
+	mesh.position.x += STEP_SIZE / 2;
+	mesh.position.y += STEP_SIZE / 2;
+	mesh.position.z += STEP_SIZE / 2;
 
 	// raycast itself from the center of each face (negated normal), and whichever face gets intersected
 	// is an inner face

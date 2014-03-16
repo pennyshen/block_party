@@ -10,7 +10,8 @@ function LevelMode(toPopulateMenu) {
 				,'two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks'
 				,'two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks','two_blocks'
 				], 80, '', '', '', [1,1,1]), */
-			new Level(['L', 'lightning', 'L'], 80, '', '', '',[4,1,3]),
+			new Level(['L', 'lightning', 'L'], 80, '', '', '',
+				'[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":-2,"y":0,"z":0},{"x":-2,"y":0,"z":1},{"x":-1,"y":0,"z":1},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":1,"y":0,"z":2},{"x":0,"y":0,"z":2},{"x":-1,"y":0,"z":2},{"x":-2,"y":0,"z":2}]'),
 			new Level(['lightning', 'short_T', 'L', 'two_blocks', 'short_T'], 80, '','', '', [3,2,3]),
 			new Level(["cross_block", "lightning", "straight3", "two_blocks", "short_T", "straight3", "lightning", "two_blocks"], 80, '', '', '', [3,3,3]),
 			new Level(["L", "short_T", "short_T", "straight3", "lightning", "two_blocks", "L", "two_blocks"], 80, '','','', [3,3,3]),
@@ -22,6 +23,8 @@ function LevelMode(toPopulateMenu) {
 	}
 
 	this.INTERSECTED = null;
+	this.goal = [];
+	this.goalObject = {};
 
 	this.showLevelMenu();
 }
@@ -57,9 +60,8 @@ LevelMode.prototype.showLevel = function() {
 		// create
 		rollOverMesh = this.currentBlock.mesh;
 		scene.add(rollOverMesh);
-		rollOverMesh.position.x = getRandomInteger(-7, 7)*STEP_SIZE + STEP_SIZE/2;
-		rollOverMesh.position.y += STEP_SIZE/2;
-		rollOverMesh.position.z = getRandomInteger(-7, 7)*STEP_SIZE + STEP_SIZE/2;
+		rollOverMesh.position.x += getRandomInteger(-7, 7)*STEP_SIZE;
+		rollOverMesh.position.z += getRandomInteger(-7, 7)*STEP_SIZE;
 		rollOverMesh.currentHex = rollOverMesh.material.emissive.getHex();
 		moveToLegal(this.currentBlock, this.currentBlock.mesh.position);
 
@@ -85,30 +87,61 @@ LevelMode.prototype.startLevel = function(level) {
 	this.levelBlocks = [];
 	this.levelBlocks = this.levels[level].blocks.slice(0);
 	this.toPass = this.levels[level].passRate;
-	var gs = this.levels[level].goalShape;
 
-	this.createGoalShape(gs[0],gs[1],gs[2]);
+	this.createGoalShape(JSON.parse(this.levels[level].goalShape));
 
 	this.showLevel();
 } 
 
-//create the goal shape using the given x, y, and z values position at the origin.
-LevelMode.prototype.createGoalShape = function(x,y,z) {
+LevelMode.prototype.checkSuccess = function() {
+	var map = getPositionsMap(this.currentBlock.getMyPositions());
+	var key;
 
-	var x_adjusted = x * STEP_SIZE;
-	var y_adjusted = y * STEP_SIZE;
-	var z_adjusted = z * STEP_SIZE;
-	var geom = new THREE.CubeGeometry(x_adjusted, y_adjusted, z_adjusted);
-	this.goalShape = new THREE.Line( geo2line(geom), new THREE.LineBasicMaterial( { color: 0xFF0000 } ), THREE.LinePieces );
-	this.goalShape.visible = true;
-	if(x%2==1)
-		this.goalShape.position.x += STEP_SIZE/2;
-	this.goalShape.position.y += y_adjusted/2;
-	if(z%2==1)
-		this.goalShape.position.z +=STEP_SIZE/2;
-	scene.add(this.goalShape);
+	for (var i = 0; i < this.goal.length; i++) {
+		key = getKeyString(this.goal[i]);
+		if (key in this.existingBlocks) {
+			continue;
+		} else if (key in map) {
+			continue;
+		} else {
+			return;
+		}
+	}
 
+	this.endGame();
 }
+
+LevelMode.prototype.createGoalShape = function(shape) {
+	var block = BlockGenerator.getBlock("goalShape", shape, "grey");
+	var wireframe = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0xFF0000 } ), THREE.LinePieces );
+
+	wireframe.position.x += STEP_SIZE/2;
+	wireframe.position.y += STEP_SIZE/2;
+	wireframe.position.z += STEP_SIZE/2;
+
+	this.goal = shape;
+	this.goalObject = wireframe;
+
+	scene.add(wireframe);
+}
+
+// //create the goal shape using the given x, y, and z values position at the origin.
+// LevelMode.prototype.createGoalShape = function(x,y,z) {
+
+// 	var x_adjusted = x * STEP_SIZE;
+// 	var y_adjusted = y * STEP_SIZE;
+// 	var z_adjusted = z * STEP_SIZE;
+// 	var geom = new THREE.CubeGeometry(x_adjusted, y_adjusted, z_adjusted);
+// 	this.goalShape = new THREE.Line( geo2line(geom), new THREE.LineBasicMaterial( { color: 0xFF0000 } ), THREE.LinePieces );
+// 	this.goalShape.visible = true;
+// 	if(x%2==1)
+// 		this.goalShape.position.x += STEP_SIZE/2;
+// 	this.goalShape.position.y += y_adjusted/2;
+// 	if(z%2==1)
+// 		this.goalShape.position.z +=STEP_SIZE/2;
+// 	scene.add(this.goalShape);
+
+// }
 
 LevelMode.prototype.getNextBlock = function() {
 	if (this.levelBlocks.length <= 0) {
@@ -124,7 +157,6 @@ LevelMode.prototype.getNextBlock = function() {
 	this.currentBlock = block;
 	this.levelBlocks.splice( this.levelBlocks.indexOf(this.currentBlock.shapeName), 1 );
 	piecesLeft_doc.innerHTML = game.levelBlocks.length;
-	// this.populateSelection();
 
 	return true;
 };
@@ -139,20 +171,21 @@ LevelMode.prototype.endGame = function() {
 	var nextLevel = '';
 	var playAgain = '<a href="javascript: void(0)" class="menuItem" onClick="restartLevel()">Play again</a><br>'; 
 
-	if (this.score >= this.toPass) {
-		passOrFail = "PASSED!";
-		if (this.level + 1 < this.levels.length) {
-			nextLevel = '<a href="javascript: void(0)" class="menuItem" onClick="nextLevel()">Next level</a><br>'; 
-		}		
+	// if (this.score >= this.toPass) {
+	// 	passOrFail = "PASSED!";
+	// 	if (this.level + 1 < this.levels.length) {
+	// 		nextLevel = '<a href="javascript: void(0)" class="menuItem" onClick="nextLevel()">Next level</a><br>'; 
+	// 	}		
 
-		successSound.load();
-		successSound.play();
-	} else {
-		passOrFail = "FAILED!";
+	// 	successSound.load();
+	// 	successSound.play();
+	// } else {
+	// 	passOrFail = "FAILED!";
 
-		failSound.load();
-		failSound.play();
-	}
+	// 	failSound.load();
+	// 	failSound.play();
+	// }
+	passOrFail = 'PASSED!';
 
 	endScreen_doc.innerHTML = '<h1>' + passOrFail + "</h1><br>"
 		+ playAgain

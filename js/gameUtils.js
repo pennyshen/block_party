@@ -3,6 +3,16 @@ function canPlayAudio(a) {
 	return !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
 }
 
+function getPositionsMap(positions) {
+    var map = {};
+
+    for (var i = 0; i < positions.length; i++) {
+        map[getKeyString(positions[i])] = true;
+    }
+
+    return map;
+}
+
 function startMovingBlock(meshToMove) {
 	var blockToMove;
 	var blockIdx;
@@ -65,9 +75,6 @@ function startGame() {
 	rollOverMesh = game.currentBlock.mesh;
 
 	scene.add( rollOverMesh );
-	rollOverMesh.position.x += STEP_SIZE / 2; 
-	rollOverMesh.position.y += STEP_SIZE / 2; 
-	rollOverMesh.position.z += STEP_SIZE / 2;
 
 	calculateGameBoardOrientation();
 
@@ -189,7 +196,7 @@ function getRandomInteger(min, max) {
 
 // get random array member
 function getRandomMember(array) {
-	return array[getRandomInteger(0, array.length)];
+	return array[getRandomInteger(0, array.length-1)];
 }
 
 //check for intersection

@@ -182,6 +182,7 @@ function onDocumentKeyDown( event ) {
         // check if the intersected block can still be moved
         if (game.mode == "level") {
             intersectToHighlight();
+            game.checkSuccess();
         }
     }
 }

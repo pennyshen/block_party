@@ -55,19 +55,10 @@ Game.prototype = {
 		var positions = block._getPositions(block.mesh.position);
 		var position, posAbove;
 		var maxY = -1;
-		var currentPositions = this.currentBlock._getPositions(this.currentBlock.mesh.position);
-		var currentMap = {};
-		var blockMap = {};
+		var currentPositions = this.currentBlock.getMyPositions();
+		var currentMap = getPositionsMap(currentPositions);
+		var blockMap = getPositionsMap(positions);
 		var key;
-
-		// make a map of the current positions because we'll need to check that too
-		for (var i = 0; i < currentPositions.length; i++) {
-			currentMap[getKeyString(currentPositions[i])] = true;
-		}
-
-		for (var i = 0; i < positions.length; i++) {
-			blockMap[getKeyString(positions[i])] = true;
-		}
 
 		for (var i = 0; i < positions.length; i++) {
 			position = positions[i];
@@ -110,8 +101,10 @@ Game.prototype = {
 			scene.remove(this.boundingBox);
 			this.boundingBox.geometry.dispose();
 		}
-		if(this.goalShape){
-			scene.remove(this.goalShape);
+
+		if (this.goalObject) {
+			scene.remove(this.goalObject);
+			this.goalObject.geometry.dispose();
 		}
 	},
 
@@ -151,6 +144,16 @@ Game.prototype = {
 
 	exportFromCurrent: function() {
 		return JSON.stringify(this.currentBlock._getPositions(this.currentBlock.mesh.position));
+	},
+
+	exportGoal: function() {
+		var newShape = [];
+
+		for (var i = 0; i < this.existingBlocks.length; i++) {
+			newShape.push(this.existingBlocks[i].getMyPositions()[0]);
+		}
+
+		return JSON.stringify(newShape);
 	},
 
 	exportFromExisting: function() {
