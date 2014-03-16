@@ -21,39 +21,7 @@ function LevelMode(toPopulateMenu) {
 		this.objectiveText = "Use given pieces to fill the red box!"
 	}
 
-	// set up for block preview
-	this.previewScene = new THREE.Scene();
-	this.previewCamera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-	this.previewCamera.position.set(1000, 0, 0);
-	this.previewCamera.lookAt(new THREE.Vector3(0, 0, 0));
-	this.previewScene.add( this.previewCamera );
-
-	this.previewControls = new THREE.OrbitControls( this.previewCamera , renderer.domElement );
-	this.previewControls.rotateSpeed = 0.5;
-	this.previewControls.minPolarAngle = 0.0;
-	this.previewControls.maxPolarAngle = Math.PI * 4 / 9;
-	this.previewControls.noZoom = true;
-	this.previewControls.noPan = true;
-	this.previewScene.add( this.previewControls );
-	this.previewControls.enabled = false;	
-
-	var light = new THREE.DirectionalLight( 0xffffff, 2 );
-	light.position.set( 1, 1, 1 ).normalize();
-	this.previewScene.add( light );
-
-	var light = new THREE.DirectionalLight( 0xffffff );
-	light.position.set( -1, -1, -1 ).normalize();
-	this.previewScene.add( light );
-
-	// projector and raycastor for block preview
-	this.projector = new THREE.Projector();
-	this.raycaster = new THREE.Raycaster();
-
 	this.INTERSECTED = null;
-
-	this.showingPreview = false;
-
-	this.previewBlocks = [];
 
 	this.showLevelMenu();
 }
@@ -74,7 +42,6 @@ LevelMode.prototype.showLevelMenu = function() {
 LevelMode.prototype.showLevel = function() {
 	hideAllNav();
 	hideAllInfo();
-	showElement(avail_blocks);
 	if (this.mode == "tutorial") {
 		showElement(hint_doc);
 		if (center_tooltip_doc.innerHTML != '') {
@@ -113,35 +80,6 @@ LevelMode.prototype.showLevel = function() {
 	// volume_doc.innerHTML = this.totalVolume;
 }
 
-LevelMode.prototype.findIntersected = function() {
-	var vector = new THREE.Vector3( mouse2D.x, mouse2D.y, 1 );
-	this.projector.unprojectVector( vector, this.previewCamera );
-
-	this.raycaster.set( this.previewCamera.position, vector.sub( this.previewCamera.position ).normalize() );
-
-	var intersects = this.raycaster.intersectObjects( this.previewScene.children );
-
-	if ( intersects.length > 0 ) {
-
-		if ( this.INTERSECTED != intersects[ 0 ].object ) {
-
-			if ( this.INTERSECTED ) this.INTERSECTED.material.emissive.setHex( this.INTERSECTED.currentHex );
-
-			this.INTERSECTED = intersects[ 0 ].object;
-			this.INTERSECTED.currentHex = this.INTERSECTED.material.emissive.getHex();
-			this.INTERSECTED.material.emissive.setHex( 0xff0000 );
-
-		}
-
-	} else {
-
-		if ( this.INTERSECTED ) this.INTERSECTED.material.emissive.setHex( this.INTERSECTED.currentHex );
-
-		this.INTERSECTED = null;
-
-	}	
-}
-
 LevelMode.prototype.startLevel = function(level) {
 	this.level = level;
 	this.levelBlocks = [];
@@ -170,89 +108,6 @@ LevelMode.prototype.createGoalShape = function(x,y,z) {
 		this.goalShape.position.z +=STEP_SIZE/2;
 	scene.add(this.goalShape);
 
-}
-
-LevelMode.prototype.showAvailable = function() {
-	if (this.showingPreview || this.levelBlocks.length ==0) {
-		// already showing preview. ignore
-		return;
-	}
-
-	// showElement(selectBlockScreen_doc);
-	gameInProgress = false;	// make everything pause for now
-	controls.enabled = false;
-	this.showingPreview = true;
-	this.previewControls.enabled = true;
-	this.previewBlocks = [];
-	// this.previewCamera.position.set(1000, 0, 0);
-
-	var block;
-	var zPos = (this.levelBlocks.length * 200) / -2 + 100;
-
-	for (var i = 0; i < this.levelBlocks.length; i++) {
-		block = BlockGenerator.generate(this.levelBlocks[i]);
-		block.mesh.position.z = zPos;
-		block.mesh.castShadow	= false;
-		block.mesh.receiveShadow = false;
-		block.mesh.material.opacity = 1.0;
-		block.mesh.depthWrite = false;
-		block.mesh.depthTest = false;
-		block.mesh.rotation.set(0, Math.PI/4, 0);
-		this.previewScene.add(block.mesh);
-		this.previewBlocks.push(block);
-		zPos += 200;
-	}
-
-	avail_blocks.blur();
-
-	if (toCheckGoal) {
-		this.checkGoal(true, false, false);	// count this as move
-	}
-}
-
-LevelMode.prototype.switchBlock = function() {
-	if (this.INTERSECTED == null) {
-		return;
-	}
-
-	var index;
-	var oldPos = this.currentBlock.mesh.position.clone();
-
-	for (var i = 0; i < this.previewBlocks.length; i++) {
-		if (this.INTERSECTED.id == this.previewBlocks[i].mesh.id) {
-			index = i;
-			break;
-		}
-	}
-
-	// first push the current block back in and then remove it
-	this.levelBlocks.push(this.currentBlock.shapeName);
-	this.currentBlock.removeFromScene();
-
-	this.currentBlock = BlockGenerator.generate(this.levelBlocks[index]);
-	rollOverMesh = this.currentBlock.mesh;
-
-	rollOverMesh.position.x += oldPos.x;
-	rollOverMesh.position.y += oldPos.y;
-	rollOverMesh.position.z += oldPos.z;
-
-	moveTowardsPlayer(rollOverMesh.position);
-
-	this.levelBlocks.splice( index, 1 );
-
-	scene.add(this.currentBlock.mesh);
-
-	// remove all preview blocks
-	for (var i = 0; i < this.previewBlocks.length; i++) {
-		this.previewBlocks[i].removeFromScene();
-	}
-	this.previewBlocks = null;
-
-	gameInProgress = true;	// make everything pause for now
-	controls.enabled = true;
-	this.showingPreview = false;	
-	this.previewControls.resetState();
-	this.previewControls.enabled = false;
 }
 
 LevelMode.prototype.getNextBlock = function() {

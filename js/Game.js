@@ -69,11 +69,8 @@ Game.prototype = {
 			blockMap[getKeyString(positions[i])] = true;
 		}
 
-		// find all positions that have the max y 
 		for (var i = 0; i < positions.length; i++) {
 			position = positions[i];
-			
-			// see if these top positions have anything above them
 			posAbove = cloneVector(position);
 			posAbove.y += 1;
 			key = getKeyString(posAbove);

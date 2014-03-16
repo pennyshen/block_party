@@ -105,7 +105,6 @@
 			    Pieces left: <span id="piecesLeft">0</span>
 			    <br>
 			    <span id="showNextPiece">Next piece: <span id="nextPiece"></span><br/></span>
-			    <button id="avail_blocks" onclick="game.showAvailable()">Switch block</button>
 				<br>
 			</font>
 	    </div>
@@ -164,7 +163,6 @@
 		var blocker = document.getElementById("blocker");
 		var nextPiece_doc = document.getElementById( 'nextPiece' );
 		var showNextPiece_doc = document.getElementById( 'showNextPiece' );
-		var avail_blocks = document.getElementById("avail_blocks");
 		var score_doc = document.getElementById("score");
 		var menu_doc = document.getElementById("menu");
 		var reMenu_doc = document.getElementById("reMenu");
@@ -179,7 +177,7 @@
 		var loading_doc = document.getElementById("loading");
 		var nav_items = [menu_doc, reMenu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
 			selectBlockScreen_doc, loading_doc];
-		var info_items = [showNextPiece_doc, hint_doc, avail_blocks, center_tooltip_doc];
+		var info_items = [showNextPiece_doc, hint_doc, center_tooltip_doc];
 
 		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Back</a>';
 
@@ -393,14 +391,6 @@
 
 				intersectToHighlight();
 			}
-
-			// if (game) {
-			// 	if (game.showingPreview) {
-			// 		game.findIntersected();
-			// 		renderer.clear( false, true, false );
-			// 		renderer.render( game.previewScene, game.previewCamera );
-			// 	}				
-			// }
 
 			time = Date.now();
 		}
