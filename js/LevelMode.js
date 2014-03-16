@@ -12,10 +12,14 @@ function LevelMode(toPopulateMenu) {
 				], 80, '', '', '', [1,1,1]), */
 			new Level(['L', 'lightning', 'L'], 80, '', '', '',
 				'[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":-2,"y":0,"z":0},{"x":-2,"y":0,"z":1},{"x":-1,"y":0,"z":1},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":1,"y":0,"z":2},{"x":0,"y":0,"z":2},{"x":-1,"y":0,"z":2},{"x":-2,"y":0,"z":2}]'),
-			new Level(['lightning', 'short_T', 'L', 'two_blocks', 'short_T'], 80, '','', '', [3,2,3]),
-			new Level(["cross_block", "lightning", "straight3", "two_blocks", "short_T", "straight3", "lightning", "two_blocks"], 80, '', '', '', [3,3,3]),
-			new Level(["L", "short_T", "short_T", "straight3", "lightning", "two_blocks", "L", "two_blocks"], 80, '','','', [3,3,3]),
-			new Level(["lightning", "lightning", "lightning", "lightning", "two_blocks"], 80, '', '', '', [3,3,2])
+			new Level(['lightning', 'short_T', 'L', 'two_blocks', 'short_T'], 80, '','', '', 
+				'[{"x":0,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":-1,"y":0,"z":1},{"x":-1,"y":0,"z":0},{"x":-2,"y":0,"z":0},{"x":-2,"y":0,"z":1},{"x":-2,"y":0,"z":2},{"x":-1,"y":0,"z":2},{"x":0,"y":0,"z":2},{"x":0,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":-2,"y":1,"z":0},{"x":-2,"y":1,"z":1},{"x":-2,"y":1,"z":2},{"x":-1,"y":1,"z":1},{"x":-1,"y":1,"z":2},{"x":0,"y":1,"z":1},{"x":0,"y":1,"z":2}]'),
+			new Level(["cross_block", "lightning", "straight3", "two_blocks", "short_T", "straight3", "lightning", "two_blocks"], 80, '', '', '', 
+				'[{"x":0,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":-1},{"x":-1,"y":0,"z":-1},{"x":-1,"y":0,"z":0},{"x":-1,"y":0,"z":1},{"x":-2,"y":0,"z":-1},{"x":-2,"y":0,"z":0},{"x":-2,"y":0,"z":1},{"x":-2,"y":1,"z":-1},{"x":-2,"y":1,"z":0},{"x":-2,"y":1,"z":1},{"x":-1,"y":1,"z":-1},{"x":-1,"y":1,"z":0},{"x":-1,"y":1,"z":1},{"x":0,"y":1,"z":-1},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":2,"z":-1},{"x":0,"y":2,"z":0},{"x":0,"y":2,"z":1},{"x":-1,"y":2,"z":-1},{"x":-1,"y":2,"z":0},{"x":-1,"y":2,"z":1},{"x":-2,"y":2,"z":-1},{"x":-2,"y":2,"z":0},{"x":-2,"y":2,"z":1}]'),
+			new Level(["L", "short_T", "short_T", "straight3", "lightning", "two_blocks", "L", "two_blocks"], 80, '','','', 
+				'[{"x":0,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":-1},{"x":-1,"y":0,"z":-1},{"x":-1,"y":0,"z":0},{"x":-1,"y":0,"z":1},{"x":-2,"y":0,"z":-1},{"x":-2,"y":0,"z":0},{"x":-2,"y":0,"z":1},{"x":-2,"y":1,"z":-1},{"x":-2,"y":1,"z":0},{"x":-2,"y":1,"z":1},{"x":-1,"y":1,"z":-1},{"x":-1,"y":1,"z":0},{"x":-1,"y":1,"z":1},{"x":0,"y":1,"z":-1},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":2,"z":-1},{"x":0,"y":2,"z":0},{"x":0,"y":2,"z":1},{"x":-1,"y":2,"z":-1},{"x":-1,"y":2,"z":0},{"x":-1,"y":2,"z":1},{"x":-2,"y":2,"z":-1},{"x":-2,"y":2,"z":0},{"x":-2,"y":2,"z":1}]'),
+			new Level(["lightning", "lightning", "lightning", "lightning", "two_blocks"], 80, '', '', '', 
+				'[{"x":0,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":-1,"y":0,"z":1},{"x":-1,"y":0,"z":0},{"x":-2,"y":0,"z":0},{"x":-2,"y":0,"z":1},{"x":-2,"y":0,"z":2},{"x":-1,"y":0,"z":2},{"x":0,"y":0,"z":2},{"x":0,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":-2,"y":1,"z":0},{"x":-2,"y":1,"z":1},{"x":-2,"y":1,"z":2},{"x":-1,"y":1,"z":1},{"x":-1,"y":1,"z":2},{"x":0,"y":1,"z":1},{"x":0,"y":1,"z":2}]')
 		];
 		this.mode = "level";
 		this.titleText = "Level Mode"
@@ -186,6 +190,9 @@ LevelMode.prototype.endGame = function() {
 	// 	failSound.play();
 	// }
 	passOrFail = 'PASSED!';
+	if (this.level + 1 < this.levels.length) {
+		nextLevel = '<a href="javascript: void(0)" class="menuItem" onClick="nextLevel()">Next level</a><br>'; 
+	}	
 
 	endScreen_doc.innerHTML = '<h1>' + passOrFail + "</h1><br>"
 		+ playAgain

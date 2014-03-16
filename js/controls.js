@@ -392,9 +392,9 @@ function add_voxel( ) {
 
     rollOverMesh = game.currentBlock.mesh;
 
-    rollOverMesh.position.x += oldPos.x;
-    rollOverMesh.position.y += oldPos.y;
-    rollOverMesh.position.z += oldPos.z;
+    rollOverMesh.position.x = oldPos.x;
+    rollOverMesh.position.y = oldPos.y;
+    rollOverMesh.position.z = oldPos.z;
 
     moveTowardsPlayer(rollOverMesh.position);
 
