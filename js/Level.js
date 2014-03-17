@@ -1,9 +1,9 @@
 
-function Level(blocks, goalShape, hint, toImport, goals) {
+function Level(blocks, goalShape, hint, goals, toImport) {
 	this.blocks = blocks;
 	this.goalShape = goalShape;
-	this.toImport = toImport;
 	this.goals = goals;
+	this.toImport = toImport;
 }
 
 

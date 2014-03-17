@@ -84,7 +84,6 @@ LevelMode.prototype.showLevel = function() {
 	}
 
 	gameInProgress = true;
-	// volume_doc.innerHTML = this.totalVolume;
 }
 
 LevelMode.prototype.startLevel = function(level) {
@@ -130,24 +129,6 @@ LevelMode.prototype.createGoalShape = function(shape) {
 	scene.add(wireframe);
 }
 
-// //create the goal shape using the given x, y, and z values position at the origin.
-// LevelMode.prototype.createGoalShape = function(x,y,z) {
-
-// 	var x_adjusted = x * STEP_SIZE;
-// 	var y_adjusted = y * STEP_SIZE;
-// 	var z_adjusted = z * STEP_SIZE;
-// 	var geom = new THREE.CubeGeometry(x_adjusted, y_adjusted, z_adjusted);
-// 	this.goalShape = new THREE.Line( geo2line(geom), new THREE.LineBasicMaterial( { color: 0xFF0000 } ), THREE.LinePieces );
-// 	this.goalShape.visible = true;
-// 	if(x%2==1)
-// 		this.goalShape.position.x += STEP_SIZE/2;
-// 	this.goalShape.position.y += y_adjusted/2;
-// 	if(z%2==1)
-// 		this.goalShape.position.z +=STEP_SIZE/2;
-// 	scene.add(this.goalShape);
-
-// }
-
 LevelMode.prototype.getNextBlock = function() {
 	if (this.levelBlocks.length <= 0) {
 		// this.currentBlock = null;
@@ -161,7 +142,6 @@ LevelMode.prototype.getNextBlock = function() {
 	this.currentAliveTime = 0;
 	this.currentBlock = block;
 	this.levelBlocks.splice( this.levelBlocks.indexOf(this.currentBlock.shapeName), 1 );
-	piecesLeft_doc.innerHTML = game.levelBlocks.length;
 
 	return true;
 };
