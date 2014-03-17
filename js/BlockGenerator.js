@@ -110,6 +110,7 @@ BlockGenerator.getBlock = function(shapeName, originalShape, color) {
 
 	// merge the different cube geometries together
 	geometry = new THREE.Geometry();
+	geometry.vertices.push(new THREE.Vector3(0, 0, 0));
 	for (i = 0; i < shape.length; i++) {
 		tmpGeometry =  new THREE.Mesh(new THREE.CubeGeometry(STEP_SIZE, STEP_SIZE, STEP_SIZE));
 		tmpGeometry.position.x = STEP_SIZE * shape[i].x;
