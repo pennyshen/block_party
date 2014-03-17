@@ -56,9 +56,12 @@ function startMovingBlock(meshToMove) {
 	// meshToMove.material.color.setHex(0x000000);
 	// meshToMove.material.emissive.setHex(0x00FF00);
 	game.outline = new THREE.Mesh( game.currentBlock.mesh.geometry, game.outlineMaterial );
+
 	game.outline.position = game.currentBlock.mesh.position;
-	// game.outline.renderDepth = 0.9;
 	game.outline.scale.multiplyScalar(1.05);
+	game.outline.matrix = rollOverMesh.matrix;
+	game.outline.rotation.setFromRotationMatrix(rollOverMesh.matrix);
+
 	scene.add( game.outline );
 }
 
