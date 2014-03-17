@@ -119,7 +119,7 @@ LevelMode.prototype.checkSuccess = function() {
 
 LevelMode.prototype.createGoalShape = function(shape) {
 	var block = BlockGenerator.getBlock("goalShape", shape, "grey");
-	var wireframe = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0xFF0000 } ), THREE.LinePieces );
+	var wireframe = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
 
 	wireframe.position.x += STEP_SIZE/2;
 	wireframe.position.y += STEP_SIZE/2;
