@@ -172,6 +172,9 @@ Game.prototype = {
 	},
 
 	importToExisting: function(jsonString) {
+		if (jsonString == '')
+			return;
+
 		var blocks = JSON.parse(jsonString);
 		var block, position;
 

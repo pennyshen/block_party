@@ -184,6 +184,9 @@ function onDocumentKeyDown( event ) {
             intersectToHighlight();
             game.checkSuccess();
         }
+        if (game.mode == "tutorial") {
+            game.checkSuccess();
+        }
     }
 }
 

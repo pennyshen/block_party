@@ -1,11 +1,12 @@
 
-function Block(shapeName, shape, color, mesh, generatedTime, rotation) {
+function Block(shapeName, shape, color, mesh, generatedTime, rotation, isStatic) {
 	this.shapeName = shapeName;
 	this.shape = shape;
     this.color = color;
 	this.mesh = mesh;
 	this.generatedTime = generatedTime;
 	this.rotation = rotation;
+    this.isStatic = isStatic;
 }
 
 Block.prototype.removeFromScene = function() {
