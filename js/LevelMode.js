@@ -29,6 +29,8 @@ function LevelMode(toPopulateMenu) {
 	this.INTERSECTED = null;
 	this.goal = [];
 	this.goalObject = {};
+	this.outline = {};
+	this.outlineMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.BackSide } );
 
 	this.showLevelMenu();
 }

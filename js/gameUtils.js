@@ -23,6 +23,9 @@ function startMovingBlock(meshToMove) {
 		game.currentBlock.makeStatic();
 		game.addToExisting(game.currentBlock, rollOverMesh.position);
 		rollOverMesh.material.emissive.setHex( rollOverMesh.currentHex );
+		// scene.remove( game.outline );
+		// console.log(rollOverMesh.oldColor);
+		// rollOverMesh.material.color = rollOverMesh.oldColor;
 	}
 	rollOverMesh = meshToMove;
 
@@ -41,6 +44,14 @@ function startMovingBlock(meshToMove) {
 
 	// permanently highlight this block
 	meshToMove.material.emissive.setHex( 0xff0000 );
+	// meshToMove.oldColor = meshToMove.material.color;
+	// meshToMove.material.color.setHex(0x7FFF00);
+	// meshToMove.material.color.setHex(0x000000);
+	// meshToMove.material.emissive.setHex(0x00FF00);
+	// game.outline = new THREE.Mesh( game.currentBlock.mesh.geometry, game.outlineMaterial );
+	// game.outline.position = game.currentBlock.mesh.position;
+	// game.outline.scale.multiplyScalar(1.05);
+	// scene.add( game.outline );
 }
 
 function initGame(gameMode) {
