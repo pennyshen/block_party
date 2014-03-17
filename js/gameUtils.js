@@ -3,6 +3,12 @@ function canPlayAudio(a) {
 	return !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
 }
 
+function setPosition(positionFrom, positionTo) {
+	positionTo.x = positionFrom.x;
+	positionTo.y = positionFrom.y;
+	positionTo.z = positionFrom.z;
+}
+
 function getPositionsMap(positions) {
     var map = {};
 
@@ -22,12 +28,13 @@ function startMovingBlock(meshToMove) {
 	if (rollOverMesh) {
 		game.currentBlock.makeStatic();
 		game.addToExisting(game.currentBlock, rollOverMesh.position);
-		rollOverMesh.material.emissive.setHex( rollOverMesh.currentHex );
+		scene.remove( game.outline );
 		// scene.remove( game.outline );
 		// console.log(rollOverMesh.oldColor);
 		// rollOverMesh.material.color = rollOverMesh.oldColor;
 	}
 	rollOverMesh = meshToMove;
+	rollOverMesh.material.emissive.setHex( rollOverMesh.currentHex );
 
 	// find which block it is from the mesh
 	blockIdx = game.getIndexFromExistingBlocks(meshToMove);
@@ -43,15 +50,16 @@ function startMovingBlock(meshToMove) {
 	}
 
 	// permanently highlight this block
-	meshToMove.material.emissive.setHex( 0xff0000 );
+	// meshToMove.material.emissive.setHex( 0xff0000 );
 	// meshToMove.oldColor = meshToMove.material.color;
 	// meshToMove.material.color.setHex(0x7FFF00);
 	// meshToMove.material.color.setHex(0x000000);
 	// meshToMove.material.emissive.setHex(0x00FF00);
-	// game.outline = new THREE.Mesh( game.currentBlock.mesh.geometry, game.outlineMaterial );
-	// game.outline.position = game.currentBlock.mesh.position;
-	// game.outline.scale.multiplyScalar(1.05);
-	// scene.add( game.outline );
+	game.outline = new THREE.Mesh( game.currentBlock.mesh.geometry, game.outlineMaterial );
+	game.outline.position = game.currentBlock.mesh.position;
+	// game.outline.renderDepth = 0.9;
+	game.outline.scale.multiplyScalar(1.05);
+	scene.add( game.outline );
 }
 
 function initGame(gameMode) {
@@ -69,7 +77,6 @@ function initGame(gameMode) {
 	} else if (gameMode == "random") {
 		game = new RandomMode();
 		startGame();
-		piecesLeft_doc.innerHTML = "?";
 	} else if (gameMode == "tutorial") {
 		game = new TutorialMode();
 		toCheckGoal = true;

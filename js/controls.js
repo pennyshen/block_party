@@ -113,7 +113,7 @@ function onDocumentKeyDown( event ) {
             break;
         case 32: 
             isSpaceDown = true; 
-            if (game.mode == "level") {
+            if (game.mode != "random") {
                 // move the next block
                 for (var i = 0; i < game.existingBlocks.length; i++) {
                     if (game.canMoveBlock(game.existingBlocks[i])) {
@@ -130,11 +130,11 @@ function onDocumentKeyDown( event ) {
             break;
     }
 
-    // // !! only for building levels!!
-    // if (climbed) {
-    //     rollOverMesh.position.add(toMove);
-    //     return;
-    // }
+    // !! only for building levels!!
+    if (climbed) {
+        rollOverMesh.position.add(toMove);
+        return;
+    }
 
     if ( rotated || moved ) {
         newPos = rollOverMesh.position.clone();
@@ -144,7 +144,7 @@ function onDocumentKeyDown( event ) {
         } 
 
         moveToLegal(game.currentBlock, newPos);
-        rollOverMesh.position = newPos;
+        setPosition(newPos, rollOverMesh.position);
     } 
 
     if ( climbed == 1) {
@@ -153,8 +153,7 @@ function onDocumentKeyDown( event ) {
 
         climbToLegal(game.currentBlock, newPos);
         if (!climbedTooFar) {
-           rollOverMesh.position = newPos;
-        
+           setPosition(newPos, rollOverMesh.position);
         } else if (climbedTooFar) {
             alert("cannot move in that direction");
         }
@@ -166,7 +165,7 @@ function onDocumentKeyDown( event ) {
         newPos = rollOverMesh.position.clone();
         fallToLegal(game.currentBlock,newPos,noLegalSpot);
         if (!noLegalSpot) {
-            rollOverMesh.position = newPos;
+            setPosition(newPos, rollOverMesh.position);
         }
         else if (noLegalSpot) {
             alert("cannot move in that direction");
@@ -248,18 +247,18 @@ function rotate( camera_axis, direction ) {
 
     if ( direction == "pitch" ) {
         switch ( camera_axis ) {
-            case 1: game.currentBlock.rotateAroundWorldAxis("z",90); console.log(camera_axis); break;
-            case 2: game.currentBlock.rotateAroundWorldAxis("x",90); console.log(camera_axis); break;
-            case 3: game.currentBlock.rotateAroundWorldAxis("x",90); console.log(camera_axis); break;
-            case 4: game.currentBlock.rotateAroundWorldAxis("z",90); console.log(camera_axis); break;
+            case 1: game.currentBlock.rotateAroundWorldAxis("z",90); break;
+            case 2: game.currentBlock.rotateAroundWorldAxis("x",90); break;
+            case 3: game.currentBlock.rotateAroundWorldAxis("x",90); break;
+            case 4: game.currentBlock.rotateAroundWorldAxis("z",90); break;
         }  
     }
     if ( direction == "roll" ) {
         switch ( camera_axis ) {
-            case 1: game.currentBlock.rotateAroundWorldAxis("z",-90); console.log(camera_axis); break;
-            case 2: game.currentBlock.rotateAroundWorldAxis("x",-90); console.log(camera_axis); break;
-            case 3: game.currentBlock.rotateAroundWorldAxis("x",-90); console.log(camera_axis); break;
-            case 4: game.currentBlock.rotateAroundWorldAxis("z",-90); console.log(camera_axis); break;
+            case 1: game.currentBlock.rotateAroundWorldAxis("z",-90); break;
+            case 2: game.currentBlock.rotateAroundWorldAxis("x",-90); break;
+            case 3: game.currentBlock.rotateAroundWorldAxis("x",-90); break;
+            case 4: game.currentBlock.rotateAroundWorldAxis("z",-90); break;
         }  
     }
 

@@ -28,7 +28,7 @@ function LevelMode(toPopulateMenu) {
 	this.INTERSECTED = null;
 	this.goal = [];
 	this.goalObject = {};
-	this.outline = {};
+	// this.outline = {};
 	this.outlineMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.BackSide } );
 
 	this.showLevelMenu();
@@ -56,6 +56,9 @@ LevelMode.prototype.showLevel = function() {
 			showElement(center_tooltip_doc);
 		}		
 	}
+
+	// hide all info for now
+	hideElement(info_doc);
 
 	// TODO: DON'T CALL THIS FOR NOW
 	// TODO: REORGANIZE HOW WE'RE STARTING A GAME
@@ -147,10 +150,11 @@ LevelMode.prototype.getNextBlock = function() {
 };
 
 LevelMode.prototype.endGame = function() {
-	// hideElement(container);
 	gameInProgress = false;
 	mainMusic.pause();
 	showElement(endScreen_doc);
+
+	scene.remove( this.outline );
 
 	var passOrFail = '';
 	var nextLevel = '';

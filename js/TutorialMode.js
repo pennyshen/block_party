@@ -7,11 +7,21 @@ function TutorialMode() {
 			'Use W,A,S,D to move block into wireframe',
 			[new Goal('MOVE', 'Use W,A,S,D to move block into wireframe')]
 		), new Level(
+			['short_T'],
+			'[{"x":0,"y":0,"z":9},{"x":-1,"y":0,"z":9},{"x":-2,"y":0,"z":9},{"x":-1,"y":1,"z":9}]',
+			'Mouse wheel to zoom',
+			[new Goal('MOVE', 'Mouse wheel to zoom')]
+		), new Level(
 			['lightning'],
 			'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":-1,"y":2,"z":0}]',
 			'Rotate with 1',
 			[new Goal('ROTATE', '1 Rotates about the floor'),
 			new Goal('[{"x":0,"y":2,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":2,"z":0},{"x":-1,"y":3,"z":0}]', '')]
+		), new Level(
+			['cross_block'],
+			'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":2,"z":0},{"x":0,"y":1,"z":-1}]',
+			"Click and drag to look around. <br> Don't forget to rotate!",
+			[new Goal('MOVE', 'Click and drag to look around')]
 		), new Level(
 			['L'],
 			'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":2,"z":0}]',
@@ -24,6 +34,11 @@ function TutorialMode() {
 			'Combine 1,2,3 to rotate!',
 			[new Goal('ROTATE', 'Use 1, 2, 3 to place the shape.'),
 			new Goal('[{"x":0,"y":0,"z":2},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":3},{"x":1,"y":0,"z":1}]', '')]
+		), new Level(
+			['two_blocks', 'L'],
+			'[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":-1,"y":2,"z":0},{"x":-1,"y":3,"z":0}]',
+			'Use SPACE or click to switch control to another block <br> Block being controlled is outlined with green',
+			[new Goal('MOVE', 'Use SPACE or click to switch control to another block')]
 		)
 	];
 	this.mode = "tutorial";
@@ -41,7 +56,6 @@ TutorialMode.prototype.startLevel = function(level) {
 	this.level = level;
 	this.levelBlocks = [];
 	this.levelBlocks = this.levels[level].blocks.slice(0);
-	this.toPass = 100;	// since it's tutorial, always require 100%
 
 	hint_doc.innerHTML = "Hint: <br>" + this.levels[level].hint;
 

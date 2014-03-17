@@ -2,6 +2,7 @@
 function Level(blocks, goalShape, hint, goals, toImport) {
 	this.blocks = blocks;
 	this.goalShape = goalShape;
+	this.hint = hint;
 	this.goals = goals;
 	this.toImport = toImport;
 }

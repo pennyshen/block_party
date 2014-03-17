@@ -159,6 +159,12 @@ Block.prototype.rotateAroundWorldAxis = function(axisName, degrees) {
     object.matrix = rotWorldMatrix;
     object.rotation.setFromRotationMatrix(object.matrix);
 
+    // rotating highlight shape
+    if (game.mode == "level" || game.mode == "tutorial") {
+        game.outline.matrix = rotWorldMatrix;
+        game.outline.rotation.setFromRotationMatrix(game.outline.matrix);
+    }
+
     var quat = this.mesh.quaternion;
     for (var i = 0; i < tshape.length; i++) {
         var THREEvector = new THREE.Vector3();

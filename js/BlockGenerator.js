@@ -4,40 +4,49 @@ var BlockGenerator = {};
 
 BlockGenerator.shapes = {
 	/* "2D" shapes (involving only 2 axes) */
-	// "cube": []
+	// "cube": [{x: 0, y: 0, z: 0}]
 
-	"two_blocks": [{x: 1, y: 0, z: 0}],
+	"two_blocks": [
+		{x: 0, y: 0, z: 0},
+		{x: 1, y: 0, z: 0}
+	],
 	"L":
 	[
+		{x: 0, y: 0, z: 0},
         {x: 0, y: -1, z: 0},
         {x: 0, y: 1, z: 0},
         {x: -1, y: -1, z: 0}
     ],
     "straight3": // one straight line consisting of 3 blocks
     [
+    	{x: 0, y: 0, z: 0},
         {x: 0, y: 1, z: 0},
         {x: 0, y: -1, z: 0},
     ],
     "square_flat":
     [
+    	{x: 0, y: 0, z: 0},
         {x: 0, y: 1, z: 0},
         {x: 1, y: 0, z: 0},
         {x: 1, y: 1, z: 0}
     ],
     "short_T": // typical tetris short t 
     [
+    	{x: 0, y: 0, z: 0},
         {x: 0, y: 1, z: 0},
         {x: 1, y: 0, z: 0},
         {x: -1, y: 0, z: 0}
     ],
     "lightning": // typical tetris lighting-looking z
     [
+    	{x: 0, y: 0, z: 0},
         {x: 0, y: -1, z: 0},
         {x: 1, y: 0, z: 0},
         {x: 1, y: 1, z: 0}
     ],
     "cross_block":
     [
+    	{x: 0, y: 0, z: 0},
     	{x: -1, y: 0, z: 0},
     	{x: 1, y: 0, z: 0},
     	{x: 0, y: 0, z: 1},
@@ -78,10 +87,6 @@ BlockGenerator.shapesToColors = (function() {
 	return toReturn;
 })();
 
-BlockGenerator.getCube = function() {
-	return new THREE.CubeGeometry(STEP_SIZE, STEP_SIZE, STEP_SIZE);
-}
-
 BlockGenerator.getRandomBlock = function() {
 	var shapeName = getRandomMember(this.allShapes);
 	return this.generate(shapeName);
@@ -104,9 +109,9 @@ BlockGenerator.getBlock = function(shapeName, originalShape, color) {
 	}
 
 	// merge the different cube geometries together
-	geometry = this.getCube();
+	geometry = new THREE.Geometry();
 	for (i = 0; i < shape.length; i++) {
-		tmpGeometry =  new THREE.Mesh(this.getCube());
+		tmpGeometry =  new THREE.Mesh(new THREE.CubeGeometry(STEP_SIZE, STEP_SIZE, STEP_SIZE));
 		tmpGeometry.position.x = STEP_SIZE * shape[i].x;
 		tmpGeometry.position.y = STEP_SIZE * shape[i].y;
 		tmpGeometry.position.z = STEP_SIZE * shape[i].z;
