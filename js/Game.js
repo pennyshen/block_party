@@ -106,6 +106,11 @@ Game.prototype = {
 			scene.remove(this.goalObject);
 			this.goalObject.geometry.dispose();
 		}
+
+		if (this.outline) {
+			scene.remove(this.outline);
+			this.outline.geometry.dispose();
+		}
 	},
 
 	computeBoundingBox: function() {
