@@ -1,11 +1,9 @@
 
-function Level(blocks, passRate, hint, toImport, goals, goalShape) {
+function Level(blocks, goalShape, hint, toImport, goals) {
 	this.blocks = blocks;
-	this.passRate = passRate;
-	this.hint = hint;
+	this.goalShape = goalShape;
 	this.toImport = toImport;
 	this.goals = goals;
-	this.goalShape = goalShape;
 }
 
 
