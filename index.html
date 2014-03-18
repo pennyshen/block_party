@@ -399,7 +399,9 @@
 
 				game.currentAliveTime += Date.now() - time;
 
-				intersectToHighlight();
+				if (game.mode != "random") {
+					intersectToHighlight();
+				}
 			}
 
 			time = Date.now();
