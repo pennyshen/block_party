@@ -34,12 +34,6 @@
 	<script src="js/gameUtils.js"></script>
 	<script src="js/navigation.js"></script>
 
-	<div id="reMenu" class="nav">
-		<h1>Block Party</h1>
-		<p id="info2">Game Over</p>
-		<a href="javascript: void(0)" id="restart" onclick="reset()" >Restart</a> 
-	</div>
-
 	<div id="menu" class="nav">
 		<h1>Block Party</h1>
 		<a href="javascript: void(0)" class="menuItem" onclick="initGame('tutorial')" >Tutorial</a>
@@ -50,6 +44,7 @@
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(instructions_doc)">Instructions</a>
 		<br>
+		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(about_doc)">About</a>
 	</div>	
 
 	<div id="levelModeMenu" class="nav">
@@ -76,6 +71,20 @@
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Back</a>
 	</div>
+
+	<div id="about" class="nav">
+		<h1>About</h1>
+		<br>
+		<p class="instructions">Created by <a class="link" href="https://github.com/whateverwhouare/" target="_blank">Jennifer Shen</a>, <a class="link" href="https://github.com/pingbattlespl0x" target="_blank">Nathan Shih</a>, and Vincent Wang for COMP460 at Rice University with Dr. <a class="link" href="http://www.cs.rice.edu/~jwarren/" target="_blank">Joe Warren</a>.</p>
+		<br>
+		<p class="instructions">View source code on <a class="link" href="https://github.com/whateverwhouare/block_party" target="_blank">Github</a>.</p>
+		<br>
+		<p class="instructions">Music by Kassich from <a class="link" href="http://www.newgrounds.com/audio/listen/472958" target="_blank">Newgrounds</a></p>
+		<br>
+		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Back</a>
+	</div>
+
+
 
 	<div id="endScreen" class="nav">
 	</div>
@@ -156,25 +165,28 @@
 		var controls;
 		var time = Date.now();
 
+		// nav items
+		var menu_doc = document.getElementById("menu");
+		var endScreen_doc = document.getElementById("endScreen");
+		var instructions_doc = document.getElementById("instructions");
+		var pauseScreen_doc = document.getElementById("pauseScreen");
+		var levelModeMenu_doc = document.getElementById("levelModeMenu");
+		var selectBlockScreen_doc = document.getElementById("selectBlockScreen");
+		var loading_doc = document.getElementById("loading");
+		var about_doc = document.getElementById("about");
+
 		var timer = document.getElementById( 'timer');
 		var volume_doc = document.getElementById( 'volume_used' );
 		var blocker = document.getElementById("blocker");
 		var nextPiece_doc = document.getElementById( 'nextPiece' );
 		var showNextPiece_doc = document.getElementById( 'showNextPiece' );
 		var score_doc = document.getElementById("score");
-		var menu_doc = document.getElementById("menu");
-		var reMenu_doc = document.getElementById("reMenu");
-		var endScreen_doc = document.getElementById("endScreen");
-		var instructions_doc = document.getElementById("instructions");
-		var pauseScreen_doc = document.getElementById("pauseScreen");
-		var levelModeMenu_doc = document.getElementById("levelModeMenu");
 		var hint_doc = document.getElementById("hint");
 		var center_tooltip_doc = document.getElementById("center_tooltip");
-		var selectBlockScreen_doc = document.getElementById("selectBlockScreen");
-		var loading_doc = document.getElementById("loading");
 		var info_doc = document.getElementById("info");
-		var nav_items = [menu_doc, reMenu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
-			selectBlockScreen_doc, loading_doc];
+
+		var nav_items = [menu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
+			selectBlockScreen_doc, loading_doc, about_doc];
 		var info_items = [showNextPiece_doc, hint_doc, center_tooltip_doc];
 
 		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Back</a>';

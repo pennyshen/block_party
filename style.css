@@ -44,11 +44,6 @@ h1, p, a {
 
 h1 {margin-top: 5%;}
 
-p {
-    font-size: 16px;
-    margin-top: 10px;
-    padding-left: 200px;
-}
 
 #hint {
     font-size: 24px;
@@ -72,17 +67,18 @@ p {
     width: 100%;
 }
 
-a.instructions {
+.instructions {
     font-size: 20px;
     display: block;
     top: 10%;   
     left: 0; 
-    /*padding: 10px;*/
     text-decoration: none;
     margin: 0 auto; 
+    width: 1100px;
+    line-height: 35px;
 }
 
-a.menuItem {
+.menuItem {
     width: 280px;
     font-size: 24px;
     display: block;
@@ -93,6 +89,14 @@ a.menuItem {
     padding: 10px;
     text-decoration: none;
     margin: 0 auto; 
+}
+
+a.link {
+    font-size: 20px;
+}
+
+a.link:hover {
+    color: yellow;  
 }
 
 a.menuItem:hover
@@ -127,4 +131,5 @@ p#loading_text {
     border: none;
     font-size: 30px;
     top: 40%;
+    padding-left: 200px;
 }
