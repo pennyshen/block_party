@@ -129,7 +129,7 @@
 
     <audio id="main_music" loop>
     	<!-- <source src="https://dl.dropboxusercontent.com/u/87553861/spaceForest.mp3" type="audio/mp3" /> -->
-    	<source src="http://whateverwhouare.github.io/block_party/sounds/spaceForest.mp3" type="audio/mp3">
+    	<source id="mainMusicSource" src="http://whateverwhouare.github.io/block_party/sounds/spaceForest.mp3" type="audio/mp3">
 		<!-- <source src="sounds/spaceForest.mp3" type="audio/mp3" /> -->
 	</audio>
 
@@ -188,6 +188,7 @@
 		var hint_doc = document.getElementById("hint");
 		var center_tooltip_doc = document.getElementById("center_tooltip");
 		var info_doc = document.getElementById("info");
+		var mainMusicSource_doc = document.getElementById("mainMusicSource");
 
 		var nav_items = [menu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
 			selectBlockScreen_doc, loading_doc, about_doc];
@@ -231,6 +232,7 @@
 
 		var mainMusic;
 
+		mainMusicSource_doc.src += ("?bust=" + Date.now());	// prevent caching
 		mainMusic = document.getElementById("main_music");
 		if (canPlayAudio(mainMusic)) {
 			mainMusic.addEventListener("loadeddata", function() {
