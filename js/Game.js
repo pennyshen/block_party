@@ -30,20 +30,24 @@ Game.prototype = {
 		positions = block._getPositions(realPosition, block.shape);
 		for (i = 0; i < positions.length; i++) {
 			position = positions[i];
-			this.existingBlocks[getKeyString(position)] = true;
-
-			// this.min_x = Math.min(this.min_x, position.x * STEP_SIZE);
-			// this.min_y = Math.min(this.min_y, position.y * STEP_SIZE);
-			// this.min_z = Math.min(this.min_z, position.z * STEP_SIZE);
-
-			// this.max_x = Math.max(this.max_x, position.x * STEP_SIZE + STEP_SIZE);
-			// this.max_y = Math.max(this.max_y, position.y * STEP_SIZE + STEP_SIZE);
-			// this.max_z = Math.max(this.max_z, position.z * STEP_SIZE + STEP_SIZE);			
+			this.existingBlocks[getKeyString(position)] = true;			
 		}
-		// this.totalVolume += positions.length;		
 		this.existingBlocks.push(block);
 
-		// this.computeBoundingBox();	
+		if (this.mode == Game.MODE_RANDOM) {
+			for (i = 0; i < positions.length; i++) {
+				position = positions[i];
+				this.min_x = Math.min(this.min_x, position.x * STEP_SIZE);
+				this.min_y = Math.min(this.min_y, position.y * STEP_SIZE);
+				this.min_z = Math.min(this.min_z, position.z * STEP_SIZE);
+
+				this.max_x = Math.max(this.max_x, position.x * STEP_SIZE + STEP_SIZE);
+				this.max_y = Math.max(this.max_y, position.y * STEP_SIZE + STEP_SIZE);
+				this.max_z = Math.max(this.max_z, position.z * STEP_SIZE + STEP_SIZE);
+			}
+			this.totalVolume += positions.length;
+			this.computeBoundingBox();	
+		}
 	},
 
 	getIndexFromExistingBlocks: function(meshToFind) {
@@ -125,7 +129,7 @@ Game.prototype = {
 		var cube_vol = x_dif * y_dif * z_dif;
 		this.score = Math.round((this.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100);
 
-		score_doc.innerHTML = this.score + '%' + bonus;
+		score_doc.innerHTML = this.score + '%';
 		
 		if (this.boundingBox) {
 			scene.remove(this.boundingBox);
