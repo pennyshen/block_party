@@ -66,12 +66,12 @@ function initGame(gameMode) {
 	// don't check for goal unless told otherwise
 	toCheckGoal = false;
 
-	if (gameMode == "level") {
+	if (gameMode == Game.MODE_LEVEL) {
 		game = new LevelMode(true);
-	} else if (gameMode == "random") {
+	} else if (gameMode == Game.MODE_RANDOM) {
 		game = new RandomMode();
 		startGame();
-	} else if (gameMode == "tutorial") {
+	} else if (gameMode == Game.MODE_TUTORIAL) {
 		game = new TutorialMode();
 		toCheckGoal = true;
 	}

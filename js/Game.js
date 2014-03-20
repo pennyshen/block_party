@@ -17,10 +17,14 @@ function Game() {
 	this.max_z = -Number.MAX_VALUE;
 }
 
+
 Game.box_material = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
 
-Game.prototype = {
+Game.MODE_TUTORIAL = 0;
+Game.MODE_LEVEL = 1;
+Game.MODE_RANDOM = 2;
 
+Game.prototype = {
 	addToExisting: function(block, realPosition) {
 		var i, positions, position;
 		positions = block._getPositions(realPosition, block.shape);
@@ -120,15 +124,7 @@ Game.prototype = {
 		var z_dif = this.max_z - this.min_z;
 		var cube_vol = x_dif * y_dif * z_dif;
 		this.score = Math.round((this.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100);
-		//if random mode, calculate bonus scores
-		var bonus = '';
-		if(this.mode=='random'){
-			var dim_dif =  (Math.max(x_dif, y_dif, z_dif) - Math.min(x_dif, y_dif, z_dif))/STEP_SIZE;
-			if(dim_dif == 0)
-				bonus = ' +10';
-			else if (dim_dif ==1)
-				bonus = ' +5';
-		}	
+
 		score_doc.innerHTML = this.score + '%' + bonus;
 		
 		if (this.boundingBox) {

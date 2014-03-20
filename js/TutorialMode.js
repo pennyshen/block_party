@@ -41,7 +41,7 @@ function TutorialMode() {
 			[new Goal('MOVE', 'Use SPACE or click to switch control to another block')]
 		)
 	];
-	this.mode = "tutorial";
+	this.mode = Game.MODE_TUTORIAL;
 	this.titleText = "Tutorial Mode";
 	this.objectiveText = "Fill in the missing spots!";
 	this.goals = [];

@@ -100,7 +100,7 @@ function onDocumentKeyDown( event ) {
             break;
         case 32: 
             isSpaceDown = true; 
-            if (game.mode != "random") {
+            if (game.mode != Game.MODE_RANDOM) {
                 // move the next block
                 for (var i = 0; i < game.existingBlocks.length; i++) {
                     if (game.canMoveBlock(game.existingBlocks[i])) {
@@ -166,11 +166,11 @@ function onDocumentKeyDown( event ) {
         }  
 
         // check if the intersected block can still be moved
-        if (game.mode == "level") {
+        if (game.mode == Game.MODE_LEVEL) {
             intersectToHighlight();
             game.checkSuccess();
         }
-        if (game.mode == "tutorial") {
+        if (game.mode == Game.MODE_TUTORIAL) {
             game.checkSuccess();
         }
     }
@@ -250,6 +250,7 @@ function rotate( camera_axis, direction ) {
     }
 
 }
+
 //assumes that you are in an illegal position
 function moveToLegal(block, newPos) {
     while (!block.isPosLegal(newPos)) {

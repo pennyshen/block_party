@@ -160,7 +160,7 @@ Block.prototype.rotateAroundWorldAxis = function(axisName, degrees) {
     object.rotation.setFromRotationMatrix(object.matrix);
 
     // rotating highlight shape
-    if (game.mode == "level" || game.mode == "tutorial") {
+    if (game.mode != Game.MODE_RANDOM) {
         game.outline.matrix = rotWorldMatrix;
         game.outline.rotation.setFromRotationMatrix(game.outline.matrix);
     }
