@@ -8,13 +8,6 @@ function onWindowResize() {
     backgroundCamera.aspect = window.innerWidth / window.innerHeight;
     backgroundCamera.updateProjectionMatrix();
 
-    // if (game) {
-    //     if (game.showingPreview) {
-    //         game.previewCamera.aspect = window.innerWidth / window.innerHeight;
-    //         game.previewCamera.updateProjectionMatrix();
-    //     }
-    // }
-
     renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
@@ -27,12 +20,6 @@ function onDocumentMouseDown( event ) {
             }
         }
     }
-
-    // if (game) {
-    //     if (game.showingPreview) {
-    //         game.switchBlock();
-    //     }
-    // }
 }
 
 function onDocumentMouseMove( event ) {
@@ -130,11 +117,11 @@ function onDocumentKeyDown( event ) {
             break;
     }
 
-    // !! only for building levels!!
-    if (climbed) {
-        rollOverMesh.position.add(toMove);
-        return;
-    }
+    // // !! only for building levels!!
+    // if (climbed) {
+    //     rollOverMesh.position.add(toMove);
+    //     return;
+    // }
 
     if ( rotated || moved ) {
         newPos = rollOverMesh.position.clone();

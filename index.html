@@ -273,13 +273,10 @@
         	backgroundCamera.lookAt(backgroundMesh.position);
 
 			camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-            // camera.position.x = 5;
-            // camera.position.y = 325;
-            // camera.position.z = 694;
+
 
 			scene = new THREE.Scene();
 			renderer = new THREE.WebGLRenderer( { antialias: true } );
-			// renderer.setClearColor(0xFFFFFF,0);
 			renderer.setClearColor(0x000000,0);
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			renderer.shadowMapEnabled = true;
