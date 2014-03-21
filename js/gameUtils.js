@@ -1,4 +1,11 @@
 
+function checkAllLoaded(numLoaded) {
+	// set number of files loading here
+	if (numLoaded >= 2) {
+		showElementAndHideNav(menu_doc);
+	}
+}
+
 function canPlayAudio(a) {
 	return !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
 }

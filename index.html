@@ -207,8 +207,6 @@
 
 		var timeRemaining, mins, secs;
 
-		// Load the background texture
-        var texture = THREE.ImageUtils.loadTexture( 'textures/space2.jpg' );
         var colorAgainstTexture = 0xffffff;
         var floor
         // variables for the background images
@@ -230,24 +228,36 @@
 
 		var game;
 
+        var texture;
 		var mainMusic;
 
-		mainMusicSource_doc.src += ("?bust=" + Date.now());	// prevent caching
-		mainMusic = document.getElementById("main_music");
-		if (canPlayAudio(mainMusic)) {
-			mainMusic.addEventListener("loadeddata", function() {
-				showElementAndHideNav(menu_doc);
-			});
-			showElementAndHideNav(loading_doc);			
-		} else {
-			mainMusic = null;
-			showElementAndHideNav(menu_doc);
-		}			
-
-
+		loadFiles();
 		init();
 		initParticles();
 		animate();
+
+		function loadFiles() {
+			var numLoaded = 0;
+			showElementAndHideNav(loading_doc);
+
+			texture = THREE.ImageUtils.loadTexture( 'textures/space2.jpg', undefined, function() {
+        		numLoaded++;
+        		checkAllLoaded(numLoaded);
+        	} );
+
+			mainMusicSource_doc.src += ("?bust=" + Date.now());	// prevent caching
+			mainMusic = document.getElementById("main_music");
+			if (canPlayAudio(mainMusic)) {
+				mainMusic.addEventListener("loadeddata", function() {
+					numLoaded++;
+					checkAllLoaded(numLoaded);
+				});			
+			} else {
+				mainMusic = null;
+				numLoaded++;
+				checkAllLoaded(numLoaded);
+			}			        	
+		}
 
 		function init() {
 			container = document.getElementById( 'game' );
