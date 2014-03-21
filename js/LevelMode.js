@@ -115,7 +115,10 @@ LevelMode.prototype.checkSuccess = function() {
 		}
 	}
 
-	this.endGame();
+	var that = this;
+	window.setTimeout(function() {
+		that.endGame();
+	}, 50);
 }
 
 LevelMode.prototype.createGoalShape = function(shape) {
@@ -134,9 +137,6 @@ LevelMode.prototype.createGoalShape = function(shape) {
 
 LevelMode.prototype.getNextBlock = function() {
 	if (this.levelBlocks.length <= 0) {
-		// this.currentBlock = null;
-		// this.endGame();
-		// return;
 		return false;
 	}
 
