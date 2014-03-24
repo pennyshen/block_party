@@ -13,7 +13,7 @@ function onWindowResize() {
 
 function onDocumentMouseDown( event ) {
     event.preventDefault();
-    console.log(MOVING);
+    
     if (game) {
         if (INTERSECTED) {
             if (INTERSECTED.id != rollOverMesh.id) {
@@ -48,6 +48,11 @@ function onDocumentMouseUp( event ) {
     MOVINGPIECE = null;
     controls.enabled = true;
     controls.resetState();
+    console.log("mouse up");
+    if (game) {
+        INTERSECTED = null;
+        intersectToHighlight();
+    }
     document.removeEventListener('mouseup', onDocumentMouseUp, false);
 
     // console.log(mouseDown);

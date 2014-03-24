@@ -159,7 +159,7 @@ function intersectToHighlight() {
 			if ( intersects[ 0 ].object.id == rollOverMesh.id ) {
 				MOVING = true;
 				return;
-			}			
+			}
 
 			// only highlight if we can actually move it
 			idx = game.getIndexFromExistingBlocks(intersects[ 0 ].object);
@@ -205,39 +205,41 @@ function dragPiece() {
 
 function adjustPosition( rayPosition, piecePosition ) {
 	var newPosition;
-	console.log(rayPosition,piecePosition);
+	// console.log(rayPosition,piecePosition);
 	var toMove = new THREE.Vector3(0,0,0);
 	var moved = null;
-	console.log(gameBoardOrientation);
+	// console.log(gameBoardOrientation);
 	newPos = rollOverMesh.position.clone();
 	var dX;
 	var dZ;
 	var xORz;
+	var delta = 50;
 	dX = rayPosition.x - piecePosition.x;
 	dZ = rayPosition.z - piecePosition.z;
 	xORz = Math.abs(dX) - Math.abs(dZ);
 	if (xORz > 0) {
-		if (dX < 0) {
+		if (dX < -delta) {
 			moveLeft(1,toMove);
 			moved = true;
 		}
-		else if (dX > 0) {
+		else if (dX > delta) {
 			moveRight(1,toMove);
 			moved = true;
 		}
 	}
 	else if (xORz < 0) {
-		if (dZ < 0) {
+		if (dZ < -delta) {
 			moveForward(1,toMove);
 			moved = true;
 		}
-		else if (dZ > 0) {
+		else if (dZ > delta) {
 			moveBackward(1,toMove);
 			moved = true;
 		}
 	}
 	if (moved) {
 	    newPos.add(toMove);
+	    intersectToHighlight();
 	} 
 
 	moveToLegal(game.currentBlock, newPos);
