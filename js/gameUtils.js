@@ -139,6 +139,14 @@ function intersectToHighlight() {
 	var intersects = raycaster.intersectObjects( toIntersect );
 	var idx;
 
+	var onRollover = raycaster.intersectObject( rollOverMesh );
+	if ( onRollover.length > 0) {
+		MOVINGMAIN = true;
+
+	} else {
+		MOVINGMAIN = null;
+	}
+
 	if ( intersects.length > 0 ) {
 		if ( INTERSECTED != intersects[ 0 ].object ) {
 			// rolled from one object onto another
@@ -151,6 +159,7 @@ function intersectToHighlight() {
 
 			// check if we're already moving the intersected object
 			if ( intersects[ 0 ].object.id == rollOverMesh.id ) {
+				MOVING = true;
 				return;
 			}			
 
@@ -175,8 +184,78 @@ function intersectToHighlight() {
 		}
 
 		INTERSECTED = null;
+		MOVING = null;
 
 	}		
+}
+
+function dragPiece() {
+	var vector = new THREE.Vector3( mouse2D.x, mouse2D.y, 1 );
+	projector.unprojectVector( vector, camera );
+
+	raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
+
+	var toIntersect = [];
+	for (var i = 0; i < game.existingBlocks.length; i++) {
+		toIntersect.push(game.existingBlocks[i].mesh);
+	}
+
+	var intersects = raycaster.intersectObject( floor.plane );	
+	adjustPosition(intersects[0].point, rollOverMesh.position);
+	
+}
+
+function adjustPosition( rayPosition, piecePosition ) {
+	var newPosition;
+	console.log(rayPosition,piecePosition);
+	var toMove = new THREE.Vector3(0,0,0);
+	var moved = null;
+	console.log(gameBoardOrientation);
+	newPos = rollOverMesh.position.clone();
+	var dX;
+	var dZ;
+	var xORz;
+	dX = rayPosition.x - piecePosition.x;
+	dZ = rayPosition.z - piecePosition.z;
+	xORz = Math.abs(dX) - Math.abs(dZ);
+	if (xORz > 0) {
+		if (dX < 0) {
+			moveLeft(1,toMove);
+			moved = true;
+		}
+		else if (dX > 0) {
+			moveRight(1,toMove);
+			moved = true;
+		}
+	}
+	else if (xORz < 0) {
+		if (dZ < 0) {
+			moveForward(1,toMove);
+			moved = true;
+		}
+		else if (dZ > 0) {
+			moveBackward(1,toMove);
+			moved = true;
+		}
+	}
+	if (moved) {
+	    newPos.add(toMove);
+	} 
+
+	moveToLegal(game.currentBlock, newPos);
+	setPosition(newPos, rollOverMesh.position);
+	if (toCheckGoal) {
+	    game.checkGoal(moved, rotated, false);
+	}  
+
+	// check if the intersected block can still be moved
+	if (game.mode == "level") {
+	    intersectToHighlight();
+	    game.checkSuccess();
+	}
+	if (game.mode == "tutorial") {
+	    game.checkSuccess();
+	}
 }
 
 // draws the normal line for debugging

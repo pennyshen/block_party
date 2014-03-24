@@ -19,15 +19,28 @@ function onWindowResize() {
 }
 
 function onDocumentMouseDown( event ) {
+    event.preventDefault();
+    console.log(MOVING);
     if (game) {
         if (INTERSECTED) {
             if (INTERSECTED.id != rollOverMesh.id) {
                 // only update if it's a different block from the one we're on right now
                 startMovingBlock(INTERSECTED);
+                
             }
+            controls.enabled = false;
+            MOVINGPIECE = true;
+        }
+        if (MOVING || MOVINGMAIN) {
+            controls.enabled = false;
+            MOVINGPIECE = true;
         }
     }
 
+    
+    document.addEventListener('mousemove', onDocumentMouseMove, false);
+    document.addEventListener('mouseup', onDocumentMouseUp, false);
+    mouseDown = true;
     // if (game) {
     //     if (game.showingPreview) {
     //         game.switchBlock();
@@ -35,8 +48,23 @@ function onDocumentMouseDown( event ) {
     // }
 }
 
+function onDocumentMouseUp( event ) {
+    event.preventDefault();
+    mouseDown = false;
+    SELECTED = false;
+    MOVINGPIECE = null;
+    controls.enabled = true;
+    controls.resetState();
+    document.removeEventListener('mouseup', onDocumentMouseUp, false);
+
+    // console.log(mouseDown);
+}
+
 function onDocumentMouseMove( event ) {
     event.preventDefault();
+    if (MOVINGPIECE) {
+        dragPiece();
+    }
 
 
     mouse2D.x = ( event.clientX / window.innerWidth ) * 2 - 1;
