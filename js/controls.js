@@ -48,8 +48,11 @@ function onDocumentMouseUp( event ) {
     MOVINGPIECE = null;
     controls.enabled = true;
     controls.resetState();
-    console.log("mouse up");
-    if (game) {
+    if (gameInProgress) {
+        if (game.mode != Game.MODE_RANDOM) {
+            game.checkSuccess();
+        }
+
         INTERSECTED = null;
         intersectToHighlight();
     }

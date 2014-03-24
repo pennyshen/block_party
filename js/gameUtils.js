@@ -245,17 +245,8 @@ function adjustPosition( rayPosition, piecePosition ) {
 	moveToLegal(game.currentBlock, newPos);
 	setPosition(newPos, rollOverMesh.position);
 	if (toCheckGoal) {
-	    game.checkGoal(moved, rotated, false);
+	    game.checkGoal(moved, false, false);
 	}  
-
-	// check if the intersected block can still be moved
-	if (game.mode == "level") {
-	    intersectToHighlight();
-	    game.checkSuccess();
-	}
-	if (game.mode == "tutorial") {
-	    game.checkSuccess();
-	}
 }
 
 // draws the normal line for debugging
