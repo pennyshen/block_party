@@ -14,7 +14,7 @@ function onWindowResize() {
 function onDocumentMouseDown( event ) {
     event.preventDefault();
     
-    if (game) {
+    if (gameInProgress) {
         if (INTERSECTED) {
             if (INTERSECTED.id != rollOverMesh.id) {
                 // only update if it's a different block from the one we're on right now
@@ -28,17 +28,11 @@ function onDocumentMouseDown( event ) {
             controls.enabled = false;
             MOVINGPIECE = true;
         }
-    }
 
-    
-    document.addEventListener('mousemove', onDocumentMouseMove, false);
-    document.addEventListener('mouseup', onDocumentMouseUp, false);
-    mouseDown = true;
-    // if (game) {
-    //     if (game.showingPreview) {
-    //         game.switchBlock();
-    //     }
-    // }
+        document.addEventListener('mousemove', onDocumentMouseMove, false);
+        document.addEventListener('mouseup', onDocumentMouseUp, false);
+        mouseDown = true;        
+    }
 }
 
 function onDocumentMouseUp( event ) {
