@@ -67,6 +67,10 @@ h1 {margin-top: 5%;}
     width: 100%;
 }
 
+#instructions {
+    overflow-y: scroll;
+}
+
 .instructions {
     font-size: 20px;
     display: block;

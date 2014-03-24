@@ -36,15 +36,16 @@
 
 	<div id="menu" class="nav">
 		<h1>Block Party</h1>
-		<a href="javascript: void(0)" class="menuItem" onclick="initGame('tutorial')" >Tutorial</a>
+		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_TUTORIAL)" >Tutorial</a>
 		<br>
-		<a href="javascript: void(0)" class="menuItem" onclick="initGame('level')" >Level mode</a>
+		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_LEVEL)" >Level mode</a>
 		<br>
-		<a href="javascript: void(0)" class="menuItem" onclick="initGame('random')" >Random mode</a>
+		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_RANDOM)" >Random mode</a>
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(instructions_doc)">Instructions</a>
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(about_doc)">About</a>
+		<br>
 	</div>	
 
 	<div id="levelModeMenu" class="nav">
@@ -70,18 +71,20 @@
 		<a class="instructions">SHIFT = Toggle bounding box</a>
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Back</a>
+		<br>
 	</div>
 
 	<div id="about" class="nav">
 		<h1>About</h1>
 		<br>
-		<p class="instructions">Created by <a class="link" href="https://github.com/whateverwhouare/" target="_blank">Jennifer Shen</a>, <a class="link" href="https://github.com/pingbattlespl0x" target="_blank">Nathan Shih</a>, and Vincent Wang for COMP460 at Rice University with Dr. <a class="link" href="http://www.cs.rice.edu/~jwarren/" target="_blank">Joe Warren</a>.</p>
+		<p class="instructions">Created by <a class="link" href="https://github.com/whateverwhouare/" target="_blank">Jennifer Shen</a>, <a class="link" href="https://github.com/pingbattlespl0x" target="_blank">Nathan Shih</a>, and <a class="link" href="http://www.linkedin.com/pub/vincent-wang/19/341/89b" target="_blank">Vincent Wang</a> for COMP460 at Rice University with Dr. <a class="link" href="http://www.cs.rice.edu/~jwarren/" target="_blank">Joe Warren</a>.</p>
 		<br>
 		<p class="instructions">View source code on <a class="link" href="https://github.com/whateverwhouare/block_party" target="_blank">Github</a>.</p>
 		<br>
 		<p class="instructions">Music by Kassich from <a class="link" href="http://www.newgrounds.com/audio/listen/472958" target="_blank">Newgrounds</a></p>
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Back</a>
+		<br>
 	</div>
 
 
@@ -97,6 +100,7 @@
 		<a href="javascript: void(0)" class="menuItem" onClick="restartLevel()">Restart</a>
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">End Game</a>
+		<br>
 	</div>
 
 	<div id="selectBlockScreen" class="nav">
@@ -125,7 +129,7 @@
 
     <audio id="main_music" loop>
     	<!-- <source src="https://dl.dropboxusercontent.com/u/87553861/spaceForest.mp3" type="audio/mp3" /> -->
-    	<source src="http://whateverwhouare.github.io/block_party/sounds/spaceForest.mp3" type="audio/mp3">
+    	<source id="mainMusicSource" src="http://whateverwhouare.github.io/block_party/sounds/spaceForest.mp3" type="audio/mp3">
 		<!-- <source src="sounds/spaceForest.mp3" type="audio/mp3" /> -->
 	</audio>
 
@@ -184,12 +188,13 @@
 		var hint_doc = document.getElementById("hint");
 		var center_tooltip_doc = document.getElementById("center_tooltip");
 		var info_doc = document.getElementById("info");
+		var mainMusicSource_doc = document.getElementById("mainMusicSource");
 
 		var nav_items = [menu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
 			selectBlockScreen_doc, loading_doc, about_doc];
 		var info_items = [showNextPiece_doc, hint_doc, center_tooltip_doc];
 
-		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Back</a>';
+		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Back</a><br>';
 
 
 		var STEP_SIZE = 50;
@@ -202,8 +207,6 @@
 
 		var timeRemaining, mins, secs;
 
-		// Load the background texture
-        var texture = THREE.ImageUtils.loadTexture( 'textures/space2.jpg' );
         var colorAgainstTexture = 0xffffff;
         var floor
         // variables for the background images
@@ -229,23 +232,36 @@
 
 		var game;
 
+        var texture;
 		var mainMusic;
 
-		mainMusic = document.getElementById("main_music");
-		if (canPlayAudio(mainMusic)) {
-			mainMusic.addEventListener("loadeddata", function() {
-				showElementAndHideNav(menu_doc);
-			});
-			showElementAndHideNav(loading_doc);			
-		} else {
-			mainMusic = null;
-			showElementAndHideNav(menu_doc);
-		}			
-
-
+		loadFiles();
 		init();
 		initParticles();
 		animate();
+
+		function loadFiles() {
+			var numLoaded = 0;
+			showElementAndHideNav(loading_doc);
+
+			texture = THREE.ImageUtils.loadTexture( 'textures/space2.jpg', undefined, function() {
+        		numLoaded++;
+        		checkAllLoaded(numLoaded);
+        	} );
+
+			mainMusicSource_doc.src += ("?bust=" + Date.now());	// prevent caching
+			mainMusic = document.getElementById("main_music");
+			if (canPlayAudio(mainMusic)) {
+				mainMusic.addEventListener("loadeddata", function() {
+					numLoaded++;
+					checkAllLoaded(numLoaded);
+				});			
+			} else {
+				mainMusic = null;
+				numLoaded++;
+				checkAllLoaded(numLoaded);
+			}			        	
+		}
 
 		function init() {
 			container = document.getElementById( 'game' );
@@ -271,13 +287,10 @@
         	backgroundCamera.lookAt(backgroundMesh.position);
 
 			camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-            // camera.position.x = 5;
-            // camera.position.y = 325;
-            // camera.position.z = 694;
+
 
 			scene = new THREE.Scene();
 			renderer = new THREE.WebGLRenderer( { antialias: true } );
-			// renderer.setClearColor(0xFFFFFF,0);
 			renderer.setClearColor(0x000000,0);
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			renderer.shadowMapEnabled = true;
@@ -403,7 +416,9 @@
 
 				game.currentAliveTime += Date.now() - time;
 
-				intersectToHighlight();
+				if (game.mode != Game.MODE_RANDOM) {
+					intersectToHighlight();
+				}
 			}
 
 			time = Date.now();
@@ -412,6 +427,5 @@
 	</script>
 
 </body>
-
 
 </html>

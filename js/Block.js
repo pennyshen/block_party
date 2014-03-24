@@ -49,7 +49,6 @@ Block.prototype._getPositions = function(realPosition) {
     position.x = Math.floor(position.x / STEP_SIZE);
     position.y = Math.floor(position.y / STEP_SIZE);
     position.z = Math.floor(position.z / STEP_SIZE);
-    positions.push(position);
 
     for (i = 0; i < this.shape.length; i++) {
         shapePos = cloneVector(this.shape[i]);
@@ -160,7 +159,7 @@ Block.prototype.rotateAroundWorldAxis = function(axisName, degrees) {
     object.rotation.setFromRotationMatrix(object.matrix);
 
     // rotating highlight shape
-    if (game.mode == "level" || game.mode == "tutorial") {
+    if (game.mode != Game.MODE_RANDOM) {
         game.outline.matrix = rotWorldMatrix;
         game.outline.rotation.setFromRotationMatrix(game.outline.matrix);
     }
