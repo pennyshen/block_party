@@ -198,9 +198,11 @@ function dragPiece() {
 		toIntersect.push(game.existingBlocks[i].mesh);
 	}
 
-	var intersects = raycaster.intersectObject( floor.plane );	
-	adjustPosition(intersects[0].point, rollOverMesh.position);
-	
+	var intersects = raycaster.intersectObject( floor.plane );
+
+	if (intersects.length > 0) {
+		adjustPosition(intersects[0].point, rollOverMesh.position);
+	}	
 }
 
 function adjustPosition( rayPosition, piecePosition ) {
