@@ -49,7 +49,6 @@ LevelMode.prototype.showLevelMenu = function() {
 }
 
 LevelMode.prototype.showLevel = function() {
-	console.log(hint_doc.style.display);
 	hideAllNav();
 
 	// hide all info for now
