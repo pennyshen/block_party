@@ -41,7 +41,6 @@ function hideAllNav() {
 	for (var i = 0; i < nav_items.length; i++) {
 		hideElement(nav_items[i]);
 	}
-	hideElement(hint_doc);
 }
 
 function hideAllInfo() {

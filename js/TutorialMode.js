@@ -20,8 +20,8 @@ function TutorialMode() {
 		), new Level(
 			['L'],
 			'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":2,"z":0}]',
-			'Rotate with 2, 3',
-			[new Goal('ROTATE', '2 always rotates counterclockwise, 3 clockwise'),
+			'Rotate with 2',
+			[new Goal('ROTATE', '2 always rotates counterclockwise'),
 			new Goal('[{"x":0,"y":2,"z":-1},{"x":0,"y":3,"z":-1},{"x":0,"y":1,"z":-1},{"x":1,"y":3,"z":-1}]','')]
 		), new Level(
 			['cross_block'],
@@ -32,7 +32,7 @@ function TutorialMode() {
 			['L'],
 			'[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":2}]',
 			'Combine 1,2,3 to rotate!',
-			[new Goal('ROTATE', 'Use 1, 2, 3 to place the shape.'),
+			[new Goal('ROTATE', 'Use 1, 2 to place the shape.'),
 			new Goal('[{"x":0,"y":0,"z":2},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":3},{"x":1,"y":0,"z":1}]', '')]
 		), new Level(
 			['two_blocks', 'L'],
@@ -85,6 +85,7 @@ TutorialMode.prototype.initTutorial = function() {
 		}
 	}
 
+	showElement(hint_doc);
 	this.nextGoal();
 }
 

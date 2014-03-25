@@ -32,6 +32,7 @@ function LevelMode(toPopulateMenu) {
 	this.outlineMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.BackSide } );
 
 	this.showLevelMenu();
+	hideAllInfo();
 }
 
 LevelMode.prototype = Object.create(Game.prototype);
@@ -48,14 +49,8 @@ LevelMode.prototype.showLevelMenu = function() {
 }
 
 LevelMode.prototype.showLevel = function() {
+	console.log(hint_doc.style.display);
 	hideAllNav();
-	hideAllInfo();
-	if (this.mode == "tutorial") {
-		showElement(hint_doc);
-		if (center_tooltip_doc.innerHTML != '') {
-			showElement(center_tooltip_doc);
-		}		
-	}
 
 	// hide all info for now
 	hideElement(info_doc);

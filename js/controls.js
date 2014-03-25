@@ -89,10 +89,10 @@ function onDocumentKeyDown( event ) {
             rotate( gameBoardOrientation, "pitch" );
             rotated = true;
             break;
-        case 51: // NUMBER 3
-            rotate( gameBoardOrientation, "roll" );
-            rotated = true;    
-            break;      
+        // case 51: // NUMBER 3
+        //     rotate( gameBoardOrientation, "roll" );
+        //     rotated = true;    
+        //     break;      
         case 16: 
             isShiftDown = true; 
             if (game.boundingBox) {
