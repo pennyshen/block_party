@@ -126,6 +126,17 @@ a#start{top: 100%;}
     font-size: 200%;
 }
 
+
+#levelText {
+    top: 20px;
+    right: 20px;
+    width: 100%;
+    text-align: right;
+    position: absolute;        
+    font: 30px "Press Start 2P", cursive; 
+    color: white;
+}
+
 #helperText {
     font-size: 20px;
     padding: 0;

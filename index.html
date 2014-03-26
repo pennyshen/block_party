@@ -119,6 +119,8 @@
 				<br>
 			</font>
 	    </div>
+	    <div id="levelText">
+	    </div>
 	    <span id="hint"></span>
 	    <span id="center_tooltip"></span>
     </div>
@@ -189,10 +191,11 @@
 		var center_tooltip_doc = document.getElementById("center_tooltip");
 		var info_doc = document.getElementById("info");
 		var mainMusicSource_doc = document.getElementById("mainMusicSource");
+		var levelText_doc = document.getElementById("levelText");
 
 		var nav_items = [menu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
 			selectBlockScreen_doc, loading_doc, about_doc];
-		var info_items = [showNextPiece_doc, hint_doc, center_tooltip_doc];
+		var info_items = [showNextPiece_doc, hint_doc, center_tooltip_doc, levelText_doc];
 
 		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Back</a><br>';
 

@@ -7,11 +7,11 @@ function LevelMode(toPopulateMenu) {
 			// new Level(["straight3", "straight3", "straight3", "lightning","lightning","two_blocks","two_blocks", "cross_block", "cross_block", "cross_block",
 			// 	"L", "L", "L", 'short_T', 'short_T', 'short_T'], 
 			// 	'[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":1,"z":0}]'),
-			new Level(["L", "L", "lightning", "lightning"],
-				'[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":-2,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":-2,"y":1,"z":0},{"x":-2,"y":2,"z":0},{"x":-1,"y":1,"z":0},{"x":-1,"y":2,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":1,"z":0},{"x":1,"y":2,"z":0},{"x":0,"y":0,"z":1},{"x":0,"y":1,"z":1},{"x":-1,"y":0,"z":1},{"x":-1,"y":1,"z":1}]'),
 			new Level(["two_blocks", "two_blocks"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":1,"z":0}]'),
 			new Level(["straight3", "straight3", "straight3"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":2,"y":0,"z":1},{"x":0,"y":0,"z":2},{"x":1,"y":0,"z":2},{"x":2,"y":0,"z":2}]'),
 			new Level(["two_blocks","two_blocks","short_T","short_T"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":1,"y":0,"z":1},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":2},{"x":2,"y":0,"z":1},{"x":2,"y":0,"z":2},{"x":2,"y":0,"z":3},{"x":0,"y":0,"z":3},{"x":1,"y":0,"z":3},{"x":1,"y":0,"z":2}]'),
+			new Level(["L", "L", "lightning", "lightning"],
+				'[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":-2,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":-2,"y":1,"z":0},{"x":-2,"y":2,"z":0},{"x":-1,"y":1,"z":0},{"x":-1,"y":2,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":1,"z":0},{"x":1,"y":2,"z":0},{"x":0,"y":0,"z":1},{"x":0,"y":1,"z":1},{"x":-1,"y":0,"z":1},{"x":-1,"y":1,"z":1}]'),
 			new Level(["L", "lightning", "short_T"], 
 				'[{"x":1,"y":0,"z":-1},{"x":0,"y":0,"z":-1},{"x":-1,"y":0,"z":-1},{"x":-1,"y":0,"z":0},{"x":-1,"y":0,"z":1},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":1,"y":0,"z":0},{"x":-1,"y":1,"z":0},{"x":0,"y":1,"z":-1},{"x":-1,"y":1,"z":-1},{"x":-1,"y":2,"z":-1}]'),
 			new Level(['L', 'lightning', 'L'], 
@@ -67,6 +67,9 @@ LevelMode.prototype.showLevel = function() {
 
 	// hide all info for now
 	hideElement(info_doc);
+
+	showElement(levelText_doc);
+	levelText_doc.innerHTML = "Level:" + (this.level + 1);
 
 	// TODO: DON'T CALL THIS FOR NOW
 	// TODO: REORGANIZE HOW WE'RE STARTING A GAME
