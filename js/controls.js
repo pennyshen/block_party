@@ -154,10 +154,10 @@ function onDocumentKeyDown( event ) {
     }
 
     // // !! only for building levels!!
-    // if (climbed) {
-    //     rollOverMesh.position.add(toMove);
-    //     return;
-    // }
+    if (climbed) {
+        rollOverMesh.position.add(toMove);
+        return;
+    }
 
     if ( rotated || moved ) {
         newPos = rollOverMesh.position.clone();
