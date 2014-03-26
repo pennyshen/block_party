@@ -15,6 +15,10 @@ function Game() {
 	this.max_x = -Number.MAX_VALUE;
 	this.max_y = -Number.MAX_VALUE;
 	this.max_z = -Number.MAX_VALUE;
+
+	if (mainMusic) {
+		mainMusic.currentTime = 0;
+	}
 }
 
 

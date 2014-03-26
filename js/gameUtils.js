@@ -364,16 +364,6 @@ function geo2line( geo ) // credit to WestLangley!
     return geometry;
 }
 
-//called at the end of the level
-function endLevel() {
-	score_doc.innerHTML = '' + Math.round((BlockGenerator.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100) + "/100";
-	gameInProgress = false;
-	timer.innerHTML = '';
-	nextPiece_doc.innerHTML = '';
-	//clear unnecessary fields
-
-}
-
 function cloneVector(v) {
   	return {x: v.x, y: v.y, z: v.z};
 };

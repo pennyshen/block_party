@@ -7,6 +7,8 @@ function LevelMode(toPopulateMenu) {
 			// new Level(["straight3", "straight3", "straight3", "lightning","lightning","two_blocks","two_blocks", "cross_block", "cross_block", "cross_block",
 			// 	"L", "L", "L", 'short_T', 'short_T', 'short_T'], 
 			// 	'[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":1,"z":0}]'),
+			new Level(["cross_block", "cross_block", "short_T", "short_T", "straight3"],
+				'[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":-1,"y":0,"z":1},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":0},{"x":1,"y":0,"z":1},{"x":1,"y":0,"z":-1},{"x":0,"y":0,"z":-1},{"x":-1,"y":0,"z":-1},{"x":-1,"y":1,"z":-1},{"x":-1,"y":1,"z":0},{"x":-1,"y":1,"z":1},{"x":0,"y":1,"z":-1},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":1,"y":1,"z":-1},{"x":1,"y":1,"z":0},{"x":1,"y":1,"z":1},{"x":-1,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":-1,"y":3,"z":0},{"x":1,"y":3,"z":0},{"x":0,"y":3,"z":0}]'),
 			new Level(["two_blocks", "two_blocks"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":1,"z":0}]'),
 			new Level(["straight3", "straight3", "straight3"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":2,"y":0,"z":1},{"x":0,"y":0,"z":2},{"x":1,"y":0,"z":2},{"x":2,"y":0,"z":2}]'),
 			new Level(["two_blocks","two_blocks","short_T","short_T"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":1,"y":0,"z":1},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":2},{"x":2,"y":0,"z":1},{"x":2,"y":0,"z":2},{"x":2,"y":0,"z":3},{"x":0,"y":0,"z":3},{"x":1,"y":0,"z":3},{"x":1,"y":0,"z":2}]'),
@@ -92,12 +94,7 @@ LevelMode.prototype.showLevel = function() {
 	rollOverMesh = null;
 	startMovingBlock(this.currentBlock.mesh);
 
-	if (mainMusic) {
-		mainMusic.currentTime = 0;
-		mainMusic.play();		
-	}
-
-	gameInProgress = true;
+	setGameInProgress(true);
 }
 
 LevelMode.prototype.startLevel = function(level) {
@@ -161,9 +158,8 @@ LevelMode.prototype.getNextBlock = function() {
 };
 
 LevelMode.prototype.endGame = function() {
+	setGameInProgress(false);
 	this.currentBlock.makeStatic();
-	gameInProgress = false;
-	mainMusic.pause();
 	showElement(endScreen_doc);
 
 	scene.remove( this.outline );

@@ -1,17 +1,26 @@
 
-function pauseGame() {
-	if (mainMusic) {
-		mainMusic.pause();
+function setGameInProgress(isInProgress) {
+	gameInProgress = isInProgress;
+	controls.enabled = isInProgress;
+	
+	if (gameInProgress) {
+		if (mainMusic) {
+			mainMusic.play();
+		}
+	} else {
+		if (mainMusic) {
+			mainMusic.pause();
+		}		
 	}
-    gameInProgress = false;
+}
+
+function pauseGame() {
+	setGameInProgress(false);
     showElement(pauseScreen_doc);	
 }
 
 function resumeGame() {
-	if (mainMusic) {
-		mainMusic.play();
-	}
-	gameInProgress = true;
+	setGameInProgress(true);
 	hideElement(pauseScreen_doc);
 }
 

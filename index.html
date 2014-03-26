@@ -387,7 +387,9 @@
 
 		function animate() {
 			requestAnimationFrame( animate );
-			controls.update();
+			if (gameInProgress) {
+				controls.update();
+			}
 			render(0.016);
 			stats.update();
 		}
