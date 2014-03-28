@@ -135,6 +135,8 @@ LevelMode.prototype.checkSuccess = function() {
 		}
 	}
 
+	dingSound.load();
+	dingSound.play();
 	var that = this;
 	window.setTimeout(function() {
 		that.endGame();
@@ -179,21 +181,6 @@ LevelMode.prototype.endGame = function() {
 	var passOrFail = '';
 	var nextLevel = '';
 	var playAgain = '<a href="javascript: void(0)" class="menuItem" onClick="restartLevel()">Play again</a><br>'; 
-
-	// if (this.score >= this.toPass) {
-	// 	passOrFail = "PASSED!";
-	// 	if (this.level + 1 < this.levels.length) {
-	// 		nextLevel = '<a href="javascript: void(0)" class="menuItem" onClick="nextLevel()">Next level</a><br>'; 
-	// 	}		
-
-	// 	successSound.load();
-	// 	successSound.play();
-	// } else {
-	// 	passOrFail = "FAILED!";
-
-	// 	failSound.load();
-	// 	failSound.play();
-	// }
 
 	passOrFail = 'PASSED!';
 	if (this.level + 1 < this.levels.length) {
