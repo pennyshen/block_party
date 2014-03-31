@@ -26,9 +26,13 @@ function resumeGame() {
 
 function backToMenu() {
 	game.clearScene();
-	game = null;
-	// main
-	showElementAndHideNav(menu_doc);
+	if (game.mode == Game.MODE_RANDOM) {
+		showElementAndHideNav(menu_doc);
+	} else {
+		initGame(game.mode);
+	}
+
+	
 }
 
 function nextLevel() {
