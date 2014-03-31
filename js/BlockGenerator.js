@@ -38,6 +38,12 @@ BlockGenerator.shapes = {
     "short_T": //4 typical tetris short t 
     [{x: 0, y: 0, z: 0}, {x: 0, y: 1, z: 0}, {x: 1, y: 0, z: 0}, {x: -1, y: 0, z: 0}],
 
+    "v_piece":
+    [{"x":-2,"y":0,"z":0},{"x":-1,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":2,"y":0,"z":0},{"x":0,"y":2,"z":0}],
+
+    "y_piece":
+    [{"x":0,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":-1,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":1,"y":0,"z":-1},{"x":-1,"y":0,"z":-1}],
+
     "lightning": //4 typical tetris lighting-looking z
     [{x: 0, y: 0, z: 0}, {x: 0, y: -1, z: 0}, {x: 1, y: 0, z: 0}, {x: 1, y: 1, z: 0}],
 
