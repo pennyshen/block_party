@@ -12,7 +12,13 @@ function RandomMode() {
 RandomMode.prototype = Object.create(Game.prototype);
 
 RandomMode.prototype.getNextBlock = function() {
-	var toReturn = BlockGenerator.generate(this.nextBlockName);
+	var toReturn;
+	if (makingLevels) {
+		toReturn = BlockGenerator.getBlock("cube", [{x: 0, y: 0, z: 0}], 0xADADAD);
+	} else {
+		toReturn = BlockGenerator.generate(this.nextBlockName);		
+	}
+	
 	this.currentBlock = toReturn;
 	this.currentAliveTime = 0;
 	this.nextBlockName = getRandomMember(BlockGenerator.allShapes);

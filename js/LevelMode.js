@@ -112,10 +112,17 @@ LevelMode.prototype.showLevel = function() {
 }
 
 LevelMode.prototype.startLevel = function(level) {
+	// TODO: remove this later
+	if (makingLevels) {
+		this.level = 0;
+		this.levelBlocks = ["straight3", "straight3", "straight3", "lightning","lightning","two_blocks","two_blocks", "cross_block", "cross_block", "cross_block", "L", "L", "L", 'short_T', 'short_T', 'short_T'];
+		this.createGoalShape([{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":1,"z":0}]);
+		this.showLevel();
+		return;
+	}
+
 	this.level = level;
-	this.levelBlocks = [];
 	this.levelBlocks = this.levels[level].blocks.slice(0);
-	this.toPass = this.levels[level].passRate;
 
 	this.createGoalShape(JSON.parse(this.levels[level].goalShape));
 
@@ -147,8 +154,14 @@ LevelMode.prototype.checkSuccess = function() {
 
 LevelMode.prototype.createGoalShape = function(shape) {
 	var block = BlockGenerator.getBlock("goalShape", shape, "grey");
-	var wireframe = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
+	// var wireframe = block.mesh;
+	// wireframe.matrixAutoUpdate = false;
+ //    wireframe.geometry.verticesNeedUpdate = true;
+ //    wireframe.castShadow = false;
+ //    wireframe.renderDepth = 0.2;
+ //    wireframe.updateMatrix();    
 
+	var wireframe = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
 	wireframe.position.x += STEP_SIZE/2;
 	wireframe.position.y += STEP_SIZE/2;
 	wireframe.position.z += STEP_SIZE/2;
