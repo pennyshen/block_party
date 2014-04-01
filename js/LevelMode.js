@@ -9,17 +9,24 @@ function LevelMode(toPopulateMenu) {
 			// 	"L", "L", "L", 'short_T', 'short_T', 'short_T'], 
 			// 	'[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":1,"z":0}]'),
 
-			//big pieces Nate
+			//big pieces
 			new Level(["lock_piece_1","key_piece_2"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":2,"y":0,"z":1},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":2,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":2,"y":2,"z":0},{"x":0,"y":1,"z":1},{"x":2,"y":1,"z":1},{"x":0,"y":2,"z":1},{"x":2,"y":2,"z":1},{"x":1,"y":2,"z":1},{"x":1,"y":1,"z":1},{"x":0,"y":0,"z":2},{"x":0,"y":1,"z":2},{"x":0,"y":2,"z":2},{"x":1,"y":0,"z":2},{"x":1,"y":1,"z":2},{"x":1,"y":2,"z":2},{"x":2,"y":0,"z":2},{"x":2,"y":1,"z":2},{"x":2,"y":2,"z":2}]'),
 			new Level(["cube_third_1","cube_third_2","cube_third_3"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":-1,"y":1,"z":0},{"x":-1,"y":2,"z":0},{"x":-1,"y":2,"z":-1},{"x":-1,"y":0,"z":-2},{"x":-1,"y":1,"z":-2},{"x":-1,"y":2,"z":-2},{"x":-1,"y":0,"z":-1},{"x":-1,"y":1,"z":-1},{"x":-1,"y":0,"z":0},{"x":0,"y":0,"z":-1},{"x":0,"y":1,"z":-1},{"x":0,"y":2,"z":-1},{"x":0,"y":0,"z":-2},{"x":0,"y":1,"z":-2},{"x":0,"y":2,"z":-2},{"x":1,"y":0,"z":-1},{"x":1,"y":1,"z":-1},{"x":1,"y":2,"z":-1},{"x":1,"y":0,"z":-2},{"x":1,"y":1,"z":-2},{"x":1,"y":2,"z":-2}]'),
 			new Level(["u_shape","u_shape","pronged_Z_shape","pronged_L_shape"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":2,"y":0,"z":1},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":2,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":2,"y":2,"z":0},{"x":0,"y":1,"z":1},{"x":2,"y":1,"z":1},{"x":0,"y":2,"z":1},{"x":2,"y":2,"z":1},{"x":1,"y":2,"z":1},{"x":1,"y":1,"z":1},{"x":0,"y":0,"z":2},{"x":0,"y":1,"z":2},{"x":0,"y":2,"z":2},{"x":1,"y":0,"z":2},{"x":1,"y":1,"z":2},{"x":1,"y":2,"z":2},{"x":2,"y":0,"z":2},{"x":2,"y":1,"z":2},{"x":2,"y":2,"z":2}]'),			
 			new Level(["u_shape","short_L","corner_setup", "short_T", "goofy_L"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":2,"y":0,"z":1},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":2,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":2,"y":2,"z":0},{"x":0,"y":1,"z":1},{"x":2,"y":1,"z":1},{"x":0,"y":2,"z":1},{"x":2,"y":2,"z":1},{"x":1,"y":2,"z":1},{"x":1,"y":1,"z":1},{"x":0,"y":0,"z":2},{"x":0,"y":1,"z":2},{"x":0,"y":2,"z":2},{"x":1,"y":0,"z":2},{"x":1,"y":1,"z":2},{"x":1,"y":2,"z":2},{"x":2,"y":0,"z":2},{"x":2,"y":1,"z":2},{"x":2,"y":2,"z":2}]'),
 			new Level(["2_cubed", "straight3", "short_L", "short_T", "lightning", "2_L"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":1,"y":1,"z":1},{"x":1,"y":0,"z":2},{"x":1,"y":1,"z":2},{"x":0,"y":1,"z":2},{"x":2,"y":1,"z":2},{"x":2,"y":2,"z":2},{"x":0,"y":0,"z":2},{"x":0,"y":2,"z":2},{"x":2,"y":0,"z":2},{"x":2,"y":0,"z":1},{"x":2,"y":1,"z":1},{"x":0,"y":2,"z":1},{"x":1,"y":2,"z":1},{"x":2,"y":2,"z":1},{"x":1,"y":2,"z":2},{"x":2,"y":0,"z":0},{"x":2,"y":1,"z":0},{"x":2,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":0,"y":2,"z":0}]'),
-			new Level(["donut", "short_u", "u_shape"], '[{"x":0,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":2},{"x":1,"y":0,"z":0},{"x":1,"y":0,"z":1},{"x":1,"y":0,"z":2},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":1,"z":2},{"x":1,"y":1,"z":0},{"x":1,"y":1,"z":1},{"x":1,"y":1,"z":2},{"x":0,"y":2,"z":0},{"x":0,"y":2,"z":1},{"x":0,"y":2,"z":2},{"x":1,"y":2,"z":0},{"x":1,"y":2,"z":1},{"x":1,"y":2,"z":2},{"x":0,"y":3,"z":1},{"x":1,"y":3,"z":1}]'),			
-			new Level(["donut", "donut", "short_u", "short_u", "u_shape", "u_shape", "straight4", "straight4"], '[{"x":-4,"y":0,"z":1},{"x":-3,"y":0,"z":1},{"x":-2,"y":0,"z":1},{"x":-4,"y":0,"z":0},{"x":-3,"y":0,"z":0},{"x":-2,"y":0,"z":0},{"x":-4,"y":1,"z":1},{"x":-3,"y":1,"z":1},{"x":-2,"y":1,"z":1},{"x":-4,"y":1,"z":0},{"x":-3,"y":1,"z":0},{"x":-2,"y":1,"z":0},{"x":-4,"y":2,"z":1},{"x":-3,"y":2,"z":1},{"x":-2,"y":2,"z":1},{"x":-4,"y":2,"z":0},{"x":-3,"y":2,"z":0},{"x":-2,"y":2,"z":0},{"x":-3,"y":3,"z":1},{"x":-3,"y":3,"z":0},{"x":-2,"y":3,"z":1},{"x":-1,"y":3,"z":1},{"x":0,"y":3,"z":1},{"x":-2,"y":3,"z":0},{"x":-1,"y":3,"z":0},{"x":0,"y":3,"z":0},{"x":1,"y":0,"z":1},{"x":2,"y":0,"z":1},{"x":3,"y":0,"z":1},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":3,"y":0,"z":0},{"x":1,"y":1,"z":1},{"x":2,"y":1,"z":1},{"x":1,"y":1,"z":0},{"x":2,"y":1,"z":0},{"x":3,"y":1,"z":0},{"x":1,"y":2,"z":1},{"x":2,"y":2,"z":1},{"x":3,"y":2,"z":1},{"x":1,"y":2,"z":0},{"x":3,"y":1,"z":1},{"x":2,"y":2,"z":0},{"x":3,"y":2,"z":0},{"x":2,"y":3,"z":0},{"x":2,"y":3,"z":1},{"x":1,"y":3,"z":1},{"x":1,"y":3,"z":0}]'),
-			new Level(["v_piece", "y_piece", "straight3", "cross_block"], '[{"x":-2,"y":0,"z":0},{"x":-1,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":1,"z":0},{"x":2,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":-1,"y":0,"z":1},{"x":1,"y":0,"z":0},{"x":1,"y":0,"z":1},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":2},{"x":0,"y":0,"z":0},{"x":0,"y":0,"z":-1},{"x":0,"y":0,"z":-2},{"x":1,"y":0,"z":-1},{"x":-1,"y":0,"z":-1},{"x":0,"y":1,"z":1},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":-1}]'),
-			new Level(["short_T", "short_T", "short_T", "short_u", "short_u", "short_u"], '[{"x":-2,"y":0,"z":0},{"x":-2,"y":1,"z":0},{"x":-2,"y":2,"z":0},{"x":-1,"y":0,"z":0},{"x":-1,"y":1,"z":0},{"x":-1,"y":2,"z":0},{"x":-1,"y":0,"z":-1},{"x":-1,"y":1,"z":-1},{"x":-1,"y":2,"z":-1},{"x":0,"y":0,"z":-1},{"x":0,"y":1,"z":-1},{"x":0,"y":2,"z":-1},{"x":0,"y":0,"z":-2},{"x":0,"y":1,"z":-2},{"x":0,"y":2,"z":-2},{"x":1,"y":0,"z":-2},{"x":1,"y":1,"z":-2},{"x":1,"y":2,"z":-2},{"x":1,"y":0,"z":-3},{"x":1,"y":1,"z":-3},{"x":1,"y":2,"z":-3},{"x":2,"y":0,"z":-3},{"x":2,"y":1,"z":-3},{"x":2,"y":2,"z":-3},{"x":2,"y":0,"z":-4},{"x":2,"y":1,"z":-4},{"x":2,"y":2,"z":-4}]'),
+			new Level(["short_u", "short_u", "donut", "donut", "u_shape", "u_shape", "straight4", "straight4"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":2,"y":1,"z":0},{"x":2,"y":2,"z":0},{"x":2,"y":3,"z":0},{"x":1,"y":1,"z":0},{"x":1,"y":2,"z":0},{"x":1,"y":3,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":0,"y":3,"z":0},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":2,"y":0,"z":1},{"x":0,"y":0,"z":2},{"x":1,"y":0,"z":2},{"x":2,"y":0,"z":2},{"x":0,"y":1,"z":1},{"x":1,"y":1,"z":1},{"x":2,"y":1,"z":1},{"x":0,"y":1,"z":2},{"x":1,"y":1,"z":2},{"x":2,"y":1,"z":2},{"x":0,"y":0,"z":3},{"x":1,"y":0,"z":3},{"x":2,"y":0,"z":3},{"x":0,"y":1,"z":3},{"x":1,"y":1,"z":3},{"x":2,"y":1,"z":3},{"x":0,"y":2,"z":1},{"x":1,"y":2,"z":1},{"x":2,"y":2,"z":1},{"x":2,"y":2,"z":2},{"x":1,"y":2,"z":2},{"x":0,"y":2,"z":2},{"x":0,"y":2,"z":3},{"x":1,"y":2,"z":3},{"x":2,"y":2,"z":3},{"x":0,"y":3,"z":1},{"x":1,"y":3,"z":1},{"x":2,"y":3,"z":1},{"x":2,"y":3,"z":2},{"x":1,"y":3,"z":2},{"x":0,"y":3,"z":2},{"x":1,"y":3,"z":3},{"x":0,"y":3,"z":3},{"x":2,"y":3,"z":3}]'),
+			
 			//end big pieces
+
+			//Vincent-> pyramid level
+			new Level(["v_shape", "claw", "short_L", "short_L", "twisted", "L"], '[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":0,"z":1},{"x":-1,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":1,"y":0,"z":0},{"x":0,"y":0,"z":-1},{"x":0,"y":0,"z":2},{"x":-1,"y":0,"z":2},{"x":0,"y":0,"z":3},{"x":1,"y":0,"z":2},{"x":2,"y":0,"z":1},{"x":-2,"y":0,"z":1},{"x":-1,"y":1,"z":0},{"x":-1,"y":1,"z":1},{"x":-1,"y":1,"z":2},{"x":0,"y":1,"z":2},{"x":1,"y":1,"z":0},{"x":1,"y":1,"z":1},{"x":1,"y":1,"z":2},{"x":0,"y":2,"z":1}]'),
+			//Vincent -> crane level
+			new Level(["short_L", "L", "short_L","short_L", "lightning"], '[{"x":-2,"y":1,"z":3},{"x":-2,"y":0,"z":3},{"x":-3,"y":0,"z":3},{"x":-1,"y":0,"z":3},{"x":-1,"y":1,"z":3},{"x":0,"y":1,"z":3},{"x":1,"y":1,"z":3},{"x":2,"y":0,"z":3},{"x":2,"y":1,"z":3},{"x":0,"y":2,"z":3},{"x":0,"y":3,"z":3},{"x":0,"y":4,"z":3},{"x":-1,"y":4,"z":3},{"x":-2,"y":4,"z":3},{"x":-2,"y":5,"z":3},{"x":-3,"y":4,"z":3},{"x":-3,"y":5,"z":3}]'),
+			//Vincent-> inverted 2D pyramid
+			new Level(["L", "lightning", "cross_block", "lightning", "short_T"], '[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":1,"y":2,"z":0},{"x":0,"y":2,"z":0},{"x":-1,"y":2,"z":0},{"x":2,"y":2,"z":0},{"x":-2,"y":2,"z":0},{"x":-1,"y":3,"z":0},{"x":0,"y":3,"z":0},{"x":1,"y":3,"z":0},{"x":2,"y":3,"z":0},{"x":3,"y":3,"z":0},{"x":-2,"y":3,"z":0},{"x":-3,"y":3,"z":0},{"x":-2,"y":4,"z":0},{"x":-1,"y":4,"z":0},{"x":0,"y":4,"z":0},{"x":1,"y":4,"z":0},{"x":2,"y":4,"z":0}]'),
+
+
 
 			// small pieces together
 			// new Level(["cross_block", "cross_block", "short_T", "short_T", "straight3"],
@@ -62,33 +69,14 @@ function LevelMode(toPopulateMenu) {
 	this.INTERSECTED = null;
 	this.goal = [];
 	this.goalObject = {};
-	this.preview = {};
+	// this.outline = {};
 	this.outlineMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.BackSide } );
-	this.isPreviewing = true;
-	this.FADING_TIME = 3 * 1000;
 
 	this.showLevelMenu();
 	hideAllInfo();
 }
 
 LevelMode.prototype = Object.create(Game.prototype);
-
-LevelMode.prototype.fadingInAndOut = function() {
-	if (this.currentAliveTime < this.FADING_TIME) {
-		this.preview.material.opacity = 0.6 * (this.currentAliveTime / this.FADING_TIME);
-	} else if (this.currentAliveTime < this.FADING_TIME * 2) {
-		this.preview.material.opacity = 0.6 * (1 - (this.currentAliveTime - this.FADING_TIME) / this.FADING_TIME);
-	} else {
-		this.preview.material.opacity = 0;
-		this.isPreviewing = false;
-
-		var that = this;
-		window.setTimeout(function() {
-			that.currentAliveTime = 0;
-			that.isPreviewing = true;
-		}, 3 * 1000);		
-	}
-}
 
 LevelMode.prototype.showLevelMenu = function() {
 	levelModeMenu_doc.innerHTML = "<h1>" + this.titleText + "</h1><br>";
@@ -176,29 +164,21 @@ LevelMode.prototype.checkSuccess = function() {
 }
 
 LevelMode.prototype.createGoalShape = function(shape) {
-	var block = BlockGenerator.getBlock("goalShape", shape, 0x37FDFC);
-	this.preview = block.mesh;
-	this.preview.toBeRemoved = true;
-	this.preview.name = "preview";
-	this.preview.matrixAutoUpdate = false;
-    this.preview.geometry.verticesNeedUpdate = true;
-    this.preview.castShadow = false;
-    this.preview.renderDepth = 1.0;
-    this.preview.material.opacity = 0;
-    this.preview.material.side = THREE.FrontSide;
-    this.preview.scale.multiplyScalar(1.01);
-    this.preview.updateMatrix();    
-    scene.add(this.preview);
+	var block = BlockGenerator.getBlock("goalShape", shape, "grey");
+	// var wireframe = block.mesh;
+	// wireframe.matrixAutoUpdate = false;
+ //    wireframe.geometry.verticesNeedUpdate = true;
+ //    wireframe.castShadow = false;
+ //    wireframe.renderDepth = 0.2;
+ //    wireframe.updateMatrix();    
 
 	var wireframe = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
-	wireframe.toBeRemoved = true;
 	wireframe.position.x += STEP_SIZE/2;
 	wireframe.position.y += STEP_SIZE/2;
 	wireframe.position.z += STEP_SIZE/2;
 
 	this.goal = shape;
 	this.goalObject = wireframe;
-	this.goalObject.name = "goalObject";
 
 	scene.add(wireframe);
 }
@@ -223,7 +203,6 @@ LevelMode.prototype.endGame = function() {
 	showElement(endScreen_doc);
 
 	scene.remove( this.outline );
-	this.preview.material.opacity = 0;
 
 	var passOrFail = '';
 	var nextLevel = '';
