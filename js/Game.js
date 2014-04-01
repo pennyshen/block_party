@@ -101,6 +101,8 @@ Game.prototype = {
 	},
 
 	clearScene: function() {
+		var child;
+
 		for (var i = 0; i < this.existingBlocks.length; i++) {
 			this.existingBlocks[i].removeFromScene();
 		}
@@ -109,19 +111,17 @@ Game.prototype = {
 			this.currentBlock.removeFromScene();
 		}
 
-		if (this.boundingBox) {
-			scene.remove(this.boundingBox);
-			this.boundingBox.geometry.dispose();
+		// clean up the rest
+		var removeList = [];
+		for (var i = 0; i < scene.children.length; i++) {
+			child = scene.children[i];
+			if (child.toBeRemoved) {
+				removeList.push(child);
+			}
 		}
-
-		if (this.goalObject) {
-			scene.remove(this.goalObject);
-			this.goalObject.geometry.dispose();
-		}
-
-		if (this.outline) {
-			scene.remove(this.outline);
-			this.outline.geometry.dispose();
+		for (var i = 0; i < removeList.length; i++) {
+			scene.remove(removeList[i]);
+			removeList[i].geometry.dispose();
 		}
 	},
 
@@ -142,6 +142,7 @@ Game.prototype = {
 
 		var geom = new THREE.CubeGeometry(this.max_x - this.min_x, this.max_y - this.min_y, this.max_z - this.min_z);
 		this.boundingBox = new THREE.Line( geo2line(geom), Game.box_material, THREE.LinePieces );
+		this.boundingBox.toBeRemoved = true;
 
 		this.boundingBox.position.x = (this.max_x + this.min_x) / 2;
 		this.boundingBox.position.y = (this.max_y + this.min_y) / 2;

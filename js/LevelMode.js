@@ -58,14 +58,33 @@ function LevelMode(toPopulateMenu) {
 	this.INTERSECTED = null;
 	this.goal = [];
 	this.goalObject = {};
-	// this.outline = {};
+	this.preview = {};
 	this.outlineMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.BackSide } );
+	this.isPreviewing = true;
+	this.FADING_TIME = 3 * 1000;
 
 	this.showLevelMenu();
 	hideAllInfo();
 }
 
 LevelMode.prototype = Object.create(Game.prototype);
+
+LevelMode.prototype.fadingInAndOut = function() {
+	if (this.currentAliveTime < this.FADING_TIME) {
+		this.preview.material.opacity = 0.6 * (this.currentAliveTime / this.FADING_TIME);
+	} else if (this.currentAliveTime < this.FADING_TIME * 2) {
+		this.preview.material.opacity = 0.6 * (1 - (this.currentAliveTime - this.FADING_TIME) / this.FADING_TIME);
+	} else {
+		this.preview.material.opacity = 0;
+		this.isPreviewing = false;
+
+		var that = this;
+		window.setTimeout(function() {
+			that.currentAliveTime = 0;
+			that.isPreviewing = true;
+		}, 3 * 1000);		
+	}
+}
 
 LevelMode.prototype.showLevelMenu = function() {
 	levelModeMenu_doc.innerHTML = "<h1>" + this.titleText + "</h1><br>";
@@ -153,21 +172,29 @@ LevelMode.prototype.checkSuccess = function() {
 }
 
 LevelMode.prototype.createGoalShape = function(shape) {
-	var block = BlockGenerator.getBlock("goalShape", shape, "grey");
-	// var wireframe = block.mesh;
-	// wireframe.matrixAutoUpdate = false;
- //    wireframe.geometry.verticesNeedUpdate = true;
- //    wireframe.castShadow = false;
- //    wireframe.renderDepth = 0.2;
- //    wireframe.updateMatrix();    
+	var block = BlockGenerator.getBlock("goalShape", shape, 0x37FDFC);
+	this.preview = block.mesh;
+	this.preview.toBeRemoved = true;
+	this.preview.name = "preview";
+	this.preview.matrixAutoUpdate = false;
+    this.preview.geometry.verticesNeedUpdate = true;
+    this.preview.castShadow = false;
+    this.preview.renderDepth = 1.0;
+    this.preview.material.opacity = 0;
+    this.preview.material.side = THREE.FrontSide;
+    this.preview.scale.multiplyScalar(1.01);
+    this.preview.updateMatrix();    
+    scene.add(this.preview);
 
 	var wireframe = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
+	wireframe.toBeRemoved = true;
 	wireframe.position.x += STEP_SIZE/2;
 	wireframe.position.y += STEP_SIZE/2;
 	wireframe.position.z += STEP_SIZE/2;
 
 	this.goal = shape;
 	this.goalObject = wireframe;
+	this.goalObject.name = "goalObject";
 
 	scene.add(wireframe);
 }
@@ -192,6 +219,7 @@ LevelMode.prototype.endGame = function() {
 	showElement(endScreen_doc);
 
 	scene.remove( this.outline );
+	this.preview.material.opacity = 0;
 
 	var passOrFail = '';
 	var nextLevel = '';

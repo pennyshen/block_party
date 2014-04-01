@@ -426,7 +426,10 @@
 
 				if (game.mode != Game.MODE_RANDOM) {
 					intersectToHighlight();
-				}
+					if (game.isPreviewing) {
+						game.fadingInAndOut();
+					}
+				} 
 			}
 
 			time = Date.now();

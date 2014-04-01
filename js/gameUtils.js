@@ -54,11 +54,14 @@ function startMovingBlock(meshToMove) {
 	}
 
 	// outline the block
+	// game.outline = new THREE.Line( geo2line(game.currentBlock.mesh.geometry), new THREE.LineBasicMaterial( { color: 0xFFFFFF } ), THREE.LinePieces )
 	game.outline = new THREE.Mesh( game.currentBlock.mesh.geometry, game.outlineMaterial );
-	game.outline.position = game.currentBlock.mesh.position;
 	game.outline.scale.multiplyScalar(1.05);
+	game.outline.position = game.currentBlock.mesh.position;
 	game.outline.matrix = rollOverMesh.matrix;
 	game.outline.rotation.setFromRotationMatrix(rollOverMesh.matrix);
+	game.outline.toBeRemoved = true;
+	game.outline.name = "outline";
 
 	scene.add( game.outline );
 }
