@@ -122,6 +122,15 @@ BlockGenerator.getRandomBlock = function() {
 	return this.generate(shapeName);
 }
 
+BlockGenerator.lockCentroid = function(point) {
+	// magic!!
+	if (point % (STEP_SIZE/2) == 0) {
+		return Math.floor(point / STEP_SIZE);
+	} else {
+		return Math.floor((point - STEP_SIZE/2)/STEP_SIZE) + 1;
+	}
+}
+
 BlockGenerator.getBlock = function(shapeName, originalShape, color) {
 	var shape = []; 
 	var i, j;
@@ -132,6 +141,9 @@ BlockGenerator.getBlock = function(shapeName, originalShape, color) {
 	var toDelete = [];
 	var mesh;
 	var block;
+	var leftPoint, rightPoint, facePoint;
+	var leftKey, rightKey;
+	var posMap = getPositionsMap(originalShape);
 
 	// clone the shape.
 	for ( i = 0; i < originalShape.length; i++ ) {
@@ -163,18 +175,31 @@ BlockGenerator.getBlock = function(shapeName, originalShape, color) {
 	mesh.position.y += STEP_SIZE / 2;
 	mesh.position.z += STEP_SIZE / 2;
 
+	console.log("removing inner faces");
 	// raycast itself from the center of each face (negated normal), and whichever face gets intersected
 	// is an inner face
 	for (i = 0; i < geometry.faces.length; i++) {
 		face = geometry.faces[i];
 		if (face) {
 			normal = face.normal.clone();
-			normal.negate();
-			blockRaycaster.set(face.centroid, normal);
-			intersects = blockRaycaster.intersectObject(mesh);
-			for (j = 0; j < intersects.length; j++) {
-				toDelete.push(intersects[j].faceIndex);
+			facePoint = face.centroid.clone();
+
+			// get the two positions to either side of the face (using normal)
+			facePoint.x = this.lockCentroid(facePoint.x);
+			facePoint.y = this.lockCentroid(facePoint.y);
+			facePoint.z = this.lockCentroid(facePoint.z);
+			leftKey = getKeyString(facePoint);
+			rightPoint = new THREE.Vector3();
+			rightPoint.x = facePoint.x + Math.abs(normal.x);
+			rightPoint.y = facePoint.y + Math.abs(normal.y);
+			rightPoint.z = facePoint.z + Math.abs(normal.z);
+			rightKey = getKeyString(rightPoint);
+
+			// if both positions exist in the shape, the face is an inner face
+			if ((leftKey in posMap) && (rightKey in posMap)) {
+				toDelete.push(i);
 			}
+
 		}
 	}
 
