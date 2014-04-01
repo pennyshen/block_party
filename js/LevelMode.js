@@ -243,7 +243,7 @@ LevelMode.prototype.endGame = function() {
 	}	
 
 	endScreen_doc.innerHTML = '<h1>' + passOrFail + "</h1><br>"
-		+ playAgain
 		+ nextLevel
+		+ playAgain
 		+ backToMenu_string;
 };

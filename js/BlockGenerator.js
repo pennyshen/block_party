@@ -184,9 +184,7 @@ BlockGenerator.getBlock = function(shapeName, originalShape, color) {
 	mesh.position.y += STEP_SIZE / 2;
 	mesh.position.z += STEP_SIZE / 2;
 
-	console.log("removing inner faces");
-	// raycast itself from the center of each face (negated normal), and whichever face gets intersected
-	// is an inner face
+	// remove inner faces
 	for (i = 0; i < geometry.faces.length; i++) {
 		face = geometry.faces[i];
 		if (face) {

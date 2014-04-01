@@ -210,10 +210,9 @@ function dragPiece() {
 
 function adjustPosition( rayPosition, piecePosition ) {
 	var newPosition;
-	// console.log(rayPosition,piecePosition);
 	var toMove = new THREE.Vector3(0,0,0);
 	var moved = null;
-	// console.log(gameBoardOrientation);
+	
 	newPos = rollOverMesh.position.clone();
 	var dX;
 	var dZ;

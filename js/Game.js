@@ -34,7 +34,7 @@ Game.prototype = {
 		positions = block._getPositions(realPosition, block.shape);
 		for (i = 0; i < positions.length; i++) {
 			position = positions[i];
-			this.existingBlocks[getKeyString(position)] = true;			
+			this.existingBlocks[getKeyString(position)] = true;
 		}
 		this.existingBlocks.push(block);
 
