@@ -84,6 +84,9 @@ BlockGenerator.shapes = {
     "short_L": //3
     [{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":0,"z":1}],
 
+    "fat_L_block": //7
+    [{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":-1,"y":0,"z":0}],
+
     "claw": //4
     [{"x":0,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":0},{"x":0,"y":1,"z":0}],
 
@@ -100,6 +103,9 @@ BlockGenerator.colors = {
 	"purple": 0x660099,
 	"orange": 0xff9900, 
 	"brown": 0x70543b,
+	"pink": 0xFF00FF,
+	"teal": 0x00CCFF,
+	"dirty_green": 0x333300,
 	// "grey": 0xADADAD
 };
 
