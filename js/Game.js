@@ -199,12 +199,35 @@ Game.prototype = {
 		return JSON.stringify(this.currentBlock._getPositions(this.currentBlock.mesh.position));
 	},
 
-	exportGoal: function() {
-		var newShape = [];
+	getAllShapeNames: function() {
+		var shapes = [];
+
+		// shapes.push(this.currentBlock.shapeName);
 
 		for (var i = 0; i < this.existingBlocks.length; i++) {
-			newShape.push(this.existingBlocks[i].getMyPositions()[0]);
+			shapes.push(this.existingBlocks[i].shapeName);
 		}
+
+		return shapes;
+	},
+
+	exportGoal: function() {
+		var newShape = [];
+		var positions;
+
+		for (var i = 0; i < this.existingBlocks.length; i++) {
+			positions = this.existingBlocks[i].getMyPositions();
+			for (var j = 0; j < positions.length; j++) {
+				newShape.push(positions[j]);
+			}
+		}
+
+		// if (this.mode != Game.MODE_RANDOM) {
+		// 	positions = this.currentBlock.getMyPositions();
+		// 	for (var i = 0; i < positions.length; i++) {
+		// 		newShape.push(positions[i]);
+		// 	}
+		// }
 
 		return JSON.stringify(newShape);
 	}
