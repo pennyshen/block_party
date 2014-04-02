@@ -30,7 +30,6 @@ function LevelMode(toPopulateMenu) {
 			//Vincent-> inverted 2D pyramid
 			new Level(["L_block", "Z_block", "cross_block", "Z_block", "t_block"], '[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":1,"y":2,"z":0},{"x":0,"y":2,"z":0},{"x":-1,"y":2,"z":0},{"x":2,"y":2,"z":0},{"x":-2,"y":2,"z":0},{"x":-1,"y":3,"z":0},{"x":0,"y":3,"z":0},{"x":1,"y":3,"z":0},{"x":2,"y":3,"z":0},{"x":3,"y":3,"z":0},{"x":-2,"y":3,"z":0},{"x":-3,"y":3,"z":0},{"x":-2,"y":4,"z":0},{"x":-1,"y":4,"z":0},{"x":0,"y":4,"z":0},{"x":1,"y":4,"z":0},{"x":2,"y":4,"z":0}]'),
 
-
 			// small pieces together
 			// new Level(["cross_block", "cross_block", "t_block", "t_block", "straight3"],
 			// 	'[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":-1,"y":0,"z":1},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":0},{"x":1,"y":0,"z":1},{"x":1,"y":0,"z":-1},{"x":0,"y":0,"z":-1},{"x":-1,"y":0,"z":-1},{"x":-1,"y":1,"z":-1},{"x":-1,"y":1,"z":0},{"x":-1,"y":1,"z":1},{"x":0,"y":1,"z":-1},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":1,"y":1,"z":-1},{"x":1,"y":1,"z":0},{"x":1,"y":1,"z":1},{"x":-1,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":-1,"y":3,"z":0},{"x":1,"y":3,"z":0},{"x":0,"y":3,"z":0}]'),
@@ -111,6 +110,15 @@ LevelMode.prototype.showLevelMenu = function() {
 	showElementAndHideNav(levelModeMenu);
 }
 
+// for making level only! to delete later
+LevelMode.prototype.getBlock = function(name) {
+	var block = BlockGenerator.generate(name);
+	moveToLegal(block, block.mesh.position);
+	this.addToExisting(block, block.mesh.position);
+	block.makeStatic();
+	scene.add(block.mesh);
+}
+
 LevelMode.prototype.showLevel = function() {
 	hideAllNav();
 
@@ -148,8 +156,9 @@ LevelMode.prototype.startLevel = function(level) {
 	// TODO: remove this later
 	if (makingLevels) {
 		this.level = 0;
-		this.levelBlocks = ["straight3", "straight3", "straight3", "Z_block","Z_block","straight2","straight2", "cross_block", "cross_block", "cross_block", "L_block", "L_block", "L_block", 'short_T', 'short_T', 'short_T'];
-		this.createGoalShape([{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":1,"z":0}]);
+		this.levelBlocks = ["straight2"];
+		// this.levelBlocks = ["straight3", "straight3", "straight3", "Z_block","Z_block","straight2","straight2", "cross_block", "cross_block", "cross_block", "L_block", "L_block", "L_block", 'short_T', 'short_T', 'short_T'];
+		this.createGoalShape([{"x":0,"y":20,"z":0}]);
 		this.showLevel();
 		return;
 	}

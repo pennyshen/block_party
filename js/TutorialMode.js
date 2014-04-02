@@ -67,9 +67,6 @@ TutorialMode.prototype.startLevel = function(level) {
 }
 
 TutorialMode.prototype.initTutorial = function() {
-	if (this.levels[this.level].toImport) {
-		this.importToExisting(this.levels[this.level].toImport);
-	}
 	this.goals = this.levels[this.level].goals;
 	var goal, pos;
 

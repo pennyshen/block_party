@@ -207,43 +207,6 @@ Game.prototype = {
 		}
 
 		return JSON.stringify(newShape);
-	},
-
-	exportFromExisting: function() {
-		var tmpBlock;
-		var blocks = [];
-
-		for (var i = 0; i < this.existingBlocks.length; i++) {
-			tmpBlock = {};
-			tmpBlock.shape = this.existingBlocks[i].shape;
-			tmpBlock.shapeName = this.existingBlocks[i].shapeName;
-			tmpBlock.position = this.existingBlocks[i].mesh.position;
-			blocks.push(tmpBlock);
-		}
-
-		return JSON.stringify(blocks);
-	},
-
-	importToExisting: function(jsonString) {
-		if (jsonString == '')
-			return;
-
-		var blocks = JSON.parse(jsonString);
-		var block, position;
-
-		for (var i = 0; i < blocks.length; i++) {
-			block = blocks[i];
-			block = BlockGenerator.getBlock(blocks[i].shapeName, blocks[i].shape, "grey");
-			block.mesh.position.x = blocks[i].position.x;
-			block.mesh.position.y = blocks[i].position.y;
-			block.mesh.position.z = blocks[i].position.z;
-			block.makeStatic();
-			position = blocks[i].position;
-			this.addToExisting(block, new THREE.Vector3(position.x, position.y, position.z));
-			scene.add(block.mesh);
-		}
-
-		this.computeBoundingBox();
 	}
 
 }

@@ -269,21 +269,6 @@ function getKeyString(obj) {
 	return obj.x + "," + obj.y + "," + obj.z;
 }
 
-function getDupVertices(vertices) {
-	var i, vertexString, vertex;
-	var vertexMap = {};
-	var duplicateVertices = {};
-	for (i = 0; i < vertices.length; i++) {
-		vertex = vertices[i];
-		vertexString = vertex.x + "," + vertex.y + "," + vertex.z;
-		if (vertexString in vertexMap) {
-			duplicateVertices[vertexString] = true;
-		} else {
-			vertexMap[vertexString] = true;
-		}
-	}
-}
-
 // get random integer between min and max
 function getRandomInteger(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -294,32 +279,6 @@ function getRandomMember(array) {
 	return array[getRandomInteger(0, array.length-1)];
 }
 
-//check for intersection
-function hasCollision() {
-	var block = rollOverMesh;
-    var face, block2, face2;
-    var ray = new THREE.Raycaster();
-    var collided;
-    var sharedNormals;
-
-    console.log(block.position);
-    console.log("collided = ");
-    for (var i = 0; i < block.geometry.faces.length; i++) {
-        face = block.geometry.faces[i];
-        facePoint = face.centroid.clone();
-        rollOverMesh.localToWorld(facePoint);
-        ray.set(facePoint, face.normal.clone());
-        collided = ray.intersectObjects( block_list );
-        if (collided.length > 0) {
-            for (var j = 0; j < collided.length; j++) {
-                block2 = collided[j].object.material.color.set(0x7F7C9C);
-                console.log(collided[j]);
-            }    
-        }
-    }
-
-	return false;
-}
 
 function isDiagonal(point1, point2) {
 	var sameNum = 0;
