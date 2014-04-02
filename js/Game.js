@@ -34,7 +34,7 @@ Game.prototype = {
 		positions = block._getPositions(realPosition, block.shape);
 		for (i = 0; i < positions.length; i++) {
 			position = positions[i];
-			this.existingBlocks[getKeyString(position)] = true;
+			this.existingBlocks[getKeyString(position)] = block.mesh.id;
 		}
 		this.existingBlocks.push(block);
 
@@ -54,9 +54,10 @@ Game.prototype = {
 		}
 	},
 
-	getIndexFromExistingBlocks: function(meshToFind) {
+	getIndexFromExistingBlocks: function(meshId) {
 		for (var i = 0; i < this.existingBlocks.length; i++) {
-			if (this.existingBlocks[i].mesh.id == meshToFind.id) {
+			var p = this.existingBlocks[i].mesh.id;
+			if (this.existingBlocks[i].mesh.id == meshId) {
 				return i;
 			}
 		}
@@ -64,13 +65,16 @@ Game.prototype = {
 	},
 
 	canMoveBlock: function(block) {
-		var positions = block._getPositions(block.mesh.position);
+		var positions = block.getMyPositions();
 		var position, posAbove;
 		var maxY = -1;
 		var currentPositions = this.currentBlock.getMyPositions();
 		var currentMap = getPositionsMap(currentPositions);
 		var blockMap = getPositionsMap(positions);
-		var key;
+		var key, blockOnTop, positionsOnTop, positionsOnTopMap;
+		var meshIds = {};
+		var meshId;
+		var isSupported;
 
 		for (var i = 0; i < positions.length; i++) {
 			position = positions[i];
@@ -81,10 +85,49 @@ Game.prototype = {
 				// ignore if position above is occupied by the block itself
 				continue;
 			}
+
+			// get a list of mesh ids who are on top of this block
 			if (key in game.existingBlocks) {
-				return false;	
+				meshIds[game.existingBlocks[key]] = true;
+			} else if (key in currentMap) {
+				meshIds[this.currentBlock.mesh.id] = true;
 			}
-			if (key in currentMap) {
+		}
+
+		// check if the blocks on top are supported by anything else other than the block in question
+		for (var meshIdStr in meshIds) {
+			meshId = parseInt(meshIdStr);
+			if (meshId == this.currentBlock.mesh.id) {
+				blockOnTop = this.currentBlock;
+			} else {
+				blockOnTop = this.existingBlocks[this.getIndexFromExistingBlocks(meshId)];
+			}
+			positionsOnTop = blockOnTop.getMyPositions();
+			positionsOnTopMap = getPositionsMap(positionsOnTop);
+			isSupported = false;
+			for (var i = 0; i < positionsOnTop.length; i++) {
+				if (positionsOnTop[i].y == 0) {
+					// supported by the ground. good enough!
+					isSupported = true;
+					break;
+				}
+				position = cloneVector(positionsOnTop[i]);
+				position.y -= 1;
+				key = getKeyString(position);
+				if (key in positionsOnTopMap) {
+					// ignore itself
+					continue;
+				}
+				if (key in blockMap) {
+					// doesn't count if it's supported by the block 
+					continue;
+				}
+				if (key in game.existingBlocks || key in currentMap) {
+					isSupported = true;
+					break;
+				}
+			}
+			if (!isSupported) {
 				return false;
 			}
 		}

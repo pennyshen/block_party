@@ -41,7 +41,7 @@ function startMovingBlock(meshToMove) {
 	rollOverMesh.material.emissive.setHex( rollOverMesh.currentHex );
 
 	// find which block it is from the mesh
-	blockIdx = game.getIndexFromExistingBlocks(meshToMove);
+	blockIdx = game.getIndexFromExistingBlocks(meshToMove.id);
 	blockToMove = game.existingBlocks[blockIdx];
 
 	// remove from existingBlocks
@@ -165,7 +165,7 @@ function intersectToHighlight() {
 			}
 
 			// only highlight if we can actually move it
-			idx = game.getIndexFromExistingBlocks(intersects[ 0 ].object);
+			idx = game.getIndexFromExistingBlocks(intersects[ 0 ].object.id);
 			if (!game.canMoveBlock(game.existingBlocks[idx])) {
 				intersects[ 0 ].object.material.emissive.setHex( intersects[ 0 ].object.currentHex );
 				INTERSECTED = null;
@@ -212,7 +212,7 @@ function adjustPosition( rayPosition, piecePosition ) {
 	var newPosition;
 	var toMove = new THREE.Vector3(0,0,0);
 	var moved = null;
-	
+
 	newPos = rollOverMesh.position.clone();
 	var dX;
 	var dZ;
