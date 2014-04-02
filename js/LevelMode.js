@@ -234,7 +234,11 @@ LevelMode.prototype.endGame = function() {
 
 	scene.remove( this.outline );
 	this.preview.material.opacity = 0;
-
+	if (INTERSECTED) {
+		INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );	
+		INTERSECTED = null;
+	}
+	
 	var passOrFail = '';
 	var nextLevel = '';
 	var playAgain = '<a href="javascript: void(0)" class="menuItem" onClick="restartLevel()">Play again</a><br>'; 
