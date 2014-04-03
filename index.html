@@ -28,6 +28,7 @@
 	<script src="js/TutorialMode.js"></script>
 	<script src="js/Block.js"></script>
 	<script src="js/Level.js"></script>
+	<script src="js/LevelContent.js"></script>
 
 	<!-- other javascript functions -->
 	<script src="js/controls.js"></script>
@@ -36,11 +37,11 @@
 
 	<div id="menu" class="nav">
 		<h1>Block Party</h1>
-		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_TUTORIAL)" >Tutorial</a>
+		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_TUTORIAL)">Tutorial</a>
 		<br>
-		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_LEVEL)" >Level mode</a>
+		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_LEVEL)">Level mode</a>
 		<br>
-		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_RANDOM)" >Random mode</a>
+		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_RANDOM)">Random mode</a>
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(instructions_doc)">Instructions</a>
 		<br>
@@ -198,7 +199,7 @@
 		var info_items = [showNextPiece_doc, hint_doc, center_tooltip_doc, levelText_doc];
 
 		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Back</a><br>';
-
+		var backToMainMenu_string = '<br><br><a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)" style="margin-bottom:50px">Back</a>';
 
 		var STEP_SIZE = 50;
 		var ALIVE_TIME = 100 * 1000.0;	// time during which the block is alive, in milliseconds

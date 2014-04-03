@@ -29,10 +29,8 @@ function backToMenu() {
 	if (game.mode == Game.MODE_RANDOM) {
 		showElementAndHideNav(menu_doc);
 	} else {
-		initGame(game.mode);
+		game.showLevelMenu(game.levelType);
 	}
-
-	
 }
 
 function nextLevel() {
@@ -44,9 +42,14 @@ function restartLevel()　{
 }
 
 function goToLevel(level, mode) {
+	var type = game.levelType;
 	game.clearScene();
 	game = null;
 	initGame(mode);
+	if (mode != Game.MODE_RANDOM) {
+		game.levelType = type;
+		game.levels = LevelContent.levels[game.levelType];
+	}
 	game.startLevel(level);
 }
 
