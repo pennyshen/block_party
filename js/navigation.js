@@ -24,11 +24,22 @@ function resumeGame() {
 	hideElement(pauseScreen_doc);
 }
 
+function reinitGame() {
+	var mode = game.mode;
+	var type = game.levelType;
+	initGame(mode);
+	if (mode != Game.MODE_RANDOM) {
+		game.levelType = type;
+		game.levels = LevelContent.levels[game.levelType];
+	}
+}
+
 function backToMenu() {
 	game.clearScene();
 	if (game.mode == Game.MODE_RANDOM) {
 		showElementAndHideNav(menu_doc);
 	} else {
+		reinitGame();
 		game.showLevelMenu(game.levelType);
 	}
 }
@@ -44,11 +55,10 @@ function restartLevel()　{
 function goToLevel(level, mode) {
 	var type = game.levelType;
 	game.clearScene();
-	game = null;
-	initGame(mode);
 	if (mode != Game.MODE_RANDOM) {
-		game.levelType = type;
-		game.levels = LevelContent.levels[game.levelType];
+		reinitGame();
+	} else {
+		initGame(mode);
 	}
 	game.startLevel(level);
 }
