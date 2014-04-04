@@ -9,6 +9,9 @@ function LevelMode(toPopulateMenu) {
 	this.isPreviewing = true;
 	this.FADING_TIME = 3 * 1000;
 
+	this.shapeToColor = {};
+	this.numShapes = 0;
+
 	hideAllInfo();
 
 	if (toPopulateMenu) {
@@ -151,7 +154,7 @@ LevelMode.prototype.checkSuccess = function() {
 	var that = this;
 	window.setTimeout(function() {
 		that.endGame();
-	}, 50);
+	}, 100);
 }
 
 LevelMode.prototype.createGoalShape = function(shape) {
@@ -183,12 +186,23 @@ LevelMode.prototype.createGoalShape = function(shape) {
 }
 
 LevelMode.prototype.getNextBlock = function() {
+
 	if (this.levelBlocks.length <= 0) {
 		return false;
 	}
 
 	var block;
-	block = BlockGenerator.generate(this.levelBlocks[0]);
+	var shape = this.levelBlocks[0];
+	var colorName;
+	if (shape in this.shapeToColor) {
+		colorName = this.shapeToColor[shape];
+	} else {
+		colorName = BlockGenerator.allColors[this.numShapes];
+		this.numShapes++;
+		this.shapeToColor[shape] = colorName;
+	}
+	console.log(colorName);
+	block = BlockGenerator.getBlock(shape, BlockGenerator.shapes[shape], BlockGenerator.colors[colorName]);
 	this.currentAliveTime = 0;
 	this.currentBlock = block;
 	this.levelBlocks.splice( this.levelBlocks.indexOf(this.currentBlock.shapeName), 1 );
