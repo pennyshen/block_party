@@ -30,8 +30,8 @@ TutorialMode.prototype.initTutorial = function() {
 
 	// copy goals
 	this.goals = [];
-	for (var i = 0; i < this.levels[this.level].goals; i++) {
-		this.goals.push(this.levels[this.level].goals[i].copyGoal());
+	for (var i = 0; i < this.levels[this.level].goals.length; i++) {
+		this.goals.push(copyGoal(this.levels[this.level].goals[i]));
 	}
 
 	for (var i = 0; i < this.goals.length; i++) {

@@ -13,9 +13,9 @@ function Goal(goalPos, goalText) {
 }
 
 
-Goal.copyGoal = function() {
+function copyGoal(goal) {
 	var newGoal = {};
-	newGoal.goalPos = goalPos;
-	newGoal.goalText = goalText;
+	newGoal.goalPos = goal.goalPos;
+	newGoal.goalText = goal.goalText;
 	return newGoal;
 }
