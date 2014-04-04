@@ -109,6 +109,8 @@ BlockGenerator.colors = {
 	// "grey": 0xADADAD
 };
 
+BlockGenerator.randomModeShapes = ["2_square", "cross_block", "L_block", "straight3", "t_block", "Z_block"];
+
 // names of all the blocks in an array
 BlockGenerator.allShapes = (function() {
 	return Object.getOwnPropertyNames(BlockGenerator.shapes);
@@ -123,7 +125,16 @@ BlockGenerator.shapesToColors = (function() {
 	var toReturn = {};
 
 	colorIdx = 0;
+	for (var i = 0; i < BlockGenerator.randomModeShapes.length; i++) {
+		toReturn[BlockGenerator.randomModeShapes[i]] = BlockGenerator.allColors[colorIdx];
+		colorIdx = (colorIdx + 1) % BlockGenerator.allColors.length;
+	}
+
 	for (shapeIdx = 0; shapeIdx < BlockGenerator.allShapes.length; shapeIdx++) {
+		if (BlockGenerator.allShapes[shapeIdx] in toReturn) {
+			continue;
+		}
+		
 		toReturn[BlockGenerator.allShapes[shapeIdx]] = BlockGenerator.allColors[colorIdx];
 		colorIdx = (colorIdx + 1) % BlockGenerator.allColors.length;
 	}

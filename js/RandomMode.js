@@ -2,7 +2,7 @@
 function RandomMode() {
 	Game.call( this );
 
-	this.nextBlockName = getRandomMember(BlockGenerator.allShapes);
+	this.nextBlockName = getRandomMember(BlockGenerator.randomModeShapes);
 	this.mode = Game.MODE_RANDOM;
 
 	hideAllInfo();
@@ -21,7 +21,7 @@ RandomMode.prototype.getNextBlock = function() {
 	
 	this.currentBlock = toReturn;
 	this.currentAliveTime = 0;
-	this.nextBlockName = getRandomMember(BlockGenerator.allShapes);
+	this.nextBlockName = getRandomMember(BlockGenerator.randomModeShapes);
 	nextPiece_doc.innerHTML = this.nextBlockName;
 	return toReturn;
 };
