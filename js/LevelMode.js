@@ -201,7 +201,7 @@ LevelMode.prototype.getNextBlock = function() {
 		this.numShapes++;
 		this.shapeToColor[shape] = colorName;
 	}
-	console.log(colorName);
+	
 	block = BlockGenerator.getBlock(shape, BlockGenerator.shapes[shape], BlockGenerator.colors[colorName]);
 	this.currentAliveTime = 0;
 	this.currentBlock = block;
