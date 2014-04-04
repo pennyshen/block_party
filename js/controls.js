@@ -102,21 +102,29 @@ function onDocumentKeyDown( event ) {
         case 17: isCtrlDown = true; break;
         case 187: isEqualsDown = true; break;
         case 189: isDashDown = true; break;
+        
+        case 37:    // left arrow
         case 65: 
             aDown = true;  
             moveLeft(gameBoardOrientation, toMove);
             moved = true;
             break;
+        
+        case 38:    // up arrow
         case 87: 
             wDown = true;
             moveForward(gameBoardOrientation, toMove);
             moved = true;
             break;
+
+        case 40:    // down arrow
         case 83: 
             sDown = true;
             moveBackward(gameBoardOrientation, toMove);
             moved = true;
             break;
+
+        case 39:    // right arrow
         case 68: 
             dDown = true;
             moveRight(gameBoardOrientation, toMove);
