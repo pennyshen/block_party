@@ -11,3 +11,11 @@ function Goal(goalPos, goalText) {
 	this.goalPos = goalPos;
 	this.goalText = goalText;
 }
+
+
+Goal.copyGoal = function() {
+	var newGoal = {};
+	newGoal.goalPos = goalPos;
+	newGoal.goalText = goalText;
+	return newGoal;
+}

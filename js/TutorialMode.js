@@ -1,46 +1,5 @@
 
 function TutorialMode() {
-	this.levels = [
-		new Level(
-			['L_block'],
-			'[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0}]',
-			'Use W,A,S,D to move block into wireframe',
-			[new Goal('MOVE', 'Use W,A,S,D to move block into wireframe')]
-		), new Level(
-			['t_block'],
-			'[{"x":0,"y":0,"z":9},{"x":-1,"y":0,"z":9},{"x":-2,"y":0,"z":9},{"x":-1,"y":1,"z":9}]',
-			'Mouse wheel to zoom',
-			[new Goal('MOVE', 'Mouse wheel to zoom')]
-		), new Level(
-			['Z_block'],
-			'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":-1,"y":2,"z":0}]',
-			'Rotate with 1',
-			[new Goal('ROTATE', '1 Rotates about the floor'),
-			new Goal('[{"x":0,"y":2,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":2,"z":0},{"x":-1,"y":3,"z":0}]', '')]
-		), new Level(
-			['L_block'],
-			'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":2,"z":0}]',
-			'Rotate with 2',
-			[new Goal('ROTATE', '2 always rotates counterclockwise'),
-			new Goal('[{"x":0,"y":2,"z":-1},{"x":0,"y":3,"z":-1},{"x":0,"y":1,"z":-1},{"x":1,"y":3,"z":-1}]','')]
-		), new Level(
-			['cross_block'],
-			'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":2,"z":0},{"x":0,"y":1,"z":-1}]',
-			"Click and drag to look around. <br> Don't forget to rotate!",
-			[new Goal('ROTATE', 'Click and drag to look around')]
-		), new Level(
-			['L_block'],
-			'[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":2}]',
-			'Combine 1,2,3 to rotate!',
-			[new Goal('ROTATE', 'Use 1, 2 to place the shape.'),
-			new Goal('[{"x":0,"y":0,"z":2},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":3},{"x":1,"y":0,"z":1}]', '')]
-		), new Level(
-			['straight2', 'L_block'],
-			'[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":-1,"y":2,"z":0},{"x":-1,"y":3,"z":0}]',
-			'Use SPACE or click to switch control to another block <br> Block being controlled is outlined with green',
-			[new Goal('MOVE', 'Use SPACE or click to switch control to another block')]
-		)
-	];
 	this.mode = Game.MODE_TUTORIAL;
 	this.titleText = "Tutorial Mode";
 	this.objectiveText = "Fill in the missing spots!";
@@ -67,8 +26,13 @@ TutorialMode.prototype.startLevel = function(level) {
 }
 
 TutorialMode.prototype.initTutorial = function() {
-	this.goals = this.levels[this.level].goals;
 	var goal, pos;
+
+	// copy goals
+	this.goals = [];
+	for (var i = 0; i < this.levels[this.level].goals; i++) {
+		this.goals.push(this.levels[this.level].goals[i].copyGoal());
+	}
 
 	for (var i = 0; i < this.goals.length; i++) {
 		if (this.goals[i].goalPos != "MOVE" && this.goals[i].goalPos != "ROTATE") {
