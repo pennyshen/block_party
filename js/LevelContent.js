@@ -13,19 +13,19 @@ LevelContent.levels = {
 		), new Level(
 			['t_block'],
 			'[{"x":0,"y":0,"z":9},{"x":-1,"y":0,"z":9},{"x":-2,"y":0,"z":9},{"x":-1,"y":1,"z":9}]',
-			'Mouse wheel to zoom',
-			[new Goal('MOVE', 'Mouse wheel to zoom')]
+			'Scroll up and down to zoom in and out',
+			[new Goal('MOVE', 'Scroll up and down to zoom in and out')]
 		), new Level(
 			['Z_block'],
 			'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":-1,"y":2,"z":0}]',
-			'Rotate with 1',
+			'Press 1 to rotate your piece about the floor',
 			[new Goal('ROTATE', '1 Rotates about the floor'),
 			new Goal('[{"x":0,"y":2,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":2,"z":0},{"x":-1,"y":3,"z":0}]', '')]
 		), new Level(
 			['L_block'],
 			'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":2,"z":0}]',
 			'Rotate with 2',
-			[new Goal('ROTATE', '2 always rotates counterclockwise'),
+			[new Goal('ROTATE', '2 rotates counterclockwise'),
 			new Goal('[{"x":0,"y":2,"z":-1},{"x":0,"y":3,"z":-1},{"x":0,"y":1,"z":-1},{"x":1,"y":3,"z":-1}]','')]
 		), new Level(
 			['cross_block'],
@@ -43,6 +43,17 @@ LevelContent.levels = {
 			'[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":-1,"y":2,"z":0},{"x":-1,"y":3,"z":0}]',
 			'Use SPACE or click to switch control to another block <br> Block being controlled is outlined with green',
 			[new Goal('MOVE', 'Use SPACE or click to switch control to another block')]
+		), new Level(
+			['t_block', 'L_block'],
+			'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":0,"y":1,"z":-1},{"x":0,"y":0,"z":-1},{"x":0,"y":0,"z":-2},{"x":0,"y":0,"z":-3},{"x":0,"y":1,"z":-3}]',
+			'Rotation with 2 follows the camera.  <br>  Try rotating after moving the camera around',
+			[new Goal('ROTATE', 'Rotate with 2 after moving the camera around')]
+
+		), new Level(
+			['L_block', 'L_block', 'L_block', 't_block', 't_block', 't_block'],
+			'[{"x":-5,"y":0,"z":-7},{"x":-4,"y":0,"z":-7},{"x":-3,"y":0,"z":-7},{"x":-3,"y":1,"z":-7},{"x":1,"y":0,"z":-7},{"x":1,"y":1,"z":-7},{"x":1,"y":2,"z":-7},{"x":1,"y":0,"z":-6},{"x":5,"y":0,"z":-7},{"x":5,"y":1,"z":-7},{"x":5,"y":1,"z":-6},{"x":5,"y":1,"z":-5},{"x":-8,"y":0,"z":-3},{"x":-8,"y":1,"z":-3},{"x":-8,"y":2,"z":-3},{"x":-7,"y":1,"z":-3},{"x":-8,"y":0,"z":0},{"x":-8,"y":1,"z":-1},{"x":-8,"y":1,"z":0},{"x":-8,"y":1,"z":1},{"x":-8,"y":0,"z":3},{"x":-8,"y":0,"z":4},{"x":-8,"y":0,"z":5},{"x":-7,"y":0,"z":4}]',
+			'Rotating twice in the same direction will reflect a piece! <br>  Try reflecting pieces with 1 and 2.',
+			[new Goal('MOVE', 'Time for some practice!')]
 		)
 	],
 
