@@ -71,7 +71,7 @@
 		<br>
 		<a class="instructions">SHIFT = Toggle bounding box</a>
 		<br>
-		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Back</a>
+		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Main Menu</a>
 		<br>
 	</div>
 
@@ -84,7 +84,7 @@
 		<br>
 		<p class="instructions">Music by Kassich from <a class="link" href="http://www.newgrounds.com/audio/listen/472958" target="_blank">Newgrounds</a></p>
 		<br>
-		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Back</a>
+		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Main Menu</a>
 		<br>
 	</div>
 
@@ -100,7 +100,7 @@
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="restartLevel()">Restart</a>
 		<br>
-		<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">End Game</a>
+		<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Exit to Level Select</a>
 		<br>
 	</div>
 
@@ -199,7 +199,10 @@
 		var info_items = [showNextPiece_doc, hint_doc, center_tooltip_doc, levelText_doc];
 
 		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Menu</a><br>';
-		var backToMainMenu_string = '<br><br><a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)" style="margin-bottom:50px">Back</a>';
+		var backToMainMenu_string = '<br><br><a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)" style="margin-bottom:50px">Main Menu</a>';
+
+		var LevelTypetoDescriptor = {"2D": "Shapes with only two dimensions", "monster cubes": "Make a cube (HARD)", "3D":"Non-Cube 3D shapes", "Soma": "Traditional Soma Cube shapes"};
+
 
 		var STEP_SIZE = 50;
 		var ALIVE_TIME = 100 * 1000.0;	// time during which the block is alive, in milliseconds
