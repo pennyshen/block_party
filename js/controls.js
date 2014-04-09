@@ -278,21 +278,22 @@ function rotate( camera_axis, direction ) {
     if ( direction == "yaw" ) {
         game.currentBlock.rotateAroundWorldAxis("y", 90);  
     }
-
+console.log(camera_axis);
     if ( direction == "pitch" ) {
+        switch ( camera_axis ) {
+
+            case 1: game.currentBlock.rotateAroundWorldAxis("z",90); break;
+            case 2: game.currentBlock.rotateAroundWorldAxis("x",-90); break;
+            case 3: game.currentBlock.rotateAroundWorldAxis("x",90); break;
+            case 4: game.currentBlock.rotateAroundWorldAxis("z",-90); break;
+        }  
+    }
+    if ( direction == "roll" ) {
         switch ( camera_axis ) {
             case 1: game.currentBlock.rotateAroundWorldAxis("z",90); break;
             case 2: game.currentBlock.rotateAroundWorldAxis("x",90); break;
             case 3: game.currentBlock.rotateAroundWorldAxis("x",90); break;
             case 4: game.currentBlock.rotateAroundWorldAxis("z",90); break;
-        }  
-    }
-    if ( direction == "roll" ) {
-        switch ( camera_axis ) {
-            case 1: game.currentBlock.rotateAroundWorldAxis("z",-90); break;
-            case 2: game.currentBlock.rotateAroundWorldAxis("x",-90); break;
-            case 3: game.currentBlock.rotateAroundWorldAxis("x",-90); break;
-            case 4: game.currentBlock.rotateAroundWorldAxis("z",-90); break;
         }  
     }
 

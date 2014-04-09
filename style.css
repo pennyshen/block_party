@@ -20,6 +20,7 @@ body {
     background: black;
 }
 
+
 #selectBlockScreen {
     background-color: rgba(0,0,0,0.7);
 }
@@ -94,6 +95,8 @@ h1 {margin-top: 5%;}
     text-decoration: none;
     margin: 0 auto; 
 }
+
+
 
 a.link {
     font-size: 20px;
