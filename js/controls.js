@@ -130,15 +130,15 @@ function onDocumentKeyDown( event ) {
             moveRight(gameBoardOrientation, toMove);
             moved = true;
             break;
-        case 82: 
-            rDown = true;
-            toMove.y += STEP_SIZE;
-            climbed = 1;
-            break;
-        case 70: 
-            fDown = true;
-            climbed = -1;
-            break;
+        // case 82: 
+        //     rDown = true;
+        //     toMove.y += STEP_SIZE;
+        //     climbed = 1;
+        //     break;
+        // case 70: 
+        //     fDown = true;
+        //     climbed = -1;
+        //     break;
         case 37: 
             isLeftDown = true;
             break;
