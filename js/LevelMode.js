@@ -62,7 +62,9 @@ LevelMode.prototype.showLevelMenu = function(levelType) {
 	levelModeMenu_doc.innerHTML = "<h1>" + this.titleText + "</h1><br>";
 	levelModeMenu_doc.innerHTML += "<p id='helperText'>" + levelType + "</p>";
 	for (var i = 0; i < this.levels.length; i++) {
-		levelModeMenu_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="game.startLevel(' + i + ')">' + (i+1) + '</a><br>';
+		var exp = eval("localStorage.X" +this.levelType.substring(0,2)+(i-1)+";");
+		if(unlockLevels || i==0 || exp!=null)	
+			levelModeMenu_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="game.startLevel(' + i + ')">' + (i+1) + '</a><br>';
 	}
 
 	if (levelType == "tutorial") {
@@ -148,6 +150,10 @@ LevelMode.prototype.checkSuccess = function() {
 			return;
 		}
 	}
+
+	//sets local storage
+	localStorage.setItem("X"+this.levelType.substring(0,2) + this.level, "yes");
+
 
 	dingSound.load();
 	dingSound.play();
