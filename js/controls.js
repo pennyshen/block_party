@@ -57,10 +57,12 @@ function onDocumentMouseUp( event ) {
 
 function onDocumentMouseMove( event ) {
     event.preventDefault();
+    
     if (MOVINGPIECE) {
-        dragPiece();
+        if (game.mode != Game.MODE_RANDOM) {
+            dragPiece();
+        }
     }
-
 
     mouse2D.x = ( event.clientX / window.innerWidth ) * 2 - 1;
     mouse2D.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
