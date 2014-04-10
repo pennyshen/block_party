@@ -137,5 +137,5 @@ LevelContent.levels = {
 
 };
 
-LevelContent.allTypes = ["2D", "monster cubes", "3D", "Soma"];
+LevelContent.allTypes = ["2D", "3D", "Soma", "monster cubes"];
 
