@@ -61,7 +61,8 @@ LevelMode.prototype.showSubMenu = function() {
 		if(unlockLevels || i==0 || exp!=null)	
 			levelModeMenu_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="game.showLevelMenu(\'' + levelType + '\')">' + levelType + '</a><br>';
 		else
-			levelModeMenu_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem"><b style = "color:red">' + levelType + '</b></a><br>';
+			levelModeMenu_doc.innerHTML += '<a class="locked">' + levelType + '</a><br>';
+			// levelModeMenu_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem"><b style = "color:red">' + levelType + '</b></a><br>';
 	}
 	levelModeMenu_doc.innerHTML += backToMainMenu_string;
 	showElementAndHideNav(levelModeMenu);
