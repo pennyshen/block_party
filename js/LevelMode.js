@@ -81,7 +81,7 @@ LevelMode.prototype.showLevelMenu = function(levelType) {
 		if(unlockLevels || i==0 || exp!=null)	
 			levelModeMenu_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="game.startLevel(' + i + ')">' + (i+1) + '</a><br>';
 		else
-			levelModeMenu_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" ><b style="color:red">' + (i+1) + '</b></a><br>';
+			levelModeMenu_doc.innerHTML += '<a class="locked">' + (i+1) + '</a><br>';
 	}
 	if (levelType == "tutorial") {
 		levelModeMenu_doc.innerHTML += backToMainMenu_string;
