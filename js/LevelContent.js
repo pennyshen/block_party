@@ -57,7 +57,7 @@ LevelContent.levels = {
 		)
 	],
 
-	"2D": [
+	"Old World": [
 		// 4
 		new Level(["cross_block","straight2","straight2"], 
 			'[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":-2,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":2,"z":0}]'),
@@ -85,7 +85,7 @@ LevelContent.levels = {
 		new Level(["2_cubed", "straight3", "short_L", "t_block", "Z_block", "V_block"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":1,"y":1,"z":1},{"x":1,"y":0,"z":2},{"x":1,"y":1,"z":2},{"x":0,"y":1,"z":2},{"x":2,"y":1,"z":2},{"x":2,"y":2,"z":2},{"x":0,"y":0,"z":2},{"x":0,"y":2,"z":2},{"x":2,"y":0,"z":2},{"x":2,"y":0,"z":1},{"x":2,"y":1,"z":1},{"x":0,"y":2,"z":1},{"x":1,"y":2,"z":1},{"x":2,"y":2,"z":1},{"x":1,"y":2,"z":2},{"x":2,"y":0,"z":0},{"x":2,"y":1,"z":0},{"x":2,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":0,"y":2,"z":0}]')
 	],
 
-	"3D": [
+	"New World": [
 		// 23
 		new Level(["straight3", "straight3"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":1,"z":2}]'),		
 		// 21
@@ -137,5 +137,6 @@ LevelContent.levels = {
 
 };
 
-LevelContent.allTypes = ["2D", "3D", "Soma", "monster cubes"];
+LevelContent.allTypes = ["Old World", "New World", "Soma", "monster cubes"];
+LevelContent.LevelTypetoDescriptor = {"Old World": "Shapes with only two dimensions", "monster cubes": "Make a cube (HARD)", "New World":"Non-Cube 3D shapes", "Soma": "Traditional Soma Cube shapes", "tutorial": ""};
 

@@ -11,7 +11,6 @@ function LevelMode(toPopulateMenu) {
 
 	this.shapeToColor = {};
 	this.numShapes = 0;
-	var LevelTypetoDescriptor = {"2D": "Shapes with only two dimensions", "monster cubes": "Make a cube (HARD)", "3D":"Non-Cube 3D shapes", "Soma": "Traditional Soma Cube shapes"};
 
 	hideAllInfo();
 
@@ -71,23 +70,26 @@ LevelMode.prototype.showSubMenu = function() {
 LevelMode.prototype.showLevelMenu = function(levelType) {
 	this.levelType = levelType;
 	this.levels = LevelContent.levels[this.levelType];
+	var sTA = "";
 	levelModeMenu_doc.innerHTML = "<h1>" + this.levelType + "</h1><br>";
 
-	levelModeMenu_doc.innerHTML += "<p id='helperText'>" + LevelTypetoDescriptor[this.levelType] + "</p>";
+	levelModeMenu_doc.innerHTML += "<p id='helperText'>" + LevelContent.LevelTypetoDescriptor[this.levelType] + "</p>";
 
-
+	sTA += '<div id="levels" class="levelselect">';
 	for (var i = 0; i < this.levels.length; i++) {
 		var exp = eval("localStorage.X" +this.levelType.substring(0,2)+(i-1)+";");
 		if(unlockLevels || i==0 || exp!=null)	
-			levelModeMenu_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="game.startLevel(' + i + ')">' + (i+1) + '</a><br>';
+			sTA += '<a href="javascript: void(0)" class="menuItem" onClick="game.startLevel(' + i + ')">' + (i+1) + '</a><br>';
 		else
-			levelModeMenu_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" ><b style="color:red">' + (i+1) + '</b></a><br>';
+			sTA += '<a href="javascript: void(0)" class="menuItem" ><b style="color:red">' + (i+1) + '</b></a><br>';
 	}
+	sTA += '</div>';
 	if (levelType == "tutorial") {
-		levelModeMenu_doc.innerHTML += backToMainMenu_string;
+		sTA += backToMainMenu_string;
 	} else {
-		levelModeMenu_doc.innerHTML += '<br><br><a href="javascript: void(0)" class="menuItem" onClick="game.showSubMenu()" style="margin-bottom:50px">Level Mode Menu</a>';
+		sTA += '<br><br><a href="javascript: void(0)" class="menuItem" onClick="game.showSubMenu()" style="margin-bottom:50px">Level Mode Menu</a>';
 	}
+	levelModeMenu_doc.innerHTML += sTA;
 
 
 	showElementAndHideNav(levelModeMenu);
