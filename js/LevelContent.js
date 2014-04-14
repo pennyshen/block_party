@@ -11,6 +11,11 @@ LevelContent.levels = {
 			'Use W,A,S,D to move block into wireframe',
 			[new Goal('MOVE', 'Use W,A,S,D to move block into wireframe')]
 		), new Level(
+			['L_block'],
+			'[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0}]',
+			'Click and drag a piece to move it',
+			[new Goal('MOVE', 'You can also click and drag to move pieces')]
+		), new Level(
 			['t_block'],
 			'[{"x":0,"y":0,"z":9},{"x":-1,"y":0,"z":9},{"x":-2,"y":0,"z":9},{"x":-1,"y":1,"z":9}]',
 			'Scroll up and down to zoom in and out',
@@ -61,6 +66,9 @@ LevelContent.levels = {
 		// 4
 		new Level(["cross_block","straight2","straight2"], 
 			'[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":-2,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":2,"z":0}]'),
+		// nate
+		new Level(["2_square", "L_block", "L_block", "straight4"],
+			'[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":0,"y":3,"z":0},{"x":1,"y":3,"z":0},{"x":-1,"y":3,"z":0},{"x":-1,"y":2,"z":0},{"x":-2,"y":2,"z":0},{"x":-2,"y":3,"z":0},{"x":-2,"y":4,"z":0},{"x":-1,"y":4,"z":0},{"x":-1,"y":5,"z":0},{"x":-2,"y":5,"z":0}]'),
 		// 19
 		new Level(["short_L", "L_block", "short_L","short_L", "Z_block"], '[{"x":-2,"y":1,"z":3},{"x":-2,"y":0,"z":3},{"x":-3,"y":0,"z":3},{"x":-1,"y":0,"z":3},{"x":-1,"y":1,"z":3},{"x":0,"y":1,"z":3},{"x":1,"y":1,"z":3},{"x":2,"y":0,"z":3},{"x":2,"y":1,"z":3},{"x":0,"y":2,"z":3},{"x":0,"y":3,"z":3},{"x":0,"y":4,"z":3},{"x":-1,"y":4,"z":3},{"x":-2,"y":4,"z":3},{"x":-2,"y":5,"z":3},{"x":-3,"y":4,"z":3},{"x":-3,"y":5,"z":3}]'),
 		// 30
