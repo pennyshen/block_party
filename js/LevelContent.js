@@ -1,10 +1,19 @@
 
 var LevelContent = {};
 
-LevelContent.levels = {
-	// IDs are up to: 31
+LevelContent.TUTORIAL = "Tutorial";
+LevelContent.TWO_D = "Flatland";
+LevelContent.THREE_D = "Junkyard";
+LevelContent.BIG_PIECES = "Monster Cubes";
+LevelContent.SOMA = "Somaverse";
 
-	"tutorial": [
+LevelContent.levels = {};
+
+LevelContent.LevelTypetoDescriptor = {};
+
+LevelContent.allTypes = [];
+
+LevelContent.levels[LevelContent.TUTORIAL] = [
 		new Level(
 			['L_block'],
 			'[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0}]',
@@ -60,9 +69,10 @@ LevelContent.levels = {
 			'Rotating twice in the same direction will reflect a piece! <br>  Try reflecting pieces with 1 and 2.',
 			[new Goal('MOVE', 'Time for some practice!')]
 		)
-	],
+];
+LevelContent.LevelTypetoDescriptor[LevelContent.TUTORIAL] = "";
 
-	"Flatland": [
+LevelContent.levels[LevelContent.TWO_D] = [
 		// 4
 		new Level(["cross_block","straight2","straight2"], 
 			'[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":-2,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":2,"z":0}]'),
@@ -78,9 +88,11 @@ LevelContent.levels = {
 		// 1
 		new Level(["L_block", "cross_block", "Z_block", "t_block", "cross_block", "L_block", "straight3", "t_block"], 
 				'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":0,"z":0},{"x":1,"y":1,"z":0},{"x":1,"y":2,"z":0},{"x":2,"y":0,"z":0},{"x":2,"y":1,"z":0},{"x":2,"y":2,"z":0},{"x":2,"y":3,"z":0},{"x":3,"y":0,"z":0},{"x":3,"y":1,"z":0},{"x":3,"y":2,"z":0},{"x":3,"y":3,"z":0},{"x":3,"y":4,"z":0},{"x":4,"y":4,"z":0},{"x":4,"y":5,"z":0},{"x":4,"y":6,"z":0},{"x":5,"y":4,"z":0},{"x":5,"y":5,"z":0},{"x":5,"y":6,"z":0},{"x":6,"y":0,"z":0},{"x":6,"y":1,"z":0},{"x":6,"y":2,"z":0},{"x":6,"y":3,"z":0},{"x":6,"y":4,"z":0},{"x":6,"y":5,"z":0},{"x":6,"y":6,"z":0},{"x":7,"y":0,"z":0},{"x":7,"y":1,"z":0},{"x":7,"y":2,"z":0},{"x":7,"y":3,"z":0},{"x":7,"y":4,"z":0}]')
-	],
+];
+LevelContent.LevelTypetoDescriptor[LevelContent.TWO_D] = "Shapes with only two dimensions";
+LevelContent.allTypes.push(LevelContent.TWO_D);
 
-	"Monster Cubes": [
+LevelContent.levels[LevelContent.BIG_PIECES] = [
 		// 5
 		new Level(["lock_1","key_1"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":2,"y":0,"z":1},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":2,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":2,"y":2,"z":0},{"x":0,"y":1,"z":1},{"x":2,"y":1,"z":1},{"x":0,"y":2,"z":1},{"x":2,"y":2,"z":1},{"x":1,"y":2,"z":1},{"x":1,"y":1,"z":1},{"x":0,"y":0,"z":2},{"x":0,"y":1,"z":2},{"x":0,"y":2,"z":2},{"x":1,"y":0,"z":2},{"x":1,"y":1,"z":2},{"x":1,"y":2,"z":2},{"x":2,"y":0,"z":2},{"x":2,"y":1,"z":2},{"x":2,"y":2,"z":2}]'),
 		// 6
@@ -91,9 +103,11 @@ LevelContent.levels = {
 		new Level(["U_block","short_L","corner_setup", "t_block", "goofy_L"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":2,"y":0,"z":1},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":2,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":2,"y":2,"z":0},{"x":0,"y":1,"z":1},{"x":2,"y":1,"z":1},{"x":0,"y":2,"z":1},{"x":2,"y":2,"z":1},{"x":1,"y":2,"z":1},{"x":1,"y":1,"z":1},{"x":0,"y":0,"z":2},{"x":0,"y":1,"z":2},{"x":0,"y":2,"z":2},{"x":1,"y":0,"z":2},{"x":1,"y":1,"z":2},{"x":1,"y":2,"z":2},{"x":2,"y":0,"z":2},{"x":2,"y":1,"z":2},{"x":2,"y":2,"z":2}]'),
 		// 9
 		new Level(["2_cubed", "straight3", "short_L", "t_block", "Z_block", "V_block"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":1,"y":1,"z":1},{"x":1,"y":0,"z":2},{"x":1,"y":1,"z":2},{"x":0,"y":1,"z":2},{"x":2,"y":1,"z":2},{"x":2,"y":2,"z":2},{"x":0,"y":0,"z":2},{"x":0,"y":2,"z":2},{"x":2,"y":0,"z":2},{"x":2,"y":0,"z":1},{"x":2,"y":1,"z":1},{"x":0,"y":2,"z":1},{"x":1,"y":2,"z":1},{"x":2,"y":2,"z":1},{"x":1,"y":2,"z":2},{"x":2,"y":0,"z":0},{"x":2,"y":1,"z":0},{"x":2,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":0,"y":2,"z":0}]')
-	],
+];
+LevelContent.LevelTypetoDescriptor[LevelContent.BIG_PIECES] = "Make a cube (Warning: HARD)";
+LevelContent.allTypes.push(LevelContent.BIG_PIECES);
 
-	"Junkyard": [
+LevelContent.levels[LevelContent.THREE_D] = [
 		// 23
 		new Level(["straight3", "straight3"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":1,"z":2}]'),		
 		// 21
@@ -123,9 +137,11 @@ LevelContent.levels = {
 		new Level(["V_block_b", "Y_block", "straight3", "cross_block"], '[{"x":-2,"y":0,"z":0},{"x":-1,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":1,"z":0},{"x":2,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":-1,"y":0,"z":1},{"x":1,"y":0,"z":0},{"x":1,"y":0,"z":1},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":2},{"x":0,"y":0,"z":0},{"x":0,"y":0,"z":-1},{"x":0,"y":0,"z":-2},{"x":1,"y":0,"z":-1},{"x":-1,"y":0,"z":-1},{"x":0,"y":1,"z":1},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":-1}]'),
 		// 18
 		new Level(["V_block", "claw", "short_L", "short_L", "twisted", "L_block"], '[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":0,"z":1},{"x":-1,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":1,"y":0,"z":0},{"x":0,"y":0,"z":-1},{"x":0,"y":0,"z":2},{"x":-1,"y":0,"z":2},{"x":0,"y":0,"z":3},{"x":1,"y":0,"z":2},{"x":2,"y":0,"z":1},{"x":-2,"y":0,"z":1},{"x":-1,"y":1,"z":0},{"x":-1,"y":1,"z":1},{"x":-1,"y":1,"z":2},{"x":0,"y":1,"z":2},{"x":1,"y":1,"z":0},{"x":1,"y":1,"z":1},{"x":1,"y":1,"z":2},{"x":0,"y":2,"z":1}]')
-	],
+];
+LevelContent.LevelTypetoDescriptor[LevelContent.THREE_D] = "Non-Cube 3D shapes";
+LevelContent.allTypes.push(LevelContent.THREE_D);
 
-	"Somaverse": [
+LevelContent.levels[LevelContent.SOMA] = [
 		// 26
 		new Level(["Z_block","Z_block","straight2","straight2"], 
 			'[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":0,"y":0,"z":-1},{"x":1,"y":0,"z":-1},{"x":1,"y":0,"z":-2},{"x":0,"y":0,"z":-2},{"x":0,"y":1,"z":-2},{"x":1,"y":1,"z":-2},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":1,"z":-1},{"x":1,"y":1,"z":-1}]'),
@@ -141,10 +157,7 @@ LevelContent.levels = {
 		// 27
 		new Level(["L_block", "t_block", "t_block", "straight3", "Z_block", "straight2", "L_block", "straight2"], 
 			'[{"x":0,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":-1},{"x":-1,"y":0,"z":-1},{"x":-1,"y":0,"z":0},{"x":-1,"y":0,"z":1},{"x":-2,"y":0,"z":-1},{"x":-2,"y":0,"z":0},{"x":-2,"y":0,"z":1},{"x":-2,"y":1,"z":-1},{"x":-2,"y":1,"z":0},{"x":-2,"y":1,"z":1},{"x":-1,"y":1,"z":-1},{"x":-1,"y":1,"z":0},{"x":-1,"y":1,"z":1},{"x":0,"y":1,"z":-1},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":2,"z":-1},{"x":0,"y":2,"z":0},{"x":0,"y":2,"z":1},{"x":-1,"y":2,"z":-1},{"x":-1,"y":2,"z":0},{"x":-1,"y":2,"z":1},{"x":-2,"y":2,"z":-1},{"x":-2,"y":2,"z":0},{"x":-2,"y":2,"z":1}]')
-	]	
-
-};
-
-LevelContent.allTypes = ["Flatland", "Junkyard", "Somaverse", "Monster Cubes"];
-LevelContent.LevelTypetoDescriptor = {"Flatland": "Shapes with only two dimensions", "Monster Cubes": "Make a cube (HARD)", "Junkyard":"Non-Cube 3D shapes", "Somaverse": "Traditional Soma Cube shapes", "tutorial": ""};
+];
+LevelContent.LevelTypetoDescriptor[LevelContent.SOMA] = "Traditional Soma Cube shapes";
+LevelContent.allTypes.push(LevelContent.SOMA);
 
