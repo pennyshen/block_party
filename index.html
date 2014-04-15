@@ -28,6 +28,7 @@
 	<script src="js/TutorialMode.js"></script>
 	<script src="js/Block.js"></script>
 	<script src="js/Level.js"></script>
+	<script src="js/World.js"></script>
 	<script src="js/LevelContent.js"></script>
 
 	<!-- other javascript functions -->
@@ -247,6 +248,8 @@
 
         var texture;
 		var mainMusic;
+		var textures = {};
+		var sounds = {};
 
 		loadFiles();
 		init();
@@ -257,7 +260,7 @@
 			var numLoaded = 0;
 			showElementAndHideNav(loading_doc);
 
-			texture = THREE.ImageUtils.loadTexture( 'textures/flatland.jpg', undefined, function() {
+			texture = THREE.ImageUtils.loadTexture( 'textures/space2.jpg', undefined, function() {
         		numLoaded++;
         		checkAllLoaded(numLoaded);
         	} );

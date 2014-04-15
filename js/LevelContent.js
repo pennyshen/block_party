@@ -11,6 +11,8 @@ LevelContent.levels = {};
 
 LevelContent.LevelTypetoDescriptor = {};
 
+LevelContent.worlds = {};
+
 LevelContent.allTypes = [];
 
 LevelContent.levels[LevelContent.TUTORIAL] = [
@@ -71,6 +73,7 @@ LevelContent.levels[LevelContent.TUTORIAL] = [
 		)
 ];
 LevelContent.LevelTypetoDescriptor[LevelContent.TUTORIAL] = "";
+LevelContent.worlds[LevelContent.TUTORIAL] = new World('space2.jpg', 'spaceForest.mp3');
 
 LevelContent.levels[LevelContent.TWO_D] = [
 		// 4
@@ -93,6 +96,7 @@ LevelContent.levels[LevelContent.TWO_D] = [
 				'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":0,"z":0},{"x":1,"y":1,"z":0},{"x":1,"y":2,"z":0},{"x":2,"y":0,"z":0},{"x":2,"y":1,"z":0},{"x":2,"y":2,"z":0},{"x":2,"y":3,"z":0},{"x":3,"y":0,"z":0},{"x":3,"y":1,"z":0},{"x":3,"y":2,"z":0},{"x":3,"y":3,"z":0},{"x":3,"y":4,"z":0},{"x":4,"y":4,"z":0},{"x":4,"y":5,"z":0},{"x":4,"y":6,"z":0},{"x":5,"y":4,"z":0},{"x":5,"y":5,"z":0},{"x":5,"y":6,"z":0},{"x":6,"y":0,"z":0},{"x":6,"y":1,"z":0},{"x":6,"y":2,"z":0},{"x":6,"y":3,"z":0},{"x":6,"y":4,"z":0},{"x":6,"y":5,"z":0},{"x":6,"y":6,"z":0},{"x":7,"y":0,"z":0},{"x":7,"y":1,"z":0},{"x":7,"y":2,"z":0},{"x":7,"y":3,"z":0},{"x":7,"y":4,"z":0}]')
 ];
 LevelContent.LevelTypetoDescriptor[LevelContent.TWO_D] = "Shapes with only two dimensions";
+LevelContent.worlds[LevelContent.TWO_D] = new World('space2.jpg', 'spaceForest.mp3');
 LevelContent.allTypes.push(LevelContent.TWO_D);
 
 LevelContent.levels[LevelContent.BIG_PIECES] = [
@@ -108,6 +112,7 @@ LevelContent.levels[LevelContent.BIG_PIECES] = [
 		new Level(["2_cubed", "straight3", "short_L", "t_block", "Z_block", "V_block"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":1,"y":1,"z":1},{"x":1,"y":0,"z":2},{"x":1,"y":1,"z":2},{"x":0,"y":1,"z":2},{"x":2,"y":1,"z":2},{"x":2,"y":2,"z":2},{"x":0,"y":0,"z":2},{"x":0,"y":2,"z":2},{"x":2,"y":0,"z":2},{"x":2,"y":0,"z":1},{"x":2,"y":1,"z":1},{"x":0,"y":2,"z":1},{"x":1,"y":2,"z":1},{"x":2,"y":2,"z":1},{"x":1,"y":2,"z":2},{"x":2,"y":0,"z":0},{"x":2,"y":1,"z":0},{"x":2,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":0,"y":2,"z":0}]')
 ];
 LevelContent.LevelTypetoDescriptor[LevelContent.BIG_PIECES] = "Make a cube (Warning: HARD)";
+LevelContent.worlds[LevelContent.TWO_D] = new World('space2.jpg', 'spaceForest.mp3');
 LevelContent.allTypes.push(LevelContent.BIG_PIECES);
 
 LevelContent.levels[LevelContent.THREE_D] = [
@@ -142,6 +147,7 @@ LevelContent.levels[LevelContent.THREE_D] = [
 		new Level(["V_block", "claw", "short_L", "short_L", "twisted", "L_block"], '[{"x":0,"y":0,"z":0},{"x":-1,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":0,"z":1},{"x":-1,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":1,"y":0,"z":0},{"x":0,"y":0,"z":-1},{"x":0,"y":0,"z":2},{"x":-1,"y":0,"z":2},{"x":0,"y":0,"z":3},{"x":1,"y":0,"z":2},{"x":2,"y":0,"z":1},{"x":-2,"y":0,"z":1},{"x":-1,"y":1,"z":0},{"x":-1,"y":1,"z":1},{"x":-1,"y":1,"z":2},{"x":0,"y":1,"z":2},{"x":1,"y":1,"z":0},{"x":1,"y":1,"z":1},{"x":1,"y":1,"z":2},{"x":0,"y":2,"z":1}]')
 ];
 LevelContent.LevelTypetoDescriptor[LevelContent.THREE_D] = "Non-Cube 3D shapes";
+LevelContent.worlds[LevelContent.THREE_D] = new World('space2.jpg', 'spaceForest.mp3');
 LevelContent.allTypes.push(LevelContent.THREE_D);
 
 LevelContent.levels[LevelContent.SOMA] = [
@@ -162,5 +168,6 @@ LevelContent.levels[LevelContent.SOMA] = [
 			'[{"x":0,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":-1},{"x":-1,"y":0,"z":-1},{"x":-1,"y":0,"z":0},{"x":-1,"y":0,"z":1},{"x":-2,"y":0,"z":-1},{"x":-2,"y":0,"z":0},{"x":-2,"y":0,"z":1},{"x":-2,"y":1,"z":-1},{"x":-2,"y":1,"z":0},{"x":-2,"y":1,"z":1},{"x":-1,"y":1,"z":-1},{"x":-1,"y":1,"z":0},{"x":-1,"y":1,"z":1},{"x":0,"y":1,"z":-1},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":2,"z":-1},{"x":0,"y":2,"z":0},{"x":0,"y":2,"z":1},{"x":-1,"y":2,"z":-1},{"x":-1,"y":2,"z":0},{"x":-1,"y":2,"z":1},{"x":-2,"y":2,"z":-1},{"x":-2,"y":2,"z":0},{"x":-2,"y":2,"z":1}]')
 ];
 LevelContent.LevelTypetoDescriptor[LevelContent.SOMA] = "Traditional Soma Cube shapes";
+LevelContent.worlds[LevelContent.SOMA] = new World('space2.jpg', 'spaceForest.mp3');
 LevelContent.allTypes.push(LevelContent.SOMA);
 

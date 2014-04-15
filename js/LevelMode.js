@@ -20,7 +20,7 @@ function LevelMode(toPopulateMenu) {
 		this.objectiveText = "Use given pieces to fill the goal shape!"
 		this.showSubMenu();
 	} else {
-		this.showLevelMenu("tutorial");
+		this.showLevelMenu(LevelContent.TUTORIAL);
 	}	
 }
 
