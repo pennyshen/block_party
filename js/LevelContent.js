@@ -14,6 +14,11 @@ LevelContent.LevelTypetoDescriptor = {};
 LevelContent.worlds = {};
 
 LevelContent.allTypes = [];
+LevelContent.allTypes.push(LevelContent.TWO_D);
+LevelContent.allTypes.push(LevelContent.THREE_D);
+LevelContent.allTypes.push(LevelContent.SOMA);
+LevelContent.allTypes.push(LevelContent.BIG_PIECES);
+LevelContent.allTypes.push(LevelContent.TUTORIAL);
 
 LevelContent.levels[LevelContent.TUTORIAL] = [
 		new Level(
@@ -97,7 +102,6 @@ LevelContent.levels[LevelContent.TWO_D] = [
 ];
 LevelContent.LevelTypetoDescriptor[LevelContent.TWO_D] = "Shapes with only two dimensions";
 LevelContent.worlds[LevelContent.TWO_D] = new World('space2.jpg', 'spaceForest.mp3');
-LevelContent.allTypes.push(LevelContent.TWO_D);
 
 LevelContent.levels[LevelContent.BIG_PIECES] = [
 		// 5
@@ -113,7 +117,6 @@ LevelContent.levels[LevelContent.BIG_PIECES] = [
 ];
 LevelContent.LevelTypetoDescriptor[LevelContent.BIG_PIECES] = "Make a cube (Warning: HARD)";
 LevelContent.worlds[LevelContent.TWO_D] = new World('space2.jpg', 'spaceForest.mp3');
-LevelContent.allTypes.push(LevelContent.BIG_PIECES);
 
 LevelContent.levels[LevelContent.THREE_D] = [
 		// 23
@@ -148,7 +151,6 @@ LevelContent.levels[LevelContent.THREE_D] = [
 ];
 LevelContent.LevelTypetoDescriptor[LevelContent.THREE_D] = "Non-Cube 3D shapes";
 LevelContent.worlds[LevelContent.THREE_D] = new World('space2.jpg', 'spaceForest.mp3');
-LevelContent.allTypes.push(LevelContent.THREE_D);
 
 LevelContent.levels[LevelContent.SOMA] = [
 		// 26
@@ -169,5 +171,8 @@ LevelContent.levels[LevelContent.SOMA] = [
 ];
 LevelContent.LevelTypetoDescriptor[LevelContent.SOMA] = "Traditional Soma Cube shapes";
 LevelContent.worlds[LevelContent.SOMA] = new World('space2.jpg', 'spaceForest.mp3');
-LevelContent.allTypes.push(LevelContent.SOMA);
+
+
+
+
 

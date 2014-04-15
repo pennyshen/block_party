@@ -57,6 +57,8 @@ LevelMode.prototype.showSubMenu = function() {
 			exp = eval("localStorage.X" + LevelContent.allTypes[i-1].substring(0,2)+
 				(LevelContent.levels[LevelContent.allTypes[i-1]].length-1) + ";");
 		levelType = LevelContent.allTypes[i];
+		if (levelType == LevelContent.TUTORIAL)
+			continue;
 		if(unlockLevels || i==0 || exp!=null)	
 			levelModeMenu_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="game.showLevelMenu(\'' + levelType + '\')">' + levelType + '</a><br>';
 		else
