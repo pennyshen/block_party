@@ -131,11 +131,9 @@
     	<p id="loading_text">Loading...</p>
     </div>
 
-    <audio id="main_music" loop>
-    	<!-- <source src="https://dl.dropboxusercontent.com/u/87553861/spaceForest.mp3" type="audio/mp3" /> -->
+<!--     <audio id="main_music" loop>
     	<source id="mainMusicSource" src="http://whateverwhouare.github.io/block_party/sounds/spaceForest.mp3" type="audio/mp3">
-		<!-- <source src="sounds/spaceForest.mp3" type="audio/mp3" /> -->
-	</audio>
+	</audio> -->
 
     <audio id="success_sound">
     	<source src="sounds/ahh.mp3" type="audio/mp3" />
@@ -160,8 +158,6 @@
 		var cameraInitRotation = new THREE.Euler(-0.4379673247787578, 0.00652451553634967, 0.00305539757043725, "XYZ");
 
 		var theta = 45 * 0.5;
-		var blockNoise = new Audio("sounds/wood-cracking-1.wav");
-		var collisionNoise = new Audio("sounds/beep-03.mp3");
 		var successSound = document.getElementById("success_sound");
 		var failSound = document.getElementById("fail_sound");
 		var dingSound = document.getElementById("ding_sound");
@@ -192,7 +188,7 @@
 		var hint_doc = document.getElementById("hint");
 		var center_tooltip_doc = document.getElementById("center_tooltip");
 		var info_doc = document.getElementById("info");
-		var mainMusicSource_doc = document.getElementById("mainMusicSource");
+		// var mainMusicSource_doc = document.getElementById("mainMusicSource");
 		var levelText_doc = document.getElementById("levelText");
 
 		var nav_items = [menu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
@@ -258,49 +254,68 @@
 
 		function loadFiles() {
 			var numLoaded = 0;
+			var myWorld;
 			showElementAndHideNav(loading_doc);
 
-			texture = THREE.ImageUtils.loadTexture( 'textures/space2.jpg', undefined, function() {
-        		numLoaded++;
-        		checkAllLoaded(numLoaded);
-        	} );
+			// first go through everything once to get all the images and music that need to be loaded
+			for (var i = 0; i < LevelContent.allTypes.length; i++) {
+				myWorld = LevelContent.worlds[LevelContent.allTypes[i]];
+				textures[myWorld.picture] = true;
+				sounds[myWorld.music] = true;
+			}
 
-			mainMusicSource_doc.src += ("?bust=" + Date.now());	// prevent caching
-			mainMusic = document.getElementById("main_music");
-			if (canPlayAudio(mainMusic)) {
-				mainMusic.addEventListener("loadeddata", function() {
+			var musicToLoad = Object.keys(sounds);
+			var pictureToLoad = Object.keys(textures);
+			var numToLoad = musicToLoad.length + pictureToLoad.length;
+			var sound;
+
+			for (var i = 0; i < musicToLoad.length; i++) {
+				sound = document.createElement("audio");
+				sound.loop = true;
+
+				sound.innerHTML = "<source src='" + "http://whateverwhouare.github.io/block_party/sounds/" + musicToLoad[i] + "?bust=" + Date.now() + "' type='audio/mp3'/>";
+				document.body.appendChild(sound);
+				if (canPlayAudio(sound)) {
+					sounds[musicToLoad[i]] = sound;
+					sound.addEventListener("loadeddata", function() {
+						numLoaded++;
+						checkAllLoaded(numLoaded, numToLoad);
+					});
+				} else {
+					sounds[i] = null;
 					numLoaded++;
-					checkAllLoaded(numLoaded);
-				});			
-			} else {
-				mainMusic = null;
-				numLoaded++;
-				checkAllLoaded(numLoaded);
-			}			        	
+					checkAllLoaded(numLoaded, numToLoad);
+				}
+			}
+
+			for (var i = 0; i < pictureToLoad.length; i++) {
+				textures[pictureToLoad[i]] = THREE.ImageUtils.loadTexture( 'textures/' + pictureToLoad[i], undefined, function() {
+	        		numLoaded++;
+	        		checkAllLoaded(numLoaded, numToLoad);
+        		} );
+			}		        	
 		}
 
 		function init() {
 			container = document.getElementById( 'game' );
 			document.body.appendChild( container );
 
-
-
-			// initializes values for backgroud image
-			// width must be image_width / image_height to perserve ratio
-			var background_scale = 100;
-			backgroundMesh = new THREE.Mesh(
-            	new THREE.PlaneGeometry(backgroundRatio * background_scale, background_scale, 0),	
-            	new THREE.MeshBasicMaterial({map: texture}));
-			backgroundMesh.position.set(0, 0, -background_scale);	// must set z to negative because the normal is (0, 0, 1)
-        	backgroundMesh.material.depthTest = false;
-        	backgroundMesh.material.depthWrite = false;
-
+			var background_scale = 100;	
+        	
         	// Create your background scene
         	backgroundScene = new THREE.Scene();
         	backgroundCamera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
         	backgroundScene.add( backgroundCamera );
-        	backgroundScene.add( backgroundMesh );
-        	backgroundCamera.lookAt(backgroundMesh.position);
+
+			backgroundMesh = new THREE.Mesh(
+	        	new THREE.PlaneGeometry(backgroundRatio * background_scale, background_scale, 0),	
+	        	new THREE.MeshBasicMaterial());
+			backgroundMesh.position.set(0, 0, -background_scale);	// must set z to negative because the normal is (0, 0, 1)
+	    	backgroundMesh.material.depthTest = false;
+	    	backgroundMesh.material.depthWrite = false;  
+	    	backgroundMesh.visible = true;      	
+	    	backgroundScene.add( backgroundMesh );
+			backgroundCamera.lookAt(backgroundMesh.position);        	
 
 			camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
 
@@ -403,9 +418,10 @@
 			requestAnimationFrame( animate );
 			if (gameInProgress) {
 				controls.update();
+				render(0.016);
+				stats.update();
 			}
-			render(0.016);
-			stats.update();
+			time = Date.now();
 		}
 
 
@@ -419,31 +435,28 @@
 
 			calculateGameBoardOrientation();
 
-			if (gameInProgress) {
-				// if (game.currentAliveTime < ALIVE_TIME) {
-				// 	// update time
-				// 	timeRemaining = Math.max(ALIVE_TIME - game.currentAliveTime, 0);
-				// 	secs = Math.floor(timeRemaining / 1000.0);
-				// 	mins = Math.floor(secs / 60);
-				// 	timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs).slice(-2);
+			// if (game.currentAliveTime < ALIVE_TIME) {
+			// 	// update time
+			// 	timeRemaining = Math.max(ALIVE_TIME - game.currentAliveTime, 0);
+			// 	secs = Math.floor(timeRemaining / 1000.0);
+			// 	mins = Math.floor(secs / 60);
+			// 	timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs).slice(-2);
 
-				// 	// update opacity
-				// 	rollOverMesh.material.opacity = INIT_OPACITY + game.currentAliveTime / ALIVE_TIME * (1 - INIT_OPACITY);
-				// } else {
-				// 	add_voxel();
-				// }				
+			// 	// update opacity
+			// 	rollOverMesh.material.opacity = INIT_OPACITY + game.currentAliveTime / ALIVE_TIME * (1 - INIT_OPACITY);
+			// } else {
+			// 	add_voxel();
+			// }				
 
-				game.currentAliveTime += Date.now() - time;
+			game.currentAliveTime += Date.now() - time;
 
-				if (game.mode != Game.MODE_RANDOM) {
-					intersectToHighlight();
-					if (game.isPreviewing) {
-						game.fadingInAndOut();
-					}
-				} 
-			}
-
-			time = Date.now();
+			if (game.mode != Game.MODE_RANDOM) {
+				intersectToHighlight();
+				if (game.isPreviewing) {
+					game.fadingInAndOut();
+				}
+			} 
+			
 		}
 
 	</script>

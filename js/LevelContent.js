@@ -101,7 +101,7 @@ LevelContent.levels[LevelContent.TWO_D] = [
 				'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":0,"z":0},{"x":1,"y":1,"z":0},{"x":1,"y":2,"z":0},{"x":2,"y":0,"z":0},{"x":2,"y":1,"z":0},{"x":2,"y":2,"z":0},{"x":2,"y":3,"z":0},{"x":3,"y":0,"z":0},{"x":3,"y":1,"z":0},{"x":3,"y":2,"z":0},{"x":3,"y":3,"z":0},{"x":3,"y":4,"z":0},{"x":4,"y":4,"z":0},{"x":4,"y":5,"z":0},{"x":4,"y":6,"z":0},{"x":5,"y":4,"z":0},{"x":5,"y":5,"z":0},{"x":5,"y":6,"z":0},{"x":6,"y":0,"z":0},{"x":6,"y":1,"z":0},{"x":6,"y":2,"z":0},{"x":6,"y":3,"z":0},{"x":6,"y":4,"z":0},{"x":6,"y":5,"z":0},{"x":6,"y":6,"z":0},{"x":7,"y":0,"z":0},{"x":7,"y":1,"z":0},{"x":7,"y":2,"z":0},{"x":7,"y":3,"z":0},{"x":7,"y":4,"z":0}]')
 ];
 LevelContent.LevelTypetoDescriptor[LevelContent.TWO_D] = "Shapes with only two dimensions";
-LevelContent.worlds[LevelContent.TWO_D] = new World('space2.jpg', 'spaceForest.mp3');
+LevelContent.worlds[LevelContent.TWO_D] = new World('flatland3.jpg', 'spaceForest.mp3');
 
 LevelContent.levels[LevelContent.BIG_PIECES] = [
 		// 5
@@ -116,7 +116,7 @@ LevelContent.levels[LevelContent.BIG_PIECES] = [
 		new Level(["2_cubed", "straight3", "short_L", "t_block", "Z_block", "V_block"], '[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":1,"y":0,"z":1},{"x":0,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":1,"y":1,"z":1},{"x":1,"y":0,"z":2},{"x":1,"y":1,"z":2},{"x":0,"y":1,"z":2},{"x":2,"y":1,"z":2},{"x":2,"y":2,"z":2},{"x":0,"y":0,"z":2},{"x":0,"y":2,"z":2},{"x":2,"y":0,"z":2},{"x":2,"y":0,"z":1},{"x":2,"y":1,"z":1},{"x":0,"y":2,"z":1},{"x":1,"y":2,"z":1},{"x":2,"y":2,"z":1},{"x":1,"y":2,"z":2},{"x":2,"y":0,"z":0},{"x":2,"y":1,"z":0},{"x":2,"y":2,"z":0},{"x":1,"y":2,"z":0},{"x":0,"y":2,"z":0}]')
 ];
 LevelContent.LevelTypetoDescriptor[LevelContent.BIG_PIECES] = "Make a cube (Warning: HARD)";
-LevelContent.worlds[LevelContent.TWO_D] = new World('space2.jpg', 'spaceForest.mp3');
+LevelContent.worlds[LevelContent.BIG_PIECES] = new World('space2.jpg', 'spaceForest.mp3');
 
 LevelContent.levels[LevelContent.THREE_D] = [
 		// 23

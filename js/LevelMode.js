@@ -73,8 +73,8 @@ LevelMode.prototype.showLevelMenu = function(levelType) {
 	this.levelType = levelType;
 	this.levels = LevelContent.levels[this.levelType];
 	var sTA = "";
-	levelModeMenu_doc.innerHTML = "<h1>" + this.levelType + "</h1><br>";
 
+	levelModeMenu_doc.innerHTML = "<h1>" + this.levelType + "</h1><br>";
 	levelModeMenu_doc.innerHTML += "<p id='helperText'>" + LevelContent.LevelTypetoDescriptor[this.levelType] + "</p>";
 
 	sTA += '<div id="levels" class="levelselect">';
@@ -114,6 +114,8 @@ LevelMode.prototype.showLevel = function() {
 
 	showElement(levelText_doc);
 	levelText_doc.innerHTML = "Level:" + (this.level + 1);
+
+	LevelContent.worlds[this.levelType].loadWorld();
 
 	// TODO: DON'T CALL THIS FOR NOW
 	// TODO: REORGANIZE HOW WE'RE STARTING A GAME
