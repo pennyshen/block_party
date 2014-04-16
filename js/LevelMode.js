@@ -197,7 +197,7 @@ LevelMode.prototype.createGoalShape = function(shape) {
     this.preview.renderDepth = 1.0;
     this.preview.material.opacity = 0;
     this.preview.material.side = THREE.FrontSide;
-    this.preview.scale.multiplyScalar(1.01);
+    this.preview.scale.multiplyScalar(1.001);
     this.preview.updateMatrix();    
     scene.add(this.preview);
 
