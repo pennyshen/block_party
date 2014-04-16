@@ -416,9 +416,6 @@ function add_voxel( ) {
     game.addToExisting(game.currentBlock, voxel.position);
     volume_doc.innerHTML = game.totalVolume; 
 
-    blockNoise.load();
-    blockNoise.play();
-   
     if (toCheckGoal) {
         game.checkGoal(false, false, true);
     }
