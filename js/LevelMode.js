@@ -250,6 +250,7 @@ LevelMode.prototype.endGame = function() {
 		INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );	
 		INTERSECTED = null;
 	}
+	render();	// render one last time
 	
 	var passOrFail = '';
 	var nextLevel = '';

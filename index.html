@@ -242,7 +242,6 @@
 
 		var game;
 
-        var texture;
 		var mainMusic;
 		var textures = {};
 		var sounds = {};
@@ -418,45 +417,46 @@
 			requestAnimationFrame( animate );
 			if (gameInProgress) {
 				controls.update();
-				render(0.016);
+				render();
 				stats.update();
 			}
 			time = Date.now();
 		}
 
 
-		function render(dt) {
-			particleGroup.tick( dt );
-
+		function render() {
+			particleGroup.tick( 0.016 );
+			
 			renderer.autoClear = false;
 			renderer.clear();
 			renderer.render( backgroundScene , backgroundCamera );
 			renderer.render( scene, camera );
 
-			calculateGameBoardOrientation();
+			if (gameInProgress) {
+				calculateGameBoardOrientation();
 
-			// if (game.currentAliveTime < ALIVE_TIME) {
-			// 	// update time
-			// 	timeRemaining = Math.max(ALIVE_TIME - game.currentAliveTime, 0);
-			// 	secs = Math.floor(timeRemaining / 1000.0);
-			// 	mins = Math.floor(secs / 60);
-			// 	timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs).slice(-2);
+				// if (game.currentAliveTime < ALIVE_TIME) {
+				// 	// update time
+				// 	timeRemaining = Math.max(ALIVE_TIME - game.currentAliveTime, 0);
+				// 	secs = Math.floor(timeRemaining / 1000.0);
+				// 	mins = Math.floor(secs / 60);
+				// 	timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs).slice(-2);
 
-			// 	// update opacity
-			// 	rollOverMesh.material.opacity = INIT_OPACITY + game.currentAliveTime / ALIVE_TIME * (1 - INIT_OPACITY);
-			// } else {
-			// 	add_voxel();
-			// }				
+				// 	// update opacity
+				// 	rollOverMesh.material.opacity = INIT_OPACITY + game.currentAliveTime / ALIVE_TIME * (1 - INIT_OPACITY);
+				// } else {
+				// 	add_voxel();
+				// }				
 
-			game.currentAliveTime += Date.now() - time;
+				game.currentAliveTime += Date.now() - time;
 
-			if (game.mode != Game.MODE_RANDOM) {
-				intersectToHighlight();
-				if (game.isPreviewing) {
-					game.fadingInAndOut();
+				if (game.mode != Game.MODE_RANDOM) {
+					intersectToHighlight();
+					if (game.isPreviewing) {
+						game.fadingInAndOut();
+					}
 				}
-			} 
-			
+			}			
 		}
 
 	</script>

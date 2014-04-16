@@ -6,22 +6,6 @@ function checkAllLoaded(numLoaded, numToLoad) {
 
 	// set number of files loading here
 	if (numLoaded >= numToLoad) {
-		// // set up a background
-		// keys = Object.keys(textures);
-		// for (var i = 0; i < keys.length; i++) {
-		// 	key = keys[i];
-		// 	backgroundMesh = new THREE.Mesh(
-  //           	new THREE.PlaneGeometry(backgroundRatio * background_scale, background_scale, 0),	
-  //           	new THREE.MeshBasicMaterial({map: textures[key]}));
-		// 	backgroundMesh.position.set(0, 0, -background_scale);	// must set z to negative because the normal is (0, 0, 1)
-  //       	backgroundMesh.material.depthTest = false;
-  //       	backgroundMesh.material.depthWrite = false;  
-  //       	backgroundMesh.visible = false;      	
-  //       	backgroundScene.add( backgroundMesh );
-  //       	backgroundMeshes[key] = backgroundMesh;
-		// }
-		// backgroundCamera.lookAt(backgroundMesh.position);
-
 		showElementAndHideNav(menu_doc);
 	}
 }
