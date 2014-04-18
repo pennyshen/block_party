@@ -86,7 +86,7 @@ LevelMode.prototype.showLevelMenu = function(levelType) {
 			sTA += '<a href="javascript: void(0)" class="locked">' + (i+1) + '</a><br>';
 	}
 	sTA += '</div>';
-	if (levelType == "tutorial") {
+	if (levelType == LevelContent.TUTORIAL) {
 		sTA += backToMainMenu_string;
 	} else {
 		sTA += '<br><br><a href="javascript: void(0)" class="menuItem" onClick="game.showSubMenu()" style="margin-bottom:50px">Level Mode Menu</a>';
