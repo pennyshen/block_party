@@ -267,6 +267,8 @@
 			var pictureToLoad = Object.keys(textures);
 			var numToLoad = musicToLoad.length + pictureToLoad.length;
 			var sound;
+			console.log(musicToLoad);
+			console.log(pictureToLoad);
 
 			for (var i = 0; i < musicToLoad.length; i++) {
 				sound = document.createElement("audio");
@@ -278,6 +280,7 @@
 					sounds[musicToLoad[i]] = sound;
 					sound.addEventListener("loadeddata", function() {
 						numLoaded++;
+						console.log("sound: " + numLoaded);
 						checkAllLoaded(numLoaded, numToLoad);
 					});
 				} else {
@@ -290,6 +293,7 @@
 			for (var i = 0; i < pictureToLoad.length; i++) {
 				textures[pictureToLoad[i]] = THREE.ImageUtils.loadTexture( 'textures/' + pictureToLoad[i], undefined, function() {
 	        		numLoaded++;
+	        		console.log("image: " + numLoaded);
 	        		checkAllLoaded(numLoaded, numToLoad);
         		} );
 			}		        	
