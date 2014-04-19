@@ -280,7 +280,6 @@
 					sounds[musicToLoad[i]] = sound;
 					sound.addEventListener("loadeddata", function() {
 						numLoaded++;
-						console.log("sound: " + numLoaded);
 						checkAllLoaded(numLoaded, numToLoad);
 					});
 				} else {
