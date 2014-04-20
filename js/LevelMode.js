@@ -50,6 +50,10 @@ LevelMode.prototype.showSubMenu = function() {
 	levelModeMenu_doc.innerHTML += "<p id='helperText'>" + this.objectiveText + "</p>";
 	for (var i = 0; i < LevelContent.allTypes.length; i++) {
 		levelType = LevelContent.allTypes[i];
+		
+		if (levelType == LevelContent.TUTORIAL)
+			continue;
+
 		//checks whether the last level in the previous world has been completed
 		/* uncomment to lock worlds
 		var exp;
