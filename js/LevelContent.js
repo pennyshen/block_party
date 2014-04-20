@@ -104,7 +104,7 @@ LevelContent.levels[LevelContent.TWO_D] = [
 			'[{"x":0,"y":2,"z":0},{"x":0,"y":3,"z":0},{"x":1,"y":2,"z":0},{"x":-1,"y":2,"z":0},{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":-2,"y":0,"z":0},{"x":-2,"y":1,"z":0},{"x":-1,"y":0,"z":0},{"x":-3,"y":0,"z":0},{"x":2,"y":0,"z":0},{"x":3,"y":0,"z":0},{"x":2,"y":1,"z":0},{"x":1,"y":1,"z":0},{"x":0,"y":4,"z":0},{"x":-1,"y":4,"z":0},{"x":1,"y":4,"z":0},{"x":-1,"y":5,"z":0},{"x":1,"y":5,"z":0},{"x":0,"y":5,"z":0},{"x":2,"y":5,"z":0},{"x":0,"y":6,"z":0},{"x":2,"y":6,"z":0},{"x":1,"y":6,"z":0},{"x":3,"y":6,"z":0},{"x":-2,"y":6,"z":0},{"x":-2,"y":5,"z":0},{"x":-3,"y":6,"z":0},{"x":-1,"y":6,"z":0}]')
 ];
 LevelContent.LevelTypetoDescriptor[LevelContent.TWO_D] = "Shapes with only two dimensions";
-LevelContent.worlds[LevelContent.TWO_D] = new World('flatland.jpg', 'spaceForest.mp3');
+LevelContent.worlds[LevelContent.TWO_D] = new World('flatland.jpg', 'flatland.mp3');
 
 LevelContent.levels[LevelContent.BIG_PIECES] = [
 		// 5
@@ -173,7 +173,7 @@ LevelContent.levels[LevelContent.SOMA] = [
 			'[{"x":0,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":-1},{"x":-1,"y":0,"z":-1},{"x":-1,"y":0,"z":0},{"x":-1,"y":0,"z":1},{"x":-2,"y":0,"z":-1},{"x":-2,"y":0,"z":0},{"x":-2,"y":0,"z":1},{"x":-2,"y":1,"z":-1},{"x":-2,"y":1,"z":0},{"x":-2,"y":1,"z":1},{"x":-1,"y":1,"z":-1},{"x":-1,"y":1,"z":0},{"x":-1,"y":1,"z":1},{"x":0,"y":1,"z":-1},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":2,"z":-1},{"x":0,"y":2,"z":0},{"x":0,"y":2,"z":1},{"x":-1,"y":2,"z":-1},{"x":-1,"y":2,"z":0},{"x":-1,"y":2,"z":1},{"x":-2,"y":2,"z":-1},{"x":-2,"y":2,"z":0},{"x":-2,"y":2,"z":1}]')
 ];
 LevelContent.LevelTypetoDescriptor[LevelContent.SOMA] = "Traditional Soma Cube shapes";
-LevelContent.worlds[LevelContent.SOMA] = new World('somaverse.jpg', 'spaceForest.mp3');
+LevelContent.worlds[LevelContent.SOMA] = new World('somaverse.jpg', 'somaverse.mp3');
 
 
 
