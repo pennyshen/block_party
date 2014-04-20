@@ -120,7 +120,7 @@ LevelMode.prototype.showLevel = function() {
 	hideElement(info_doc);
 
 	showElement(levelText_doc);
-	levelText_doc.innerHTML = "Level:" + (this.level + 1);
+	numLevel_doc.innerHTML = "Level:" + (this.level + 1);
 
 	LevelContent.worlds[this.levelType].loadWorld();
 

@@ -164,12 +164,15 @@ a#start{top: 100%;}
 
 #levelText {
     top: 20px;
-    right: 20px;
     width: 100%;
     text-align: right;
     position: absolute;        
     font: 30px "Press Start 2P", cursive; 
     color: white;
+}
+
+.helper {
+    padding-right: 20px;
 }
 
 #helperText {

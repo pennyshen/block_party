@@ -122,6 +122,9 @@
 			</font>
 	    </div>
 	    <div id="levelText">
+	    	<span id="numLevel" class="helper"></span>
+	    	<br>
+	    	<span id="timer" class="helper">0:00</span>
 	    </div>
 	    <span id="hint"></span>
 	    <span id="center_tooltip"></span>
@@ -180,6 +183,7 @@
 		var about_doc = document.getElementById("about");
 
 		var timer = document.getElementById( 'timer');
+		var numLevel_doc = document.getElementById( 'numLevel' );
 		var volume_doc = document.getElementById( 'volume_used' );
 		var blocker = document.getElementById("blocker");
 		var nextPiece_doc = document.getElementById( 'nextPiece' );
