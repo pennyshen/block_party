@@ -115,8 +115,9 @@
 			    <br>
 			    Score: <span id="score">0</span>		    
 			    <br>
-			    <span id="showNextPiece">Next piece: <span id="nextPiece"></span><br/></span>
+			    <span id="showNextPiece">Next piece: <span id="nextPiece"></span></span>
 				<br>
+				<span id="randomTimer">0:00</span>
 			</font>
 	    </div>
 	    <div id="levelText">
@@ -183,6 +184,7 @@
 		var about_doc = document.getElementById("about");
 
 		var timer = document.getElementById( 'timer');
+		var randomTimer_doc = document.getElementById( 'randomTimer' );
 		var best_time = document.getElementById( 'bestTime');
 		var numLevel_doc = document.getElementById( 'numLevel' );
 		var volume_doc = document.getElementById( 'volume_used' );

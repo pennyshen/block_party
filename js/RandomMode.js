@@ -8,6 +8,7 @@ function RandomMode() {
 	hideAllInfo();
 	LevelContent.worlds[LevelContent.TUTORIAL].loadWorld();
 	showElement(showNextPiece_doc);
+	showElement(randomTimer_doc);
 }
 
 RandomMode.prototype = Object.create(Game.prototype);
