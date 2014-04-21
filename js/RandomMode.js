@@ -97,6 +97,6 @@ RandomMode.prototype.scoreGame = function() {
 };
 
 RandomMode.prototype.endGame = function() {
-
+	//console.log('ending game');
 };
 
