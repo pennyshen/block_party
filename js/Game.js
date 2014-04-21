@@ -177,7 +177,7 @@ Game.prototype = {
 		var cube_vol = x_dif * y_dif * z_dif;
 		// this.score = Math.round((this.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100);
 
-		this.score = this.scoreGame();
+		this.score = this.totalVolume * 10 + (Math.pow((this.scoreGame()),3))*100;
 		score_doc.innerHTML = this.score;
 		
 		if (this.boundingBox) {
