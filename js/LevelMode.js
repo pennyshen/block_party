@@ -220,6 +220,7 @@ LevelMode.prototype.checkSuccess = function() {
 	dingSound.play();
 	var that = this;
 	window.setTimeout(function() {
+		setGameInProgress(false);
 		that.endGame();
 	}, 100);
 }
