@@ -27,34 +27,41 @@ RandomMode.prototype.getNextBlock = function() {
 	return toReturn;
 };
 
-RandomMode.prototype.reduceArray = function(matrix, axis, currentLength) {
-	var canReduce = false;
-	var left, right;
+RandomMode.prototype.setCount = function(count, x, y, z) {
+	var neighborCounts = [];
 
-	// for (var i = 0; i < currentLength - 1; i++) {
-	// 	if (axis == 'x') {
-	// 		left = 
-	// 	}
-	// 	if (array[i] && array[i+1]) {
-	// 		array[i] = true;
-	// 		canReduce = true;
-	// 	}
-	// }
+	if (x == 0 || y == 0 || z == 0) {
+		count[x][y][z] = 1;
+		return;
+	}
 
-	return canReduce;
-};
+	// get minimum count from all 7 neighbouring counts
+	neighborCounts.push(count[x][y-1][z-1]);
+	neighborCounts.push(count[x][y][z-1]);
+	neighborCounts.push(count[x][y-1][z]);
+	neighborCounts.push(count[x-1][y-1][z-1]);
+	neighborCounts.push(count[x-1][y][z-1]);
+	neighborCounts.push(count[x-1][y-1][z]);
+	neighborCounts.push(count[x-1][y][z]);
+	count[x][y][z] = Math.min.apply(null, neighborCounts) + 1;
+
+}
 
 RandomMode.prototype.scoreGame = function() {
 	var numReduced = 0;
 	var positions = [];
+	var count = [];
 	var x_pos, y_pos, z_pos;
 	var pos, val;
+	var maxCount = 0;
 
-	// establish the 3d array from bounding box
+	// establish the 3d array from bounding box and the corresponding empty 3d matrix for dynamic programming
 	for (var i = this.min_x / STEP_SIZE, x_pos = 0; i < this.max_x / STEP_SIZE; i++, x_pos++) {
 		positions.push([]);
+		count.push([]);
 		for (var j = this.min_y / STEP_SIZE, y_pos = 0; j < this.max_y / STEP_SIZE; j++, y_pos++) {
 			positions[x_pos].push([]);
+			count[x_pos].push([]);
 			for (var k = this.min_z / STEP_SIZE, z_pos = 0; k < this.max_z / STEP_SIZE; k++, z_pos++) {
 				pos = {};
 				pos.x = i;
@@ -66,28 +73,26 @@ RandomMode.prototype.scoreGame = function() {
 					val = false;
 				}
 				positions[x_pos][y_pos][z_pos] = val;
+				count[x_pos][y_pos][z_pos] = 0;
 			}
 		}
 	}
-	console.log(positions);
 
-	// var positionStrings = Object.keys(this.existingBlocks).splice(this.existingBlocks.length);
-	// var positions, pos;
-	// var axisMap = ['x', 'y', 'z']
+	for (var x = 0; x < positions.length; x++) {
+		for (var y = 0; y < positions[0].length; y++) {
+			for (var z = 0; z < positions[0][0].length; z++) {
+				if (positions[x][y][z]) {
+					this.setCount(count, x, y, z);
+					if (count[x][y][z] > maxCount) {
+						maxCount = count[x][y][z];
+					}
+					// console.log(x + "," + y + "," + z + ": " + count[x][y][z]);
+				} 
+			}
+		}
+	}
 
-	// positions = {};
-	// for (var i = 0; i < axisMap.length; i++) {
-	// 	positions[axisMap[i]] = [];
-	// }
-
-	// // get the positions from positionStrings into the positions map
-	// for (var i = 0; i < positionStrings.length; i++) {
-	// 	pos = positionStrings[i].split(',');
-	// 	for (var j = 0; j < pos.length; j++) {
-	// 		positions[axisMap[j]].push(parseInt(pos[j]));
-	// 	}
-	// }
-	// console.log(positions);
+	return maxCount;
 };
 
 RandomMode.prototype.endGame = function() {

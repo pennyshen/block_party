@@ -175,9 +175,10 @@ Game.prototype = {
 		var y_dif = this.max_y - this.min_y;
 		var z_dif = this.max_z - this.min_z;
 		var cube_vol = x_dif * y_dif * z_dif;
-		this.score = Math.round((this.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100);
+		// this.score = Math.round((this.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100);
 
-		score_doc.innerHTML = this.score + '%';
+		this.score = this.scoreGame();
+		score_doc.innerHTML = this.score;
 		
 		if (this.boundingBox) {
 			scene.remove(this.boundingBox);
