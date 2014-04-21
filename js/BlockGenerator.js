@@ -109,7 +109,7 @@ BlockGenerator.colors = {
 	// "grey": 0xADADAD
 };
 
-BlockGenerator.randomModeShapes = ["2_square", "claw", "L_block", "straight3", "t_block", "Z_block", "twisted"];
+BlockGenerator.randomModeShapes = ["2_square", "claw", "L_block", "straight4", "t_block", "Z_block", "twisted"];
 
 // names of all the blocks in an array
 BlockGenerator.allShapes = (function() {
