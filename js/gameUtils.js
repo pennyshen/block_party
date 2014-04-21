@@ -111,7 +111,7 @@ function startGame() {
 		mainMusic.play();		
 	}
 
-	gameInProgress = true;
+	setGameInProgress(true);
 }
 
 function calculateGameBoardOrientation() {

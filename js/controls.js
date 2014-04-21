@@ -11,10 +11,13 @@ function onWindowResize() {
     renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
-function onDocumentMouseDown( event ) {
+function onDocumentMouseDown( event ) {    
     event.preventDefault();
     
     if (gameInProgress) {
+        if (game.mode == Game.MODE_RANDOM)
+            return;
+        
         if (INTERSECTED) {
             if (INTERSECTED.id != rollOverMesh.id) {
                 // only update if it's a different block from the one we're on right now
