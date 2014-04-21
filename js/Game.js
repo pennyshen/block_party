@@ -5,6 +5,7 @@ function Game() {
 	this.existingBlocks = [];
 	this.currentBlock = {};
 	this.currentAliveTime = 0;
+	this.gameTime = 0;
 	this.boundingBox = null;
 	this.goalShape = null;
 	

@@ -113,9 +113,7 @@
 	    	<font color ="white">	    	
 			    Volume: <span id ="volume_used">0</span>
 			    <br>
-			    Score: <span id="score">0</span>
-			    <br>			    
-			    <span id="timer">0:00</span>
+			    Score: <span id="score">0</span>		    
 			    <br>
 			    <span id="showNextPiece">Next piece: <span id="nextPiece"></span><br/></span>
 				<br>
@@ -123,6 +121,8 @@
 	    </div>
 	    <div id="levelText">
 	    	<span id="numLevel" class="helper"></span>
+	    	<br>
+	    	<span id="bestTime" class="helper">Best Time:</span>
 	    	<br>
 	    	<span id="timer" class="helper">0:00</span>
 	    </div>
@@ -183,6 +183,7 @@
 		var about_doc = document.getElementById("about");
 
 		var timer = document.getElementById( 'timer');
+		var best_time = document.getElementById( 'bestTime');
 		var numLevel_doc = document.getElementById( 'numLevel' );
 		var volume_doc = document.getElementById( 'volume_used' );
 		var blocker = document.getElementById("blocker");
@@ -442,12 +443,13 @@
 			if (gameInProgress) {
 				calculateGameBoardOrientation();
 
-				// if (game.currentAliveTime < ALIVE_TIME) {
-				// 	// update time
-				// 	timeRemaining = Math.max(ALIVE_TIME - game.currentAliveTime, 0);
-				// 	secs = Math.floor(timeRemaining / 1000.0);
-				// 	mins = Math.floor(secs / 60);
-				// 	timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs).slice(-2);
+				//if (game.currentAliveTime < ALIVE_TIME) {
+				// update time
+				timeRemaining = Math.max(game.gameTime, 0);
+				secs = Math.floor(timeRemaining / 1000.0);
+				mins = Math.floor(secs / 60);
+				timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs%60).slice(-2);
+			
 
 				// 	// update opacity
 				// 	rollOverMesh.material.opacity = INIT_OPACITY + game.currentAliveTime / ALIVE_TIME * (1 - INIT_OPACITY);
@@ -456,6 +458,7 @@
 				// }				
 
 				game.currentAliveTime += Date.now() - time;
+				game.gameTime += Date.now()-time;
 
 				if (game.mode != Game.MODE_RANDOM) {
 					intersectToHighlight();

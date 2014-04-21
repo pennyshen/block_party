@@ -122,6 +122,12 @@ LevelMode.prototype.showLevel = function() {
 	showElement(levelText_doc);
 	numLevel_doc.innerHTML = "Level:" + (this.level + 1);
 
+	//if tutorial, don't show anything time-related
+	if (this.levelType == LevelContent.TUTORIAL){
+		hideElement(best_time);
+		hideElement(timer);
+	}
+
 	LevelContent.worlds[this.levelType].loadWorld();
 
 	// TODO: DON'T CALL THIS FOR NOW
@@ -164,6 +170,18 @@ LevelMode.prototype.startLevel = function(level) {
 	this.createGoalShape(JSON.parse(this.levels[level].goalShape));
 
 	this.showLevel();
+
+	showElement(best_time);
+	showElement(timer);
+
+	//sets the best time
+	var exp = eval("localStorage.X" +this.levelType.substring(0,2)+this.level+";");
+	if(exp!=null && exp!="yes"){ //this is to prevent old localStorage items
+		best_time.innerHTML = "PR " + exp;
+	}
+	else{
+		best_time.innerHTML = "PR:N/A";
+	}	
 } 
 
 LevelMode.prototype.checkSuccess = function() {
@@ -180,9 +198,22 @@ LevelMode.prototype.checkSuccess = function() {
 			return;
 		}
 	}
+	
 
-	//sets local storage
-	localStorage.setItem("X"+this.levelType.substring(0,2) + this.level, "yes");
+	//sets local storage for level completion and time (e.g. Xfla0, time)
+	var bestTime = timer.innerHTML;
+	var minSec = bestTime.split(":");
+	var timeNew = parseInt(minSec[0])*60 + parseInt(minSec[1]);	
+	var exp = eval("localStorage.X" +this.levelType.substring(0,2)+this.level+";");
+
+	if(exp!=null){
+		minSec = exp.split(":");
+		var oldTime = minSec[0]*60 +minSec[1];
+		if(timeNew > oldTime){	//no new record
+			bestTime = exp;
+		}
+	}
+	localStorage.setItem("X"+this.levelType.substring(0,2) + this.level, bestTime);
 
 
 	dingSound.load();
