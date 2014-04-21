@@ -216,7 +216,7 @@
 
 		var pos_illegal_code = 0;
 
-		var timeRemaining, mins, secs;
+		var timeRemaining, timeElapsed, mins, secs;
 
         var colorAgainstTexture = 0xffffff;
         var floor
@@ -447,10 +447,23 @@
 
 				//if (game.currentAliveTime < ALIVE_TIME) {
 				// update time
-				timeRemaining = Math.max(game.gameTime, 0);
-				secs = Math.floor(timeRemaining / 1000.0);
+				timeElapsed = Math.max(game.gameTime, 0);
+				secs = Math.floor(timeElapsed / 1000.0);
 				mins = Math.floor(secs / 60);
 				timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs%60).slice(-2);
+				if(game.mode == Game.MODE_RANDOM){
+					timeRemaining = 2*60*1000- timeElapsed;
+					secs = Math.floor(timeRemaining / 1000.0);
+					mins = Math.floor(secs / 60);
+					randomTimer_doc.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs%60).slice(-2);
+					if(timeRemaining <=0) {
+						//console.log("no time");
+						game.endGame();
+					}
+						
+				}
+
+
 			
 
 				// 	// update opacity
