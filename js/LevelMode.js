@@ -14,7 +14,7 @@ function LevelMode(toPopulateMenu) {
 
 	if (toPopulateMenu) {
 		this.mode = Game.MODE_LEVEL;
-		this.titleText = "Level Mode"
+		this.titleText = "Challenges"
 		this.objectiveText = "Use given pieces to fill the goal shape!"
 		this.showSubMenu();
 	} else {
@@ -94,7 +94,7 @@ LevelMode.prototype.showLevelMenu = function(levelType) {
 	if (levelType == LevelContent.TUTORIAL) {
 		sTA += '<a href="javascript: void(0)" class="menuItem backButton" style="top:15%;" onClick="showElementAndHideNav(menu_doc)">Main Menu</a>';
 	} else {
-		sTA += '<a href="javascript: void(0)" class="menuItem backButton" style="top:15%;" onClick="game.showSubMenu()"">Level Mode</a>';
+		sTA += '<a href="javascript: void(0)" class="menuItem backButton" style="top:15%;" onClick="game.showSubMenu()"">' + this.titleText + '</a>';
 	}
 	levelModeMenu_doc.innerHTML += sTA;
 
