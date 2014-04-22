@@ -134,7 +134,7 @@
     </div>
 
     <div id="loading" class="nav">
-    	<p id="loading_text">Loading...</p>
+    	<p id="loading_text">Loading</p>
     </div>
 
 <!--     <audio id="main_music" loop>
@@ -183,6 +183,7 @@
 		var levelModeMenu_doc = document.getElementById("levelModeMenu");
 		var selectBlockScreen_doc = document.getElementById("selectBlockScreen");
 		var loading_doc = document.getElementById("loading");
+		var loading_text_doc = document.getElementById("loading_text");
 		var about_doc = document.getElementById("about");
 
 		var timer = document.getElementById( 'timer');
@@ -453,16 +454,14 @@
 				secs = Math.floor(timeElapsed / 1000.0);
 				mins = Math.floor(secs / 60);
 				timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs%60).slice(-2);
-				if(game.mode == Game.MODE_RANDOM){
-					timeRemaining = 2*60*1000- timeElapsed;
+				if (game.mode == Game.MODE_RANDOM) {
+					if (timeRemaining <= 0) {
+						game.endGame();
+					}					
+					timeRemaining = Math.max(0, 2*60*1000- timeElapsed);
 					secs = Math.floor(timeRemaining / 1000.0);
 					mins = Math.floor(secs / 60);
 					randomTimer_doc.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs%60).slice(-2);
-					if(timeRemaining <=0) {
-						//console.log("no time");
-						game.endGame();
-					}
-						
 				}
 
 

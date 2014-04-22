@@ -97,6 +97,11 @@ RandomMode.prototype.scoreGame = function() {
 };
 
 RandomMode.prototype.endGame = function() {
-	//console.log('ending game');
+	setGameInProgress(false);
+	showElement(endScreen_doc);
+
+	endScreen_doc.innerHTML = "<h1>Final score: " + this.score + "</h1><br>"
+		+ '<a href="javascript: void(0)" class="menuItem" onClick="restartLevel()">Play again</a><br>'
+		+ backToMenu_string;
 };
 

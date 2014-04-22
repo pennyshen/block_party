@@ -1,8 +1,6 @@
 
 function checkAllLoaded(numLoaded, numToLoad) {
-	// initializes values for backgroud image
-	// width must be image_width / image_height to perserve ratio
-	var keys, key;
+	loading_text_doc.innerHTML += ".";
 
 	// set number of files loading here
 	if (numLoaded >= numToLoad) {
