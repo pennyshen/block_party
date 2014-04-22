@@ -108,7 +108,7 @@ h1 {margin-top: 5%;}
     width: 320px;
     font-size: 24px;
     display: block;
-    top: 30%;   
+    top: 25%;   
     left: 0; 
     border-top: 5px solid white;
     border-bottom: 5px solid white;
@@ -165,6 +165,11 @@ a#start{top: 100%;}
     text-align: right;
     position: absolute;        
     font-size: 200%;
+}
+
+.backButton {
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 

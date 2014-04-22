@@ -215,12 +215,8 @@ function onDocumentKeyDown( event ) {
             game.checkGoal(moved, rotated, false);
         }  
 
-        // check if the intersected block can still be moved
-        if (game.mode == Game.MODE_LEVEL) {
+        if (game.mode != Game.MODE_RANDOM) {
             intersectToHighlight();
-            game.checkSuccess();
-        }
-        if (game.mode == Game.MODE_TUTORIAL) {
             game.checkSuccess();
         }
     }

@@ -92,9 +92,9 @@ LevelMode.prototype.showLevelMenu = function(levelType) {
 	}
 	sTA += '</div>';
 	if (levelType == LevelContent.TUTORIAL) {
-		sTA += backToMainMenu_string;
+		sTA += '<a href="javascript: void(0)" class="menuItem backButton" style="top:15%;" onClick="showElementAndHideNav(menu_doc)">Main Menu</a>';
 	} else {
-		sTA += '<br><br><a href="javascript: void(0)" class="menuItem" onClick="game.showSubMenu()" style="margin-bottom:50px">Level Mode Menu</a>';
+		sTA += '<a href="javascript: void(0)" class="menuItem backButton" style="top:15%;" onClick="game.showSubMenu()"">Level Mode</a>';
 	}
 	levelModeMenu_doc.innerHTML += sTA;
 
