@@ -57,10 +57,10 @@ function goToLevel(level, mode) {
 	game.clearScene();
 	if (mode != Game.MODE_RANDOM) {
 		reinitGame();
+		game.startLevel(level);
 	} else {
 		initGame(mode);
 	}
-	game.startLevel(level);
 }
 
 function hideAllNav() {
