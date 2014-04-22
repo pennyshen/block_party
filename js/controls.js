@@ -54,8 +54,6 @@ function onDocumentMouseUp( event ) {
         intersectToHighlight();
     }
     document.removeEventListener('mouseup', onDocumentMouseUp, false);
-
-    // console.log(mouseDown);
 }
 
 function onDocumentMouseMove( event ) {
@@ -283,7 +281,7 @@ function rotate( camera_axis, direction ) {
     if ( direction == "yaw" ) {
         game.currentBlock.rotateAroundWorldAxis("y", 90);  
     }
-console.log(camera_axis);
+
     if ( direction == "pitch" ) {
         switch ( camera_axis ) {
 
@@ -293,6 +291,7 @@ console.log(camera_axis);
             case 4: game.currentBlock.rotateAroundWorldAxis("z",-90); break;
         }  
     }
+    
     if ( direction == "roll" ) {
         switch ( camera_axis ) {
             case 1: game.currentBlock.rotateAroundWorldAxis("z",90); break;

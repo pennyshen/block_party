@@ -5,10 +5,9 @@ function RandomMode() {
 	this.nextBlockName = getRandomMember(BlockGenerator.randomModeShapes);
 	this.mode = Game.MODE_RANDOM;
 
-	hideAllInfo();
 	LevelContent.worlds[LevelContent.TUTORIAL].loadWorld();
-	showElement(showNextPiece_doc);
-	showElement(randomTimer_doc);
+
+	showElement(randomInfo_doc);
 }
 
 RandomMode.prototype = Object.create(Game.prototype);

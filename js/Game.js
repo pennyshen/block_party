@@ -20,6 +20,8 @@ function Game() {
 	if (mainMusic) {
 		mainMusic.currentTime = 0;
 	}
+
+	hideAllInfo();
 }
 
 

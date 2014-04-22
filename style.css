@@ -158,7 +158,7 @@ a#start{top: 100%;}
 
 #oldie { background-color: #ddd !important }
 
-#info {
+.info {
     top: 5px;
     right: 10px;
     width: 100%;

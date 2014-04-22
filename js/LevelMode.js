@@ -12,8 +12,6 @@ function LevelMode(toPopulateMenu) {
 	this.shapeToColor = {};
 	this.numShapes = 0;
 
-	hideAllInfo();
-
 	if (toPopulateMenu) {
 		this.mode = Game.MODE_LEVEL;
 		this.titleText = "Level Mode"
@@ -115,9 +113,6 @@ LevelMode.prototype.getBlock = function(name) {
 
 LevelMode.prototype.showLevel = function() {
 	hideAllNav();
-
-	// hide all info for now
-	hideElement(info_doc);
 
 	showElement(levelText_doc);
 	numLevel_doc.innerHTML = "Level:" + (this.level + 1);
