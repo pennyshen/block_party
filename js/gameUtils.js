@@ -192,69 +192,6 @@ function intersectToHighlight() {
 	}		
 }
 
-function dragPiece() {
-	var vector = new THREE.Vector3( mouse2D.x, mouse2D.y, 1 );
-	projector.unprojectVector( vector, camera );
-
-	raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
-
-	var toIntersect = [];
-	for (var i = 0; i < game.existingBlocks.length; i++) {
-		toIntersect.push(game.existingBlocks[i].mesh);
-	}
-
-	var intersects = raycaster.intersectObject( floor.plane );
-
-	if (intersects.length > 0) {
-		adjustPosition(intersects[0].point, rollOverMesh.position);
-	}	
-}
-
-function adjustPosition( rayPosition, piecePosition ) {
-	var newPosition;
-	var toMove = new THREE.Vector3(0,0,0);
-	var moved = null;
-
-	newPos = rollOverMesh.position.clone();
-	var dX;
-	var dZ;
-	var xORz;
-	var delta = 50;
-	dX = rayPosition.x - piecePosition.x;
-	dZ = rayPosition.z - piecePosition.z;
-	xORz = Math.abs(dX) - Math.abs(dZ);
-	if (xORz > 0) {
-		if (dX < -delta) {
-			moveLeft(1,toMove);
-			moved = true;
-		}
-		else if (dX > delta) {
-			moveRight(1,toMove);
-			moved = true;
-		}
-	}
-	else if (xORz < 0) {
-		if (dZ < -delta) {
-			moveForward(1,toMove);
-			moved = true;
-		}
-		else if (dZ > delta) {
-			moveBackward(1,toMove);
-			moved = true;
-		}
-	}
-	if (moved) {
-	    newPos.add(toMove);
-	    intersectToHighlight();
-	} 
-
-	moveToLegal(game.currentBlock, newPos);
-	setPosition(newPos, rollOverMesh.position);
-	if (toCheckGoal) {
-	    game.checkGoal(moved, false, false);
-	}  
-}
-
 // draws the normal line for debugging
 function drawNormal(origin, normal) {
 	var lineGeo = new THREE.Geometry();
