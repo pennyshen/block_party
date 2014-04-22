@@ -121,13 +121,15 @@
 				<br>
 			</font>
 	    </div>
-	    <div id="levelText">
-	    	<span id="numLevel" class="helper"></span>
-	    	<br>
-	    	<span id="bestTime" class="helper">Best Time:</span>
-	    	<br>
-	    	<span id="timer" class="helper">0:00 </span>
-	    	<br>
+	    <div id="levelInfo" class="info">
+	    	<font color ="white">
+		    	Level: <span id="numLevel" class="helper"></span>
+		    	<br>
+		    	<span id="bestTime" class="helper"></span>
+		    	<br>
+		    	<span id="timer" class="helper">0:00</span>
+		    	<br>
+	    	</font>
 	    </div>
 	    <span id="hint"></span>
 	    <span id="center_tooltip"></span>
@@ -199,11 +201,11 @@
 		var center_tooltip_doc = document.getElementById("center_tooltip");
 		var randomInfo_doc = document.getElementById("randomInfo");
 		// var mainMusicSource_doc = document.getElementById("mainMusicSource");
-		var levelText_doc = document.getElementById("levelText");
+		var levelInfo_doc = document.getElementById("levelInfo");
 
 		var nav_items = [menu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
 			selectBlockScreen_doc, loading_doc, about_doc];
-		var info_items = [randomInfo_doc, hint_doc, center_tooltip_doc, levelText_doc];
+		var info_items = [randomInfo_doc, hint_doc, center_tooltip_doc, levelInfo_doc];
 
 		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Menu</a><br>';
 		var backToMainMenu_string = '<br><br><a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)" style="margin-bottom:50px">Main Menu</a>';

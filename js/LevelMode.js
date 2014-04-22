@@ -114,8 +114,8 @@ LevelMode.prototype.getBlock = function(name) {
 LevelMode.prototype.showLevel = function() {
 	hideAllNav();
 
-	showElement(levelText_doc);
-	numLevel_doc.innerHTML = "Level:" + (this.level + 1);
+	showElement(levelInfo_doc);
+	numLevel_doc.innerHTML = this.level + 1;
 
 	//if tutorial, don't show anything time-related
 	if (this.levelType == LevelContent.TUTORIAL){
@@ -172,10 +172,10 @@ LevelMode.prototype.startLevel = function(level) {
 	//sets the best time
 	var exp = eval("localStorage.X" +this.levelType.substring(0,2)+this.level+";");
 	if(exp!=null && exp!="yes"){ //this is to prevent old localStorage items
-		best_time.innerHTML = "PR " + exp;
+		best_time.innerHTML = "Best time: " + exp;
 	}
 	else{
-		best_time.innerHTML = "PR:N/A";
+		best_time.innerHTML = "Best time: N/A";
 	}	
 } 
 
