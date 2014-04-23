@@ -310,6 +310,7 @@ function refreshHighScore(){
 	var total_time = 0;
 	for(var j in LevelContent.levels){
 		var levelCount = 0;
+		var padding;
 		for(var k in LevelContent.levels[j]){
 			//initialize values if no record
 			if(completed[j]==null){
@@ -321,14 +322,22 @@ function refreshHighScore(){
 			//calcualte number of levels
 			levelCount++;
 		}
-		highscore_doc.innerHTML += '<a class="highscoreEntry">' + j + ':' + completed[j]+ '/' + 
-			levelCount + ' Time ' + ('0'+Math.floor(time[j]/60)).slice(-2) + ':' + ('0'+Math.floor(time[j]%60)).slice(-2)+'</a><br>';
+
+		var entryClass;
+		if (j == "Monster Cubes") {
+			entryClass = '<a class="highscoreEntry leftShift">'
+		} else {
+			entryClass = '<a class="highscoreEntry">';
+		}
+
+		highscore_doc.innerHTML += entryClass + j + "<span class='centerPadding'>" + completed[j]+ '/' + 
+			levelCount + '</span>' + ('0'+Math.floor(time[j]/60)).slice(-2) + ':' + ('0'+Math.floor(time[j]%60)).slice(-2)+'</a><br>';
 		total_completed += completed[j];
 		total_levels += levelCount;
 		total_time += time[j];
 	}
-	highscore_doc.innerHTML += '<a class="highscoreEntry">' + 'Total:' + total_completed+ '/' + 
-			total_levels + ' Time ' + ("0" + Math.floor(total_time/60)).slice(-2) + ':' + ("0"+Math.floor(total_time%60)).slice(-2)+'</a><br>';
-	highscore_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(confirmationPage)">Clear Progress</a><br>';
+	highscore_doc.innerHTML += '<a class="highscoreEntry" style="left:1em;">' + "Total <span class='centerPadding'>" + total_completed+ '/' + 
+			total_levels + '</span>' + ("0" + Math.floor(total_time/60)).slice(-2) + ':' + ("0"+Math.floor(total_time%60)).slice(-2)+'</a><br>';
+	highscore_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(confirmationPage)">Clear Record</a><br>';
 	highscore_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Main Menu</a><br>';
 }

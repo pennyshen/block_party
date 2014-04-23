@@ -116,7 +116,7 @@ h1 {margin-top: 5%;}
 }
 
 .highscoreEntry {
-    font-size: 20px;
+    font-size: 25px;
     display: block;
     top: 10%;   
     left: 0; 
@@ -124,6 +124,10 @@ h1 {margin-top: 5%;}
     margin: 0 auto; 
     width: 1100px;
     line-height: 35px;
+}
+
+.leftShift {
+    left: -2em;
 }
 
 .menuItem {
@@ -156,6 +160,11 @@ h1 {margin-top: 5%;}
     border-top: 5px solid red;
     border-bottom: 5px solid red;    
     cursor:default;
+}
+
+.centerPadding {
+    padding-right: 5em;
+    padding-left: 5em;
 }
 
 a.link {
