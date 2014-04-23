@@ -171,34 +171,6 @@ Game.prototype = {
 		}
 	},
 
-	computeBoundingBox: function() {
-		// calcualtes the volume of the bounding box
-		var x_dif = this.max_x - this.min_x;
-		var y_dif = this.max_y - this.min_y;
-		var z_dif = this.max_z - this.min_z;
-		var cube_vol = x_dif * y_dif * z_dif;
-		// this.score = Math.round((this.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100);
-
-		this.score = this.totalVolume * 10 + (Math.pow((this.scoreGame()),3))*100;
-		score_doc.innerHTML = this.score;
-		
-		if (this.boundingBox) {
-			scene.remove(this.boundingBox);
-			this.boundingBox.geometry.dispose();
-		}
-
-		var geom = new THREE.CubeGeometry(this.max_x - this.min_x, this.max_y - this.min_y, this.max_z - this.min_z);
-		this.boundingBox = new THREE.Line( geo2line(geom), Game.box_material, THREE.LinePieces );
-		this.boundingBox.toBeRemoved = true;
-
-		this.boundingBox.position.x = (this.max_x + this.min_x) / 2;
-		this.boundingBox.position.y = (this.max_y + this.min_y) / 2;
-		this.boundingBox.position.z = (this.max_z + this.min_z) / 2;
-
-		this.boundingBox.visible = false;
-		scene.add(this.boundingBox);	
-	},
-
 	exportFromCurrent: function() {
 		return JSON.stringify(this.currentBlock._getPositions(this.currentBlock.mesh.position));
 	},

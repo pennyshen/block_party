@@ -19,3 +19,11 @@ function copyGoal(goal) {
 	newGoal.goalText = goal.goalText;
 	return newGoal;
 }
+
+function RandomLevel(cubeSize, timeLimit, newbieScore, expertScore, superStarScore) {
+	this.cubeSize = cubeSize;
+	this.timeLimit = timeLimit;
+	this.newbieScore = newbieScore;
+	this.expertScore = expertScore;
+	this.superStarScore = superStarScore;
+}

@@ -497,5 +497,9 @@ function add_voxel( ) {
     moveTowardsPlayer(rollOverMesh.position);
 
     scene.add( rollOverMesh );
+
+    if (game.maxCubeSize >= game.level.cubeSize) {
+        game.endGame();
+    }
 }
 

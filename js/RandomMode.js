@@ -6,11 +6,22 @@ function RandomMode() {
 	this.mode = Game.MODE_RANDOM;
 
 	LevelContent.worlds[LevelContent.TUTORIAL].loadWorld();
+	
+	// level stuff
+	this.level = RandomMode.levels[0];
+	cubeSize_doc.innerHTML = this.level.cubeSize + "x" + this.level.cubeSize + "x" + this.level.cubeSize;
+	
+	this.maxCubeSize = 0;
 
 	showElement(randomInfo_doc);
 }
 
 RandomMode.prototype = Object.create(Game.prototype);
+
+RandomMode.levels = [
+	new RandomLevel(3, 1.5),
+	new RandomLevel(4, 3)
+];
 
 RandomMode.prototype.getNextBlock = function() {
 	var toReturn;
@@ -46,6 +57,35 @@ RandomMode.prototype.setCount = function(count, x, y, z) {
 	count[x][y][z] = Math.min.apply(null, neighborCounts) + 1;
 
 }
+
+RandomMode.prototype.computeBoundingBox = function() {
+	// calcualtes the volume of the bounding box
+	var x_dif = this.max_x - this.min_x;
+	var y_dif = this.max_y - this.min_y;
+	var z_dif = this.max_z - this.min_z;
+	var cube_vol = x_dif * y_dif * z_dif;
+	// this.score = Math.round((this.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100);
+
+	this.scoreGame();
+	// this.score = this.totalVolume * 10 + (Math.pow((this.scoreGame()),3))*100;
+	// score_doc.innerHTML = this.score;
+	
+	if (this.boundingBox) {
+		scene.remove(this.boundingBox);
+		this.boundingBox.geometry.dispose();
+	}
+
+	var geom = new THREE.CubeGeometry(this.max_x - this.min_x, this.max_y - this.min_y, this.max_z - this.min_z);
+	this.boundingBox = new THREE.Line( geo2line(geom), Game.box_material, THREE.LinePieces );
+	this.boundingBox.toBeRemoved = true;
+
+	this.boundingBox.position.x = (this.max_x + this.min_x) / 2;
+	this.boundingBox.position.y = (this.max_y + this.min_y) / 2;
+	this.boundingBox.position.z = (this.max_z + this.min_z) / 2;
+
+	this.boundingBox.visible = false;
+	scene.add(this.boundingBox);	
+};
 
 RandomMode.prototype.scoreGame = function() {
 	var numReduced = 0;
@@ -92,15 +132,46 @@ RandomMode.prototype.scoreGame = function() {
 		}
 	}
 
+	this.maxCubeSize = maxCount;
 	return maxCount;
 };
 
 RandomMode.prototype.endGame = function() {
 	setGameInProgress(false);
-	showElement(endScreen_doc);
 
-	endScreen_doc.innerHTML = "<h1>Final score: " + this.score + "</h1><br>"
-		+ '<a href="javascript: void(0)" class="menuItem" onClick="restartLevel()">Play again</a><br>'
+	var volumeOverflow;
+	var timeScore, volumeScore, perfectBonus;
+	var timeRemaining = game.level.timeLimit*60*1000 - this.gameTime;
+	var scoreString = "";
+
+	if (timeElapsed <= 0) {
+		endScreen_doc.innerHTML = "<h1>Fail! Try again?</h1><br>"
+	} else {
+		scoreString = "<div id='scoreBoard'>"
+
+		timeScore = Math.floor(timeRemaining / 1000) * 100;
+		scoreString += "<a class='instructions'> + " + timeScore + " (speed)</a> <br>";
+		this.score += timeScore;
+		
+		volumeOverflow = this.totalVolume - this.level.cubeSize * this.level.cubeSize * this.level.cubeSize;
+		volumeScore = 10 * volumeOverflow;
+		scoreString += "<a class='instructions'> - " + volumeScore + " (extra volume)</a> <br>";
+		this.score -= volumeScore;
+
+		if (volumeOverflow == 0) {
+			perfectBonus = 500;
+			endScreen_doc.innerHTML += "<a class='instructions'> + " + perfectBonus + " (perfect cube!) </a><br>";
+			this.score += perfectBonus;
+		} 
+
+		scoreString += "</div>";
+		endScreen_doc.innerHTML = "<h1>Final score: " + this.score + "</h1><br>" + scoreString;
+
+	}
+
+	endScreen_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="restartLevel()">Play again</a><br>'
 		+ backToMenu_string;
+
+	showElement(endScreen_doc);
 };
 

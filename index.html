@@ -20,6 +20,7 @@
 	<script src="js/libs/OrbitControls.js"></script>
 
 	<!-- our own javascript objects -->
+	<script src="js/Level.js"></script>
 	<script src="js/Wall.js"></script>
 	<script src="js/BlockGenerator.js"></script>
 	<script src="js/Game.js"></script>
@@ -27,7 +28,6 @@
 	<script src="js/LevelMode.js"></script>
 	<script src="js/TutorialMode.js"></script>
 	<script src="js/Block.js"></script>
-	<script src="js/Level.js"></script>
 	<script src="js/World.js"></script>
 	<script src="js/LevelContent.js"></script>
 
@@ -40,7 +40,7 @@
 		<h1>Block Party</h1>
 		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_TUTORIAL)">Tutorial</a>
 		<br>
-		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_LEVEL)">Challenges</a>
+		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_LEVEL)">Puzzle World</a>
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_RANDOM)">Freestyle</a>
 		<br>
@@ -110,7 +110,9 @@
 
     <div id="game">
 	    <div id="randomInfo" class="info">
-	    	<font color ="white">	    	
+	    	<font color ="white">	  
+	    		Cube Size: <span id="cubeSize"></span>
+	    		<br>  	
 			    Volume: <span id ="volume_used">0</span>
 			    <br>
 			    Score: <span id="score">0</span>		    
@@ -202,6 +204,7 @@
 		var randomInfo_doc = document.getElementById("randomInfo");
 		// var mainMusicSource_doc = document.getElementById("mainMusicSource");
 		var levelInfo_doc = document.getElementById("levelInfo");
+		var cubeSize_doc = document.getElementById("cubeSize");
 
 		var nav_items = [menu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
 			selectBlockScreen_doc, loading_doc, about_doc];
@@ -457,7 +460,7 @@
 				mins = Math.floor(secs / 60);
 				timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs%60).slice(-2);
 				if (game.mode == Game.MODE_RANDOM) {
-					timeRemaining = Math.max(0, 3*60*1000- timeElapsed);
+					timeRemaining = Math.max(0, game.level.timeLimit*60*1000 - timeElapsed);
 					if (timeRemaining <= 0) {
 						game.endGame();
 					}					
