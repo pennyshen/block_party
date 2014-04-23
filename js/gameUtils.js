@@ -308,6 +308,7 @@ function refreshHighScore(){
 	var total_completed = 0;
 	var total_levels = 0;
 	var total_time = 0;
+	highscore_doc.innerHTML += "<a class = 'highscoreEntry' style='left:5em; padding-bottom: 17px'>Completed &nbsp;&nbsp;Time<br>"
 	for(var j in LevelContent.levels){
 		var levelCount = 0;
 		var padding;
