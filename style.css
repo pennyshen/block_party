@@ -22,6 +22,10 @@ body {
 
 }
 
+#scoreBoard {
+    margin-top: 100px;
+}
+
 .levelselect {
 
     -webkit-column-count:2; 
@@ -159,7 +163,7 @@ a#start{top: 100%;}
 #oldie { background-color: #ddd !important }
 
 .info {
-    top: 5px;
+    top: 10px;
     right: 10px;
     width: 100%;
     text-align: right;

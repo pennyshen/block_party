@@ -42,7 +42,7 @@
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_LEVEL)">Puzzle World</a>
 		<br>
-		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_RANDOM)">Freestyle</a>
+		<a href="javascript: void(0)" class="menuItem" onclick="initGame(Game.MODE_RANDOM)">Improv World</a>
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(instructions_doc)">Instructions</a>
 		<br>
@@ -460,7 +460,7 @@
 				mins = Math.floor(secs / 60);
 				timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs%60).slice(-2);
 				if (game.mode == Game.MODE_RANDOM) {
-					timeRemaining = Math.max(0, game.level.timeLimit*60*1000 - timeElapsed);
+					timeRemaining = Math.max(0, game.timeLimit*60*1000 - timeElapsed);
 					if (timeRemaining <= 0) {
 						game.endGame();
 					}					

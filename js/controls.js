@@ -481,6 +481,11 @@ function add_voxel( ) {
         game.checkGoal(false, false, true);
     }
    
+    if (game.maxCubeSize >= game.cubeSize) {
+        render();
+        game.endGame();
+    }
+
     // create new block and use that new block as rollover
     game.getNextBlock();
 
@@ -497,9 +502,5 @@ function add_voxel( ) {
     moveTowardsPlayer(rollOverMesh.position);
 
     scene.add( rollOverMesh );
-
-    if (game.maxCubeSize >= game.level.cubeSize) {
-        game.endGame();
-    }
 }
 

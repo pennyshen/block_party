@@ -8,8 +8,10 @@ function RandomMode() {
 	LevelContent.worlds[LevelContent.TUTORIAL].loadWorld();
 	
 	// level stuff
-	this.level = RandomMode.levels[0];
-	cubeSize_doc.innerHTML = this.level.cubeSize + "x" + this.level.cubeSize + "x" + this.level.cubeSize;
+	this.timeLimit = 8;
+	this.cubeSize = 5;
+	// this.level = RandomMode.levels[0];
+	// cubeSize_doc.innerHTML = this.level.cubeSize + "x" + this.level.cubeSize + "x" + this.level.cubeSize;
 	
 	this.maxCubeSize = 0;
 
@@ -141,7 +143,7 @@ RandomMode.prototype.endGame = function() {
 
 	var volumeOverflow;
 	var timeScore, volumeScore, perfectBonus;
-	var timeRemaining = game.level.timeLimit*60*1000 - this.gameTime;
+	var timeRemaining = game.timeLimit*60*1000 - this.gameTime;
 	var scoreString = "";
 
 	if (timeElapsed <= 0) {
@@ -149,17 +151,18 @@ RandomMode.prototype.endGame = function() {
 	} else {
 		scoreString = "<div id='scoreBoard'>"
 
-		timeScore = Math.floor(timeRemaining / 1000) * 100;
+		timeScore = Math.floor(timeRemaining / 1000) * 50;
 		scoreString += "<a class='instructions'> + " + timeScore + " (speed)</a> <br>";
 		this.score += timeScore;
 		
-		volumeOverflow = this.totalVolume - this.level.cubeSize * this.level.cubeSize * this.level.cubeSize;
-		volumeScore = 10 * volumeOverflow;
+		volumeOverflow = this.totalVolume - this.cubeSize * this.cubeSize * this.cubeSize;
+		console.log("extra volume: " + volumeOverflow);
+		volumeScore = 100 * volumeOverflow;
 		scoreString += "<a class='instructions'> - " + volumeScore + " (extra volume)</a> <br>";
 		this.score -= volumeScore;
 
 		if (volumeOverflow == 0) {
-			perfectBonus = 500;
+			perfectBonus = 2000;
 			endScreen_doc.innerHTML += "<a class='instructions'> + " + perfectBonus + " (perfect cube!) </a><br>";
 			this.score += perfectBonus;
 		} 
