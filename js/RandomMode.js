@@ -183,7 +183,7 @@ RandomMode.prototype.endGame = function() {
 		this.score += timeScore;
 		
 		volumeOverflow = this.totalVolume - this.cubeSize * this.cubeSize * this.cubeSize;
-		volumeScore = 100 * volumeOverflow;
+		volumeScore = 200 * volumeOverflow;
 		scoreString += "<a class='instructions'> - " + volumeScore + " (extra volume)</a> <br>";
 		this.score -= volumeScore;
 
