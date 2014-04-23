@@ -296,7 +296,6 @@ function rotate( camera_axis, direction ) {
             case 4: game.currentBlock.rotateAroundWorldAxis("z",90); break;
         }  
     }
-
 }
 
 //assumes that you are in an illegal position
@@ -475,7 +474,6 @@ function add_voxel( ) {
 
     // update all blocks
     game.addToExisting(game.currentBlock, voxel.position);
-    volume_doc.innerHTML = game.totalVolume; 
 
     if (toCheckGoal) {
         game.checkGoal(false, false, true);

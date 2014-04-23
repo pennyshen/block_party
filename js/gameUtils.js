@@ -88,9 +88,6 @@ function initGame(gameMode) {
 		toCheckGoal = true;
 	}
 
-	volume_doc.innerHTML = game.totalVolume;
-	score_doc.innerHTML = game.score;
-
 }
 
 function startGame() {
@@ -288,7 +285,7 @@ function clearLocalStorage(){
 
 
 function refreshHighScore(){
-	highscore.innerHTML="<h1>Progress</h1><br>";
+	highscore.innerHTML="<h1>Game Record</h1><br>";
 	var completed = new Object();
 	var time = new Object();
 	for(var i in window.localStorage){

@@ -46,7 +46,7 @@
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(instructions_doc)">Instructions</a>
 		<br>
-		<a href="javascript: void(0)" class="menuItem" onClick="refreshHighScore();showElementAndHideNav(highscore_doc)">Progress</a>
+		<a href="javascript: void(0)" class="menuItem" onClick="refreshHighScore();showElementAndHideNav(highscore_doc)">Game Record</a>
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(about_doc)">About</a>
 		<br>
@@ -125,14 +125,6 @@
     <div id="game">
 	    <div id="randomInfo" class="info">
 	    	<font color ="white">	  
-	    		Cube Size: <span id="cubeSize"></span>
-	    		<br>  	
-			    Volume: <span id ="volume_used">0</span>
-			    <br>
-			    Score: <span id="score">0</span>		    
-			    <br>
-			    <span id="showNextPiece">Next piece: <span id="nextPiece"></span></span>
-				<br>
 				<span id="randomTimer">0:00 </span>
 				<br>
 			</font>
@@ -210,11 +202,7 @@
 		var randomTimer_doc = document.getElementById( 'randomTimer' );
 		var best_time = document.getElementById( 'bestTime');
 		var numLevel_doc = document.getElementById( 'numLevel' );
-		var volume_doc = document.getElementById( 'volume_used' );
 		var blocker = document.getElementById("blocker");
-		var nextPiece_doc = document.getElementById( 'nextPiece' );
-		var showNextPiece_doc = document.getElementById( 'showNextPiece' );
-		var score_doc = document.getElementById("score");
 		var hint_doc = document.getElementById("hint");
 		var center_tooltip_doc = document.getElementById("center_tooltip");
 		var randomInfo_doc = document.getElementById("randomInfo");

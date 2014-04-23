@@ -10,8 +10,6 @@ function RandomMode() {
 	// level stuff
 	this.timeLimit = 8;
 	this.cubeSize = 5;
-	// this.level = RandomMode.levels[0];
-	// cubeSize_doc.innerHTML = this.level.cubeSize + "x" + this.level.cubeSize + "x" + this.level.cubeSize;
 	
 	this.maxCubeSize = 0;
 
@@ -19,11 +17,6 @@ function RandomMode() {
 }
 
 RandomMode.prototype = Object.create(Game.prototype);
-
-RandomMode.levels = [
-	new RandomLevel(3, 1.5),
-	new RandomLevel(4, 3)
-];
 
 RandomMode.prototype.getNextBlock = function() {
 	var toReturn;
@@ -36,89 +29,44 @@ RandomMode.prototype.getNextBlock = function() {
 	this.currentBlock = toReturn;
 	this.currentAliveTime = 0;
 	this.nextBlockName = getRandomMember(BlockGenerator.randomModeShapes);
-	nextPiece_doc.innerHTML = this.nextBlockName;
+	
 	this.createGoalShape();
+
 	return toReturn;
 };
 
 RandomMode.prototype.createGoalShape = function() {
-	var block = BlockGenerator.generate(this.nextBlockName);
-	var children = [];
-	this.preview = block.mesh;
-	this.preview.toBeRemoved = true;
-	this.preview.name = "preview";
-	this.preview.matrixAutoUpdate = false;
-    this.preview.geometry.verticesNeedUpdate = true;
-    this.preview.castShadow = false;
-    this.preview.renderDepth = 1.0;
-    this.preview.material.opacity = 0;
-    this.preview.material.side = THREE.FrontSide;
-    this.preview.scale.multiplyScalar(1.003);
-    this.preview.updateMatrix();    
+	var shape = cloneVectors(BlockGenerator.shapes[this.nextBlockName]);
+	var shapePosition;
+	// var block = BlockGenerator.generate(this.nextBlockName);
+	var shapeHeight = 0;
 
-    console.log("wireframe:",this.wireframe);
-    if (this.wireframe1 != undefined) {
+	for (var i = 0; i < this.currentBlock.shape.length; i++) {
+		shapeHeight = Math.max(this.currentBlock.shape[i].y, shapeHeight);
+	}
+
+	var minHeight = 0;
+	for (var i = 0; i < shape.length; i++) {
+		minHeight = Math.min(shape[i].y, minHeight);
+	}
+	for (var i = 0; i < shape.length; i++) {
+		shape[i].y = shape[i].y + 2 * (shapeHeight + 2 - minHeight);
+	}
+
+	var block = BlockGenerator.getBlock(this.nextBlockName, shape, BlockGenerator.colors[BlockGenerator.shapesToColors[this.nextBlockName]])
+
+    if (this.wireframe1) {
     	scene.remove(this.wireframe1);
-    	console.log("removed wireframe");
     }
-    if (this.wireframe2 != undefined) {
-    	scene.remove(this.wireframe2);
-    	console.log("removed wireframe");
-    }
-    if (this.wireframe3 != undefined) {
-    	scene.remove(this.wireframe3);
-    	console.log("removed wireframe");
-    }
-    if (this.wireframe4 != undefined) {
-    	scene.remove(this.wireframe4);
-    	console.log("removed wireframe");
-    }
-	var wireframe1 = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
-	var wireframe2 = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
-	
-	var wireframe3 = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
-	var wireframe4 = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
 
-	wireframe1.rotation.set(0,Math.PI/2, 0);
-	wireframe2.rotation.set(0,-Math.PI/2, 0);
-	this.wireframe1 = wireframe1;
-	this.wireframe2 = wireframe2;
-	this.wireframe3 = wireframe3;
-	this.wireframe4 = wireframe4;
-
-	wireframe1.toBeRemoved = true;
-	wireframe2.toBeRemoved = true;
-	wireframe3.toBeRemoved = true;
-	wireframe4.toBeRemoved = true;
-
-
-	wireframe1.position.x += STEP_SIZE/2 - STEP_SIZE*12;
-	wireframe1.position.y += STEP_SIZE/2 + STEP_SIZE*2;
-	wireframe1.position.z += STEP_SIZE/2;	
-
-	wireframe2.position.x += STEP_SIZE/2 - STEP_SIZE*12;
-	wireframe2.position.y += STEP_SIZE/2 + STEP_SIZE*2;
-	wireframe2.position.z += STEP_SIZE/2;
-		
-	wireframe3.position.x += STEP_SIZE/2;
-	wireframe3.position.y += STEP_SIZE/2 + STEP_SIZE*2;
-	wireframe3.position.z += STEP_SIZE/2 + STEP_SIZE*12;
-		
-	wireframe4.position.x += STEP_SIZE/2;
-	wireframe4.position.y += STEP_SIZE/2 + STEP_SIZE*2;
-	wireframe4.position.z += STEP_SIZE/2 - STEP_SIZE*12;
-
-
-	// this.goal = shape;
-	// this.goalObject = wireframe;
-	// this.goalObject.name = "goalObject";
-	// scene.add(this.preview);
-	scene.add(wireframe1);
-	scene.add(wireframe2);
-	scene.add(wireframe3);
-	scene.add(wireframe4);
-
+	this.wireframe1 = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
+	this.wireframe1.position = this.currentBlock.mesh.position;
+	this.wireframe1.toBeRemoved = true;
+	this.wireframe1.scale.multiplyScalar(0.5);
+	scene.add(this.wireframe1);
 }
+
+
 RandomMode.prototype.setCount = function(count, x, y, z) {
 	var neighborCounts = [];
 
@@ -225,7 +173,7 @@ RandomMode.prototype.endGame = function() {
 	var timeRemaining = game.timeLimit*60*1000 - this.gameTime;
 	var scoreString = "";
 
-	if (timeElapsed <= 0) {
+	if (timeRemaining <= 0) {
 		endScreen_doc.innerHTML = "<h1>Fail! Try again?</h1><br>"
 	} else {
 		scoreString = "<div id='scoreBoard'>"
@@ -235,7 +183,6 @@ RandomMode.prototype.endGame = function() {
 		this.score += timeScore;
 		
 		volumeOverflow = this.totalVolume - this.cubeSize * this.cubeSize * this.cubeSize;
-		console.log("extra volume: " + volumeOverflow);
 		volumeScore = 100 * volumeOverflow;
 		scoreString += "<a class='instructions'> - " + volumeScore + " (extra volume)</a> <br>";
 		this.score -= volumeScore;
