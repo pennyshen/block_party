@@ -46,6 +46,8 @@
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(instructions_doc)">Instructions</a>
 		<br>
+		<a href="javascript: void(0)" class="menuItem" onClick="refreshHighScore();showElementAndHideNav(highscore_doc)">Progress</a>
+		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(about_doc)">About</a>
 		<br>
 	</div>	
@@ -73,6 +75,18 @@
 		<a class="instructions">MOUSE WHEEL = Zoom</a>
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Main Menu</a>
+		<br>
+	</div>
+
+	<div id="highscore" class="nav">
+	</div>
+
+	<div id="confirmationPage" class="nav">
+		<h1>Are you sure?</h1>
+		<br>
+		<a href="javascript: void(0)" class="menuItem" onClick="clearLocalStorage();refreshHighScore();showElementAndHideNav(highscore)">Yes</a>
+		<br>
+		<a href="javascript: void(0)" class="menuItem" onClick="refreshHighScore();showElementAndHideNav(highscore)">No</a>
 		<br>
 	</div>
 
@@ -189,6 +203,8 @@
 		var loading_doc = document.getElementById("loading");
 		var loading_text_doc = document.getElementById("loading_text");
 		var about_doc = document.getElementById("about");
+		var highscore_doc = document.getElementById("highscore");
+		var confirmationPage_doc = document.getElementById("confirmationPage");
 
 		var timer = document.getElementById( 'timer');
 		var randomTimer_doc = document.getElementById( 'randomTimer' );
@@ -207,7 +223,7 @@
 		var cubeSize_doc = document.getElementById("cubeSize");
 
 		var nav_items = [menu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
-			selectBlockScreen_doc, loading_doc, about_doc];
+			selectBlockScreen_doc, loading_doc, about_doc, highscore_doc, confirmationPage_doc];
 		var info_items = [randomInfo_doc, hint_doc, center_tooltip_doc, levelInfo_doc];
 
 		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Menu</a><br>';

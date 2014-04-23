@@ -63,8 +63,15 @@ h1, p, a {
     margin: 0;
 }
 
-
 #levelModeMenu {
+    overflow-y: scroll;
+}
+
+#menu{
+    overflow-y: scroll;
+}
+
+#highscore {
     overflow-y: scroll;
 }
 
@@ -98,6 +105,17 @@ h1 {margin-top: 5%;}
 }
 
 .instructions {
+    font-size: 20px;
+    display: block;
+    top: 10%;   
+    left: 0; 
+    text-decoration: none;
+    margin: 0 auto; 
+    width: 1100px;
+    line-height: 35px;
+}
+
+.highscoreEntry {
     font-size: 20px;
     display: block;
     top: 10%;   

@@ -278,3 +278,60 @@ function cloneVectors(vectors) {
 	}
 	return newVectors;
 }
+
+
+
+function clearLocalStorage(){
+	//clears level information
+	localStorage.clear();
+}
+
+
+function refreshHighScore(){
+	highscore.innerHTML="<h1>Progress</h1><br>";
+	var completed = new Object();
+	var time = new Object();
+	for(var i in window.localStorage){
+		var item = localStorage.getItem(i); 
+		for(var levelName  in LevelContent.levels){
+			if(i.substring(1,3) == levelName.substring(0,2)){
+				//incremented completed levels
+				if(completed[levelName]==null){
+					completed[levelName] = 0;
+				}
+				completed[levelName]++;
+				//add time
+				if(time[levelName]==null){
+					time[levelName] = 0;
+				}
+				time[levelName] += parseInt(item.split(':')[0])*60+parseInt(item.split(':')[1]);
+			}
+		}
+	}
+	var total_completed = 0;
+	var total_levels = 0;
+	var total_time = 0;
+	for(var j in LevelContent.levels){
+		var levelCount = 0;
+		for(var k in LevelContent.levels[j]){
+			//initialize values if no record
+			if(completed[j]==null){
+					completed[j] = 0;
+			}
+			if(time[j]==null){
+				time[j] = 0;
+			}
+			//calcualte number of levels
+			levelCount++;
+		}
+		highscore_doc.innerHTML += '<a class="highscoreEntry">' + j + ':' + completed[j]+ '/' + 
+			levelCount + ' Time ' + ('0'+Math.floor(time[j]/60)).slice(-2) + ':' + ('0'+Math.floor(time[j]%60)).slice(-2)+'</a><br>';
+		total_completed += completed[j];
+		total_levels += levelCount;
+		total_time += time[j];
+	}
+	highscore_doc.innerHTML += '<a class="highscoreEntry">' + 'Total:' + total_completed+ '/' + 
+			total_levels + ' Time ' + ("0" + Math.floor(total_time/60)).slice(-2) + ':' + ("0"+Math.floor(total_time%60)).slice(-2)+'</a><br>';
+	highscore_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(confirmationPage)">Clear Progress</a><br>';
+	highscore_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Main Menu</a><br>';
+}
