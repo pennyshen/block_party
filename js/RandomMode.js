@@ -37,9 +37,88 @@ RandomMode.prototype.getNextBlock = function() {
 	this.currentAliveTime = 0;
 	this.nextBlockName = getRandomMember(BlockGenerator.randomModeShapes);
 	nextPiece_doc.innerHTML = this.nextBlockName;
+	this.createGoalShape();
 	return toReturn;
 };
 
+RandomMode.prototype.createGoalShape = function() {
+	var block = BlockGenerator.generate(this.nextBlockName);
+	var children = [];
+	this.preview = block.mesh;
+	this.preview.toBeRemoved = true;
+	this.preview.name = "preview";
+	this.preview.matrixAutoUpdate = false;
+    this.preview.geometry.verticesNeedUpdate = true;
+    this.preview.castShadow = false;
+    this.preview.renderDepth = 1.0;
+    this.preview.material.opacity = 0;
+    this.preview.material.side = THREE.FrontSide;
+    this.preview.scale.multiplyScalar(1.003);
+    this.preview.updateMatrix();    
+
+    console.log("wireframe:",this.wireframe);
+    if (this.wireframe1 != undefined) {
+    	scene.remove(this.wireframe1);
+    	console.log("removed wireframe");
+    }
+    if (this.wireframe2 != undefined) {
+    	scene.remove(this.wireframe2);
+    	console.log("removed wireframe");
+    }
+    if (this.wireframe3 != undefined) {
+    	scene.remove(this.wireframe3);
+    	console.log("removed wireframe");
+    }
+    if (this.wireframe4 != undefined) {
+    	scene.remove(this.wireframe4);
+    	console.log("removed wireframe");
+    }
+	var wireframe1 = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
+	var wireframe2 = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
+	
+	var wireframe3 = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
+	var wireframe4 = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
+
+	wireframe1.rotation.set(0,Math.PI/2, 0);
+	wireframe2.rotation.set(0,-Math.PI/2, 0);
+	this.wireframe1 = wireframe1;
+	this.wireframe2 = wireframe2;
+	this.wireframe3 = wireframe3;
+	this.wireframe4 = wireframe4;
+
+	wireframe1.toBeRemoved = true;
+	wireframe2.toBeRemoved = true;
+	wireframe3.toBeRemoved = true;
+	wireframe4.toBeRemoved = true;
+
+
+	wireframe1.position.x += STEP_SIZE/2 - STEP_SIZE*12;
+	wireframe1.position.y += STEP_SIZE/2 + STEP_SIZE*2;
+	wireframe1.position.z += STEP_SIZE/2;	
+
+	wireframe2.position.x += STEP_SIZE/2 - STEP_SIZE*12;
+	wireframe2.position.y += STEP_SIZE/2 + STEP_SIZE*2;
+	wireframe2.position.z += STEP_SIZE/2;
+		
+	wireframe3.position.x += STEP_SIZE/2;
+	wireframe3.position.y += STEP_SIZE/2 + STEP_SIZE*2;
+	wireframe3.position.z += STEP_SIZE/2 + STEP_SIZE*12;
+		
+	wireframe4.position.x += STEP_SIZE/2;
+	wireframe4.position.y += STEP_SIZE/2 + STEP_SIZE*2;
+	wireframe4.position.z += STEP_SIZE/2 - STEP_SIZE*12;
+
+
+	// this.goal = shape;
+	// this.goalObject = wireframe;
+	// this.goalObject.name = "goalObject";
+	// scene.add(this.preview);
+	scene.add(wireframe1);
+	scene.add(wireframe2);
+	scene.add(wireframe3);
+	scene.add(wireframe4);
+
+}
 RandomMode.prototype.setCount = function(count, x, y, z) {
 	var neighborCounts = [];
 
