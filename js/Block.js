@@ -61,6 +61,15 @@ Block.prototype._getPositions = function(realPosition) {
     return positions;
 }
 
+Block.prototype.getWireframe = function() {
+    var wireframe = new THREE.Line( geo2line(this.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
+    wireframe.toBeRemoved = true;
+    wireframe.position.x += STEP_SIZE/2;
+    wireframe.position.y += STEP_SIZE/2;
+    wireframe.position.z += STEP_SIZE/2;    
+    return wireframe;
+}
+
 Block.prototype.isPosLegal = function(realPosition) {
     var positions, i, pos;
     var numUnits = FLOOR_SIZE_HALF / STEP_SIZE;

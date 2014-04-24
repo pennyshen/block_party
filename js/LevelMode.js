@@ -234,17 +234,11 @@ LevelMode.prototype.createGoalShape = function(shape) {
     this.preview.updateMatrix();    
     scene.add(this.preview);
 
-	var wireframe = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
-	wireframe.toBeRemoved = true;
-	wireframe.position.x += STEP_SIZE/2;
-	wireframe.position.y += STEP_SIZE/2;
-	wireframe.position.z += STEP_SIZE/2;
-
 	this.goal = shape;
-	this.goalObject = wireframe;
+	this.goalObject = block.getWireframe();
 	this.goalObject.name = "goalObject";
 
-	scene.add(wireframe);
+	scene.add(this.goalObject);
 }
 
 LevelMode.prototype.getNextBlock = function() {
