@@ -13,6 +13,9 @@ function RandomMode() {
 	
 	this.maxCubeSize = 0;
 
+	biggestCube_doc.innerHTML = "0x0x0";
+	dimension_doc.innerHTML = "0x0x0";
+
 	showElement(randomInfo_doc);
 }
 
@@ -175,6 +178,7 @@ RandomMode.prototype.endGame = function() {
 	var timeScore, volumeScore, perfectBonus;
 	var timeRemaining = game.timeLimit*60*1000 - this.gameTime;
 	var scoreString = "";
+	var newRecordString;
 
 	if (timeRemaining <= 0) {
 		endScreen_doc.innerHTML = "<h1>Fail! Try again?</h1><br>"
@@ -197,17 +201,22 @@ RandomMode.prototype.endGame = function() {
 		} 
 
 		scoreString += "</div>";
-		endScreen_doc.innerHTML = "<h1>Final score: " + this.score + "</h1><br>" + scoreString;
+
+		// add result to local storage
+		console.log("local storage: " + parseInt(eval("localStorage.XRa")));
+		if (parseInt(eval("localStorage.XRa")) < this.score) {
+			localStorage.setItem('XRa', this.score);
+			newRecordString = "New record! ";
+		} else {
+			newRecordString = "Score: ";
+		}
+
+		endScreen_doc.innerHTML = "<h1>" + newRecordString +  this.score + "</h1><br>" + scoreString;
 
 	}
 
 	endScreen_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="restartLevel()">Play again</a><br>'
 		+ backToMenu_string;
-
-	// add result to local storage
-	if (parseInt(eval("localStorage.XRa")) < this.score) {
-		localStorage.setItem('XRa', this.score);
-	}
 
 	showElement(endScreen_doc);
 };

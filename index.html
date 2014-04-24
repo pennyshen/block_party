@@ -404,6 +404,12 @@
 			document.addEventListener( 'keyup', onDocumentKeyUp, false );
 			window.addEventListener( 'resize', onWindowResize, false );
 
+			// initialize loca storage
+			if (!localStorage.getItem("hasBlockPartyStorage")) {
+				localStorage.setItem("hasBlockPartyStorage", true);
+				localStorage.setItem("XRa", 0)
+			}
+
 		}
 
         // Create particle group and emitter

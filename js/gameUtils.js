@@ -340,9 +340,6 @@ function refreshHighScore(){
 	highscore_doc.innerHTML += '<a class="highscoreEntry" style="left:1em;">' + "Total <span class='centerPadding'>" + total_completed+ '/' + 
 			total_levels + '</span>' + ("0" + Math.floor(total_time/60)).slice(-2) + ':' + ("0"+Math.floor(total_time%60)).slice(-2)+'</a><br>';
 	var raHigh = eval("localStorage.XRa");
-	if(raHigh==null){
-		raHigh = 0;
-	}
 
 	highscore_doc.innerHTML += "<br><br><br>"
 	highscore_doc.innerHTML += '<a class="highscoreEntry">' + "Highest score for Freestyle: " + raHigh +'</a><br>';
