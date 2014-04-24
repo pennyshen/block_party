@@ -341,9 +341,11 @@ function refreshHighScore(){
 			total_levels + '</span>' + ("0" + Math.floor(total_time/60)).slice(-2) + ':' + ("0"+Math.floor(total_time%60)).slice(-2)+'</a><br>';
 	var raHigh = eval("localStorage.XRa");
 	if(raHigh==null){
-		raHigh = 'N/A';
+		raHigh = 0;
 	}
-	highscore_doc.innerHTML += '<a class="highscoreEntry" style="left:1em;">' + "Random Mode <span class='centerPadding'>" + raHigh +'</a><br>';
+
+	highscore_doc.innerHTML += "<br><br><br>"
+	highscore_doc.innerHTML += '<a class="highscoreEntry">' + "Highest score for Improv mode: " + raHigh +'</a><br>';
 
 	highscore_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(confirmationPage)">Clear Record</a><br>';
 	highscore_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Main Menu</a><br>';

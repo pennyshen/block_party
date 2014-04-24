@@ -201,8 +201,10 @@ RandomMode.prototype.endGame = function() {
 	endScreen_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="restartLevel()">Play again</a><br>'
 		+ backToMenu_string;
 
-	//add result to local storage
-	localStorage.setItem('XRa', this.score);
+	// add result to local storage
+	if (parseInt(eval("localStorage.XRa")) < this.score) {
+		localStorage.setItem('XRa', this.score);
+	}
 
 	showElement(endScreen_doc);
 };
