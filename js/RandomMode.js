@@ -17,7 +17,7 @@ function RandomMode() {
 	this.levelsFilled = 0;
 
 	biggestCube_doc.innerHTML = "0x0x0";
-	dimension_doc.innerHTML = "0";
+	dimension_doc.innerHTML = this.levelsFilled;
 	randomScore_doc.innerHTML = this.timeLimit * 60 * this.scorePerSecond;
 
 	showElement(randomInfo_doc);
@@ -239,7 +239,7 @@ RandomMode.prototype.scoreGame = function() {
 		scene.add(block.mesh);
 
 		this.levelsFilled++;
-		dimension_doc.innerHTML = this.levelsFilled;
+		dimension_doc.innerHTML = this.cubeSize - this.levelsFilled;
 	}
 
 
