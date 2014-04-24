@@ -287,6 +287,7 @@ RandomMode.prototype.addVoxel = function() {
 RandomMode.prototype.endGame = function() {
 	setGameInProgress(false);
 	scene.remove( this.outline );
+	render();
 
 	var volumeOverflow;
 	var timeScore, volumeScore, perfectBonus;
