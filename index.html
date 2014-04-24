@@ -75,7 +75,6 @@
 		<a class="instructions">MOUSE WHEEL = Zoom</a>
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Main Menu</a>
-		<br>
 	</div>
 
 	<div id="highscore" class="nav">
@@ -405,11 +404,7 @@
 			window.addEventListener( 'resize', onWindowResize, false );
 
 			// initialize loca storage
-			if (!localStorage.getItem("hasBlockPartyStorage")) {
-				localStorage.setItem("hasBlockPartyStorage", true);
-				localStorage.setItem("XRa", 0)
-			}
-
+			initLocalStorage();
 		}
 
         // Create particle group and emitter

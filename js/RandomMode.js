@@ -171,6 +171,27 @@ RandomMode.prototype.scoreGame = function() {
 	return maxCount;
 };
 
+RandomMode.skillLookup = function(score) {
+	var skillString, starString;
+	skillString = "<a class='instructions'>Skill level: ";
+	starString = "<a class='instructions stars'>";
+
+	if (score < 10000) {
+		skillString += "Rookie";
+		starString += "[*][ ][ ]";
+	} else if (score < 15000) {
+		skillString += "Rising Star";
+		starString += "[*][*][ ]";
+	} else {
+		skillString += "Legend";
+		starString += "[*][*][*]";
+	}
+
+	skillString += "</a>";
+	starString += "</a>";
+	return skillString + "<br>" + starString;
+}
+
 RandomMode.prototype.endGame = function() {
 	setGameInProgress(false);
 
@@ -203,15 +224,16 @@ RandomMode.prototype.endGame = function() {
 		scoreString += "</div>";
 
 		// add result to local storage
-		console.log("local storage: " + parseInt(eval("localStorage.XRa")));
 		if (parseInt(eval("localStorage.XRa")) < this.score) {
 			localStorage.setItem('XRa', this.score);
-			newRecordString = "New record! ";
+			newRecordString = "New record: ";
 		} else {
 			newRecordString = "Score: ";
 		}
 
-		endScreen_doc.innerHTML = "<h1>" + newRecordString +  this.score + "</h1><br>" + scoreString;
+
+		endScreen_doc.innerHTML = "<h1>" + newRecordString +  this.score + "</h1><br>" + scoreString
+			+ "<br>" + RandomMode.skillLookup(this.score);
 
 	}
 

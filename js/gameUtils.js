@@ -276,11 +276,18 @@ function cloneVectors(vectors) {
 	return newVectors;
 }
 
+function initLocalStorage() {
+	if (!localStorage.getItem("hasBlockPartyStorage")) {
+		localStorage.setItem("hasBlockPartyStorage", true);
+		localStorage.setItem("XRa", 0)
+	}	
+}
 
 
 function clearLocalStorage(){
 	//clears level information
 	localStorage.clear();
+	initLocalStorage();
 }
 
 
@@ -339,10 +346,14 @@ function refreshHighScore(){
 	}
 	highscore_doc.innerHTML += '<a class="highscoreEntry" style="left:1em;">' + "Total <span class='centerPadding'>" + total_completed+ '/' + 
 			total_levels + '</span>' + ("0" + Math.floor(total_time/60)).slice(-2) + ':' + ("0"+Math.floor(total_time%60)).slice(-2)+'</a><br>';
-	var raHigh = eval("localStorage.XRa");
+	var raHigh = parseInt(eval("localStorage.XRa"));
 
 	highscore_doc.innerHTML += "<br><br><br>"
 	highscore_doc.innerHTML += '<a class="highscoreEntry">' + "Highest score for Freestyle: " + raHigh +'</a><br>';
+
+	if (raHigh > 0) {
+		highscore_doc.innerHTML += RandomMode.skillLookup(raHigh)
+	}
 
 	highscore_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(confirmationPage)">Clear Record</a><br>';
 	highscore_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Main Menu</a><br>';

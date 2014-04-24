@@ -10,6 +10,7 @@ body {
     overflow: hidden;
 }
 
+
 .nav {
 
     position: absolute;
@@ -62,6 +63,13 @@ h1, p, a {
     text-align: center;
     margin: 0;
 }
+
+
+.instructions.stars {  
+    padding-top: 10px;  
+    font-size: 50px;
+}
+
 
 #levelModeMenu {
     overflow-y: scroll;
