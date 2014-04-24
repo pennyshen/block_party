@@ -97,6 +97,8 @@ RandomMode.prototype.computeBoundingBox = function() {
 	dimension_doc.innerHTML = (x_dif / STEP_SIZE) + "x" + (z_dif / STEP_SIZE) + "x" + (y_dif / STEP_SIZE); 
 
 	this.scoreGame();
+
+	biggestCube_doc.innerHTML = this.maxCubeSize + "x" + this.maxCubeSize + "x" + this.maxCubeSize;
 	// this.score = this.totalVolume * 10 + (Math.pow((this.scoreGame()),3))*100;
 	// score_doc.innerHTML = this.score;
 	
