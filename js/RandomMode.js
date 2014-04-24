@@ -50,7 +50,6 @@ RandomMode.prototype.startGame = function() {
 
 	this.getNextBlock();
 	scene.add( rollOverMesh );
-	this.outlineCurrentBlock();
 	calculateGameBoardOrientation();
 	moveTowardsPlayer(rollOverMesh.position);
 	setGameInProgress(true);	
@@ -199,7 +198,6 @@ RandomMode.prototype.scoreGame = function() {
 					if (count[x][y][z] > maxCount) {
 						maxCount = count[x][y][z];
 					}
-					// console.log(x + "," + y + "," + z + ": " + count[x][y][z]);
 				} 
 			}
 		}
@@ -302,12 +300,10 @@ RandomMode.prototype.addVoxel = function() {
     moveTowardsPlayer(rollOverMesh.position);
 
     scene.add( rollOverMesh );
-    this.outlineCurrentBlock();
 };
 
 RandomMode.prototype.endGame = function() {
 	setGameInProgress(false);
-	scene.remove( this.outline );
 	render();
 
 	var volumeOverflow;

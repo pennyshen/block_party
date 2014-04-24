@@ -168,8 +168,10 @@ Block.prototype.rotateAroundWorldAxis = function(axisName, degrees) {
     object.rotation.setFromRotationMatrix(object.matrix);
 
     // rotating highlight shape
-    game.outline.matrix = rotWorldMatrix;
-    game.outline.rotation.setFromRotationMatrix(game.outline.matrix);
+    if (game.outline) {
+        game.outline.matrix = rotWorldMatrix;
+        game.outline.rotation.setFromRotationMatrix(game.outline.matrix);
+    }
 
     var quat = this.mesh.quaternion;
     for (var i = 0; i < tshape.length; i++) {
