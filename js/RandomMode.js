@@ -27,6 +27,8 @@ RandomMode.prototype = Object.create(Game.prototype);
 
 RandomMode.goal = [{"x":0,"y":0,"z":0},{"x":0,"y":0,"z":-2},{"x":0,"y":0,"z":-1},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":2},{"x":-1,"y":0,"z":-2},{"x":-1,"y":0,"z":-1},{"x":-1,"y":0,"z":0},{"x":-1,"y":0,"z":1},{"x":-1,"y":0,"z":2},{"x":1,"y":0,"z":-2},{"x":1,"y":0,"z":-1},{"x":1,"y":0,"z":0},{"x":1,"y":0,"z":1},{"x":1,"y":0,"z":2},{"x":2,"y":0,"z":-2},{"x":2,"y":0,"z":-1},{"x":2,"y":0,"z":0},{"x":2,"y":0,"z":1},{"x":2,"y":0,"z":2},{"x":-2,"y":0,"z":-2},{"x":-2,"y":0,"z":-1},{"x":-2,"y":0,"z":0},{"x":-2,"y":0,"z":1},{"x":-2,"y":0,"z":2},{"x":-2,"y":1,"z":-2},{"x":-2,"y":1,"z":-1},{"x":-2,"y":1,"z":0},{"x":-2,"y":1,"z":1},{"x":-2,"y":1,"z":2},{"x":-1,"y":1,"z":-2},{"x":-1,"y":1,"z":-1},{"x":-1,"y":1,"z":0},{"x":-1,"y":1,"z":1},{"x":-1,"y":1,"z":2},{"x":0,"y":1,"z":-2},{"x":0,"y":1,"z":-1},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":1,"z":2},{"x":1,"y":1,"z":-2},{"x":1,"y":1,"z":-1},{"x":1,"y":1,"z":0},{"x":1,"y":1,"z":1},{"x":1,"y":1,"z":2},{"x":2,"y":1,"z":-2},{"x":2,"y":1,"z":-1},{"x":2,"y":1,"z":0},{"x":2,"y":1,"z":1},{"x":2,"y":1,"z":2},{"x":2,"y":2,"z":-2},{"x":2,"y":2,"z":-1},{"x":2,"y":2,"z":0},{"x":2,"y":2,"z":1},{"x":2,"y":2,"z":2},{"x":1,"y":2,"z":-2},{"x":1,"y":2,"z":-1},{"x":1,"y":2,"z":0},{"x":1,"y":2,"z":1},{"x":1,"y":2,"z":2},{"x":0,"y":2,"z":-2},{"x":0,"y":2,"z":-1},{"x":0,"y":2,"z":0},{"x":0,"y":2,"z":1},{"x":0,"y":2,"z":2},{"x":-1,"y":2,"z":-2},{"x":-1,"y":2,"z":-1},{"x":-1,"y":2,"z":0},{"x":-1,"y":2,"z":1},{"x":-1,"y":2,"z":2},{"x":-2,"y":2,"z":-2},{"x":-2,"y":2,"z":-1},{"x":-2,"y":2,"z":0},{"x":-2,"y":2,"z":1},{"x":-2,"y":2,"z":2},{"x":-2,"y":3,"z":-2},{"x":-2,"y":3,"z":-1},{"x":-2,"y":3,"z":0},{"x":-2,"y":3,"z":1},{"x":-2,"y":3,"z":2},{"x":-1,"y":3,"z":-2},{"x":-1,"y":3,"z":-1},{"x":-1,"y":3,"z":0},{"x":-1,"y":3,"z":1},{"x":-1,"y":3,"z":2},{"x":0,"y":3,"z":-2},{"x":0,"y":3,"z":-1},{"x":0,"y":3,"z":0},{"x":0,"y":3,"z":1},{"x":0,"y":3,"z":2},{"x":1,"y":3,"z":-2},{"x":1,"y":3,"z":-1},{"x":1,"y":3,"z":0},{"x":1,"y":3,"z":1},{"x":1,"y":3,"z":2},{"x":2,"y":3,"z":-2},{"x":2,"y":3,"z":-1},{"x":2,"y":3,"z":0},{"x":2,"y":3,"z":1},{"x":2,"y":3,"z":2},{"x":2,"y":4,"z":-2},{"x":2,"y":4,"z":-1},{"x":2,"y":4,"z":0},{"x":2,"y":4,"z":1},{"x":2,"y":4,"z":2},{"x":1,"y":4,"z":-2},{"x":1,"y":4,"z":-1},{"x":1,"y":4,"z":0},{"x":1,"y":4,"z":1},{"x":1,"y":4,"z":2},{"x":0,"y":4,"z":-2},{"x":0,"y":4,"z":-1},{"x":0,"y":4,"z":0},{"x":0,"y":4,"z":1},{"x":0,"y":4,"z":2},{"x":-1,"y":4,"z":-2},{"x":-1,"y":4,"z":-1},{"x":-1,"y":4,"z":0},{"x":-1,"y":4,"z":1},{"x":-1,"y":4,"z":2},{"x":-2,"y":4,"z":-2},{"x":-2,"y":4,"z":-1},{"x":-2,"y":4,"z":0},{"x":-2,"y":4,"z":1},{"x":-2,"y":4,"z":2}];
 
+RandomMode.levelColors = [0x101010, 0x383838, 0x686868, 0x989898, 0xFFFFFF];
+
 RandomMode.prototype.startGame = function() {
 	// get the 5x5x5 wireframe
 	// var block = BlockGenerator.getBlock("goalShape", RandomMode.goal, 0x37FDFC);
@@ -39,7 +41,8 @@ RandomMode.prototype.startGame = function() {
 		geometry.vertices.push( new THREE.Vector3( i, 0,   size ) );
 
 	}
-	var line = new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: 0x37FDFC } ) );
+	var line = new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: 0x00FFFF } ) );
+	this.line = line;
 	line.type = THREE.LinePieces;	
 	line.position.x += STEP_SIZE / 2;
 	line.position.z += STEP_SIZE / 2;
@@ -60,7 +63,8 @@ RandomMode.prototype.getNextBlock = function() {
 	} else {
 		toReturn = BlockGenerator.generate(this.nextBlockName);		
 	}
-	
+
+	toReturn.isColored = false;
 	this.currentBlock = toReturn;
 	this.currentAliveTime = 0;
 	this.nextBlockName = getRandomMember(BlockGenerator.randomModeShapes);
@@ -202,6 +206,7 @@ RandomMode.prototype.scoreGame = function() {
 	}
 	this.maxCubeSize = maxCount;
 
+	// scan level to see if it is filled
 	var start, end;
 	start = Math.ceil(-this.cubeSize/2);
 	end = Math.ceil(this.cubeSize/2);
@@ -218,7 +223,23 @@ RandomMode.prototype.scoreGame = function() {
 			}
 		}
 	}
+
+	var block, positions, position, newShape;
+	var levelShape;
 	if (isFilled) {
+		// create the colored level
+		levelShape = [];
+		for (var xx = start; xx < end; xx++) {
+			for (var zz = start; zz < end; zz++) {
+				levelShape.push({x: xx, y: this.levelsFilled, z:zz});
+			}
+		}
+		block = BlockGenerator.getBlock("levelShape", levelShape, RandomMode.levelColors[this.levelsFilled]);
+		block.mesh.scale.multiplyScalar(1.005);
+		block.mesh.toBeRemoved = true;
+		block.makeStatic();
+		scene.add(block.mesh);
+
 		this.levelsFilled++;
 		dimension_doc.innerHTML = this.levelsFilled;
 	}
