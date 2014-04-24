@@ -93,7 +93,8 @@ RandomMode.prototype.computeBoundingBox = function() {
 	var y_dif = this.max_y - this.min_y;
 	var z_dif = this.max_z - this.min_z;
 	var cube_vol = x_dif * y_dif * z_dif;
-	// this.score = Math.round((this.totalVolume)/(cube_vol/Math.pow(STEP_SIZE,3) )*100);
+	
+	dimension_doc.innerHTML = (x_dif / STEP_SIZE) + "x" + (z_dif / STEP_SIZE) + "x" + (y_dif / STEP_SIZE); 
 
 	this.scoreGame();
 	// this.score = this.totalVolume * 10 + (Math.pow((this.scoreGame()),3))*100;

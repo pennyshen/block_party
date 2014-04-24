@@ -125,8 +125,9 @@
     <div id="game">
 	    <div id="randomInfo" class="info">
 	    	<font color ="white">	  
-				<span id="randomTimer">0:00 </span>
+				Time left: <span id="randomTimer">0:00 </span>
 				<br>
+				Dimension: <span id="dimension">0x0x0</span>
 			</font>
 	    </div>
 	    <div id="levelInfo" class="info">
@@ -206,9 +207,8 @@
 		var hint_doc = document.getElementById("hint");
 		var center_tooltip_doc = document.getElementById("center_tooltip");
 		var randomInfo_doc = document.getElementById("randomInfo");
-		// var mainMusicSource_doc = document.getElementById("mainMusicSource");
 		var levelInfo_doc = document.getElementById("levelInfo");
-		var cubeSize_doc = document.getElementById("cubeSize");
+		var dimension_doc = document.getElementById("dimension");
 
 		var nav_items = [menu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
 			selectBlockScreen_doc, loading_doc, about_doc, highscore_doc, confirmationPage_doc];
