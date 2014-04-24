@@ -126,7 +126,9 @@
 	    	<font color ="white">	  
 				Time left: <span id="randomTimer">0:00 </span>
 				<br>
-				Dimension: <span id="dimension">0x0x0</span>
+				Score: <span id="randomScore">0 </span>
+				<br>
+				Levels filled: <span id="dimension">0</span>
 				<br>
 				Biggest Cube: <span id="biggestCube">0x0x0</span>
 				<br>
@@ -212,6 +214,7 @@
 		var levelInfo_doc = document.getElementById("levelInfo");
 		var dimension_doc = document.getElementById("dimension");
 		var biggestCube_doc = document.getElementById("biggestCube");
+		var randomScore_doc = document.getElementById("randomScore");
 
 		var nav_items = [menu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
 			selectBlockScreen_doc, loading_doc, about_doc, highscore_doc, confirmationPage_doc];
@@ -486,6 +489,8 @@
 					if (game.isPreviewing) {
 						game.fadingInAndOut();
 					}
+				} else {
+					randomScore_doc.innerHTML = secs * game.scorePerSecond;
 				}
 			}			
 		}

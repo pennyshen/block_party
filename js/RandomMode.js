@@ -7,14 +7,18 @@ function RandomMode() {
 
 	LevelContent.worlds[LevelContent.TUTORIAL].loadWorld();
 	
-	// level stuff
 	this.timeLimit = 8;
 	this.cubeSize = 5;
+
+	this.scorePerSecond = 50;
+	this.scorePerVolume = 200;
 	
 	this.maxCubeSize = 0;
+	this.levelsFilled = 0;
 
 	biggestCube_doc.innerHTML = "0x0x0";
-	dimension_doc.innerHTML = "0x0x0";
+	dimension_doc.innerHTML = "0";
+	randomScore_doc.innerHTML = this.timeLimit * 60 * this.scorePerSecond;
 
 	showElement(randomInfo_doc);
 }
@@ -127,8 +131,6 @@ RandomMode.prototype.computeBoundingBox = function() {
 	var z_dif = this.max_z - this.min_z;
 	var cube_vol = x_dif * y_dif * z_dif;
 	
-	dimension_doc.innerHTML = (x_dif / STEP_SIZE) + "x" + (z_dif / STEP_SIZE) + "x" + (y_dif / STEP_SIZE); 
-
 	this.scoreGame();
 
 	biggestCube_doc.innerHTML = this.maxCubeSize + "x" + this.maxCubeSize + "x" + this.maxCubeSize;
@@ -159,6 +161,7 @@ RandomMode.prototype.scoreGame = function() {
 	var x_pos, y_pos, z_pos;
 	var pos, val;
 	var maxCount = 0;
+	var isFilled;
 
 	// establish the 3d array from bounding box and the corresponding empty 3d matrix for dynamic programming
 	for (var i = this.min_x / STEP_SIZE, x_pos = 0; i < this.max_x / STEP_SIZE; i++, x_pos++) {
@@ -183,6 +186,7 @@ RandomMode.prototype.scoreGame = function() {
 		}
 	}
 
+	// find maximum cube
 	for (var x = 0; x < positions.length; x++) {
 		for (var y = 0; y < positions[0].length; y++) {
 			for (var z = 0; z < positions[0][0].length; z++) {
@@ -196,8 +200,30 @@ RandomMode.prototype.scoreGame = function() {
 			}
 		}
 	}
-
 	this.maxCubeSize = maxCount;
+
+	var start, end;
+	start = Math.ceil(-this.cubeSize/2);
+	end = Math.ceil(this.cubeSize/2);
+	isFilled = true;
+	for (var x = start; x < end; x++) {
+		for (var z = start; z < end; z++) {
+			pos = {};
+			pos.x = x;
+			pos.y = this.levelsFilled;
+			pos.z = z;
+			if (!(getKeyString(pos) in this.existingBlocks)) {
+				isFilled = false;
+				break;
+			}
+		}
+	}
+	if (isFilled) {
+		this.levelsFilled++;
+		dimension_doc.innerHTML = this.levelsFilled;
+	}
+
+
 	return maxCount;
 };
 
@@ -260,6 +286,7 @@ RandomMode.prototype.addVoxel = function() {
 
 RandomMode.prototype.endGame = function() {
 	setGameInProgress(false);
+	scene.remove( this.outline );
 
 	var volumeOverflow;
 	var timeScore, volumeScore, perfectBonus;
@@ -272,12 +299,12 @@ RandomMode.prototype.endGame = function() {
 	} else {
 		scoreString = "<div id='scoreBoard'>"
 
-		timeScore = Math.floor(timeRemaining / 1000) * 50;
+		timeScore = Math.floor(timeRemaining / 1000) * this.scorePerSecond;
 		scoreString += "<a class='instructions'> + " + timeScore + " (speed)</a> <br>";
 		this.score += timeScore;
 		
 		volumeOverflow = this.totalVolume - this.cubeSize * this.cubeSize * this.cubeSize;
-		volumeScore = 200 * volumeOverflow;
+		volumeScore = this.scorePerVolume * volumeOverflow;
 		scoreString += "<a class='instructions'> - " + volumeScore + " (extra volume)</a> <br>";
 		this.score -= volumeScore;
 
