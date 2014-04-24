@@ -46,6 +46,7 @@ RandomMode.prototype.startGame = function() {
 	line.type = THREE.LinePieces;	
 	line.position.x += STEP_SIZE / 2;
 	line.position.z += STEP_SIZE / 2;
+	line.toBeRemoved = true;
 	scene.add(line);
 
 	this.getNextBlock();
