@@ -37,7 +37,6 @@ function startMovingBlock(meshToMove) {
 	if (rollOverMesh) {
 		game.currentBlock.makeStatic();
 		game.addToExisting(game.currentBlock, rollOverMesh.position);
-		scene.remove( game.outline );
 	}
 	rollOverMesh = meshToMove;
 	rollOverMesh.material.emissive.setHex( rollOverMesh.currentHex );
@@ -56,16 +55,7 @@ function startMovingBlock(meshToMove) {
 	}
 
 	// outline the block
-	// game.outline = new THREE.Line( geo2line(game.currentBlock.mesh.geometry), new THREE.LineBasicMaterial( { color: 0xFFFFFF } ), THREE.LinePieces )
-	game.outline = new THREE.Mesh( game.currentBlock.mesh.geometry, game.outlineMaterial );
-	game.outline.scale.multiplyScalar(1.05);
-	game.outline.position = game.currentBlock.mesh.position;
-	game.outline.matrix = rollOverMesh.matrix;
-	game.outline.rotation.setFromRotationMatrix(rollOverMesh.matrix);
-	game.outline.toBeRemoved = true;
-	game.outline.name = "outline";
-
-	scene.add( game.outline );
+	game.outlineCurrentBlock();
 }
 
 function initGame(gameMode) {
@@ -82,31 +72,12 @@ function initGame(gameMode) {
 		game = new LevelMode(true);
 	} else if (gameMode == Game.MODE_RANDOM) {
 		game = new RandomMode();
-		startGame();
+		game.startGame();
 	} else if (gameMode == Game.MODE_TUTORIAL) {
 		game = new TutorialMode();
 		toCheckGoal = true;
 	}
 
-}
-
-function startGame() {
-	game.getNextBlock();
-
-	rollOverMesh = game.currentBlock.mesh;
-
-	scene.add( rollOverMesh );
-
-	calculateGameBoardOrientation();
-
-	moveTowardsPlayer(rollOverMesh.position);
-	
-	if (mainMusic) {
-		mainMusic.currentTime = 0;
-		mainMusic.play();		
-	}
-
-	setGameInProgress(true);
 }
 
 function calculateGameBoardOrientation() {

@@ -8,6 +8,8 @@ function Game() {
 	this.gameTime = 0;
 	this.boundingBox = null;
 	this.goalShape = null;
+
+	this.outlineMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.BackSide } );
 	
 	// keeping track of max and min of x,y,z coordinates
 	this.min_x = Number.MAX_VALUE;
@@ -32,6 +34,24 @@ Game.MODE_LEVEL = 1;
 Game.MODE_RANDOM = 2;
 
 Game.prototype = {
+	outlineCurrentBlock: function() {
+		// remove old outline
+		if (this.outline) {
+			scene.remove(this.outline);
+		}
+
+		// create new outline
+		this.outline = new THREE.Mesh( this.currentBlock.mesh.geometry, this.outlineMaterial );
+		this.outline.scale.multiplyScalar(1.05);
+		this.outline.position = this.currentBlock.mesh.position;
+		this.outline.matrix = this.currentBlock.mesh.matrix;
+		this.outline.rotation.setFromRotationMatrix(this.currentBlock.mesh.matrix);
+		this.outline.toBeRemoved = true;
+		this.outline.name = "outline";
+
+		scene.add( this.outline );
+	},
+
 	addToExisting: function(block, realPosition) {
 		var i, positions, position;
 		positions = block._getPositions(realPosition, block.shape);

@@ -5,7 +5,6 @@ function LevelMode(toPopulateMenu) {
 	this.goal = [];
 	this.goalObject = {};
 	this.preview = {};
-	this.outlineMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.BackSide } );
 	this.isPreviewing = true;
 	this.FADING_TIME = 3 * 1000;
 
@@ -269,6 +268,8 @@ LevelMode.prototype.getNextBlock = function() {
 	this.currentAliveTime = 0;
 	this.currentBlock = block;
 	this.levelBlocks.splice( this.levelBlocks.indexOf(this.currentBlock.shapeName), 1 );
+
+	rollOverMesh = this.currentBlock.mesh;
 
 	return true;
 };

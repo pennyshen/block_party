@@ -21,6 +21,15 @@ function RandomMode() {
 
 RandomMode.prototype = Object.create(Game.prototype);
 
+RandomMode.prototype.startGame = function() {
+	this.getNextBlock();
+	scene.add( rollOverMesh );
+	this.outlineCurrentBlock();
+	calculateGameBoardOrientation();
+	moveTowardsPlayer(rollOverMesh.position);
+	setGameInProgress(true);	
+};
+
 RandomMode.prototype.getNextBlock = function() {
 	var toReturn;
 	if (makingLevels) {
@@ -34,6 +43,8 @@ RandomMode.prototype.getNextBlock = function() {
 	this.nextBlockName = getRandomMember(BlockGenerator.randomModeShapes);
 	
 	this.createGoalShape();
+
+	rollOverMesh = this.currentBlock.mesh;
 
 	return toReturn;
 };
@@ -190,7 +201,43 @@ RandomMode.skillLookup = function(score) {
 	skillString += "</a>";
 	starString += "</a>";
 	return skillString + "<br>" + starString;
-}
+};
+
+RandomMode.prototype.addVoxel = function() {
+    var voxel = rollOverMesh;
+    var oldPos = voxel.position.clone();
+
+    // places rollover block down and make it static
+    this.currentBlock.makeStatic();
+
+    // update all blocks
+    this.addToExisting(this.currentBlock, voxel.position);
+
+    if (toCheckGoal) {
+        this.checkGoal(false, false, true);
+    }
+   
+    if (this.maxCubeSize >= this.cubeSize) {
+        render();
+        this.endGame();
+    }
+
+    // create new block and use that new block as rollover
+    this.getNextBlock();
+
+    if (this.currentBlock == null) {
+        return;
+    }
+
+    rollOverMesh.position.x = oldPos.x;
+    rollOverMesh.position.y = oldPos.y;
+    rollOverMesh.position.z = oldPos.z;
+
+    moveTowardsPlayer(rollOverMesh.position);
+
+    scene.add( rollOverMesh );
+    this.outlineCurrentBlock();
+};
 
 RandomMode.prototype.endGame = function() {
 	setGameInProgress(false);

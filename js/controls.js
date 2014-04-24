@@ -156,7 +156,7 @@ function onDocumentKeyDown( event ) {
                     }
                 }
             } else {
-                add_voxel();    
+                game.addVoxel();    
             }
             break;
         case 27:    // esc
@@ -463,42 +463,5 @@ function adjustPosition( rayPosition, piecePosition ) {
     if (toCheckGoal) {
         game.checkGoal(moved, false, false);
     }  
-}
-
-function add_voxel( ) {
-    var voxel = rollOverMesh;
-    var oldPos = voxel.position.clone();
-
-    // places rollover block down and make it static
-    game.currentBlock.makeStatic();
-
-    // update all blocks
-    game.addToExisting(game.currentBlock, voxel.position);
-
-    if (toCheckGoal) {
-        game.checkGoal(false, false, true);
-    }
-   
-    if (game.maxCubeSize >= game.cubeSize) {
-        render();
-        game.endGame();
-    }
-
-    // create new block and use that new block as rollover
-    game.getNextBlock();
-
-    if (game.currentBlock == null) {
-        return;
-    }
-
-    rollOverMesh = game.currentBlock.mesh;
-
-    rollOverMesh.position.x = oldPos.x;
-    rollOverMesh.position.y = oldPos.y;
-    rollOverMesh.position.z = oldPos.z;
-
-    moveTowardsPlayer(rollOverMesh.position);
-
-    scene.add( rollOverMesh );
 }
 
