@@ -14,7 +14,7 @@ function LevelMode(toPopulateMenu) {
 
 	if (toPopulateMenu) {
 		this.mode = Game.MODE_LEVEL;
-		this.titleText = "Puzzle World"
+		this.titleText = "Puzzles"
 		this.objectiveText = "Use given pieces to fill the goal shape!"
 		this.showSubMenu();
 	} else {

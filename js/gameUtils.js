@@ -345,7 +345,7 @@ function refreshHighScore(){
 	}
 
 	highscore_doc.innerHTML += "<br><br><br>"
-	highscore_doc.innerHTML += '<a class="highscoreEntry">' + "Highest score for Improv mode: " + raHigh +'</a><br>';
+	highscore_doc.innerHTML += '<a class="highscoreEntry">' + "Highest score for Freestyle: " + raHigh +'</a><br>';
 
 	highscore_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(confirmationPage)">Clear Record</a><br>';
 	highscore_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Main Menu</a><br>';
