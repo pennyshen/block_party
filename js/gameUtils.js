@@ -329,3 +329,29 @@ function refreshHighScore(){
 	highscore_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(confirmationPage)">Clear Record</a><br>';
 	highscore_doc.innerHTML += '<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Main Menu</a><br>';
 }
+
+function initLights(sceneToAdd, hasShadow) {
+	// Lights
+	var ambientLight = new THREE.AmbientLight( 0x3c3c3c );
+	sceneToAdd.add( ambientLight );
+
+	var directionalLight = new THREE.DirectionalLight( 0xffffff );
+	directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
+	directionalLight.intensity = 0.8;
+	sceneToAdd.add( directionalLight );
+
+	directionalLight = new THREE.DirectionalLight( 0xffffff );
+	directionalLight.position.set( -1, 0.75, -0.5 ).normalize();
+	directionalLight.intensity = 0.8;
+	sceneToAdd.add( directionalLight );
+
+	if (hasShadow) {
+		var shadowLight = new THREE.DirectionalLight( 0xffffff );
+		shadowLight.position.set( 0, 1, 0 ).normalize();
+		shadowLight.castShadow = true;
+		shadowLight.shadowCameraNear = -1000;
+		shadowLight.shadowCameraFar = 10;
+		shadowLight.onlyShadow = true;
+		sceneToAdd.add( shadowLight );
+	}
+}

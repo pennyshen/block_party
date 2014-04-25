@@ -372,27 +372,7 @@
 			// placeholder so there's no error
 			rollOverMesh = new THREE.Mesh();
 
-			// Lights
-			var ambientLight = new THREE.AmbientLight( 0x3c3c3c );
-			scene.add( ambientLight );
-
-			var directionalLight = new THREE.DirectionalLight( 0xffffff );
-			directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
-			directionalLight.intensity = 0.8;
-			scene.add( directionalLight );
-
-			directionalLight = new THREE.DirectionalLight( 0xffffff );
-			directionalLight.position.set( -1, 0.75, -0.5 ).normalize();
-			directionalLight.intensity = 0.8;
-			scene.add( directionalLight );
-
-			var shadowLight = new THREE.DirectionalLight( 0xffffff );
-			shadowLight.position.set( 0, 1, 0 ).normalize();
-			shadowLight.castShadow = true;
-			shadowLight.shadowCameraNear = -1000;
-			shadowLight.shadowCameraFar = 10;
-			shadowLight.onlyShadow = true;
-			scene.add( shadowLight );
+			initLights(scene, true);
 
 			container.appendChild( renderer.domElement );
 
@@ -463,6 +443,11 @@
 			renderer.render( scene, camera );
 
 			if (gameInProgress) {
+				if (game.previewScene) {
+					renderer.clear( false, true, false );
+					renderer.render(game.previewScene, game.previewCamera);
+				}
+
 				calculateGameBoardOrientation();
 
 				//if (game.currentAliveTime < ALIVE_TIME) {

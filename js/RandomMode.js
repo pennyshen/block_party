@@ -2,8 +2,8 @@
 function RandomMode() {
 	Game.call( this );
 
-	this.nextBlockName = getRandomMember(BlockGenerator.randomModeShapes);
 	this.mode = Game.MODE_RANDOM;
+	this.nextBlockName = getRandomMember(BlockGenerator.randomModeShapes);
 
 	LevelContent.worlds[LevelContent.TUTORIAL].loadWorld();
 	
@@ -17,7 +17,7 @@ function RandomMode() {
 	this.levelsFilled = 0;
 
 	biggestCube_doc.innerHTML = "0x0x0";
-	dimension_doc.innerHTML = this.levelsFilled;
+	dimension_doc.innerHTML = this.cubeSize;
 	randomScore_doc.innerHTML = this.timeLimit * 60 * this.scorePerSecond;
 
 	showElement(randomInfo_doc);
@@ -30,8 +30,16 @@ RandomMode.goal = [{"x":0,"y":0,"z":0},{"x":0,"y":0,"z":-2},{"x":0,"y":0,"z":-1}
 RandomMode.levelColors = [0x101010, 0x383838, 0x686868, 0x989898, 0xFFFFFF];
 
 RandomMode.prototype.startGame = function() {
-	// get the 5x5x5 wireframe
-	// var block = BlockGenerator.getBlock("goalShape", RandomMode.goal, 0x37FDFC);
+ 	// set up for block preview
+ 	this.previewScene = new THREE.Scene();
+ 	this.previewCamera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+ 	this.previewCamera.position.set(1000, 0, 0);
+ 	this.previewCamera.lookAt(new THREE.Vector3(0, 0, 0));
+ 	// this.previewCamera.rotateY(Math.PI/6);
+ 	this.previewScene.add( this.previewCamera );
+ 
+	initLights(this.previewScene, false);
+	// get the 5x5 wireframe on floor
 	var size = 5 * STEP_SIZE / 2.0;
 	var geometry = new THREE.Geometry();
 	for ( var i = - size; i <= size; i += STEP_SIZE ) {
@@ -53,6 +61,7 @@ RandomMode.prototype.startGame = function() {
 	scene.add( rollOverMesh );
 	calculateGameBoardOrientation();
 	moveTowardsPlayer(rollOverMesh.position);
+
 	setGameInProgress(true);	
 };
 
@@ -77,34 +86,63 @@ RandomMode.prototype.getNextBlock = function() {
 };
 
 RandomMode.prototype.createGoalShape = function() {
-	var shape = cloneVectors(BlockGenerator.shapes[this.nextBlockName]);
-	var shapePosition;
-	// var block = BlockGenerator.generate(this.nextBlockName);
-	var shapeHeight = 0;
-
-	for (var i = 0; i < this.currentBlock.shape.length; i++) {
-		shapeHeight = Math.max(this.currentBlock.shape[i].y, shapeHeight);
+	if (this.previewMesh) {
+		this.previewScene.remove(this.previewMesh);
 	}
 
-	var minHeight = 0;
-	for (var i = 0; i < shape.length; i++) {
-		minHeight = Math.min(shape[i].y, minHeight);
+	var block = BlockGenerator.generate(this.nextBlockName);
+	block.mesh.castShadow	= false;
+	block.mesh.receiveShadow = false;
+	block.mesh.material.opacity = 1.0;
+	block.mesh.depthWrite = false;
+	block.mesh.depthTest = false;
+	// block.mesh.position.y = 200;
+	// block.mesh.position.z = -640;
+	this.previewScene.add(block.mesh);
+	this.previewMesh = block.mesh;	
+	this.previewMesh.position.y = 140;
+	this.previewMesh.position.z = -630;
+	this.previewMesh.rotateZ(-Math.PI/8);
+	this.previewMesh.rotateY(6* Math.PI/8);
+	this.previewMesh.rotateX(-Math.PI/20);
+	game.previewMesh.rotateY(-Math.PI/4)
+	this.previewMesh.scale.multiplyScalar(0.7);
+	this.previewMesh.toBeRemoved = true;
+
+	if (this.nextBlockName != "straight4") {
+		this.previewMesh.position.y += 70;
+	} else {
+		this.previewMesh.position.z -= 20;
 	}
-	for (var i = 0; i < shape.length; i++) {
-		shape[i].y = shape[i].y + 2 * (shapeHeight + 2 - minHeight);
-	}
 
-	var block = BlockGenerator.getBlock(this.nextBlockName, shape, BlockGenerator.colors[BlockGenerator.shapesToColors[this.nextBlockName]])
+	// var shape = cloneVectors(BlockGenerator.shapes[this.nextBlockName]);
+	// var shapePosition;
+	// // var block = BlockGenerator.generate(this.nextBlockName);
+	// var shapeHeight = 0;
 
-    if (this.wireframe1) {
-    	scene.remove(this.wireframe1);
-    }
+	// for (var i = 0; i < this.currentBlock.shape.length; i++) {
+	// 	shapeHeight = Math.max(this.currentBlock.shape[i].y, shapeHeight);
+	// }
 
-	this.wireframe1 = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
-	this.wireframe1.position = this.currentBlock.mesh.position;
-	this.wireframe1.toBeRemoved = true;
-	this.wireframe1.scale.multiplyScalar(0.5);
-	scene.add(this.wireframe1);
+	// var minHeight = 0;
+	// for (var i = 0; i < shape.length; i++) {
+	// 	minHeight = Math.min(shape[i].y, minHeight);
+	// }
+	// for (var i = 0; i < shape.length; i++) {
+	// 	shape[i].y = shape[i].y + 2 * (shapeHeight + 2 - minHeight);
+	// }
+
+	// var block = BlockGenerator.getBlock(this.nextBlockName, shape, BlockGenerator.colors[BlockGenerator.shapesToColors[this.nextBlockName]])
+
+ //    if (this.wireframe1) {
+ //    	scene.remove(this.wireframe1);
+ //    }
+
+	// this.wireframe1 = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
+	// this.wireframe1.position = this.currentBlock.mesh.position;
+	// this.wireframe1.toBeRemoved = true;
+	// this.wireframe1.scale.multiplyScalar(0.5);
+	// scene.add(this.wireframe1);
 }
 
 
