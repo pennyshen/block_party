@@ -16,7 +16,6 @@ function RandomMode() {
 	this.maxCubeSize = 0;
 	this.levelsFilled = 0;
 
-	biggestCube_doc.innerHTML = "0x0x0";
 	dimension_doc.innerHTML = this.cubeSize;
 	randomScore_doc.innerHTML = this.timeLimit * 60 * this.scorePerSecond;
 
@@ -96,11 +95,9 @@ RandomMode.prototype.createGoalShape = function() {
 	block.mesh.material.opacity = 1.0;
 	block.mesh.depthWrite = false;
 	block.mesh.depthTest = false;
-	// block.mesh.position.y = 200;
-	// block.mesh.position.z = -640;
 	this.previewScene.add(block.mesh);
 	this.previewMesh = block.mesh;	
-	this.previewMesh.position.y = 140;
+	this.previewMesh.position.y = 170;
 	this.previewMesh.position.z = -630;
 	this.previewMesh.rotateZ(-Math.PI/8);
 	this.previewMesh.rotateY(6* Math.PI/8);
@@ -174,10 +171,6 @@ RandomMode.prototype.computeBoundingBox = function() {
 	var cube_vol = x_dif * y_dif * z_dif;
 	
 	this.scoreGame();
-
-	biggestCube_doc.innerHTML = this.maxCubeSize + "x" + this.maxCubeSize + "x" + this.maxCubeSize;
-	// this.score = this.totalVolume * 10 + (Math.pow((this.scoreGame()),3))*100;
-	// score_doc.innerHTML = this.score;
 	
 	if (this.boundingBox) {
 		scene.remove(this.boundingBox);
