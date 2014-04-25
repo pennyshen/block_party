@@ -130,7 +130,7 @@
 				<br>
 				Levels left: <span id="dimension">0</span>
 				<br>
-				<span style="padding-right: 6em;">Next block:</span>
+				<span id="nextBlock" style="padding-right: 6em;">Next block:</span>
 				<br>
 			</font>
 	    </div>
@@ -214,6 +214,7 @@
 		var levelInfo_doc = document.getElementById("levelInfo");
 		var dimension_doc = document.getElementById("dimension");
 		var randomScore_doc = document.getElementById("randomScore");
+		var nextBlock_doc = document.getElementById("nextBlock");
 
 		var nav_items = [menu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
 			selectBlockScreen_doc, loading_doc, about_doc, highscore_doc, confirmationPage_doc];
@@ -244,7 +245,6 @@
         var backgroundRatio = 1440 / 900;
 
         var gameInProgress = false;
-        var nextPiece = "";
         var toCheckGoal = false;
 
         // Used in initParticles()

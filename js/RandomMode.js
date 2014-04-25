@@ -3,7 +3,7 @@ function RandomMode() {
 	Game.call( this );
 
 	this.mode = Game.MODE_RANDOM;
-	this.nextBlockName = getRandomMember(BlockGenerator.randomModeShapes);
+	this.nextBlockName = "cube";
 
 	LevelContent.worlds[LevelContent.TUTORIAL].loadWorld();
 	
@@ -20,6 +20,7 @@ function RandomMode() {
 	randomScore_doc.innerHTML = this.timeLimit * 60 * this.scorePerSecond;
 
 	showElement(randomInfo_doc);
+	showElement(nextBlock_doc);
 }
 
 RandomMode.prototype = Object.create(Game.prototype);
@@ -336,6 +337,7 @@ RandomMode.prototype.addVoxel = function() {
 
 RandomMode.prototype.endGame = function() {
 	setGameInProgress(false);
+	hideElement(nextBlock_doc);
 	render();
 
 	var volumeOverflow;
@@ -359,7 +361,7 @@ RandomMode.prototype.endGame = function() {
 		this.score -= volumeScore;
 
 		if (volumeOverflow == 0) {
-			perfectBonus = 2000;
+			perfectBonus = 3000;
 			endScreen_doc.innerHTML += "<a class='instructions'> + " + perfectBonus + " (perfect cube!) </a><br>";
 			this.score += perfectBonus;
 		} 
