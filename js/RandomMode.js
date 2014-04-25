@@ -117,7 +117,8 @@ RandomMode.prototype.createGoalShape = function() {
 	this.previewMesh.rotateZ(-Math.PI/8);
 	this.previewMesh.rotateY(6* Math.PI/8);
 	this.previewMesh.rotateX(-Math.PI/20);
-	game.previewMesh.rotateY(-Math.PI/4)
+	game.previewMesh.rotateY(-Math.PI/4);
+	game.previewMesh.rotateZ(Math.PI/50);
 	this.previewMesh.scale.multiplyScalar(0.7);
 	this.previewMesh.toBeRemoved = true;
 
