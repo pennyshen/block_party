@@ -112,7 +112,7 @@ RandomMode.prototype.createGoalShape = function() {
 	block.mesh.depthTest = false;
 	this.previewScene.add(block.mesh);
 	this.previewMesh = block.mesh;	
-	this.previewMesh.position.y = 170;
+	this.previewMesh.position.y = 210;
 	this.previewMesh.position.z = -630;
 	this.previewMesh.rotateZ(-Math.PI/8);
 	this.previewMesh.rotateY(6* Math.PI/8);
@@ -122,9 +122,9 @@ RandomMode.prototype.createGoalShape = function() {
 	this.previewMesh.toBeRemoved = true;
 
 	if (this.nextBlockName != "straight4") {
-		this.previewMesh.position.y += 70;
+		// this.previewMesh.position.y += 70;
 	} else {
-		this.previewMesh.position.z -= 20;
+		this.previewMesh.position.y -= 60;
 	}
 }
 
