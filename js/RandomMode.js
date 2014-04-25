@@ -19,8 +19,13 @@ function RandomMode() {
 	dimension_doc.innerHTML = this.cubeSize;
 	randomScore_doc.innerHTML = this.timeLimit * 60 * this.scorePerSecond;
 
+	this.hintLink = "<a href='javascript: void(0)' style='font-size:35px;text-decoration:none;' onClick='game.showHint()'>HINT</a>";
+
+	hint_doc.innerHTML = this.hintLink;
+
 	showElement(randomInfo_doc);
 	showElement(nextBlock_doc);
+	showElement(hint_doc);
 }
 
 RandomMode.prototype = Object.create(Game.prototype);
@@ -63,6 +68,15 @@ RandomMode.prototype.startGame = function() {
 	moveTowardsPlayer(rollOverMesh.position);
 
 	setGameInProgress(true);	
+};
+
+RandomMode.prototype.showHint = function() {
+	console.log(this.hintLink);
+	hint_doc.innerHTML = "Complete a 5x5x5 cube as fast and as perfectly as possible! <br>";
+	hint_doc.innerHTML += "SPACE to place current block and get the next block. <br>";
+	hint_doc.innerHTML += "Once each level (horizontal plane) is completed, it will turn grey. <br>";
+	hint_doc.innerHTML += "Things sticking outside of the cube will reduce score. <br>";
+	hint_doc.innerHTML += "<span onClick='hint_doc.innerHTML=game.hintLink' style='text-decoration:underline; cursor:pointer;'>Hide hint</span>"
 };
 
 RandomMode.prototype.getNextBlock = function() {
