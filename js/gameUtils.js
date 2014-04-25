@@ -1,4 +1,16 @@
 
+function hideRandomOpening() {
+	console.log("hiding");
+	document.removeEventListener( 'keydown', hideRandomOpening, false );	
+	clearInterval(game.flashInterval);
+	scene.remove(game.flashMesh);
+	game.flashMesh = null;
+	game.startTimer = true;
+	controls.enabled = true;	
+	keysEnabled = true;	
+	hideElement(endScreen_doc);	
+}
+
 function checkAllLoaded(numLoaded, numToLoad) {
 	loading_text_doc.innerHTML += ".";
 

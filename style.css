@@ -108,6 +108,13 @@ h1 {margin-top: 5%;}
     width: 100%;
 }
 
+.instructions.center {
+    font-size: 30px;
+    top: 25%;
+    width: 100%;
+    line-height: 55px;
+}
+
 #instructions {
     overflow-y: scroll;
 }

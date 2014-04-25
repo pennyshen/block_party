@@ -71,7 +71,7 @@ function onDocumentMouseMove( event ) {
 }
 
 function onDocumentKeyDown( event ) {
-    if (!gameInProgress) {
+    if (!keysEnabled) {
         return;
     }
 

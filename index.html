@@ -246,6 +246,7 @@
 
         var gameInProgress = false;
         var toCheckGoal = false;
+        var keysEnabled = false;
 
         // Used in initParticles()
 		var emitter, particleGroup;
@@ -434,28 +435,25 @@
 
 
 		function render() {
-			// particleGroup.tick( 0.016 );
-			
 			renderer.autoClear = false;
 			renderer.clear();
 			renderer.render( backgroundScene , backgroundCamera );
 			renderer.render( scene, camera );
 
-			if (gameInProgress) {
-				if (game.previewScene) {
-					renderer.clear( false, true, false );
-					renderer.render(game.previewScene, game.previewCamera);
-				}
+			if (game.previewScene) {
+				renderer.clear( false, true, false );
+				renderer.render(game.previewScene, game.previewCamera);
+			}
 
-				calculateGameBoardOrientation();
+			calculateGameBoardOrientation();
 
-				//if (game.currentAliveTime < ALIVE_TIME) {
-				// update time
-				timeElapsed = Math.max(game.gameTime, 0);
-				secs = Math.floor(timeElapsed / 1000.0);
-				mins = Math.floor(secs / 60);
-				timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs%60).slice(-2);
-				if (game.mode == Game.MODE_RANDOM) {
+			// update time
+			timeElapsed = Math.max(game.gameTime, 0);
+			secs = Math.floor(timeElapsed / 1000.0);
+			mins = Math.floor(secs / 60);
+			timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs%60).slice(-2);
+			if (game.mode == Game.MODE_RANDOM) {
+				if (game.startTimer) {
 					timeRemaining = Math.max(0, game.timeLimit*60*1000 - timeElapsed);
 					if (timeRemaining <= 0) {
 						game.endGame();
@@ -463,20 +461,22 @@
 					secs = Math.floor(timeRemaining / 1000.0);
 					mins = Math.floor(secs / 60);
 					randomTimer_doc.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs%60).slice(-2);
-				}
-
-				game.currentAliveTime += Date.now() - time;
-				game.gameTime += Date.now()-time;
-
-				if (game.mode != Game.MODE_RANDOM) {
-					intersectToHighlight();
-					if (game.isPreviewing) {
-						game.fadingInAndOut();
-					}
-				} else {
 					randomScore_doc.innerHTML = secs * game.scorePerSecond;
+					game.gameTime += Date.now() - time;
+				} else {
+					// timer not started - decrease flashMesh opacity
+					game.flashMesh.material.opacity = (1000.0 * game.numCountDownInit - game.currentAliveTime) / (1000.0 * game.numCountDownInit);
 				}
-			}			
+			}
+
+			game.currentAliveTime += Date.now() - time;
+
+			if (game.mode != Game.MODE_RANDOM) {
+				intersectToHighlight();
+				if (game.isPreviewing) {
+					game.fadingInAndOut();
+				}
+			} 
 		}
 
 	</script>

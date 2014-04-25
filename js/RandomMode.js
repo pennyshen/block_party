@@ -16,8 +16,11 @@ function RandomMode() {
 	this.maxCubeSize = 0;
 	this.levelsFilled = 0;
 
+	this.startTimer = false;
+
 	dimension_doc.innerHTML = this.cubeSize;
 	randomScore_doc.innerHTML = this.timeLimit * 60 * this.scorePerSecond;
+	randomTimer_doc.innerHTML = "0" + this.timeLimit + ":00";
 
 	this.hintLink = "<a href='javascript: void(0)' style='font-size:35px;text-decoration:none;' onClick='game.showHint()'>HINT</a>";
 
@@ -67,15 +70,49 @@ RandomMode.prototype.startGame = function() {
 	calculateGameBoardOrientation();
 	moveTowardsPlayer(rollOverMesh.position);
 
+	var block = BlockGenerator.getBlock("flash", RandomMode.goal, 0x00FFFF);
+	this.flashMesh = block.mesh;
+	this.flashMesh.castShadow = false;
+	this.flashMesh.material.opacity = 1.0;
+	scene.add(this.flashMesh);	
+
+	this.numCountdown = 5;
+	this.numCountDownInit = this.numCountdown;
+	endScreen_doc.innerHTML = "<a class='instructions center'>Complete a 5x5x5 cube <br> as fast and as perfectly as possible!</h1><br> ";
+	endScreen_doc.innerHTML += "<a class='instructions center' id='countDown' style='padding-top:110px; font-size: 100px;'>" + this.numCountdown + "</span></a><br>";
+	endScreen_doc.innerHTML += "<a class='instructions center' style='padding-top:20px'>(Press any key to start)</a><br>"
+	showElement(endScreen_doc);
+
+	this.flashInterval = setInterval(this.flash, 1000);	
+
 	setGameInProgress(true);	
+	controls.enabled = false;
+	keysEnabled = false;
+	document.addEventListener( 'keydown', hideRandomOpening, false );
+	console.log("adding:");
+	console.log(this);
+
+};
+
+RandomMode.prototype.flash = function() {
+	game.toFlash = !game.toFlash;
+	game.numCountdown--;
+	
+	if (game.numCountdown > 0) {
+		document.getElementById('countDown').innerHTML = game.numCountdown;
+	} else if (game.numCountdown == 0) {
+		document.getElementById('countDown').innerHTML = "START";		
+	} else {
+		hideRandomOpening();
+	}
 };
 
 RandomMode.prototype.showHint = function() {
 	console.log(this.hintLink);
 	hint_doc.innerHTML = "Complete a 5x5x5 cube as fast and as perfectly as possible! <br>";
-	hint_doc.innerHTML += "SPACE to place current block and get the next block. <br>";
-	hint_doc.innerHTML += "Once each level (horizontal plane) is completed, it will turn grey. <br>";
 	hint_doc.innerHTML += "Things sticking outside of the cube will reduce score. <br>";
+	hint_doc.innerHTML += "SPACE to place current block and get the next block. <br>";
+	hint_doc.innerHTML += "Each level (horizontal plane) will turn grey once it's completed. <br>";
 	hint_doc.innerHTML += "<span onClick='hint_doc.innerHTML=game.hintLink' style='text-decoration:underline; cursor:pointer;'>Hide hint</span>"
 };
 
