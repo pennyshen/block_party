@@ -8,6 +8,7 @@ function hideRandomOpening() {
 	game.startTimer = true;
 	controls.enabled = true;	
 	keysEnabled = true;	
+	game.gameTime = 0;	// reset game time
 	hideElement(endScreen_doc);	
 }
 

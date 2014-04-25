@@ -60,19 +60,21 @@
 		<br>
 		<a class="instructions">W,A,S,D / arrow keys = Move block</a>
 		<br>
-		<a class="instructions">LEFT CLICK on block and DRAG (puzzles) = Move block</a>
-		<br>
-		<a class="instructions">LEFT CLICK and DRAG anywhere else = Rotate camera</a>
-		<br>
-		<a class="instructions">RIGHT CLICK and DRAG = Pan camera</a>		
-		<br>
 		<a class="instructions">1,2 = Rotate</a>
 		<br>
 		<a class="instructions">SPACE (puzzles) = Loop through movable blocks</a>
 		<br>
 		<a class="instructions">SPACE (freestyle) = Place block</a>
 		<br>
+		<a class="instructions">LEFT CLICK on block and DRAG (puzzles) = Move block</a>
+		<br>
+		<a class="instructions">LEFT CLICK and DRAG anywhere else = Rotate camera</a>
+		<br>
+		<a class="instructions">RIGHT CLICK and DRAG = Pan camera</a>		
+		<br>
 		<a class="instructions">MOUSE WHEEL = Zoom</a>
+		<br>		
+		<a class="instructions">ESC = Navigation menu</a>
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Main Menu</a>
 	</div>
@@ -462,13 +464,13 @@
 					mins = Math.floor(secs / 60);
 					randomTimer_doc.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs%60).slice(-2);
 					randomScore_doc.innerHTML = secs * game.scorePerSecond;
-					game.gameTime += Date.now() - time;
 				} else {
 					// timer not started - decrease flashMesh opacity
 					game.flashMesh.material.opacity = (1000.0 * game.numCountDownInit - game.currentAliveTime) / (1000.0 * game.numCountDownInit);
 				}
 			}
 
+			game.gameTime += Date.now() - time;
 			game.currentAliveTime += Date.now() - time;
 
 			if (game.mode != Game.MODE_RANDOM) {
