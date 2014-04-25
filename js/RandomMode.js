@@ -126,35 +126,6 @@ RandomMode.prototype.createGoalShape = function() {
 	} else {
 		this.previewMesh.position.z -= 20;
 	}
-
-	// var shape = cloneVectors(BlockGenerator.shapes[this.nextBlockName]);
-	// var shapePosition;
-	// // var block = BlockGenerator.generate(this.nextBlockName);
-	// var shapeHeight = 0;
-
-	// for (var i = 0; i < this.currentBlock.shape.length; i++) {
-	// 	shapeHeight = Math.max(this.currentBlock.shape[i].y, shapeHeight);
-	// }
-
-	// var minHeight = 0;
-	// for (var i = 0; i < shape.length; i++) {
-	// 	minHeight = Math.min(shape[i].y, minHeight);
-	// }
-	// for (var i = 0; i < shape.length; i++) {
-	// 	shape[i].y = shape[i].y + 2 * (shapeHeight + 2 - minHeight);
-	// }
-
-	// var block = BlockGenerator.getBlock(this.nextBlockName, shape, BlockGenerator.colors[BlockGenerator.shapesToColors[this.nextBlockName]])
-
- //    if (this.wireframe1) {
- //    	scene.remove(this.wireframe1);
- //    }
-
-	// this.wireframe1 = new THREE.Line( geo2line(block.mesh.geometry), new THREE.LineBasicMaterial( { color: 0x37FDFC } ), THREE.LinePieces );
-	// this.wireframe1.position = this.currentBlock.mesh.position;
-	// this.wireframe1.toBeRemoved = true;
-	// this.wireframe1.scale.multiplyScalar(0.5);
-	// scene.add(this.wireframe1);
 }
 
 
@@ -256,37 +227,39 @@ RandomMode.prototype.scoreGame = function() {
 	start = Math.ceil(-this.cubeSize/2);
 	end = Math.ceil(this.cubeSize/2);
 	isFilled = true;
-	for (var x = start; x < end; x++) {
-		for (var z = start; z < end; z++) {
-			pos = {};
-			pos.x = x;
-			pos.y = this.levelsFilled;
-			pos.z = z;
-			if (!(getKeyString(pos) in this.existingBlocks)) {
-				isFilled = false;
-				break;
+	while (isFilled && this.levelsFilled < this.cubeSize) {
+		for (var x = start; x < end; x++) {
+			for (var z = start; z < end; z++) {
+				pos = {};
+				pos.x = x;
+				pos.y = this.levelsFilled;
+				pos.z = z;
+				if (!(getKeyString(pos) in this.existingBlocks)) {
+					isFilled = false;
+					break;
+				}
 			}
 		}
-	}
 
-	var block, positions, position, newShape;
-	var levelShape;
-	if (isFilled) {
-		// create the colored level
-		levelShape = [];
-		for (var xx = start; xx < end; xx++) {
-			for (var zz = start; zz < end; zz++) {
-				levelShape.push({x: xx, y: this.levelsFilled, z:zz});
+		var block, positions, position, newShape;
+		var levelShape;
+		if (isFilled) {
+			// create the colored level
+			levelShape = [];
+			for (var xx = start; xx < end; xx++) {
+				for (var zz = start; zz < end; zz++) {
+					levelShape.push({x: xx, y: this.levelsFilled, z:zz});
+				}
 			}
-		}
-		block = BlockGenerator.getBlock("levelShape", levelShape, RandomMode.levelColors[this.levelsFilled]);
-		block.mesh.scale.multiplyScalar(1.005);
-		block.mesh.toBeRemoved = true;
-		block.makeStatic();
-		scene.add(block.mesh);
+			block = BlockGenerator.getBlock("levelShape", levelShape, RandomMode.levelColors[this.levelsFilled]);
+			block.mesh.scale.multiplyScalar(1.005);
+			block.mesh.toBeRemoved = true;
+			block.makeStatic();
+			scene.add(block.mesh);
 
-		this.levelsFilled++;
-		dimension_doc.innerHTML = this.cubeSize - this.levelsFilled;
+			this.levelsFilled++;
+			dimension_doc.innerHTML = this.cubeSize - this.levelsFilled;
+		}		
 	}
 
 
