@@ -145,19 +145,18 @@ function intersectToHighlight() {
 				MOVING = true;
 				return;
 			}
-
-			// only highlight if we can actually move it
-			idx = game.getIndexFromExistingBlocks(intersects[ 0 ].object.id);
-			if (!game.canMoveBlock(game.existingBlocks[idx])) {
-				intersects[ 0 ].object.material.emissive.setHex( intersects[ 0 ].object.currentHex );
-				INTERSECTED = null;
-				return;
-			}
-
-			INTERSECTED = intersects[ 0 ].object;
-			INTERSECTED.material.emissive.setHex( 0xff0000 );
-
 		}
+
+		// only highlight if we can actually move it
+		idx = game.getIndexFromExistingBlocks(intersects[ 0 ].object.id);
+		if (!game.canMoveBlock(game.existingBlocks[idx])) {
+			intersects[ 0 ].object.material.emissive.setHex( intersects[ 0 ].object.currentHex );
+			INTERSECTED = null;
+			return;
+		}
+
+		INTERSECTED = intersects[ 0 ].object;
+		INTERSECTED.material.emissive.setHex( 0xff0000 );		
 
 	} else {
 		if ( INTERSECTED )  {
