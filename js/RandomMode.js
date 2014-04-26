@@ -147,8 +147,7 @@ RandomMode.prototype.createGoalShape = function() {
 	block.mesh.depthTest = false;
 	this.previewScene.add(block.mesh);
 	this.previewMesh = block.mesh;	
-	this.previewMesh.position.y = 200;
-	// this.previewMesh.position.z = - window.innerWidth/2 + 3 * window.innerWidth/20;
+	this.previewMesh.position.y = window.innerHeight * 0.22;
 	this.previewMesh.rotateZ(-Math.PI/8);
 	this.previewMesh.rotateY(6* Math.PI/8);
 	this.previewMesh.rotateX(-Math.PI/20);
