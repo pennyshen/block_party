@@ -89,8 +89,6 @@ RandomMode.prototype.startGame = function() {
 	controls.enabled = false;
 	keysEnabled = false;
 	document.addEventListener( 'keydown', hideRandomOpening, false );
-	console.log("adding:");
-	console.log(this);
 
 };
 
@@ -149,15 +147,29 @@ RandomMode.prototype.createGoalShape = function() {
 	block.mesh.depthTest = false;
 	this.previewScene.add(block.mesh);
 	this.previewMesh = block.mesh;	
-	this.previewMesh.position.y = 210;
-	this.previewMesh.position.z = - window.innerWidth/2 + window.innerWidth/8;
+	this.previewMesh.position.y = 200;
+	// this.previewMesh.position.z = - window.innerWidth/2 + 3 * window.innerWidth/20;
 	this.previewMesh.rotateZ(-Math.PI/8);
 	this.previewMesh.rotateY(6* Math.PI/8);
 	this.previewMesh.rotateX(-Math.PI/20);
 	game.previewMesh.rotateY(-Math.PI/4);
-	game.previewMesh.rotateZ(Math.PI/50);
+	game.previewMesh.rotateZ(3*Math.PI/100);
 	this.previewMesh.scale.multiplyScalar(0.7);
 	this.previewMesh.toBeRemoved = true;
+
+	var frustum = new THREE.Frustum();
+	var cameraViewProjectionMatrix = new THREE.Matrix4();
+
+	this.previewCamera.updateMatrixWorld(); // make sure the camera matrix is updated
+	this.previewCamera.matrixWorldInverse.getInverse( this.previewCamera.matrixWorld );
+	cameraViewProjectionMatrix.multiplyMatrices( this.previewCamera.projectionMatrix, this.previewCamera.matrixWorldInverse );
+	frustum.setFromMatrix( cameraViewProjectionMatrix );
+
+	// frustum is now ready to check all the objects you need
+	while (frustum.containsPoint(this.previewMesh.position)) {
+		this.previewMesh.position.z -= 1;
+	}
+	this.previewMesh.position.z += 90;
 
 	if (this.nextBlockName != "straight4") {
 		// this.previewMesh.position.y += 70;

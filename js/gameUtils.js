@@ -1,6 +1,5 @@
 
 function hideRandomOpening() {
-	console.log("hiding");
 	document.removeEventListener( 'keydown', hideRandomOpening, false );	
 	clearInterval(game.flashInterval);
 	scene.remove(game.flashMesh);
