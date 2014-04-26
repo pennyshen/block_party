@@ -22,8 +22,8 @@ function RandomMode() {
 	randomScore_doc.innerHTML = this.timeLimit * 60 * this.scorePerSecond;
 	randomTimer_doc.innerHTML = "0" + this.timeLimit + ":00";
 
-	this.hintLink = "<a href='javascript: void(0)' style='font-size:35px;text-decoration:none;' onClick='game.showHint()'>HINT</a>";
-
+	this.hintLink = "<a href='javascript: void(0)' style='font-size:35px;text-decoration:none;' onClick='game.showHint()'>Hint</a>";
+	this.hintLink += "<br><a href='javascript: void(0)' style='font-size:35px;text-decoration:none;' onClick='pauseGame()'>Pause</a>";
 	hint_doc.innerHTML = this.hintLink;
 
 	showElement(randomInfo_doc);
