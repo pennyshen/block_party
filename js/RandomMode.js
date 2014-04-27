@@ -398,7 +398,7 @@ RandomMode.prototype.endGame = function() {
 
 		if (volumeOverflow == 0) {
 			perfectBonus = 3000;
-			endScreen_doc.innerHTML += "<a class='instructions'> + " + perfectBonus + " (perfect cube!) </a><br>";
+			scoreString += "<a class='instructions'> + " + perfectBonus + " (perfect cube!) </a><br>";
 			this.score += perfectBonus;
 		} 
 
