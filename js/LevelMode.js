@@ -19,6 +19,9 @@ function LevelMode(toPopulateMenu) {
 	} else {
 		this.showLevelMenu(LevelContent.TUTORIAL);
 	}	
+
+	hint_doc.innerHTML = "<a href='javascript: void(0)' style='font-size:35px;text-decoration:none;' onClick='pauseGame()'>Pause</a>";
+	showElement(hint_doc);
 }
 
 LevelMode.prototype = Object.create(Game.prototype);

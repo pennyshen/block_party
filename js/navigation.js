@@ -2,6 +2,7 @@
 function setGameInProgress(isInProgress) {
 	gameInProgress = isInProgress;
 	controls.enabled = isInProgress;
+	keysEnabled = isInProgress;
 	
 	if (gameInProgress) {
 		if (mainMusic) {

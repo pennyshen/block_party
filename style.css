@@ -108,6 +108,13 @@ h1 {margin-top: 5%;}
     width: 100%;
 }
 
+.instructions.center {
+    font-size: 30px;
+    top: 25%;
+    width: 100%;
+    line-height: 55px;
+}
+
 #instructions {
     overflow-y: scroll;
 }
@@ -177,10 +184,14 @@ h1 {margin-top: 5%;}
 
 a.link {
     font-size: 20px;
+    text-decoration: none;
+    color: white;  
+    border-bottom: 1px solid white;    
 }
 
 a.link:hover {
-    color: yellow;  
+    color: yellow; 
+    border-bottom-color: yellow; 
 }
 
 a.menuItem:hover

@@ -17,6 +17,7 @@ TutorialMode.prototype.startLevel = function(level) {
 	this.levelBlocks = this.levels[level].blocks.slice(0);
 
 	hint_doc.innerHTML = "Hint: <br>" + this.levels[level].hint;
+	hint_doc.innerHTML += "<br>Press ESC to pause";
 
 	// TODO: consolidate this with LevelMode
 	this.createGoalShape(JSON.parse(this.levels[level].goalShape));

@@ -60,19 +60,21 @@
 		<br>
 		<a class="instructions">W,A,S,D / arrow keys = Move block</a>
 		<br>
-		<a class="instructions">LEFT CLICK on block and DRAG (puzzles) = Move block</a>
-		<br>
-		<a class="instructions">LEFT CLICK and DRAG anywhere else = Rotate camera</a>
-		<br>
-		<a class="instructions">RIGHT CLICK and DRAG = Pan camera</a>		
-		<br>
 		<a class="instructions">1,2 = Rotate</a>
 		<br>
 		<a class="instructions">SPACE (puzzles) = Loop through movable blocks</a>
 		<br>
 		<a class="instructions">SPACE (freestyle) = Place block</a>
 		<br>
+		<a class="instructions">LEFT CLICK on block and DRAG (puzzles) = Move block</a>
+		<br>
+		<a class="instructions">LEFT CLICK and DRAG anywhere else = Rotate camera</a>
+		<br>
+		<a class="instructions">RIGHT CLICK and DRAG = Pan camera</a>		
+		<br>
 		<a class="instructions">MOUSE WHEEL = Zoom</a>
+		<br>		
+		<a class="instructions">ESC = Navigation menu</a>
 		<br>
 		<a href="javascript: void(0)" class="menuItem" onClick="showElementAndHideNav(menu_doc)">Main Menu</a>
 	</div>
@@ -96,7 +98,13 @@
 		<br>
 		<p class="instructions">View source code on <a class="link" href="https://github.com/whateverwhouare/block_party" target="_blank">Github</a>.</p>
 		<br>
+<<<<<<< HEAD
 		<p class="instructions">Tutorial and Freestyle music- Space Forest by <a class="link" href="http://www.newgrounds.com/audio/listen/472958" target="_blank">Kassich</a></p>
+=======
+		<p class="instructions">Visit our <a class="link" href="https://www.facebook.com/pages/Block-Party/1410243285917441">facebook page</a>.</p>
+		<br>
+		<p class="instructions">Music by Kassich from <a class="link" href="http://www.newgrounds.com/audio/listen/472958" target="_blank">Newgrounds</a></p>
+>>>>>>> b13e908859b2fe8cb748b91ea66352835b663a52
 		<br>
 		<p class="instructions">Flatland music- Dragon Rock by <a class="link" href="http://www.newgrounds.com/audio/listen/221605" target="_blank">ellebirdy23</a></p>
 		<br>
@@ -138,7 +146,7 @@
 				Score: <span id="randomScore">0 </span>
 				<br>
 				Levels left: <span id="dimension">0</span>
-				<br>
+				<br>				
 				<span id="nextBlock">Next block:</span>
 				<br>
 			</font>
@@ -176,6 +184,17 @@
     <audio id="ding_sound">
     	<source src="sounds/ding.mp3" type="audio/mp3" />
 	</audio>
+
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-50473823-1', 'whateverwhouare.github.io');
+	  ga('send', 'pageview');
+
+	</script>	
 
 	<script>
 
@@ -255,6 +274,7 @@
 
         var gameInProgress = false;
         var toCheckGoal = false;
+        var keysEnabled = false;
 
         // Used in initParticles()
 		var emitter, particleGroup;
@@ -443,28 +463,25 @@
 
 
 		function render() {
-			// particleGroup.tick( 0.016 );
-			
 			renderer.autoClear = false;
 			renderer.clear();
 			renderer.render( backgroundScene , backgroundCamera );
 			renderer.render( scene, camera );
 
-			if (gameInProgress) {
-				if (game.previewScene) {
-					renderer.clear( false, true, false );
-					renderer.render(game.previewScene, game.previewCamera);
-				}
+			if (game.previewScene) {
+				renderer.clear( false, true, false );
+				renderer.render(game.previewScene, game.previewCamera);
+			}
 
-				calculateGameBoardOrientation();
+			calculateGameBoardOrientation();
 
-				//if (game.currentAliveTime < ALIVE_TIME) {
-				// update time
-				timeElapsed = Math.max(game.gameTime, 0);
-				secs = Math.floor(timeElapsed / 1000.0);
-				mins = Math.floor(secs / 60);
-				timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs%60).slice(-2);
-				if (game.mode == Game.MODE_RANDOM) {
+			// update time
+			timeElapsed = Math.max(game.gameTime, 0);
+			secs = Math.floor(timeElapsed / 1000.0);
+			mins = Math.floor(secs / 60);
+			timer.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs%60).slice(-2);
+			if (game.mode == Game.MODE_RANDOM) {
+				if (game.startTimer) {
 					timeRemaining = Math.max(0, game.timeLimit*60*1000 - timeElapsed);
 					if (timeRemaining <= 0) {
 						game.endGame();
@@ -472,20 +489,22 @@
 					secs = Math.floor(timeRemaining / 1000.0);
 					mins = Math.floor(secs / 60);
 					randomTimer_doc.innerHTML = ("0" + mins).slice(-2) + ":" + ("0" + secs%60).slice(-2);
-				}
-
-				game.currentAliveTime += Date.now() - time;
-				game.gameTime += Date.now()-time;
-
-				if (game.mode != Game.MODE_RANDOM) {
-					intersectToHighlight();
-					if (game.isPreviewing) {
-						game.fadingInAndOut();
-					}
-				} else {
 					randomScore_doc.innerHTML = secs * game.scorePerSecond;
+				} else {
+					// timer not started - decrease flashMesh opacity
+					game.flashMesh.material.opacity = (1000.0 * game.numCountDownInit - game.currentAliveTime) / (1000.0 * game.numCountDownInit);
 				}
-			}			
+			}
+
+			game.gameTime += Date.now() - time;
+			game.currentAliveTime += Date.now() - time;
+
+			if (game.mode != Game.MODE_RANDOM) {
+				intersectToHighlight();
+				if (game.isPreviewing) {
+					game.fadingInAndOut();
+				}
+			} 
 		}
 
 	</script>

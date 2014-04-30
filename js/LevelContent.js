@@ -40,19 +40,19 @@ LevelContent.levels[LevelContent.TUTORIAL] = [
 			['Z_block'],
 			'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":1,"z":0},{"x":-1,"y":2,"z":0}]',
 			'Press 1 to rotate your piece about the floor',
-			[new Goal('ROTATE', '1 Rotates about the floor'),
+			[new Goal('ROTATE', 'Press 1 to rotate about the floor'),
 			new Goal('[{"x":0,"y":2,"z":0},{"x":0,"y":1,"z":0},{"x":-1,"y":2,"z":0},{"x":-1,"y":3,"z":0}]', '')]
 		), new Level(
 			['L_block'],
 			'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":2,"z":0},{"x":1,"y":2,"z":0}]',
 			'Rotate with 2',
-			[new Goal('ROTATE', '2 rotates counterclockwise'),
+			[new Goal('ROTATE', 'Press 2 to rotate counterclockwise'),
 			new Goal('[{"x":0,"y":2,"z":-1},{"x":0,"y":3,"z":-1},{"x":0,"y":1,"z":-1},{"x":1,"y":3,"z":-1}]','')]
 		), new Level(
 			['cross_block'],
 			'[{"x":0,"y":0,"z":0},{"x":0,"y":1,"z":0},{"x":0,"y":1,"z":1},{"x":0,"y":2,"z":0},{"x":0,"y":1,"z":-1}]',
-			"Click and drag to look around. <br> Don't forget to rotate!",
-			[new Goal('ROTATE', 'Click and drag to look around')]
+			"Click and drag the floor to look around. <br> Don't forget to rotate!",
+			[new Goal('ROTATE', 'Click and drag the floor to look around')]
 		), new Level(
 			['L_block'],
 			'[{"x":0,"y":0,"z":0},{"x":1,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":0,"y":0,"z":2}]',
@@ -70,11 +70,6 @@ LevelContent.levels[LevelContent.TUTORIAL] = [
 			'Rotation with 2 follows the camera.  <br>  Try rotating after moving the camera around',
 			[new Goal('ROTATE', 'Rotate with 2 after moving the camera around')]
 
-		), new Level(
-			['L_block', 'L_block', 'L_block', 't_block', 't_block', 't_block', 'Z_block', 'Z_block', 'Z_block'],
-			'[{"x":6,"y":0,"z":-4},{"x":6,"y":1,"z":-4},{"x":6,"y":1,"z":-3},{"x":6,"y":2,"z":-3},{"x":6,"y":0,"z":0},{"x":7,"y":0,"z":0},{"x":7,"y":1,"z":0},{"x":8,"y":1,"z":0},{"x":6,"y":0,"z":3},{"x":5,"y":0,"z":3},{"x":5,"y":0,"z":4},{"x":4,"y":0,"z":4},{"x":-5,"y":0,"z":-7},{"x":-4,"y":0,"z":-7},{"x":-3,"y":0,"z":-7},{"x":-3,"y":1,"z":-7},{"x":1,"y":0,"z":-7},{"x":1,"y":1,"z":-7},{"x":1,"y":2,"z":-7},{"x":1,"y":0,"z":-6},{"x":5,"y":0,"z":-7},{"x":5,"y":1,"z":-7},{"x":5,"y":1,"z":-6},{"x":5,"y":1,"z":-5},{"x":-8,"y":0,"z":-3},{"x":-8,"y":1,"z":-3},{"x":-8,"y":2,"z":-3},{"x":-7,"y":1,"z":-3},{"x":-8,"y":0,"z":0},{"x":-8,"y":1,"z":-1},{"x":-8,"y":1,"z":0},{"x":-8,"y":1,"z":1},{"x":-8,"y":0,"z":3},{"x":-8,"y":0,"z":4},{"x":-8,"y":0,"z":5},{"x":-7,"y":0,"z":4}]',
-			'Rotating twice in the same direction will reflect a piece! <br>  Try reflecting pieces with 1 and 2.',
-			[new Goal('MOVE', 'Time for some practice!')]
 		)
 ];
 LevelContent.LevelTypetoDescriptor[LevelContent.TUTORIAL] = "";
