@@ -1,0 +1,20 @@
+{
+  "name": "Block Party!",
+  "manifest_version": 2,
+  "description": " A 3D puzzle game that challenges your spatial reasoning skills!",
+  "version": "1",
+  "app": {
+    "urls": [
+      "http://whateverwhouare.github.io/block_party"
+    ],
+    "launch": {
+      "web_url": "http://whateverwhouare.github.io/block_party"
+    }
+  },
+  "icons": {
+    "128": "icon.png"
+  },
+  "permissions": [
+    "unlimitedStorage"
+  ]
+}
