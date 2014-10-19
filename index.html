@@ -157,6 +157,7 @@
 	    	</font>
 	    </div>
 	    <span id="hint"></span>
+	    <span id="mute"></span>
 	    <span id="center_tooltip"></span>
     </div>
 
@@ -212,6 +213,7 @@
 		var gameBoardOrientation;
 		var controls;
 		var time = Date.now();
+		var mute = false;
 
 		// nav items
 		var menu_doc = document.getElementById("menu");
@@ -232,6 +234,7 @@
 		var numLevel_doc = document.getElementById( 'numLevel' );
 		var blocker = document.getElementById("blocker");
 		var hint_doc = document.getElementById("hint");
+		var mute_doc = document.getElementById("mute");
 		var center_tooltip_doc = document.getElementById("center_tooltip");
 		var randomInfo_doc = document.getElementById("randomInfo");
 		var levelInfo_doc = document.getElementById("levelInfo");
@@ -241,7 +244,7 @@
 
 		var nav_items = [menu_doc, endScreen_doc, instructions_doc, pauseScreen_doc, levelModeMenu_doc,
 			selectBlockScreen_doc, loading_doc, about_doc, highscore_doc, confirmationPage_doc];
-		var info_items = [randomInfo_doc, hint_doc, center_tooltip_doc, levelInfo_doc];
+		var info_items = [randomInfo_doc, hint_doc, mute_doc, center_tooltip_doc, levelInfo_doc];
 
 		var backToMenu_string = '<a href="javascript: void(0)" class="menuItem" onClick="backToMenu()">Menu</a><br>';
 		var backToMainMenu_string = '<a href="javascript: void(0)" class="menuItem backButton" onClick="showElementAndHideNav(menu_doc)">Main Menu</a>';

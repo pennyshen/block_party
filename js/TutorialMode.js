@@ -18,7 +18,10 @@ TutorialMode.prototype.startLevel = function(level) {
 
 	hint_doc.innerHTML = "Hint: <br>" + this.levels[level].hint;
 	hint_doc.innerHTML += "<br>Press ESC to pause";
+	(mute)? status = "Unmute" : status = "Mute";
+	mute_doc.innerHTML = "<a href='javascript: void(0)' style='font-size:35px;text-decoration:none;' onClick='adjustMusic()'>" + status + "</a>";
 
+	showElement(mute_doc);
 	// TODO: consolidate this with LevelMode
 	this.createGoalShape(JSON.parse(this.levels[level].goalShape));
 

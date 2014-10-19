@@ -25,10 +25,13 @@ function RandomMode() {
 	this.hintLink = "<a href='javascript: void(0)' style='font-size:30px;text-decoration:none;' onClick='game.showHint()'>Hint</a>";
 	this.hintLink += "<br><a href='javascript: void(0)' style='font-size:30px;text-decoration:none;' onClick='pauseGame()'>Pause</a>";
 	hint_doc.innerHTML = this.hintLink;
+	(mute)? status = "Unmute" : status = "Mute";
+	mute_doc.innerHTML = "<a href='javascript: void(0)' style='font-size:35px;text-decoration:none;' onClick='adjustMusic()'>" + status + "</a>";
 
 	showElement(randomInfo_doc);
 	showElement(nextBlock_doc);
 	showElement(hint_doc);
+	showElement(mute_doc);
 }
 
 RandomMode.prototype = Object.create(Game.prototype);

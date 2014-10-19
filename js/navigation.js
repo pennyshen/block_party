@@ -5,7 +5,7 @@ function setGameInProgress(isInProgress) {
 	keysEnabled = isInProgress;
 	
 	if (gameInProgress) {
-		if (mainMusic) {
+		if (mainMusic && mute == false) {
 			mainMusic.play();
 		}
 	} else {
@@ -87,4 +87,25 @@ function showElement(element) {
 function showElementAndHideNav(element) {
 	hideAllNav();
 	showElement(element);
+}
+
+function adjustMusic() {
+	if (mute == false)
+	{
+		mute = true;
+		mute_doc.innerHTML = "<a href='javascript: void(0)' style='font-size:35px;text-decoration:none;' onClick='adjustMusic()'>Unmute</a>";
+		if(mainMusic)
+		{
+			mainMusic.pause();
+		}
+	}
+	else
+	{
+		mute = false;
+		mute_doc.innerHTML = "<a href='javascript: void(0)' style='font-size:35px;text-decoration:none;' onClick='adjustMusic()'>Mute</a>";
+		if (mainMusic)
+		{
+			mainMusic.play();
+		}
+	}
 }

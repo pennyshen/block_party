@@ -21,7 +21,10 @@ function LevelMode(toPopulateMenu) {
 	}	
 
 	hint_doc.innerHTML = "<a href='javascript: void(0)' style='font-size:35px;text-decoration:none;' onClick='pauseGame()'>Pause</a>";
+	(mute)? status = "Unmute" : status = "Mute";
+	mute_doc.innerHTML = "<a href='javascript: void(0)' style='font-size:35px;text-decoration:none;' onClick='adjustMusic()'>" + status + "</a>";
 	showElement(hint_doc);
+	showElement(mute_doc);
 }
 
 LevelMode.prototype = Object.create(Game.prototype);

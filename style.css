@@ -97,6 +97,18 @@ h1 {margin-top: 5%;}
     background-color: rgba(255,0,0,0.5);
 }
 
+#mute {
+    font-size: 24px;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    z-index: 2;
+    display: inline-block;
+    top: 115px;
+    position: absolute;
+    background-color: rgba(255,0,0,0.5);
+}
+
 #center_tooltip {
     font: 30px "Press Start 2P", cursive; 
     position: absolute;
