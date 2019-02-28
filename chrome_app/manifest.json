@@ -5,10 +5,10 @@
   "version": "1",
   "app": {
     "urls": [
-      "http://whateverwhouare.github.io/block_party"
+      "http://pennyshen.github.io/block_party"
     ],
     "launch": {
-      "web_url": "http://whateverwhouare.github.io/block_party"
+      "web_url": "http://pennyshen.github.io/block_party"
     }
   },
   "icons": {
